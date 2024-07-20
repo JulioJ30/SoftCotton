@@ -1,0 +1,1336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5647AFD4-9C9A-434B-88C9-6D59AED1C46A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SoftCotton</RootNamespace>
+    <AssemblyName>SoftCotton</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publicar\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML, Version=0.94.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.94.0\lib\net40\ClosedXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Dapper, Version=1.50.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.0\lib\net45\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.0.3.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.0.3\lib\net20\ExcelNumberFormat.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FastMember, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastMember.1.3.0\lib\net45\FastMember.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.3.0.8, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.3.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.3.0.0\lib\netstandard2.0\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1620.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1620.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1620.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1620.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1620.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.1016.290\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessLogic\CompartidoBL.cs" />
+    <Compile Include="BusinessLogic\ConstantesBL.cs" />
+    <Compile Include="BusinessLogic\DispatchControlBL.cs" />
+    <Compile Include="BusinessLogic\EmpleadoBL.cs" />
+    <Compile Include="BusinessLogic\EmpresaBL.cs" />
+    <Compile Include="BusinessLogic\EnviarGuiaRemisionBL.cs" />
+    <Compile Include="BusinessLogic\FacturaBL.cs" />
+    <Compile Include="BusinessLogic\GuiaRemisionExportacionBL.cs" />
+    <Compile Include="BusinessLogic\KardexBL.cs" />
+    <Compile Include="BusinessLogic\MantenimientoBL.cs" />
+    <Compile Include="BusinessLogic\OrdenCompraBL.cs" />
+    <Compile Include="BusinessLogic\GuiaRemisionBL.cs" />
+    <Compile Include="BusinessLogic\OrdenServicioBL.cs" />
+    <Compile Include="BusinessLogic\SeguridadBL.cs" />
+    <Compile Include="Database\ConnectionBD.cs" />
+    <Compile Include="DTO\Security\LoginDTO.cs" />
+    <Compile Include="Model\DispatchControl\busquedaControlDespacho.cs" />
+    <Compile Include="Model\DispatchControl\controlDespachoCab.cs" />
+    <Compile Include="Model\DispatchControl\controlDespachoDet.cs" />
+    <Compile Include="Model\DispatchControl\controlDespachoDetTallas.cs" />
+    <Compile Include="Model\DispatchControl\parametrosRegistros.cs" />
+    <Compile Include="Model\DispatchControl\procesoControl.cs" />
+    <Compile Include="Model\Employee\GetEmp1_Personas.cs" />
+    <Compile Include="Model\Employee\GetEmp2_Colaboradores.cs" />
+    <Compile Include="Model\Employee\GetEmp3_BuscarPersona.cs" />
+    <Compile Include="Model\Employee\GetEmp4_Cargos.cs" />
+    <Compile Include="Model\Employee\GetEmp5_Areas.cs" />
+    <Compile Include="Model\Employee\GetEmp6_BuscarXDNI.cs" />
+    <Compile Include="Model\Employee\SetColaboradorParam.cs" />
+    <Compile Include="Model\Employee\SetPersonaParam.cs" />
+    <Compile Include="Model\Enterprise\Get1_Empresas.cs" />
+    <Compile Include="Model\Invoices\GetFact1_Detalle.cs" />
+    <Compile Include="Model\Invoices\GetFact2_TipoMoneda.cs" />
+    <Compile Include="Model\Invoices\GetFact3_Cabecera.cs" />
+    <Compile Include="Model\Invoices\SetFacCabParam.cs" />
+    <Compile Include="Model\Invoices\SetFacDetParam.cs" />
+    <Compile Include="Model\Kardex\KardexElectronico.cs" />
+    <Compile Include="Model\Kardex\KardexValorizado.cs" />
+    <Compile Include="Model\Maintenance\GetMant10_TipoMoneda.cs" />
+    <Compile Include="Model\Maintenance\GetMant11_TipoDoc.cs" />
+    <Compile Include="Model\Maintenance\GetMant12_ProvClientesRpte.cs" />
+    <Compile Include="Model\Maintenance\GetMant12_ProvClientes.cs" />
+    <Compile Include="Model\Maintenance\GetMant13_TipoDoc.cs" />
+    <Compile Include="Model\Maintenance\GetMant14_RelEmpresas.cs" />
+    <Compile Include="Model\Maintenance\GetMant15_Nivel.cs" />
+    <Compile Include="Model\Maintenance\GetMant16_NivelCBX.cs" />
+    <Compile Include="Model\Maintenance\GetMant17_TallasCBX.cs" />
+    <Compile Include="Model\Maintenance\GetMant18_ColoresCBX.cs" />
+    <Compile Include="Model\Maintenance\GetMant19_UMCBX.cs" />
+    <Compile Include="Model\Maintenance\GetMant20_Productos.cs" />
+    <Compile Include="Model\Maintenance\GetMant21_Tallas.cs" />
+    <Compile Include="Model\Maintenance\GetMant34_Programa.cs" />
+    <Compile Include="Model\Maintenance\GetMant33_Servicio.cs" />
+    <Compile Include="Model\Maintenance\GetMant22_Color.cs" />
+    <Compile Include="Model\Maintenance\GetMant23_TipoCambio.cs" />
+    <Compile Include="Model\Maintenance\GetMant24_TipoMoneda.cs" />
+    <Compile Include="Model\Maintenance\GetMant25_Grupos.cs" />
+    <Compile Include="Model\Maintenance\GetMant26_ProdServicios.cs" />
+    <Compile Include="Model\Maintenance\GetMant27_Cuentas.cs" />
+    <Compile Include="Model\Maintenance\GetMant28_CuentaNivelCBX.cs" />
+    <Compile Include="Model\Maintenance\GetMant29_CuentaTipoCBX.cs" />
+    <Compile Include="Model\Maintenance\GetMant30_UM.cs" />
+    <Compile Include="Model\Maintenance\GetMant32_BuscarColor.cs" />
+    <Compile Include="Model\Maintenance\GetMant40_ConstanciaInscripcion.cs" />
+    <Compile Include="Model\Maintenance\GetMant41_NumeroLicenciaConducir.cs" />
+    <Compile Include="Model\Maintenance\GetMant42_CatalogoNubeFact.cs" />
+    <Compile Include="Model\Maintenance\GetMant43_Categorias.cs" />
+    <Compile Include="Model\Maintenance\GetMant53_Estilos.cs" />
+    <Compile Include="Model\Maintenance\GetMant54_Programas.cs" />
+    <Compile Include="Model\Maintenance\GetMant55_Pedidos.cs" />
+    <Compile Include="Model\Maintenance\GetMant56_PedidosColor.cs" />
+    <Compile Include="Model\Maintenance\GetMantRpte2_Productos.cs" />
+    <Compile Include="Model\Maintenance\GetUbigeos.cs" />
+    <Compile Include="Model\Maintenance\SetAreasAlmacen.cs" />
+    <Compile Include="Model\Maintenance\SetCalagoNumbeFactParam.cs" />
+    <Compile Include="Model\Maintenance\SetCategoriasParam.cs" />
+    <Compile Include="Model\Maintenance\SetConstanciaInscripcionParam.cs" />
+    <Compile Include="Model\Maintenance\SetCuentaParam.cs" />
+    <Compile Include="Model\Maintenance\SetEstilosParam.cs" />
+    <Compile Include="Model\Maintenance\SetNumeroLicenciaConducirParam.cs" />
+    <Compile Include="Model\Maintenance\SetPedidosColorParam.cs" />
+    <Compile Include="Model\Maintenance\SetPedidosParam.cs" />
+    <Compile Include="Model\Maintenance\SetProgramaParam.cs" />
+    <Compile Include="Model\Maintenance\SetServicioParam.cs" />
+    <Compile Include="Model\Maintenance\SetUMParam.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC19_Reporte.cs" />
+    <Compile Include="Model\ReferralGuide\EnvioGuiaRemisionParam.cs" />
+    <Compile Include="Model\ReferralGuide\GetGR7_CierrePeriodo.cs" />
+    <Compile Include="Model\ReferralGuide\GetGR8_RpteExportacion.cs" />
+    <Compile Include="Model\ReferralGuide\GetGR9_DetalleSalidaIngreso.cs" />
+    <Compile Include="Model\ReferralGuide\GR_TipoTransporte.cs" />
+    <Compile Include="Model\ReferralGuide\SetCierrePeriodoParam.cs" />
+    <Compile Include="Model\ReferralGuide\SetGRCabExportacionParam.cs" />
+    <Compile Include="Model\ReferralGuide\SetGRDetExportacionParam.cs" />
+    <Compile Include="Model\ServiceOrder\GetOS19_Reporte.cs" />
+    <Compile Include="Model\ServiceOrder\GetOS16_Firmantes.cs" />
+    <Compile Include="Model\ServiceOrder\GetOS15_FirmanteXNivel.cs" />
+    <Compile Include="Model\ServiceOrder\GetOS11_Firmantes.cs" />
+    <Compile Include="Model\ServiceOrder\GetOS14_Observaciones.cs" />
+    <Compile Include="Model\ServiceOrder\GetOS5_TipoAprobacion.cs" />
+    <Compile Include="Model\ServiceOrder\GetOS6_TipoAnulado.cs" />
+    <Compile Include="Model\ServiceOrder\GetOS7_OSCabXCodigo.cs" />
+    <Compile Include="Model\ServiceOrder\GetOS8_OSDetXCodigo.cs" />
+    <Compile Include="Model\ServiceOrder\SetOSAprobacionParam.cs" />
+    <Compile Include="Model\ServiceOrder\SetOSTipoAnuladoParam.cs" />
+    <Compile Include="Model\ServiceOrder\SetOSTipoAprobParam.cs" />
+    <Compile Include="Model\ServiceOrder\SetOSFirmantesParam.cs" />
+    <Compile Include="Model\ServiceOrder\SetOSObservacionParam.cs" />
+    <Compile Include="Model\ServiceOrder\SetOSDetParam.cs" />
+    <Compile Include="Model\ServiceOrder\SetOSParam.cs" />
+    <Compile Include="Model\Shared\GetShared2_BuscarProdServ.cs" />
+    <Compile Include="Model\Maintenance\GetMant7_CeCos.cs" />
+    <Compile Include="Model\Maintenance\GetMant8_TipoCpte.cs" />
+    <Compile Include="Model\Maintenance\GetMant9_CondPago.cs" />
+    <Compile Include="Model\Maintenance\GetRpte1_ProvClientes.cs" />
+    <Compile Include="Model\Maintenance\SetCeCoParam.cs" />
+    <Compile Include="Model\Maintenance\SetColorParam.cs" />
+    <Compile Include="Model\Maintenance\SetCondPagoParam.cs" />
+    <Compile Include="Model\Maintenance\SetGrupoParam.cs" />
+    <Compile Include="Model\Maintenance\SetNivelParam.cs" />
+    <Compile Include="Model\Maintenance\SetProductoParam.cs" />
+    <Compile Include="Model\Maintenance\SetProductoServicioParam.cs" />
+    <Compile Include="Model\Maintenance\SetProvClientesParam.cs" />
+    <Compile Include="Model\Maintenance\SetTallaParam.cs" />
+    <Compile Include="Model\Maintenance\SetTipoCambioParam.cs" />
+    <Compile Include="Model\Maintenance\SetTipoDocumentoParam.cs" />
+    <Compile Include="Model\Maintenance\SetTipoComprobanteParam.cs" />
+    <Compile Include="Model\Maintenance\SetTipoMonedaParam.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC11_Firmantes.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC13_TiposAprobacion.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC12_Usuarios.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC14_Observaciones.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC15_FirmanteXNivel.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC16_Firmantes.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC1_TipoMoneda.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC2_CondPago.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC4_ProductoXCod.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC5_TipoAprobacion.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC6_TipoAnulado.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC7_OCCabXCodigo.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC8_OCDetXCodigo.cs" />
+    <Compile Include="Model\PurchaseOrder\SetOCAprobacionParam.cs" />
+    <Compile Include="Model\PurchaseOrder\SetOCDetParam.cs" />
+    <Compile Include="Model\PurchaseOrder\SetOCFirmantesParam.cs" />
+    <Compile Include="Model\PurchaseOrder\SetOCObservacionParam.cs" />
+    <Compile Include="Model\PurchaseOrder\SetOCParam.cs" />
+    <Compile Include="Model\PurchaseOrder\SetOCTipoAnuladoParam.cs" />
+    <Compile Include="Model\PurchaseOrder\SetOCTipoAprobParam.cs" />
+    <Compile Include="Model\ReferralGuide\GetGR1_Motivo.cs" />
+    <Compile Include="Model\ReferralGuide\GetGR2_CabeceraXCod.cs" />
+    <Compile Include="Model\ReferralGuide\GetGR3_DetalleXCod.cs" />
+    <Compile Include="Model\ReferralGuide\GetGR4_TipoCptes.cs" />
+    <Compile Include="Model\ReferralGuide\GetGR5_OCDetalle.cs" />
+    <Compile Include="Model\ReferralGuide\GetGR6_RpteGROC.cs" />
+    <Compile Include="Model\ReferralGuide\SetGRCabParam.cs" />
+    <Compile Include="Model\ReferralGuide\SetGRDetParam.cs" />
+    <Compile Include="Model\ReferralGuide\SetGRMotTraslado.cs" />
+    <Compile Include="Model\Security\GetAcceso4_Personas.cs" />
+    <Compile Include="Model\Security\GetMant2_Modulos.cs" />
+    <Compile Include="Model\Security\GetMant1_Usuarios.cs" />
+    <Compile Include="Model\Security\GetMant3_SubModulos.cs" />
+    <Compile Include="Model\Security\GetMant4_CbxModulos.cs" />
+    <Compile Include="Model\Security\GetMant5_Usuarios.cs" />
+    <Compile Include="Model\Security\GetMant6_Accesos.cs" />
+    <Compile Include="Model\Security\SetAccesoParam.cs" />
+    <Compile Include="Model\Security\SetSubModuloParam.cs" />
+    <Compile Include="Model\Security\SetModuloParam.cs" />
+    <Compile Include="Model\Security\SetUsuarioParam.cs" />
+    <Compile Include="Model\Security\GetLogin.cs" />
+    <Compile Include="Model\Security\GetAcceso2_Mod.cs" />
+    <Compile Include="Model\Security\GetAcceso3_SubMod.cs" />
+    <Compile Include="Model\Shared\GetShared1_ProvClientes.cs" />
+    <Compile Include="Model\Shared\GetShared3_BuscarCuenta.cs" />
+    <Compile Include="Model\Shared\GetShared4_BuscarGR.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\KardexValorizado\Rpt_KardexValorizadoNuevo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\KardexValorizado\Rpt_KardexValorizadoNuevo.Designer.cs">
+      <DependentUpon>Rpt_KardexValorizadoNuevo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Kardex\Rpt_KardexValorizado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\Kardex\Rpt_KardexValorizado.Designer.cs">
+      <DependentUpon>Rpt_KardexValorizado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraModel.cs" />
+    <Compile Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraModelV2.cs" />
+    <Compile Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraRpteCabModel.cs" />
+    <Compile Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraRpteDetModel.cs" />
+    <Compile Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraRpteDetModelTallaV2.cs" />
+    <Compile Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraRpteDetModelV2.cs" />
+    <Compile Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraRpteFirmasModel.cs" />
+    <Compile Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraRpteObsModel.cs" />
+    <Compile Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraRpteView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraRpteView.Designer.cs">
+      <DependentUpon>OrdenCompraRpteView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraRpteViewV2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraRpteViewV2.Designer.cs">
+      <DependentUpon>OrdenCompraRpteViewV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RemittanceGuide\ExportGuide\GuiaRemisionExportacionCabModel.cs" />
+    <Compile Include="Reports\RemittanceGuide\ExportGuide\GuiaRemisionExportacionDetModel.cs" />
+    <Compile Include="Reports\RemittanceGuide\ExportGuide\GuiaRemisionExportacionModel.cs" />
+    <Compile Include="Reports\RemittanceGuide\ExportGuide\GuiaRemisionExportacionPrintView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\RemittanceGuide\ExportGuide\GuiaRemisionExportacionPrintView.Designer.cs">
+      <DependentUpon>GuiaRemisionExportacionPrintView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ServiceOrder\OrdenServicio\OrdenServicioModelV2.cs" />
+    <Compile Include="Reports\ServiceOrder\OrdenServicio\OrdenServicioRpteDetModelV2.cs" />
+    <Compile Include="Reports\ServiceOrder\OrdenServicio\OrdenServicioRpteObsModel.cs" />
+    <Compile Include="Reports\ServiceOrder\OrdenServicio\OrdenServicioRpteFirmasModel.cs" />
+    <Compile Include="Reports\ServiceOrder\OrdenServicio\OrdenServicioRpteDetModel.cs" />
+    <Compile Include="Reports\ServiceOrder\OrdenServicio\OrdenServicioRpteCabModel.cs" />
+    <Compile Include="Reports\ServiceOrder\OrdenServicio\OrdenServicioModel.cs" />
+    <Compile Include="Reports\ServiceOrder\OrdenServicio\OrdenServicioRpteView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\ServiceOrder\OrdenServicio\OrdenServicioRpteView.Designer.cs">
+      <DependentUpon>OrdenServicioRpteView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ServiceOrder\OrdenServicio\OrdenServicioRpteViewV2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\ServiceOrder\OrdenServicio\OrdenServicioRpteViewV2.Designer.cs">
+      <DependentUpon>OrdenServicioRpteViewV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\CompartidoRepository.cs" />
+    <Compile Include="Repository\ConstanteRepository.cs" />
+    <Compile Include="Repository\DispatchControlRespository.cs" />
+    <Compile Include="Repository\EmpleadoRepository.cs" />
+    <Compile Include="Repository\EmpresaRepository.cs" />
+    <Compile Include="Repository\FacturaRepository.cs" />
+    <Compile Include="Repository\GuiaRemisionExportacionRepository.cs" />
+    <Compile Include="Repository\KardexRepository.cs" />
+    <Compile Include="Repository\MantenimientoRepository.cs" />
+    <Compile Include="Repository\OrdenServicioRepository.cs" />
+    <Compile Include="Repository\OrdenCompraRepository.cs" />
+    <Compile Include="Repository\GuiaRemisionRepository.cs" />
+    <Compile Include="Repository\SeguridadRepository.cs" />
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Util\Constantes.cs" />
+    <Compile Include="Util\Empresa.cs" />
+    <Compile Include="Util\ExcelReport.cs" />
+    <Compile Include="Util\ExcelReportTitulo.cs" />
+    <Compile Include="Util\ListaConstantes.cs" />
+    <Compile Include="Util\Response.cs" />
+    <Compile Include="Util\ResponseGeneral.cs" />
+    <Compile Include="Util\ResponseMessage.cs" />
+    <Compile Include="Util\UserApplication.cs" />
+    <Compile Include="VariableGeneral.cs" />
+    <Compile Include="Views\Configuraciones\ConfiguracionesView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Configuraciones\ConfiguracionesView.Designer.cs">
+      <DependentUpon>ConfiguracionesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DispatchControl\DispatchControlView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\DispatchControl\DispatchControlView.Designer.cs">
+      <DependentUpon>DispatchControlView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DispatchControl\frmBuscarDispatchControlView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\DispatchControl\frmBuscarDispatchControlView.Designer.cs">
+      <DependentUpon>frmBuscarDispatchControlView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employee\RegistroColaboradorView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Employee\RegistroColaboradorView.Designer.cs">
+      <DependentUpon>RegistroColaboradorView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employee\RegistroPersonaView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Employee\RegistroPersonaView.Designer.cs">
+      <DependentUpon>RegistroPersonaView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Invoices\frmTipoCambio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Invoices\frmTipoCambio.Designer.cs">
+      <DependentUpon>frmTipoCambio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Invoices\RegistroFacturasView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Invoices\RegistroFacturasView.Designer.cs">
+      <DependentUpon>RegistroFacturasView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Kardex\BuscarKardexView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Kardex\BuscarKardexView.Designer.cs">
+      <DependentUpon>BuscarKardexView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Kardex\KardexCentral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Kardex\KardexCentral.Designer.cs">
+      <DependentUpon>KardexCentral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Kardex\KardexElectronicoValorizadoView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Kardex\KardexElectronicoValorizadoView.Designer.cs">
+      <DependentUpon>KardexElectronicoValorizadoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Kardex\KardexMovimientoCentral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Kardex\KardexMovimientoCentral.Designer.cs">
+      <DependentUpon>KardexMovimientoCentral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Kardex\KardexValorizadoView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Kardex\KardexValorizadoView.Designer.cs">
+      <DependentUpon>KardexValorizadoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Kardex\RptStockProducto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Kardex\RptStockProducto.Designer.cs">
+      <DependentUpon>RptStockProducto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Kardex\SubKardexCentral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Kardex\SubKardexCentral.Designer.cs">
+      <DependentUpon>SubKardexCentral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Kardex\SubKardexMovimientoCentral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Kardex\SubKardexMovimientoCentral.Designer.cs">
+      <DependentUpon>SubKardexMovimientoCentral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarArticulo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarArticulo.Designer.cs">
+      <DependentUpon>BuscarArticulo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarColorProductoView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarColorProductoView.Designer.cs">
+      <DependentUpon>BuscarColorProductoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarEstilosView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarEstilosView.Designer.cs">
+      <DependentUpon>BuscarEstilosView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarNiveles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarNiveles.Designer.cs">
+      <DependentUpon>BuscarNiveles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarPedidosColorView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarPedidosColorView.Designer.cs">
+      <DependentUpon>BuscarPedidosColorView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarPeronaView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarPeronaView.Designer.cs">
+      <DependentUpon>BuscarPeronaView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarProgramasView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarProgramasView.Designer.cs">
+      <DependentUpon>BuscarProgramasView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistrarAreasAlmacen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistrarAreasAlmacen.Designer.cs">
+      <DependentUpon>RegistrarAreasAlmacen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroCatalogoNubefactView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroCatalogoNubefactView.Designer.cs">
+      <DependentUpon>RegistroCatalogoNubefactView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroColorView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroColorView.Designer.cs">
+      <DependentUpon>RegistroColorView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroCondPagoView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroCondPagoView.Designer.cs">
+      <DependentUpon>RegistroCondPagoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroConstanciaInscripcionesView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroConstanciaInscripcionesView.Designer.cs">
+      <DependentUpon>RegistroConstanciaInscripcionesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroCuentaView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroCuentaView.Designer.cs">
+      <DependentUpon>RegistroCuentaView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroEstilosView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroEstilosView.Designer.cs">
+      <DependentUpon>RegistroEstilosView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroNivelView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroNivelView.Designer.cs">
+      <DependentUpon>RegistroNivelView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroNumeroLicenciaConducirView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroNumeroLicenciaConducirView.Designer.cs">
+      <DependentUpon>RegistroNumeroLicenciaConducirView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroPedidosView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroPedidosView.Designer.cs">
+      <DependentUpon>RegistroPedidosView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroProductoView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroProductoView.Designer.cs">
+      <DependentUpon>RegistroProductoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroProgramasView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroProgramasView.Designer.cs">
+      <DependentUpon>RegistroProgramasView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroProgramaView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroProgramaView.Designer.cs">
+      <DependentUpon>RegistroProgramaView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroProvClientesView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroProvClientesView.Designer.cs">
+      <DependentUpon>RegistroProvClientesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroServicioView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroServicioView.Designer.cs">
+      <DependentUpon>RegistroServicioView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroTallaView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroTallaView.Designer.cs">
+      <DependentUpon>RegistroTallaView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroTipoCambioView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroTipoCambioView.Designer.cs">
+      <DependentUpon>RegistroTipoCambioView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroTipoCpteView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroTipoCpteView.Designer.cs">
+      <DependentUpon>RegistroTipoCpteView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroTipoDocView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroTipoDocView.Designer.cs">
+      <DependentUpon>RegistroTipoDocView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroTipoMonedaView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroTipoMonedaView.Designer.cs">
+      <DependentUpon>RegistroTipoMonedaView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroUnidadMedidaView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroUnidadMedidaView.Designer.cs">
+      <DependentUpon>RegistroUnidadMedidaView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\ReporteProductoView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\ReporteProductoView.Designer.cs">
+      <DependentUpon>ReporteProductoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PurchaseOrder\ReporteOCView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\PurchaseOrder\ReporteOCView.Designer.cs">
+      <DependentUpon>ReporteOCView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReferralGuide\BuscarOCGRView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ReferralGuide\BuscarOCGRView.Designer.cs">
+      <DependentUpon>BuscarOCGRView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReferralGuide\RegistroCierrePeriodoView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ReferralGuide\RegistroCierrePeriodoView.Designer.cs">
+      <DependentUpon>RegistroCierrePeriodoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReferralGuide\RegistroGuiaRemisionExportacionView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ReferralGuide\RegistroGuiaRemisionExportacionView.Designer.cs">
+      <DependentUpon>RegistroGuiaRemisionExportacionView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReferralGuide\ReporteGuiaRemisionOCView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ReferralGuide\ReporteGuiaRemisionOCView.Designer.cs">
+      <DependentUpon>ReporteGuiaRemisionOCView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Requerimiento\E_Producto_Reque.cs" />
+    <Compile Include="Views\Requerimiento\frmListaRequerimiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Requerimiento\frmListaRequerimiento.Designer.cs">
+      <DependentUpon>frmListaRequerimiento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Requerimiento\ListaArticulo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Requerimiento\ListaArticulo.Designer.cs">
+      <DependentUpon>ListaArticulo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Requerimiento\RegistrarOrdenSalida.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Requerimiento\RegistrarOrdenSalida.Designer.cs">
+      <DependentUpon>RegistrarOrdenSalida.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Requerimiento\RegistrarRequerimiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Requerimiento\RegistrarRequerimiento.Designer.cs">
+      <DependentUpon>RegistrarRequerimiento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\BuscarUsuarioOSView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\BuscarUsuarioOSView.Designer.cs">
+      <DependentUpon>BuscarUsuarioOSView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\FirmantesOSView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\FirmantesOSView.Designer.cs">
+      <DependentUpon>FirmantesOSView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\ObservacionesOSView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\ObservacionesOSView.Designer.cs">
+      <DependentUpon>ObservacionesOSView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\RegistroOSEspecialView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\RegistroOSEspecialView.designer.cs">
+      <DependentUpon>RegistroOSEspecialView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\RegistroOSView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\RegistroOSView.Designer.cs">
+      <DependentUpon>RegistroOSView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\ReporteOSView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\ReporteOSView.Designer.cs">
+      <DependentUpon>ReporteOSView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\TipoAnuladoOSView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\TipoAnuladoOSView.Designer.cs">
+      <DependentUpon>TipoAnuladoOSView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\TipoAprobacionOSView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ServiceOrder\TipoAprobacionOSView.Designer.cs">
+      <DependentUpon>TipoAprobacionOSView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\BuscarCuentaView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Shared\BuscarCuentaView.Designer.cs">
+      <DependentUpon>BuscarCuentaView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\BuscarGuiaRemisionView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Shared\BuscarGuiaRemisionView.Designer.cs">
+      <DependentUpon>BuscarGuiaRemisionView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\BuscarProductoView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Shared\BuscarProductoView.Designer.cs">
+      <DependentUpon>BuscarProductoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\BuscarProgramServiceView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Shared\BuscarProgramServiceView.Designer.cs">
+      <DependentUpon>BuscarProgramServiceView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\BuscarProvClienteView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Shared\BuscarProvClienteView.Designer.cs">
+      <DependentUpon>BuscarProvClienteView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PurchaseOrder\BuscarUsuarioView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\PurchaseOrder\BuscarUsuarioView.Designer.cs">
+      <DependentUpon>BuscarUsuarioView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PurchaseOrder\FirmantesOCView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\PurchaseOrder\FirmantesOCView.Designer.cs">
+      <DependentUpon>FirmantesOCView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PurchaseOrder\ObservacionesOCView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\PurchaseOrder\ObservacionesOCView.Designer.cs">
+      <DependentUpon>ObservacionesOCView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PurchaseOrder\RegistroOCView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\PurchaseOrder\RegistroOCView.Designer.cs">
+      <DependentUpon>RegistroOCView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PurchaseOrder\TipoAnuladoView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\PurchaseOrder\TipoAnuladoView.Designer.cs">
+      <DependentUpon>TipoAnuladoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PurchaseOrder\TipoAprobacionView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\PurchaseOrder\TipoAprobacionView.Designer.cs">
+      <DependentUpon>TipoAprobacionView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReferralGuide\RegistroGuiaRemisionView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ReferralGuide\RegistroGuiaRemisionView.Designer.cs">
+      <DependentUpon>RegistroGuiaRemisionView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Security\LoginView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Security\LoginView.Designer.cs">
+      <DependentUpon>LoginView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Security\PrincipalView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Security\PrincipalView.Designer.cs">
+      <DependentUpon>PrincipalView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Security\RegistroAccesoView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Security\RegistroAccesoView.Designer.cs">
+      <DependentUpon>RegistroAccesoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroCeCoView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\RegistroCeCoView.Designer.cs">
+      <DependentUpon>RegistroCeCoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Security\RegistroModuloView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Security\RegistroModuloView.Designer.cs">
+      <DependentUpon>RegistroModuloView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Security\RegistroSubModuloView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Security\RegistroSubModuloView.Designer.cs">
+      <DependentUpon>RegistroSubModuloView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Security\RegistroUsuarioView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Security\RegistroUsuarioView.Designer.cs">
+      <DependentUpon>RegistroUsuarioView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DetalleSalidaIngreso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Shared\DetalleSalidaIngreso.Designer.cs">
+      <DependentUpon>DetalleSalidaIngreso.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Reports\KardexValorizado\Rpt_KardexValorizadoNuevo.resx">
+      <DependentUpon>Rpt_KardexValorizadoNuevo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Kardex\Reporte_KardexValorizado.rdlc" />
+    <EmbeddedResource Include="Reports\Kardex\Rpt_KardexValorizado.resx">
+      <DependentUpon>Rpt_KardexValorizado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraRpte.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraRpteV2.rdlc" />
+    <EmbeddedResource Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraRpteView.resx">
+      <DependentUpon>OrdenCompraRpteView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\PurchaseOrder\OrdenCompra\OrdenCompraRpteViewV2.resx">
+      <DependentUpon>OrdenCompraRpteViewV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\RemittanceGuide\ExportGuide\GuiaRemisionExportacionPrint.rdlc" />
+    <EmbeddedResource Include="Reports\RemittanceGuide\ExportGuide\GuiaRemisionExportacionPrintView.resx">
+      <DependentUpon>GuiaRemisionExportacionPrintView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ServiceOrder\OrdenServicio\OrdenServicioRpte.rdlc" />
+    <EmbeddedResource Include="Reports\ServiceOrder\OrdenServicio\OrdenServicioRpteV2.rdlc" />
+    <EmbeddedResource Include="Reports\ServiceOrder\OrdenServicio\OrdenServicioRpteView.resx">
+      <DependentUpon>OrdenServicioRpteView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ServiceOrder\OrdenServicio\OrdenServicioRpteViewV2.resx">
+      <DependentUpon>OrdenServicioRpteViewV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Configuraciones\ConfiguracionesView.resx">
+      <DependentUpon>ConfiguracionesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\DispatchControl\DispatchControlView.resx">
+      <DependentUpon>DispatchControlView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\DispatchControl\frmBuscarDispatchControlView.resx">
+      <DependentUpon>frmBuscarDispatchControlView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Employee\RegistroColaboradorView.resx">
+      <DependentUpon>RegistroColaboradorView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Employee\RegistroPersonaView.resx">
+      <DependentUpon>RegistroPersonaView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Invoices\frmTipoCambio.resx">
+      <DependentUpon>frmTipoCambio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Invoices\RegistroFacturasView.resx">
+      <DependentUpon>RegistroFacturasView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Kardex\BuscarKardexView.resx">
+      <DependentUpon>BuscarKardexView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Kardex\KardexCentral.resx">
+      <DependentUpon>KardexCentral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Kardex\KardexElectronicoValorizadoView.resx">
+      <DependentUpon>KardexElectronicoValorizadoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Kardex\KardexMovimientoCentral.resx">
+      <DependentUpon>KardexMovimientoCentral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Kardex\KardexValorizadoView.resx">
+      <DependentUpon>KardexValorizadoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Kardex\RptStockProducto.resx">
+      <DependentUpon>RptStockProducto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Kardex\SubKardexCentral.resx">
+      <DependentUpon>SubKardexCentral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Kardex\SubKardexMovimientoCentral.resx">
+      <DependentUpon>SubKardexMovimientoCentral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\BuscarArticulo.resx">
+      <DependentUpon>BuscarArticulo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\BuscarColorProductoView.resx">
+      <DependentUpon>BuscarColorProductoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\BuscarEstilosView.resx">
+      <DependentUpon>BuscarEstilosView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\BuscarNiveles.resx">
+      <DependentUpon>BuscarNiveles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\BuscarPedidosColorView.resx">
+      <DependentUpon>BuscarPedidosColorView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\BuscarPeronaView.resx">
+      <DependentUpon>BuscarPeronaView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\BuscarProgramasView.resx">
+      <DependentUpon>BuscarProgramasView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistrarAreasAlmacen.resx">
+      <DependentUpon>RegistrarAreasAlmacen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroCatalogoNubefactView.resx">
+      <DependentUpon>RegistroCatalogoNubefactView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroCeCoView.resx">
+      <DependentUpon>RegistroCeCoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroColorView.resx">
+      <DependentUpon>RegistroColorView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroCondPagoView.resx">
+      <DependentUpon>RegistroCondPagoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroConstanciaInscripcionesView.resx">
+      <DependentUpon>RegistroConstanciaInscripcionesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroCuentaView.resx">
+      <DependentUpon>RegistroCuentaView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroEstilosView.resx">
+      <DependentUpon>RegistroEstilosView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroNivelView.resx">
+      <DependentUpon>RegistroNivelView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroNumeroLicenciaConducirView.resx">
+      <DependentUpon>RegistroNumeroLicenciaConducirView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroPedidosView.resx">
+      <DependentUpon>RegistroPedidosView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroProductoView.resx">
+      <DependentUpon>RegistroProductoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroProgramasView.resx">
+      <DependentUpon>RegistroProgramasView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroProgramaView.resx">
+      <DependentUpon>RegistroProgramaView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroProvClientesView.resx">
+      <DependentUpon>RegistroProvClientesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroServicioView.resx">
+      <DependentUpon>RegistroServicioView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroTallaView.resx">
+      <DependentUpon>RegistroTallaView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroTipoCambioView.resx">
+      <DependentUpon>RegistroTipoCambioView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroTipoCpteView.resx">
+      <DependentUpon>RegistroTipoCpteView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroTipoDocView.resx">
+      <DependentUpon>RegistroTipoDocView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroTipoMonedaView.resx">
+      <DependentUpon>RegistroTipoMonedaView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\RegistroUnidadMedidaView.resx">
+      <DependentUpon>RegistroUnidadMedidaView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\ReporteProductoView.resx">
+      <DependentUpon>ReporteProductoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\PurchaseOrder\ReporteOCView.resx">
+      <DependentUpon>ReporteOCView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ReferralGuide\BuscarOCGRView.resx">
+      <DependentUpon>BuscarOCGRView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ReferralGuide\RegistroCierrePeriodoView.resx">
+      <DependentUpon>RegistroCierrePeriodoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ReferralGuide\RegistroGuiaRemisionExportacionView.resx">
+      <DependentUpon>RegistroGuiaRemisionExportacionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ReferralGuide\ReporteGuiaRemisionOCView.resx">
+      <DependentUpon>ReporteGuiaRemisionOCView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Requerimiento\frmListaRequerimiento.resx">
+      <DependentUpon>frmListaRequerimiento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Requerimiento\ListaArticulo.resx">
+      <DependentUpon>ListaArticulo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Requerimiento\RegistrarOrdenSalida.resx">
+      <DependentUpon>RegistrarOrdenSalida.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Requerimiento\RegistrarRequerimiento.resx">
+      <DependentUpon>RegistrarRequerimiento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ServiceOrder\BuscarUsuarioOSView.resx">
+      <DependentUpon>BuscarUsuarioOSView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ServiceOrder\FirmantesOSView.resx">
+      <DependentUpon>FirmantesOSView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ServiceOrder\ObservacionesOSView.resx">
+      <DependentUpon>ObservacionesOSView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ServiceOrder\RegistroOSEspecialView.resx">
+      <DependentUpon>RegistroOSEspecialView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ServiceOrder\RegistroOSView.resx">
+      <DependentUpon>RegistroOSView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ServiceOrder\ReporteOSView.resx">
+      <DependentUpon>ReporteOSView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ServiceOrder\TipoAnuladoOSView.resx">
+      <DependentUpon>TipoAnuladoOSView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ServiceOrder\TipoAprobacionOSView.resx">
+      <DependentUpon>TipoAprobacionOSView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\BuscarCuentaView.resx">
+      <DependentUpon>BuscarCuentaView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\BuscarGuiaRemisionView.resx">
+      <DependentUpon>BuscarGuiaRemisionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\BuscarProductoView.resx">
+      <DependentUpon>BuscarProductoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\BuscarProgramServiceView.resx">
+      <DependentUpon>BuscarProgramServiceView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\BuscarProvClienteView.resx">
+      <DependentUpon>BuscarProvClienteView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\PurchaseOrder\BuscarUsuarioView.resx">
+      <DependentUpon>BuscarUsuarioView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\PurchaseOrder\FirmantesOCView.resx">
+      <DependentUpon>FirmantesOCView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\PurchaseOrder\ObservacionesOCView.resx">
+      <DependentUpon>ObservacionesOCView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\PurchaseOrder\RegistroOCView.resx">
+      <DependentUpon>RegistroOCView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\PurchaseOrder\TipoAnuladoView.resx">
+      <DependentUpon>TipoAnuladoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\PurchaseOrder\TipoAprobacionView.resx">
+      <DependentUpon>TipoAprobacionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ReferralGuide\RegistroGuiaRemisionView.resx">
+      <DependentUpon>RegistroGuiaRemisionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Security\LoginView.resx">
+      <DependentUpon>LoginView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Security\PrincipalView.resx">
+      <DependentUpon>PrincipalView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Security\RegistroAccesoView.resx">
+      <DependentUpon>RegistroAccesoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Security\RegistroModuloView.resx">
+      <DependentUpon>RegistroModuloView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Security\RegistroSubModuloView.resx">
+      <DependentUpon>RegistroSubModuloView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Security\RegistroUsuarioView.resx">
+      <DependentUpon>RegistroUsuarioView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\DetalleSalidaIngreso.resx">
+      <DependentUpon>DetalleSalidaIngreso.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\DataSources\SoftCotton.Model.Kardex.KardexElectronico.datasource" />
+    <None Include="Properties\DataSources\SoftCotton.Model.Kardex.KardexValorizado.datasource" />
+    <None Include="Properties\DataSources\SoftCotton.Reports.PurchaseOrder.OrdenCompra.OrdenCompraModel.datasource" />
+    <None Include="Properties\DataSources\SoftCotton.Reports.ServiceOrder.OrdenServicio.OrdenServicioModel.datasource" />
+    <None Include="Properties\DataSources\SoftCotton.Reports.ServiceOrder.OrdenServicio.OrdenServicioRpteCabModel.datasource" />
+    <None Include="Properties\DataSources\SoftCotton.Reports.ServiceOrder.OrdenServicio.OrdenServicioRpteDetModel.datasource" />
+    <None Include="Properties\DataSources\SoftCotton.Reports.ServiceOrder.OrdenServicio.OrdenServicioRpteFirmasModel.datasource" />
+    <None Include="Properties\DataSources\SoftCotton.Reports.ServiceOrder.OrdenServicio.OrdenServicioRpteObsModel.datasource" />
+    <None Include="Properties\DataSources\SoftCotton.Reports.ServiceOrder.OrdenServicio.OrdenServicioRpteView.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\KardexValorizado\Reporte_KardexValorizadoNuevo.rdlc" />
+    <None Include="Resources\btn_Buscar_140x50.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\btn_excel_140x50.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\btn_impri_140x50.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\btn_impri_140x50_txt.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\btn_aceptar_informa.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\btn_guardar_140x50.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\btn_cancelar_informa.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\btn_cancelar_140x50.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\btn_nuevo_140x50.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\btn_cancelar_140x501.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\btn_nuevo_90x50 .png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\btn_procesar_90x50 .png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\btn_grabarr_90x50 .png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\btn_anularr_90x50 .png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\btn_cancelarr_90x50 .png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\btn_agregar_90x50 .png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\agregar_btn.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Resources\icono-oc-default.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\icono.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\login - logistico.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\migracion.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\bg-aplicacion.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\icon-buscar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\icon-checked.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\icon-eliminar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\icon-excel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\icon-guardar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\icon-imagen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\icon-nuevo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\icon-refrescar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\icono-oc.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\icon-print.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Resources\logo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
