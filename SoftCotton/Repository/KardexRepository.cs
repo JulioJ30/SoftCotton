@@ -132,11 +132,11 @@ namespace SoftCotton.Repository
 
 
 
-        public List<KardexValorizado> uspGetMovimientoKardex(string codNivel, string codCuenta, string codGrupo, string codTalla, string codColor, string fechaIni, string fechafin)
+        public List<KardexValorizadoPrincipal> uspGetMovimientoKardex(string codNivel, string codCuenta, string codGrupo, string codTalla, string codColor, string fechaIni, string fechafin)
         {
-            List<KardexValorizado> listv2 = new List<KardexValorizado>();
-            List<KardexValorizado> list = new List<KardexValorizado>();
-            KardexValorizado det = new KardexValorizado();
+            List<KardexValorizadoPrincipal> listv2 = new List<KardexValorizadoPrincipal>();
+            List<KardexValorizadoPrincipal> list = new List<KardexValorizadoPrincipal>();
+            KardexValorizadoPrincipal det = new KardexValorizadoPrincipal();
 
             using (var sqlConnection = ConnectionBD.GetConnection())
             {
@@ -163,7 +163,7 @@ namespace SoftCotton.Repository
                     {
                         while (reader.Read())
                         {
-                            det = new KardexValorizado();
+                            det = new KardexValorizadoPrincipal();
 
                             det.orden = Convert.ToInt32(reader["orden"].ToString());
                             det.tipo = Convert.ToString(reader["tipo"].ToString());

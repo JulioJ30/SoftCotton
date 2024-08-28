@@ -18,7 +18,7 @@ namespace SoftCotton.Views.Kardex
     {
         KardexBL _kardexBL;
         MantenimientoBL _mantenimientoBL;
-        List<KardexValorizado> listaval;
+        List<KardexValorizadoPrincipal> listaval;
 
         public BuscarKardexView()
         {
@@ -168,7 +168,7 @@ namespace SoftCotton.Views.Kardex
                         //arrayTitulo[33] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
                         //arrayTitulo[34] = new ExcelReportTitulo() { titulo = "TOTAL", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
                         
-                        ExcelReport.GetExcelReportKardex<KardexValorizado>(sfd.FileName, arrayTitulo, listaval);
+                        ExcelReport.GetExcelReportKardex<KardexValorizadoPrincipal>(sfd.FileName, arrayTitulo, listaval);
 
                         ResponseMessage.Message("Reporte Exportado", "INFORMATION");
                     };

@@ -260,8 +260,8 @@ namespace SoftCotton.Repository
                     sqlCommand.Parameters.Add("@secuencia", SqlDbType.Int).Value = parametros.secuencia;
 
                     sqlCommand.Parameters.Add("@grIdEmpresa", SqlDbType.Int).Value = parametros.grIdEmpresa;
-                    sqlCommand.Parameters.Add("@grSerie", SqlDbType.VarChar, 4).Value = parametros.grSerie;
-                    sqlCommand.Parameters.Add("@grNumero", SqlDbType.VarChar, 6).Value = parametros.grNumero;
+                    sqlCommand.Parameters.Add("@grSerie", SqlDbType.VarChar, 50).Value = parametros.grSerie;
+                    sqlCommand.Parameters.Add("@grNumero", SqlDbType.VarChar, 50).Value = parametros.grNumero;
                     sqlCommand.Parameters.Add("@grSecuencia", SqlDbType.Int).Value = parametros.grSecuencia;
 
                     sqlCommand.Parameters.Add("@codigo", SqlDbType.VarChar, 20).Value = parametros.codigo;

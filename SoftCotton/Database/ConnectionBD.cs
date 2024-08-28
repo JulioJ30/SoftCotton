@@ -31,11 +31,16 @@ namespace SoftCotton.Database
                 {
                     CadenaConexion = ConfigurationManager.ConnectionStrings["cnxsql"].ToString() + " Password=$usoftcotton.22;";
                 }
-                else
+                if(ambiente == "D")
                 {
                     CadenaConexion = ConfigurationManager.ConnectionStrings["cnxsql"].ToString();
                 }
-                 
+
+                if (ambiente == "NUBEP")
+                {
+                    CadenaConexion = ConfigurationManager.ConnectionStrings["cnxsqlproduccion"].ToString();
+                }
+
                 return new SqlConnection(CadenaConexion);
             }
             catch (Exception)

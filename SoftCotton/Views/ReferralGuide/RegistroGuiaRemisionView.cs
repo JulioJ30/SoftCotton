@@ -132,6 +132,9 @@ namespace SoftCotton.Views.ReferralGuide
             dgvGRDetalle.Rows[e.RowIndex].Cells["dgvTxtIdDet"].Value = txtCodigoOrdenDefault.Text;
         }
 
+
+
+
         private void dgvGRDetalle_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             double output;
@@ -359,11 +362,16 @@ namespace SoftCotton.Views.ReferralGuide
             var fechaEmision = dtpFechaEmision.Value.ToString();
             var responseGeneral = _referralGuideBL.SetValidarPeriodo(fechaEmision);
 
+
+
             if (responseGeneral.idResponse == 1)
             {
                 ResponseMessage.Message(responseGeneral.messageResponse, responseGeneral.typeMessage);
                 return;
             }
+
+            // VALIDAR STOCK
+
 
             if (ValidarDatosCabecera() && ValidarDatosDetalle())
             {
@@ -911,6 +919,38 @@ namespace SoftCotton.Views.ReferralGuide
                                 seguirValidando = false;
                                 ResponseMessage.Message("Seleccione el tipo de movimiento", "WARNING");
                             }
+                        }
+
+                        // 6. Stock
+                        if (respuesta)
+                        {
+
+                            if (row.Cells["dgvDecCantidadSaldo"].Value != null)
+                            {
+
+                                string valor = row.Cells["dgvDecCantidadSaldo"].Value.ToString().Trim();
+                                float valorFloat =  Convert.ToSingle(valor);
+
+                                if (valorFloat < 0)
+                                {
+                                    respuesta = false;
+                                    seguirValidando = false;
+                                    ResponseMessage.Message("No hay Stock Disponible", "WARNING");
+                                }
+                                else
+                                {
+                                    respuesta = true;
+                                }
+
+                            }
+                            else
+                            {
+                                respuesta = false;
+                                seguirValidando = false;
+                                ResponseMessage.Message("No hay Stock", "WARNING");
+                            }
+
+                            
                         }
                     }
                 }

@@ -31,7 +31,7 @@ namespace SoftCotton.BusinessLogic
             return _kardexRepository.uspGetMovimientoKardexValorizado(codNivel, codCuenta, codGrupo, codTalla, codColor, periodo);
         }
 
-        public List<KardexValorizado> uspGetMovimientoKardex(string codNivel, string codCuenta, string codGrupo, string codTalla, string codColor,string fechaIni, string fechafin)
+        public List<KardexValorizadoPrincipal> uspGetMovimientoKardex(string codNivel, string codCuenta, string codGrupo, string codTalla, string codColor,string fechaIni, string fechafin)
         {
             return _kardexRepository.uspGetMovimientoKardex(codNivel, codCuenta, codGrupo, codTalla, codColor,fechaIni,fechafin);
         }
