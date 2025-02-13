@@ -1025,7 +1025,7 @@ namespace SoftCotton.Views.ReferralGuide
         private void dgvGRDetalle_KeyDown(object sender, KeyEventArgs e)
         {
             int n;
-            string vTipoOrdenID = "";
+            string vTipoOrdenID = "";// PRUEBA
 
             if (e.Control && e.KeyCode == Keys.B)
             {
