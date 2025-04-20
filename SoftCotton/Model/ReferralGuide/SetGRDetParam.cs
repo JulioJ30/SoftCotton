@@ -24,6 +24,8 @@ namespace SoftCotton.Model.ReferralGuide
 
         public string numeroPartida { get; set; }
         public string tipoOrden { get; set; }
+        public string OP { get; set; }
+
 
 
         public SetGRDetParam()
@@ -42,6 +44,7 @@ namespace SoftCotton.Model.ReferralGuide
             numeroPartida = "";
             codCuenta = "";
             tipoOrden = "";
+            OP = "";
         }
     }
 }

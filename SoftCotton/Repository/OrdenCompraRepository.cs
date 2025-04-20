@@ -637,6 +637,8 @@ namespace SoftCotton.Repository
                             oc.obs3 = reader["obs3"].ToString();
                             oc.obs4 = reader["obs4"].ToString();
                             oc.obs5 = reader["obs5"].ToString();
+                            oc.programa = reader["programa"].ToString();
+
 
                             ocs.Add(oc);
                         }

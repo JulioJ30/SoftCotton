@@ -1,4 +1,5 @@
 ﻿
+using Org.BouncyCastle.Math.EC.Multiplier;
 using SoftCotton.Database;
 using SoftCotton.Model.Kardex;
 using SoftCotton.Model.Maintenance;
@@ -194,6 +195,8 @@ namespace SoftCotton.Repository
                             det.SaldocantidadSolesS = Convert.ToDecimal(reader["saldoCantidad"].ToString());
                             det.SaldoPUCalcSolesS = Convert.ToDecimal(reader["SaldoPuSoles"].ToString());
                             det.SaldoTotalSolesS = Convert.ToDecimal(reader["SaldoValorSoles"].ToString());
+                            det.Secuencia = Convert.ToInt32(reader["Secuencia"].ToString());
+
 
 
                             list.Add(det);
@@ -514,7 +517,44 @@ namespace SoftCotton.Repository
             return respuesta;
         }
 
-     
+
+        public string setCambioPrecio(string Tipo, int IdEmpresa, string Serie, int Numero, int Secuencia, float Precio)
+        {
+            string respuesta = "";
+            try
+            {
+                using (var sqlConnection = ConnectionBD.GetConnection())
+                {
+                    using (var sqlCommand = sqlConnection.CreateCommand())
+                    {
+                        sqlCommand.CommandText = @"uspSetEditarPrecio";
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                        sqlCommand.Parameters.Add("@Tipo", SqlDbType.VarChar).Value = Tipo;
+                        sqlCommand.Parameters.Add("@IdEmpresa", SqlDbType.Int).Value = IdEmpresa;
+                        sqlCommand.Parameters.Add("@Serie", SqlDbType.VarChar).Value = Serie;
+                        sqlCommand.Parameters.Add("@Numero", SqlDbType.Int).Value = Numero;
+                        sqlCommand.Parameters.Add("@Secuencia", SqlDbType.Int).Value = Secuencia;
+                        sqlCommand.Parameters.Add("@Precio", SqlDbType.Float).Value = Precio;
+
+                        sqlCommand.CommandTimeout = 1000;
+                        sqlConnection.Open();
+
+                        sqlCommand.ExecuteNonQuery();
+
+                        
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta = "";
+            }
+            return respuesta;
+        }
+
+
         public string RegistrarReq_Deta(double idRequerimiento, string ProductoID, double cantidad, double stock_actual, double cantidad_atendida)
         {
             string respuesta = "";

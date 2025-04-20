@@ -64,6 +64,7 @@ namespace SoftCotton.Repository
                         grDet.codUM = reader["codUM"].ToString();
                         grDet.codUmDam = reader["codUmDam"].ToString();
                         grDet.descripcionUM = reader["descripcionUM"].ToString();
+                        grDet.OP = reader["Op"].ToString();
                         grDets.Add(grDet);
                     }
                 }
@@ -264,6 +265,8 @@ namespace SoftCotton.Repository
                 sqlCommand.Parameters.Add("@descripcion", SqlDbType.VarChar, 500).Value = parametros.descripcion;
                 sqlCommand.Parameters.Add("@codUM", SqlDbType.Char, 3).Value = parametros.codUM;
                 sqlCommand.Parameters.Add("@codigoproducto", SqlDbType.VarChar, 50).Value = parametros.codProducto;
+                sqlCommand.Parameters.Add("@OP", SqlDbType.VarChar, 1000).Value = parametros.OP;
+
                 sqlConnection.Open();
                 SqlDataReader reader = sqlCommand.ExecuteReader();
                 if (reader.HasRows && reader.Read())

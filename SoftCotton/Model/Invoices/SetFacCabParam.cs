@@ -27,6 +27,8 @@ namespace SoftCotton.Model.Invoices
         public string serieNotaCredito { get; set; }
         public string numeroNotaCredito { get; set; }
         public string observacionNotaCredito { get; set; }
+        public string OP { get; set; }
+
 
 
 

@@ -73,6 +73,8 @@ namespace SoftCotton.Views.PurchaseOrder
                 dgvListado.Rows[index].Cells["dgvigv"].Value = item.igv;
                 dgvListado.Rows[index].Cells["dgvprecioUnitario"].Value = item.precioUnitario;
                 dgvListado.Rows[index].Cells["dgvtotal"].Value = item.total;
+                dgvListado.Rows[index].Cells["programa"].Value = item.programa;
+
             }
 
             dgvListado.AutoResizeColumns();
@@ -93,7 +95,7 @@ namespace SoftCotton.Views.PurchaseOrder
                 {
                     if (!string.IsNullOrEmpty(sfd.FileName))
                     {
-                        ExcelReportTitulo[] arrayTitulo = new ExcelReportTitulo[30];
+                        ExcelReportTitulo[] arrayTitulo = new ExcelReportTitulo[31];
 
                         arrayTitulo[0] = new ExcelReportTitulo() { titulo = "ID Empresa", backgroundColor = XLColor.LightBlue, foreColor = XLColor.Black };
                         arrayTitulo[1] = new ExcelReportTitulo() { titulo = "OC", backgroundColor = XLColor.LightBlue, foreColor = XLColor.Black };
@@ -126,7 +128,9 @@ namespace SoftCotton.Views.PurchaseOrder
                         arrayTitulo[27] = new ExcelReportTitulo() { titulo = "IGV", backgroundColor = XLColor.LightGreen, foreColor = XLColor.Black };
                         arrayTitulo[28] = new ExcelReportTitulo() { titulo = "Precio Unitario", backgroundColor = XLColor.LightGreen, foreColor = XLColor.Black };
                         arrayTitulo[29] = new ExcelReportTitulo() { titulo = "Total", backgroundColor = XLColor.LightGreen, foreColor = XLColor.Black };
-                        
+                        arrayTitulo[30] = new ExcelReportTitulo() { titulo = "Programa", backgroundColor = XLColor.LightGreen, foreColor = XLColor.Black };
+
+
                         ExcelReport.GetExcelReport<GetOC19_Reporte>(sfd.FileName, arrayTitulo, lista);
 
                         ResponseMessage.Message("Reporte Exportado", "INFORMATION");

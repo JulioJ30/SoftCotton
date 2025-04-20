@@ -127,6 +127,7 @@ namespace SoftCotton.Views.Invoices
 
                     txtAnio.Text = factCab.anio.ToString();
                     txtMes.Text = factCab.mes.ToString();
+                    txtOp.Text = factCab.OP.ToString();
                     //txtContabilizado.Text = factCab.contabilizado;
 
 
@@ -211,6 +212,8 @@ namespace SoftCotton.Views.Invoices
                 _facCabParam.tipoCambio = Convert.ToDecimal(cbTipoCambio.SelectedValue.ToString());
                 _facCabParam.mes = Convert.ToInt32(txtMes.Text.Trim());
                 _facCabParam.anio = Convert.ToInt32(txtAnio.Text.Trim());
+                _facCabParam.OP = txtOp.Text.Trim();
+
                 //_facCabParam.contabilizado = txtContabilizado.Text.Trim();
 
 
@@ -674,63 +677,118 @@ namespace SoftCotton.Views.Invoices
 
                         ocView.ShowDialog();
 
-                        if (ocView.Serie == "")
+                        bool primeraFila = true;
+
+                        foreach (var item in ocView.listaDetalleDevolver)
                         {
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRSerie"].Value = "";
+                            DataGridViewRow newRow;
 
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtSerie"].Value = txtSerie.Text.Trim();
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtNumero"].Value = txtNumero.Text.Trim();
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtRUC"].Value = lblRUC.Text.Trim();
+                            if (primeraFila)
+                            {
+                                newRow = dgvListadoDetalle.CurrentRow;
+                                primeraFila = false;
+                            }
+                            else
+                            {
+                                int index = dgvListadoDetalle.Rows.Add();
+                                newRow = dgvListadoDetalle.Rows[index];
+                            }
 
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRIdEmpresa"].Value = 0;
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRSerie"].Value = "";
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRSerie"].Value = "";
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRSecuencia"].Value = "";
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRTipoOrden"].Value = "";
+                            newRow.Cells["dgvTxtSerie"].Value = txtSerie.Text.Trim();
+                            newRow.Cells["dgvTxtNumero"].Value = txtNumero.Text.Trim();
+                            newRow.Cells["dgvTxtRUC"].Value = lblRUC.Text.Trim();
 
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtCodigo"].Value = "";
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtDescripcion"].Value = 0;
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtCodUM"].Value = 0;
+                            if (string.IsNullOrEmpty(item.serie))
+                            {
+                                newRow.Cells["dgvTxtGRIdEmpresa"].Value = 0;
+                                newRow.Cells["dgvTxtGRSerie"].Value = "";
+                                newRow.Cells["dgvTxtGRSecuencia"].Value = "";
+                                newRow.Cells["dgvTxtGRTipoOrden"].Value = "";
 
-                            dgvListadoDetalle.CurrentRow.Cells["dgvDecCantidad"].Value = 0;
-                            dgvListadoDetalle.CurrentRow.Cells["dgvDecIGV"].Value = constanteIGV.valor;
-                            dgvListadoDetalle.CurrentRow.Cells["dgvDecPrecioUnitario"].Value = 0;
+                                newRow.Cells["dgvTxtCodigo"].Value = "";
+                                newRow.Cells["dgvTxtDescripcion"].Value = "";
+                                newRow.Cells["dgvTxtCodUM"].Value = "";
+                            }
+                            else
+                            {
+                                newRow.Cells["dgvTxtGRIdEmpresa"].Value = item.idEmpresa;
+                                newRow.Cells["dgvTxtGRSerie"].Value = item.serie;
+                                newRow.Cells["dgvTxtGRNumero"].Value = item.numero;
+                                newRow.Cells["dgvTxtGRSecuencia"].Value = item.secuencia;
+                                newRow.Cells["dgvTxtGRTipoOrden"].Value = item.tipo;
 
-                            dgvListadoDetalle.CurrentCell = dgvListadoDetalle.CurrentRow.Cells["dgvTxtCodigo"];
+                                newRow.Cells["dgvTxtCodigo"].Value = item.codProducto;
+                                newRow.Cells["dgvTxtDescripcion"].Value = item.producto;
+                                newRow.Cells["dgvTxtCodUM"].Value = item.codUM;
+                            }
 
-                            PintarDataGridDetalle(dgvListadoDetalle.CurrentRow.Index, false);
+                            newRow.Cells["dgvDecCantidad"].Value = 0;
+                            newRow.Cells["dgvDecIGV"].Value = constanteIGV.valor;
+                            newRow.Cells["dgvDecPrecioUnitario"].Value = 0;
 
-                        }
-                        else
-                        {
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtSerie"].Value = txtSerie.Text.Trim();
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtNumero"].Value = txtNumero.Text.Trim();
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtRUC"].Value = lblRUC.Text.Trim();
-
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRIdEmpresa"].Value = ocView.IdEmpresa;
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRSerie"].Value = ocView.Serie;
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRNumero"].Value = ocView.Numero;
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRSecuencia"].Value = ocView.Secuencia;
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRTipoOrden"].Value = ocView.Tipo;
-
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtCodigo"].Value = ocView.CodProducto;
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtDescripcion"].Value = ocView.Producto;
-                            dgvListadoDetalle.CurrentRow.Cells["dgvTxtCodUM"].Value = ocView.CodUM;
-
-                            dgvListadoDetalle.CurrentRow.Cells["dgvDecCantidad"].Value = 0;
-                            dgvListadoDetalle.CurrentRow.Cells["dgvDecIGV"].Value = constanteIGV.valor;
-                            dgvListadoDetalle.CurrentRow.Cells["dgvDecPrecioUnitario"].Value = 0;
-
-                            PintarDataGridDetalle(dgvListadoDetalle.CurrentRow.Index, false);
-
-                            dgvListadoDetalle.CurrentCell = dgvListadoDetalle.CurrentRow.Cells["dgvTxtCodUM"];
-
-                            dgvListadoDetalle.AutoResizeColumns();
-                            dgvListadoDetalle.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-
+                            PintarDataGridDetalle(newRow.Index, false);
                         }
 
                         CalcularMontosFinales();
+
+
+                        //if (ocView.Serie == "")
+                        //{
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRSerie"].Value = "";
+
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtSerie"].Value = txtSerie.Text.Trim();
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtNumero"].Value = txtNumero.Text.Trim();
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtRUC"].Value = lblRUC.Text.Trim();
+
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRIdEmpresa"].Value = 0;
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRSerie"].Value = "";
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRSerie"].Value = "";
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRSecuencia"].Value = "";
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRTipoOrden"].Value = "";
+
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtCodigo"].Value = "";
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtDescripcion"].Value = 0;
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtCodUM"].Value = 0;
+
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvDecCantidad"].Value = 0;
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvDecIGV"].Value = constanteIGV.valor;
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvDecPrecioUnitario"].Value = 0;
+
+                        //    dgvListadoDetalle.CurrentCell = dgvListadoDetalle.CurrentRow.Cells["dgvTxtCodigo"];
+
+                        //    PintarDataGridDetalle(dgvListadoDetalle.CurrentRow.Index, false);
+
+                        //}
+                        //else
+                        //{
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtSerie"].Value = txtSerie.Text.Trim();
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtNumero"].Value = txtNumero.Text.Trim();
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtRUC"].Value = lblRUC.Text.Trim();
+
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRIdEmpresa"].Value = ocView.IdEmpresa;
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRSerie"].Value = ocView.Serie;
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRNumero"].Value = ocView.Numero;
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRSecuencia"].Value = ocView.Secuencia;
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtGRTipoOrden"].Value = ocView.Tipo;
+
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtCodigo"].Value = ocView.CodProducto;
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtDescripcion"].Value = ocView.Producto;
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvTxtCodUM"].Value = ocView.CodUM;
+
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvDecCantidad"].Value = 0;
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvDecIGV"].Value = constanteIGV.valor;
+                        //    dgvListadoDetalle.CurrentRow.Cells["dgvDecPrecioUnitario"].Value = 0;
+
+                        //    PintarDataGridDetalle(dgvListadoDetalle.CurrentRow.Index, false);
+
+                        //    dgvListadoDetalle.CurrentCell = dgvListadoDetalle.CurrentRow.Cells["dgvTxtCodUM"];
+
+                        //    dgvListadoDetalle.AutoResizeColumns();
+                        //    dgvListadoDetalle.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+                        //}
+
+                        //CalcularMontosFinales();
                     }
                 }
                 else
@@ -1080,13 +1138,7 @@ namespace SoftCotton.Views.Invoices
                 {
                     col.ReadOnly = false;
                 }
-                //dgvListadoDetalle.Columns["cantidadNotaCredito"].Visible = false;
-
-                //if (dgvListadoDetalle.Columns.Count >0 )
-                //{
-                //    dgvListadoDetalle.Columns["cantidadNotaCredito"].Visible = false;
-
-                //}
+               
 
 
                 lblNotaCredito.Visible = false;

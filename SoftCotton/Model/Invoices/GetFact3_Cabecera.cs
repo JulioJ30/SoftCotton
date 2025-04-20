@@ -22,6 +22,7 @@ namespace SoftCotton.Model.Invoices
         public string contabilizado { get; set; }
 
         public string numeroNotaCredito { get; set; }
+        public string OP { get; set; }
 
         public string serieNotaCredito { get; set; }
         public string codTipoCpte { get; set; }

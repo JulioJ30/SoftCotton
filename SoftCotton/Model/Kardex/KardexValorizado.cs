@@ -94,6 +94,8 @@ namespace SoftCotton.Model.Kardex
         public decimal SaldocantidadSolesS { get; set; }
         public decimal SaldoPUCalcSolesS { get; set; }
         public decimal SaldoTotalSolesS { get; set; }
+        public int Secuencia { get; set; }
+
 
 
 

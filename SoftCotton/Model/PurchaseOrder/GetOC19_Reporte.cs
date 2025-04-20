@@ -39,7 +39,8 @@ namespace SoftCotton.Model.PurchaseOrder
         public decimal igv { get; set; }
         public decimal precioUnitario { get; set; }
         public decimal total { get; set; }
+        public string programa { get; set; }
 
-        
+
     }
 }

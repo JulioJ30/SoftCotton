@@ -19,6 +19,8 @@ namespace SoftCotton.Model.ReferralGuide
         public string descripcion { get; set; }
         public decimal cantidadIngresada { get; set; }
         public string codUM { get; set; }
+        public string OP { get; set; }
+
 
 
         public SetGRDetExportacionParam()
@@ -33,7 +35,7 @@ namespace SoftCotton.Model.ReferralGuide
             codProducto = "";
             descripcion = "";
             codUM = "";
-
+            OP = "";
 
         }
     }

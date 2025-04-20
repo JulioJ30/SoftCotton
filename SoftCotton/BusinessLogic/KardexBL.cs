@@ -67,6 +67,13 @@ namespace SoftCotton.BusinessLogic
         {
             return _kardexRepository.GetKardexArticulos(filtro, almacen);
         }
+
+        public string CambiarPrecio(string Tipo,int IdEmpresa,string Serie,int Numero, int Secuencia, float Precio)
+        {
+            string resultado = _kardexRepository.setCambioPrecio(Tipo,  IdEmpresa,Serie,Numero,Secuencia,Precio);
+            return resultado;
+        }
+
         public string RegistrarReq_Cabe(double idRequerimiento, string AlmacenDespacho, string AlmacenRequiere,
             int estado, string observacion, int usuarioRegistro)
         {

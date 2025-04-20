@@ -211,6 +211,8 @@ namespace SoftCotton.Views.ReferralGuide
                     _grDetParam.descripcion = row.Cells["dgvTxtProducto"].Value.ToString();
                     _grDetParam.cantidadIngresada = Convert.ToDecimal(row.Cells["dgvDecCantidad"].Value);
                     _grDetParam.codUM = row.Cells["dgvTxtUnidadMedida"].Value.ToString();
+                    _grDetParam.OP = row.Cells["OP"].Value.ToString();
+
 
                     respuestaDetalle = _referralGuideBL.SetGRDetalleExportacion(_grDetParam);
 
@@ -602,6 +604,8 @@ namespace SoftCotton.Views.ReferralGuide
                 dgvGRDetalle.Rows[index].Cells["dgvDecCantidad"].Value = item.cantidadIngresada;
                 dgvGRDetalle.Rows[index].Cells["dgvTxtUnidadMedida"].Value = item.codUM;
                 dgvGRDetalle.Rows[index].Cells["Secuencia"].Value = item.secuencia;
+                dgvGRDetalle.Rows[index].Cells["OP"].Value = item.OP;
+
                 total_cantidad = total_cantidad + item.cantidadIngresada;
             }
             lblCantidadTotal.Text = total_cantidad.ToString();
@@ -1380,11 +1384,15 @@ namespace SoftCotton.Views.ReferralGuide
                     string celdaDescripcion = "B" + x.ToString();
                     string celdaCantidad = "G" + x.ToString();
                     string celdaUnidadMedida = "H" + x.ToString();
+                    string celdaOp              = "I" + x.ToString();
 
-                    excel.Range cellCodigo = xlWorksheet.Range[celdaCodigo];
-                    excel.Range cellDescripcion = xlWorksheet.Range[celdaDescripcion];
-                    excel.Range cellCantidad = xlWorksheet.Range[celdaCantidad];
-                    excel.Range cellUnidadMedida = xlWorksheet.Range[celdaUnidadMedida];
+
+                    excel.Range cellCodigo          = xlWorksheet.Range[celdaCodigo];
+                    excel.Range cellDescripcion     = xlWorksheet.Range[celdaDescripcion];
+                    excel.Range cellCantidad        = xlWorksheet.Range[celdaCantidad];
+                    excel.Range cellUnidadMedida    = xlWorksheet.Range[celdaUnidadMedida];
+                    excel.Range cellOp              = xlWorksheet.Range[celdaOp];
+
 
                     if (cellCodigo.Value != null)
                     {
@@ -1393,6 +1401,8 @@ namespace SoftCotton.Views.ReferralGuide
                         item.descripcion = cellDescripcion.Value.ToString().Trim();
                         item.cantidadIngresada = Convert.ToInt32(cellCantidad.Value.ToString().Trim());
                         item.codUM = cellUnidadMedida.Value.ToString().Trim();
+                        item.OP = cellOp.Value.ToString().Trim();
+
 
 
                         if (Empresa.Validar_stock_exportacion)
@@ -1420,6 +1430,7 @@ namespace SoftCotton.Views.ReferralGuide
                     dgvGRDetalle.Rows[index].Cells["dgvTxtProducto"].Value = item.descripcion;
                     dgvGRDetalle.Rows[index].Cells["dgvDecCantidad"].Value = item.cantidadIngresada;
                     dgvGRDetalle.Rows[index].Cells["dgvTxtUnidadMedida"].Value = item.codUM;
+                    dgvGRDetalle.Rows[index].Cells["OP"].Value = item.OP;
                     dgvGRDetalle.Rows[index].Cells["Secuencia"].Value = item.secuencia;
                 }
             }

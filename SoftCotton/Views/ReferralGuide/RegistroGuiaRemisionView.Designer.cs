@@ -40,6 +40,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblcuo = new System.Windows.Forms.Label();
             this.btnVer = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.lblFiltro = new System.Windows.Forms.Label();
@@ -137,7 +138,7 @@
             this.dgvDecCantIngresada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvDecPesoIngresado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvIntIdOC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblcuo = new System.Windows.Forms.Label();
+            this.OP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -239,6 +240,16 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "REGISTRO";
+            // 
+            // lblcuo
+            // 
+            this.lblcuo.AutoSize = true;
+            this.lblcuo.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblcuo.Location = new System.Drawing.Point(774, 197);
+            this.lblcuo.Name = "lblcuo";
+            this.lblcuo.Size = new System.Drawing.Size(207, 23);
+            this.lblcuo.TabIndex = 61;
+            this.lblcuo.Text = "Número de movimiento:";
             // 
             // btnVer
             // 
@@ -1060,7 +1071,8 @@
             this.dgvDecCantidadSaldo,
             this.dgvDecCantIngresada,
             this.dgvDecPesoIngresado,
-            this.dgvIntIdOC});
+            this.dgvIntIdOC,
+            this.OP});
             this.dgvGRDetalle.Location = new System.Drawing.Point(4, 3);
             this.dgvGRDetalle.Name = "dgvGRDetalle";
             this.dgvGRDetalle.RowHeadersWidth = 15;
@@ -1282,15 +1294,12 @@
             this.dgvIntIdOC.Name = "dgvIntIdOC";
             this.dgvIntIdOC.Width = 150;
             // 
-            // lblcuo
+            // OP
             // 
-            this.lblcuo.AutoSize = true;
-            this.lblcuo.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblcuo.Location = new System.Drawing.Point(774, 197);
-            this.lblcuo.Name = "lblcuo";
-            this.lblcuo.Size = new System.Drawing.Size(207, 23);
-            this.lblcuo.TabIndex = 61;
-            this.lblcuo.Text = "Número de movimiento:";
+            this.OP.HeaderText = "OP";
+            this.OP.MinimumWidth = 8;
+            this.OP.Name = "OP";
+            this.OP.Width = 150;
             // 
             // RegistroGuiaRemisionView
             // 
@@ -1411,6 +1420,7 @@
         private System.Windows.Forms.Button btnVer;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label lblFiltro;
+        private System.Windows.Forms.Label lblcuo;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvTxtItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvTxtSecuenciaBD;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvTxtIdDet;
@@ -1436,6 +1446,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvDecCantIngresada;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvDecPesoIngresado;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvIntIdOC;
-        private System.Windows.Forms.Label lblcuo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OP;
     }
 }

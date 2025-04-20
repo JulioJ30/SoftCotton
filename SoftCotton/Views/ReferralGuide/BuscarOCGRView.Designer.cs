@@ -30,7 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BuscarOCGRView));
             this.dgvOrdenCompra = new System.Windows.Forms.DataGridView();
+            this.btnNuevo = new System.Windows.Forms.Button();
             this.dgvIntIdEmpresa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cbxSeleccionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dgvTxtTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvTxtTipoId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvIntId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,7 +54,7 @@
             this.dgvTxtCodUM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvDecPrecioUnitario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvDecTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnNuevo = new System.Windows.Forms.Button();
+            this.btnAgregar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrdenCompra)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,6 +68,7 @@
             this.dgvOrdenCompra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOrdenCompra.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvIntIdEmpresa,
+            this.cbxSeleccionar,
             this.dgvTxtTipo,
             this.dgvTxtTipoId,
             this.dgvIntId,
@@ -97,7 +100,21 @@
             this.dgvOrdenCompra.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvOrdenCompra.Size = new System.Drawing.Size(972, 407);
             this.dgvOrdenCompra.TabIndex = 5;
+            this.dgvOrdenCompra.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrdenCompra_CellClick);
             this.dgvOrdenCompra.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvOrdenCompra_KeyDown);
+            // 
+            // btnNuevo
+            // 
+            this.btnNuevo.Image = global::SoftCotton.Properties.Resources.icon_nuevo;
+            this.btnNuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNuevo.Location = new System.Drawing.Point(7, 7);
+            this.btnNuevo.Name = "btnNuevo";
+            this.btnNuevo.Padding = new System.Windows.Forms.Padding(4);
+            this.btnNuevo.Size = new System.Drawing.Size(145, 30);
+            this.btnNuevo.TabIndex = 60;
+            this.btnNuevo.Text = "Seleccionar Todos";
+            this.btnNuevo.UseVisualStyleBackColor = true;
+            this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
             // 
             // dgvIntIdEmpresa
             // 
@@ -107,6 +124,14 @@
             this.dgvIntIdEmpresa.ReadOnly = true;
             this.dgvIntIdEmpresa.Visible = false;
             this.dgvIntIdEmpresa.Width = 80;
+            // 
+            // cbxSeleccionar
+            // 
+            this.cbxSeleccionar.HeaderText = "X";
+            this.cbxSeleccionar.MinimumWidth = 8;
+            this.cbxSeleccionar.Name = "cbxSeleccionar";
+            this.cbxSeleccionar.ReadOnly = true;
+            this.cbxSeleccionar.Width = 50;
             // 
             // dgvTxtTipo
             // 
@@ -208,6 +233,7 @@
             this.dgvTxtProducto.MinimumWidth = 6;
             this.dgvTxtProducto.Name = "dgvTxtProducto";
             this.dgvTxtProducto.ReadOnly = true;
+            this.dgvTxtProducto.Width = 150;
             // 
             // dgvCodCuenta
             // 
@@ -236,14 +262,18 @@
             // dgvDecCantidadEntrada
             // 
             this.dgvDecCantidadEntrada.HeaderText = "Entrada";
+            this.dgvDecCantidadEntrada.MinimumWidth = 8;
             this.dgvDecCantidadEntrada.Name = "dgvDecCantidadEntrada";
             this.dgvDecCantidadEntrada.ReadOnly = true;
+            this.dgvDecCantidadEntrada.Width = 150;
             // 
             // dgvDecCantidadSalida
             // 
             this.dgvDecCantidadSalida.HeaderText = "Salida";
+            this.dgvDecCantidadSalida.MinimumWidth = 8;
             this.dgvDecCantidadSalida.Name = "dgvDecCantidadSalida";
             this.dgvDecCantidadSalida.ReadOnly = true;
+            this.dgvDecCantidadSalida.Width = 150;
             // 
             // dgvIntCantidadSaldo
             // 
@@ -277,24 +307,26 @@
             this.dgvDecTotal.ReadOnly = true;
             this.dgvDecTotal.Width = 60;
             // 
-            // btnNuevo
+            // btnAgregar
             // 
-            this.btnNuevo.Image = global::SoftCotton.Properties.Resources.icon_nuevo;
-            this.btnNuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNuevo.Location = new System.Drawing.Point(7, 7);
-            this.btnNuevo.Name = "btnNuevo";
-            this.btnNuevo.Padding = new System.Windows.Forms.Padding(4);
-            this.btnNuevo.Size = new System.Drawing.Size(145, 30);
-            this.btnNuevo.TabIndex = 60;
-            this.btnNuevo.Text = "Seleccionar Todos";
-            this.btnNuevo.UseVisualStyleBackColor = true;
+            this.btnAgregar.Image = global::SoftCotton.Properties.Resources.icon_checked;
+            this.btnAgregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAgregar.Location = new System.Drawing.Point(834, 4);
+            this.btnAgregar.Name = "btnAgregar";
+            this.btnAgregar.Padding = new System.Windows.Forms.Padding(4);
+            this.btnAgregar.Size = new System.Drawing.Size(145, 30);
+            this.btnAgregar.TabIndex = 61;
+            this.btnAgregar.Text = "Agregar";
+            this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // BuscarOCGRView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(987, 456);
+            this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.btnNuevo);
             this.Controls.Add(this.dgvOrdenCompra);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -315,7 +347,9 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvOrdenCompra;
+        private System.Windows.Forms.Button btnNuevo;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvIntIdEmpresa;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn cbxSeleccionar;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvTxtTipo;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvTxtTipoId;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvIntId;
@@ -337,6 +371,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvTxtCodUM;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvDecPrecioUnitario;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvDecTotal;
-        private System.Windows.Forms.Button btnNuevo;
+        private System.Windows.Forms.Button btnAgregar;
     }
 }

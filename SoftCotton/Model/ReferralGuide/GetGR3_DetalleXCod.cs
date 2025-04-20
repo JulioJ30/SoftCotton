@@ -25,6 +25,8 @@ namespace SoftCotton.Model.ReferralGuide
         public decimal cantidadOC { get; set; }
         public decimal cantidadOCsaldo { get; set; }
         public string codUM { get; set; }
+        public string OP { get; set; }
+
         public decimal precioUnitario { get; set; }
         public decimal total { get; set; }
         public string tipoMovimiento { get; set; }

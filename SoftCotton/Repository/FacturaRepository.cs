@@ -177,6 +177,7 @@ namespace SoftCotton.Repository
                             cabecera.serieNotaCredito    = reader["serieNotaCredito"].ToString();
                             cabecera.observacionNotaCredito = reader["observacionNotaCredito"].ToString();
                             cabecera.numeroNotaCredito = reader["numeroNotaCredito"].ToString();
+                            cabecera.OP = reader["Op"].ToString();
 
 
 
@@ -220,6 +221,8 @@ namespace SoftCotton.Repository
                     sqlCommand.Parameters.Add("@serieNotaCredito", SqlDbType.VarChar, 4).Value = parametros.serieNotaCredito;
                     sqlCommand.Parameters.Add("@numeroNotaCredito", SqlDbType.Int).Value = parametros.numeroNotaCredito;
                     sqlCommand.Parameters.Add("@observacionNotaCredito", SqlDbType.VarChar, 255).Value = parametros.observacionNotaCredito;
+                    sqlCommand.Parameters.Add("@OP", SqlDbType.VarChar, 1000).Value = parametros.OP;
+
 
 
 

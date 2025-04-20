@@ -640,6 +640,11 @@ namespace SoftCotton.Views.PurchaseOrder
                 respuesta = false;
                 ResponseMessage.Message("No existe tipo de Anulado", "WARNING");
             }
+            else if (string.IsNullOrEmpty(txtCodPrograma.Text.Trim()))
+            {
+                respuesta = false;
+                ResponseMessage.Message("Ingrese Programa por favor", "WARNING");
+            }
             else
             {
                 respuesta = true;

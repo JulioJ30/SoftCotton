@@ -590,6 +590,8 @@ namespace SoftCotton.Repository
                     sqlCommand.Parameters.Add("@codCuenta", SqlDbType.VarChar).Value = parametros.codCuenta;
 
                     sqlCommand.Parameters.Add("@tipoOrden", SqlDbType.VarChar).Value = parametros.tipoOrden;
+                    sqlCommand.Parameters.Add("@OP", SqlDbType.VarChar).Value = parametros.OP;
+
 
                     sqlConnection.Open();
 

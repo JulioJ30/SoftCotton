@@ -65,6 +65,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnCambiar = new System.Windows.Forms.Button();
             this.cbTipoCambio = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtObservaciones = new System.Windows.Forms.TextBox();
@@ -89,7 +90,8 @@
             this.cbxTipoMoneda = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnNuevo = new System.Windows.Forms.Button();
-            this.btnCambiar = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtOp = new System.Windows.Forms.TextBox();
             this.panel5.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListadoDetalle)).BeginInit();
@@ -440,6 +442,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtOp);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.btnCambiar);
             this.groupBox1.Controls.Add(this.cbTipoCambio);
             this.groupBox1.Controls.Add(this.label4);
@@ -464,6 +468,18 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "REGISTRO";
+            // 
+            // btnCambiar
+            // 
+            this.btnCambiar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCambiar.Location = new System.Drawing.Point(859, 71);
+            this.btnCambiar.Name = "btnCambiar";
+            this.btnCambiar.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.btnCambiar.Size = new System.Drawing.Size(80, 25);
+            this.btnCambiar.TabIndex = 15;
+            this.btnCambiar.Text = "Cambiar";
+            this.btnCambiar.UseVisualStyleBackColor = true;
+            this.btnCambiar.Click += new System.EventHandler(this.btnCambiar_Click);
             // 
             // cbTipoCambio
             // 
@@ -730,17 +746,23 @@
             this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
             this.btnNuevo.Leave += new System.EventHandler(this.btnNuevo_Leave);
             // 
-            // btnCambiar
+            // label5
             // 
-            this.btnCambiar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCambiar.Location = new System.Drawing.Point(859, 71);
-            this.btnCambiar.Name = "btnCambiar";
-            this.btnCambiar.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.btnCambiar.Size = new System.Drawing.Size(80, 25);
-            this.btnCambiar.TabIndex = 15;
-            this.btnCambiar.Text = "Cambiar";
-            this.btnCambiar.UseVisualStyleBackColor = true;
-            this.btnCambiar.Click += new System.EventHandler(this.btnCambiar_Click);
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(638, 137);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(42, 29);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "OP";
+            // 
+            // txtOp
+            // 
+            this.txtOp.Location = new System.Drawing.Point(717, 134);
+            this.txtOp.MaxLength = 1000;
+            this.txtOp.Name = "txtOp";
+            this.txtOp.Size = new System.Drawing.Size(222, 26);
+            this.txtOp.TabIndex = 17;
             // 
             // RegistroFacturasView
             // 
@@ -833,5 +855,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvDecIGV;
         private System.Windows.Forms.ComboBox cbTipoCambio;
         private System.Windows.Forms.Button btnCambiar;
+        private System.Windows.Forms.TextBox txtOp;
+        private System.Windows.Forms.Label label5;
     }
 }

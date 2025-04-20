@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using SoftCotton.BusinessLogic;
 using SoftCotton.Model.Kardex;
 using SoftCotton.Model.Maintenance;
@@ -9,6 +10,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
@@ -106,12 +109,27 @@ namespace SoftCotton.Views.Kardex
                 dgvListado.Rows[index].Cells["fact_tipo"].Value = item.fact_tipo; 
                 dgvListado.Rows[index].Cells["mes"].Value = item.mes;
                 dgvListado.Rows[index].Cells["tipoMovimiento"].Value = item.tipoMovimiento;
-                dgvListado.Rows[index].Cells["cantidad"].Value = item.cantidadSolesE; 
+                dgvListado.Rows[index].Cells["cantidad"].Value = item.cantidadSolesE;
+                dgvListado.Rows[index].Cells["secuencia"].Value = item.Secuencia;
+
 
             }
 
             dgvListado.AutoResizeColumns();
             dgvListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+            // 
+            // SOLO SI ESTA DENTRO DE COSTURA Y CORTE
+            string nivel = cbxNivel.SelectedValue.ToString();
+            if (nivel == "06" || nivel == "07" )
+            {
+                dgvListado.Columns["PU"].ReadOnly = false; // Editable
+            }
+            else
+            {
+                dgvListado.Columns["PU"].ReadOnly = true; // Editable
+            }
+
         }
 
         private void btnExcel_Click_1(object sender, EventArgs e)
@@ -179,6 +197,59 @@ namespace SoftCotton.Views.Kardex
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void dgvListado_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            // Verificar que la celda editada pertenece a la columna "PU"
+            if (dgvListado.Columns[e.ColumnIndex].Name == "PU")
+            {
+                // Obtener el nuevo valor de la celda
+                var nuevaValor = dgvListado.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+
+                // Validar si el valor es numérico
+                if (!decimal.TryParse(nuevaValor?.ToString(), out decimal resultado))
+                {
+                    MessageBox.Show("Por favor, ingrese un valor numérico válido en PU.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    dgvListado.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = 0; // Restaurar a 0 si es inválido
+                }
+                else
+                {
+                    // Aquí puedes actualizar la base de datos o realizar otra acción
+                    //Console.WriteLine($"Nuevo valor de PU: {resultado}");
+
+                    //dgvListado.Rows[index].Cells["orden"].Value = item.orden;
+                    //dgvListado.Rows[index].Cells["tipo"].Value = item.tipo;
+                    //dgvListado.Rows[index].Cells["cod"].Value = item.cod;
+                    //dgvListado.Rows[index].Cells["Nombre_Articulo"].Value = item.Nombre_Articulo;
+                    //dgvListado.Rows[index].Cells["color"].Value = item.color;
+                    //dgvListado.Rows[index].Cells["Fecha_Guia"].Value = item.Fecha_Guia;
+                    //dgvListado.Rows[index].Cells["serie"].Value = item.serie;
+                    //dgvListado.Rows[index].Cells["numero"].Value = item.numero;
+                    //dgvListado.Rows[index].Cells["codigo_Proveedor"].Value = item.codigo_Proveedor;
+                    //dgvListado.Rows[index].Cells["razonSocial"].Value = item.razonSocial;
+                    //dgvListado.Rows[index].Cells["serie_fact"].Value = item.serie_fact;
+                    //dgvListado.Rows[index].Cells["Num_fact"].Value = item.Num_fact;
+                    //dgvListado.Rows[index].Cells["Tipo_Moneda"].Value = item.Tipo_Moneda;
+                    //dgvListado.Rows[index].Cells["codigo"].Value = item.codigo;
+                    //dgvListado.Rows[index].Cells["UM"].Value = item.UM;
+                    //dgvListado.Rows[index].Cells["PU"].Value = item.PU;
+                    //dgvListado.Rows[index].Cells["fact_tipo"].Value = item.fact_tipo;
+                    //dgvListado.Rows[index].Cells["mes"].Value = item.mes;
+                    //dgvListado.Rows[index].Cells["tipoMovimiento"].Value = item.tipoMovimiento;
+                    //dgvListado.Rows[index].Cells["cantidad"].Value = item.cantidadSolesE;
+
+                    string Tipo = dgvListado.Rows[e.ColumnIndex].Cells["tipoMovimiento"].Value.ToString() == "E" ? "N" : "E";
+                    int IdEmpresa = 1;
+                    string Serie = dgvListado.Rows[e.ColumnIndex].Cells["serie"].Value.ToString();
+                    int Numero = Convert.ToInt32(dgvListado.Rows[e.ColumnIndex].Cells["numero"].Value.ToString());
+                    int Secuencia = Convert.ToInt32(dgvListado.Rows[e.ColumnIndex].Cells["secuencia"].Value.ToString().Trim());
+                    float Precio = (float)resultado;
+
+                    _kardexBL.CambiarPrecio(Tipo, IdEmpresa, Serie, Numero, Secuencia, Precio);
+
+                }
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SoftCotton.BusinessLogic;
+using SoftCotton.Model.ReferralGuide;
 using SoftCotton.Model.Shared;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,9 @@ namespace SoftCotton.Views.Shared
         public int vpIdEmpresa = 0;
         public string vpSerie = "";
         public string vpNumero = "";
+
+        public List<GetShared4_BuscarGREnviar> listaDetalleDevolver = new List<GetShared4_BuscarGREnviar>();
+
 
         public BuscarGuiaRemisionView(int pIdEmpresa, string pSerie, string pNumero)
         {
@@ -164,9 +168,116 @@ namespace SoftCotton.Views.Shared
             }
         }
 
+        private void dgvListado_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow dgr in dgvListado.Rows)
+            {
+
+                bool seleccionar = Convert.ToBoolean(dgr.Cells["cbxSeleccionar"].Value);
+
+                if (seleccionar)
+                {
+
+                    // CREAMOS CLSE
+                    GetShared4_BuscarGREnviar clase = new GetShared4_BuscarGREnviar();
+
+                    IdEmpresa = Convert.ToInt32(dgr.Cells["dgvIntIdEmpresa"].Value);
+
+                    if (IdEmpresa != 0)
+                    {
+                        clase.idEmpresa = IdEmpresa;
+                        clase.tipo = dgr.Cells["dgvTxtGrTipo"].Value.ToString();
+                        clase.serie = dgr.Cells["dgvTxtSerie"].Value.ToString();
+                        clase.numero = dgr.Cells["dgvTxtNumero"].Value.ToString();
+                        clase.fechaEmision = dgr.Cells["dgvTxtFechaEmision"].Value.ToString();
+                        clase.destCodigoPC = dgr.Cells["dgvTxtDestCodigoPC"].Value.ToString();
+                        clase.razonSocial = dgr.Cells["dgvTxtRazonSocial"].Value.ToString();
+                        clase.secuencia = Convert.ToInt32(dgr.Cells["dgvIntSecuencia"].Value);
+                        clase.idDet = Convert.ToInt32(dgr.Cells["dgvIntIdDet"].Value);
+                        clase.idSecuenciaDet = Convert.ToInt32(dgr.Cells["dgvIntIdSecuenciaDet"].Value);
+                        clase.codNivel = dgr.Cells["dgvTxtCodNivel"].Value.ToString();
+                        clase.codGrupo = dgr.Cells["dgvTxtCodGrupo"].Value.ToString();
+                        clase.codTalla = dgr.Cells["dgvTxtCodTalla"].Value.ToString();
+                        clase.codColor = dgr.Cells["dgvTxtCodColor"].Value.ToString();
+                        clase.codProducto = dgr.Cells["dgvTxtCodProducto"].Value.ToString();
+                        clase.producto = dgr.Cells["dgvTxtProducto"].Value.ToString();
+                        clase.codUM = dgr.Cells["dgvTxtCodUM"].Value.ToString();
+                        clase.tipoMovimiento = dgr.Cells["dgvTxtTipoMovimiento"].Value.ToString();
+                        clase.cantidadIngresada = Convert.ToDecimal(dgr.Cells["dgvDecCantidadIngresada"].Value);
+                        clase.pesoIngresado = Convert.ToDecimal(dgr.Cells["dgvDecPesoIngresado"].Value);
+
+                        listaDetalleDevolver.Add(clase);
+
+                    }
+
+                    this.Hide();
+
+                    //clase.tipoOrdenId = dgr.Cells["dgvTxtTipoId"].Value.ToString().Trim();
+                    //clase.tipoOrden = dgr.Cells["dgvTxtTipo"].Value.ToString().Trim();
+                    //clase.idEmpresa = Convert.ToInt32(dgr.Cells["dgvIntIdEmpresa"].Value);
+                    //clase.codigoPc = dgr.Cells["dgvTxtCodPC"].Value.ToString().Trim();
+                    //clase.proveedor = dgr.Cells["dgvTxtPC"].Value.ToString().Trim();
+                    //clase.secuencia = Convert.ToInt32(dgr.Cells["dgvIntSecuencia"].Value);
+                    //clase.codNivel = dgr.Cells["dgvTxtCodNivel"].Value.ToString().Trim();
+                    //clase.codGrupo = dgr.Cells["dgvTxtCodGrupo"].Value.ToString().Trim();
+                    //clase.codTalla = dgr.Cells["dgvTxtCodTalla"].Value.ToString().Trim();
+                    //clase.codColor = dgr.Cells["dgvTxtCodColor"].Value.ToString().Trim();
+                    //clase.codProductoGeneral = dgr.Cells["dgvCodigoProducto"].Value.ToString().Trim();
+                    //clase.producto = dgr.Cells["dgvTxtProducto"].Value.ToString().Trim();
+                    //clase.codCuenta = dgr.Cells["dgvCodCuenta"].Value.ToString().Trim();
+                    //clase.descripcionCta = dgr.Cells["dgvDescripcionCta"].Value.ToString().Trim();
+                    //clase.cantidad = Convert.ToDecimal(dgr.Cells["dgvIntCantidad"].Value);
+
+                    //clase.cantidadIngreso = Convert.ToDecimal(dgr.Cells["dgvDecCantidadEntrada"].Value);
+                    //clase.cantidadSalida = Convert.ToDecimal(dgr.Cells["dgvDecCantidadSalida"].Value);
+
+                    //clase.cantidadSaldo = Convert.ToDecimal(dgr.Cells["dgvDecCantidadEntrada"].Value) + Convert.ToDecimal(dgr.Cells["dgvDecCantidadSalida"].Value);
+                    //clase.codUM = dgr.Cells["dgvTxtCodUM"].Value.ToString().Trim();
+                    //clase.precioUnitario = Convert.ToDecimal(dgr.Cells["dgvDecPrecioUnitario"].Value);
+                    //clase.total = Convert.ToDecimal(dgr.Cells["dgvDecTotal"].Value);
+
+                    //listaOCDetalleDevolver.Add(clase);
 
 
 
+                }
 
+            }
+
+        }
+
+        private void btnNuevo_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow rowItem in dgvListado.Rows)
+            {
+
+                rowItem.Cells["cbxSeleccionar"].Value = true;
+
+            }
+        }
+
+        private void dgvListado_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dgvListado.Columns[e.ColumnIndex].Name.Equals("cbxSeleccionar"))
+            {
+                foreach (DataGridViewRow rowItem in dgvListado.Rows)
+                {
+                    if (rowItem.Index == e.RowIndex)
+                    {
+                        rowItem.Cells["cbxSeleccionar"].Value = !Convert.ToBoolean(rowItem.Cells["cbxSeleccionar"].Value);
+                    }
+                }
+            }
+        }
     }
 }

@@ -38,7 +38,8 @@ namespace SoftCotton.Views.ReferralGuide
         public string _tipoOrdenID = "";
         public decimal cantidadIngreso = 0;
         public decimal cantidadSalida = 0;
-        
+
+        public List<GetGR5_OCDetalleDevolver> listaOCDetalleDevolver = new List<GetGR5_OCDetalleDevolver>();
 
         public int countMostrarFormulario = 1;
 
@@ -98,6 +99,10 @@ namespace SoftCotton.Views.ReferralGuide
             foreach (GetGR5_OCDetalle item in listaOCDetalle)
             {
                 int index = dgvOrdenCompra.Rows.Add();
+
+                dgvOrdenCompra.Rows[index].Cells["cbxSeleccionar"].Value = false;
+
+
                 dgvOrdenCompra.Rows[index].Cells["dgvTxtTipoId"].Value = item.tipo;
                 if (item.tipo == "C")
                 {
@@ -200,7 +205,110 @@ namespace SoftCotton.Views.ReferralGuide
             }
         }
 
-      
+        private void dgvOrdenCompra_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dgvOrdenCompra.Columns[e.ColumnIndex].Name.Equals("cbxSeleccionar"))
+            {
+                foreach (DataGridViewRow rowItem in dgvOrdenCompra.Rows)
+                {
+                    if (rowItem.Index == e.RowIndex)
+                    {
+                        rowItem.Cells["cbxSeleccionar"].Value = !Convert.ToBoolean(rowItem.Cells["cbxSeleccionar"].Value);
+                    }
+                    //else
+                    //{
+                    //    rowItem.Cells["cbxSeleccionar"].Value = false;
+                    //}
+                }
+            }
+            
+        }
 
+        private void btnNuevo_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow rowItem in dgvOrdenCompra.Rows)
+            {
+
+                rowItem.Cells["cbxSeleccionar"].Value = true;
+              
+            }
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            // BUSCAMOS LOS QUE TIENEN CHECK
+            foreach (DataGridViewRow dgr in dgvOrdenCompra.Rows)
+            {
+
+                bool seleccionar = Convert.ToBoolean(dgr.Cells["cbxSeleccionar"].Value);
+
+                if (seleccionar)
+                {
+
+                    // CREAMOS CLSE
+                    GetGR5_OCDetalleDevolver clase = new GetGR5_OCDetalleDevolver();
+
+                    clase.tipoOrdenId = dgr.Cells["dgvTxtTipoId"].Value.ToString().Trim();
+                    clase.tipoOrden = dgr.Cells["dgvTxtTipo"].Value.ToString().Trim();
+                    clase.idEmpresa = Convert.ToInt32(dgr.Cells["dgvIntIdEmpresa"].Value);
+                    clase.codigoPc = dgr.Cells["dgvTxtCodPC"].Value.ToString().Trim();
+                    clase.proveedor = dgr.Cells["dgvTxtPC"].Value.ToString().Trim();
+                    clase.secuencia = Convert.ToInt32(dgr.Cells["dgvIntSecuencia"].Value);
+                    clase.codNivel = dgr.Cells["dgvTxtCodNivel"].Value.ToString().Trim();
+                    clase.codGrupo = dgr.Cells["dgvTxtCodGrupo"].Value.ToString().Trim();
+                    clase.codTalla = dgr.Cells["dgvTxtCodTalla"].Value.ToString().Trim();
+                    clase.codColor = dgr.Cells["dgvTxtCodColor"].Value.ToString().Trim();
+                    clase.codProductoGeneral = dgr.Cells["dgvCodigoProducto"].Value.ToString().Trim();
+                    clase.producto = dgr.Cells["dgvTxtProducto"].Value.ToString().Trim();
+                    clase.codCuenta = dgr.Cells["dgvCodCuenta"].Value.ToString().Trim();
+                    clase.descripcionCta = dgr.Cells["dgvDescripcionCta"].Value.ToString().Trim();
+                    clase.cantidad = Convert.ToDecimal(dgr.Cells["dgvIntCantidad"].Value);
+
+                    clase.cantidadIngreso = Convert.ToDecimal(dgr.Cells["dgvDecCantidadEntrada"].Value);
+                    clase.cantidadSalida = Convert.ToDecimal(dgr.Cells["dgvDecCantidadSalida"].Value);
+
+                    clase.cantidadSaldo = Convert.ToDecimal(dgr.Cells["dgvDecCantidadEntrada"].Value) + Convert.ToDecimal(dgr.Cells["dgvDecCantidadSalida"].Value);
+                    clase.codUM = dgr.Cells["dgvTxtCodUM"].Value.ToString().Trim();
+                    clase.precioUnitario = Convert.ToDecimal(dgr.Cells["dgvDecPrecioUnitario"].Value);
+                    clase.total = Convert.ToDecimal(dgr.Cells["dgvDecTotal"].Value);
+
+                    listaOCDetalleDevolver.Add(clase);
+
+
+
+                }
+
+            }
+
+            VariableGeneral._sEnter = true;
+            Hide();
+
+
+            //DataGridViewRow dgr = dgvOrdenCompra.CurrentRow;
+            //_tipoOrdenID = dgr.Cells["dgvTxtTipoId"].Value.ToString().Trim();
+            //_tipoOrden = dgr.Cells["dgvTxtTipo"].Value.ToString().Trim();
+            //_idEmpresa = Convert.ToInt32(dgr.Cells["dgvIntIdEmpresa"].Value);
+            //codigoPC = dgr.Cells["dgvTxtCodPC"].Value.ToString().Trim();
+            //proveedor = dgr.Cells["dgvTxtPC"].Value.ToString().Trim();
+            //secuencia = Convert.ToInt32(dgr.Cells["dgvIntSecuencia"].Value);
+            //codNivel = dgr.Cells["dgvTxtCodNivel"].Value.ToString().Trim();
+            //codGrupo = dgr.Cells["dgvTxtCodGrupo"].Value.ToString().Trim();
+            //codTalla = dgr.Cells["dgvTxtCodTalla"].Value.ToString().Trim();
+            //codColor = dgr.Cells["dgvTxtCodColor"].Value.ToString().Trim();
+            //codProductoGeneral = dgr.Cells["dgvCodigoProducto"].Value.ToString().Trim();
+            //producto = dgr.Cells["dgvTxtProducto"].Value.ToString().Trim();
+            //codCuenta = dgr.Cells["dgvCodCuenta"].Value.ToString().Trim();
+            //descripcionCta = dgr.Cells["dgvDescripcionCta"].Value.ToString().Trim();
+            //cantidad = Convert.ToDecimal(dgr.Cells["dgvIntCantidad"].Value);
+
+            //cantidadIngreso = Convert.ToDecimal(dgr.Cells["dgvDecCantidadEntrada"].Value);
+            //cantidadSalida = Convert.ToDecimal(dgr.Cells["dgvDecCantidadSalida"].Value);
+
+            //cantidadSaldo = Convert.ToDecimal(dgr.Cells["dgvDecCantidadEntrada"].Value) + Convert.ToDecimal(dgr.Cells["dgvDecCantidadSalida"].Value);
+            //codUM = dgr.Cells["dgvTxtCodUM"].Value.ToString().Trim();
+            //precioUnitario = Convert.ToDecimal(dgr.Cells["dgvDecPrecioUnitario"].Value);
+            //total = Convert.ToDecimal(dgr.Cells["dgvDecTotal"].Value);
+            //VariableGeneral._sEnter = true;
+        }
     }
 }
