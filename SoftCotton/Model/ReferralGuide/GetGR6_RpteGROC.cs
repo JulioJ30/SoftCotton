@@ -59,6 +59,8 @@ namespace SoftCotton.Model.ReferralGuide
         public string fserieNotaCredito { get; set; }
         public string fnumeroNotaCredito { get; set; }
         public string fobservacionNotaCredito { get; set; }
-        
+        public string Op { get; set; }
+
+
     }
 }

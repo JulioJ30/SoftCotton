@@ -92,6 +92,8 @@ namespace SoftCotton.Views.ReferralGuide
                 dgvListado.Rows[index].Cells["dgvFACfprecioUnitario"].Value = item.fprecioUnitario;
                 dgvListado.Rows[index].Cells["dgvFACftipoCambio"].Value = item.ftipoCambio;
                 dgvListado.Rows[index].Cells["dgvFACftipoMoneda"].Value = item.ftipoMoneda;
+                dgvListado.Rows[index].Cells["Op"].Value = item.Op;
+
 
             }
 
@@ -113,7 +115,7 @@ namespace SoftCotton.Views.ReferralGuide
                 {
                     if (!string.IsNullOrEmpty(sfd.FileName))
                     {
-                        ExcelReportTitulo[] arrayTitulo = new ExcelReportTitulo[50];
+                        ExcelReportTitulo[] arrayTitulo = new ExcelReportTitulo[51];
 
                         arrayTitulo[0] = new ExcelReportTitulo() { titulo = "Tipo", backgroundColor = XLColor.LightBlue, foreColor = XLColor.Black };
                         arrayTitulo[1] = new ExcelReportTitulo() { titulo = "Codigo", backgroundColor = XLColor.LightBlue, foreColor = XLColor.Black };
@@ -168,6 +170,8 @@ namespace SoftCotton.Views.ReferralGuide
                         arrayTitulo[47] = new ExcelReportTitulo() { titulo = "NC - Serie", backgroundColor = XLColor.LightCyan, foreColor = XLColor.Black };
                         arrayTitulo[48] = new ExcelReportTitulo() { titulo = "NC - Número", backgroundColor = XLColor.LightCyan, foreColor = XLColor.Black };
                         arrayTitulo[49] = new ExcelReportTitulo() { titulo = "NC - Observación", backgroundColor = XLColor.LightCyan, foreColor = XLColor.Black };
+                        arrayTitulo[50] = new ExcelReportTitulo() { titulo = "Op", backgroundColor = XLColor.LightCyan, foreColor = XLColor.Black };
+
 
                         ExcelReport.GetExcelReport<GetGR6_RpteGROC>(sfd.FileName, arrayTitulo, lista);
 

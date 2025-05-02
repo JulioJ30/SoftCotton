@@ -407,6 +407,30 @@ namespace SoftCotton.Views.ReferralGuide
                             }
                         }
 
+                        // 5. OP
+                        if (respuesta)
+                        {
+                            if (row.Cells["OP"].Value != null)
+                            {
+                                if (row.Cells["OP"].Value.ToString().Trim() == "")
+                                {
+                                    respuesta = false;
+                                    seguirValidando = false;
+                                    ResponseMessage.Message("Ingrese OP por favor", "WARNING");
+                                }
+                                else
+                                {
+                                    respuesta = true;
+                                }
+                            }
+                            else
+                            {
+                                respuesta = false;
+                                seguirValidando = false;
+                                ResponseMessage.Message("Ingrese OP por favor", "WARNING");
+                            }
+                        }
+
 
                     }
                 }

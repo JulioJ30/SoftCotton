@@ -398,6 +398,7 @@ namespace SoftCotton.Repository
                             rpte.fserieNotaCredito = reader["fserieNotaCredito"].ToString();
                             rpte.fnumeroNotaCredito = reader["fnumeroNotaCredito"].ToString();
                             rpte.fobservacionNotaCredito = reader["fobservacionNotaCredito"].ToString();
+                            rpte.Op = reader["Op"].ToString();
 
                             rptes.Add(rpte);
                         }

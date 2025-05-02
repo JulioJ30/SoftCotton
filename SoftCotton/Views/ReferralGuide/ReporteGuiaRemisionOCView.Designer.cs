@@ -88,6 +88,7 @@
             this.dgvFACfprecioUnitario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvFACftipoCambio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvFACftipoMoneda = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Op = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -127,7 +128,7 @@
             this.txtCodProducto.Location = new System.Drawing.Point(479, 28);
             this.txtCodProducto.MaxLength = 20;
             this.txtCodProducto.Name = "txtCodProducto";
-            this.txtCodProducto.Size = new System.Drawing.Size(139, 26);
+            this.txtCodProducto.Size = new System.Drawing.Size(139, 29);
             this.txtCodProducto.TabIndex = 62;
             // 
             // label3
@@ -135,7 +136,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(377, 32);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(96, 19);
+            this.label3.Size = new System.Drawing.Size(119, 23);
             this.label3.TabIndex = 61;
             this.label3.Text = "Cod Produco: ";
             // 
@@ -143,9 +144,9 @@
             // 
             this.panel2.Controls.Add(this.btnExcel);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(748, 22);
+            this.panel2.Location = new System.Drawing.Point(748, 25);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(143, 49);
+            this.panel2.Size = new System.Drawing.Size(143, 46);
             this.panel2.TabIndex = 59;
             // 
             // btnExcel
@@ -179,7 +180,7 @@
             this.dtpFechaFin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFechaFin.Location = new System.Drawing.Point(262, 28);
             this.dtpFechaFin.Name = "dtpFechaFin";
-            this.dtpFechaFin.Size = new System.Drawing.Size(109, 26);
+            this.dtpFechaFin.Size = new System.Drawing.Size(109, 29);
             this.dtpFechaFin.TabIndex = 1;
             // 
             // dtpFechaInicio
@@ -187,7 +188,7 @@
             this.dtpFechaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFechaInicio.Location = new System.Drawing.Point(86, 28);
             this.dtpFechaInicio.Name = "dtpFechaInicio";
-            this.dtpFechaInicio.Size = new System.Drawing.Size(109, 26);
+            this.dtpFechaInicio.Size = new System.Drawing.Size(109, 29);
             this.dtpFechaInicio.TabIndex = 1;
             // 
             // label2
@@ -195,7 +196,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(200, 32);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 19);
+            this.label2.Size = new System.Drawing.Size(90, 23);
             this.label2.TabIndex = 0;
             this.label2.Text = "Fecha Fin: ";
             // 
@@ -204,7 +205,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(13, 32);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 19);
+            this.label1.Size = new System.Drawing.Size(109, 23);
             this.label1.TabIndex = 0;
             this.label1.Text = "Fecha Inicio: ";
             // 
@@ -260,7 +261,8 @@
             this.dgvFACfigv,
             this.dgvFACfprecioUnitario,
             this.dgvFACftipoCambio,
-            this.dgvFACftipoMoneda});
+            this.dgvFACftipoMoneda,
+            this.Op});
             this.dgvListado.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvListado.Location = new System.Drawing.Point(0, 82);
             this.dgvListado.Name = "dgvListado";
@@ -645,9 +647,17 @@
             this.dgvFACftipoMoneda.ReadOnly = true;
             this.dgvFACftipoMoneda.Width = 125;
             // 
+            // Op
+            // 
+            this.Op.HeaderText = "Op";
+            this.Op.MinimumWidth = 8;
+            this.Op.Name = "Op";
+            this.Op.ReadOnly = true;
+            this.Op.Width = 150;
+            // 
             // ReporteGuiaRemisionOCView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(902, 414);
@@ -728,5 +738,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvFACfprecioUnitario;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvFACftipoCambio;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvFACftipoMoneda;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Op;
     }
 }
