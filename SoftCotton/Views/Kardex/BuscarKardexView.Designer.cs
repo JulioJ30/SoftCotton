@@ -30,25 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BuscarKardexView));
             this.dgvListado = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cmbCuenta = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.dtpFechaHasta = new System.Windows.Forms.DateTimePicker();
-            this.label4 = new System.Windows.Forms.Label();
-            this.dtpFechaDesde = new System.Windows.Forms.DateTimePicker();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtColor = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtTalla = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cbxNivel = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtGrupo = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnExcel = new System.Windows.Forms.Button();
-            this.btnBuscar = new System.Windows.Forms.Button();
             this.orden = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.secuencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,6 +51,26 @@
             this.mes = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tipoMovimiento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cmbCuenta = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.dtpFechaHasta = new System.Windows.Forms.DateTimePicker();
+            this.label4 = new System.Windows.Forms.Label();
+            this.dtpFechaDesde = new System.Windows.Forms.DateTimePicker();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtColor = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtTalla = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbxNivel = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtGrupo = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnExcel = new System.Windows.Forms.Button();
+            this.btnBuscar = new System.Windows.Forms.Button();
+            this.btnCongelar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListado)).BeginInit();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -108,222 +109,9 @@
             this.dgvListado.Margin = new System.Windows.Forms.Padding(2);
             this.dgvListado.Name = "dgvListado";
             this.dgvListado.RowHeadersWidth = 51;
-            this.dgvListado.Size = new System.Drawing.Size(1334, 410);
+            this.dgvListado.Size = new System.Drawing.Size(1424, 410);
             this.dgvListado.TabIndex = 3;
             this.dgvListado.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListado_CellEndEdit);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(3);
-            this.panel1.Size = new System.Drawing.Size(1334, 67);
-            this.panel1.TabIndex = 2;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.cmbCuenta);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.dtpFechaHasta);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.dtpFechaDesde);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.txtColor);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.txtTalla);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.cbxNivel);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.txtGrupo);
-            this.groupBox1.Controls.Add(this.panel2);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(3, 3);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(1328, 61);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
-            // 
-            // cmbCuenta
-            // 
-            this.cmbCuenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCuenta.FormattingEnabled = true;
-            this.cmbCuenta.Location = new System.Drawing.Point(217, 25);
-            this.cmbCuenta.Margin = new System.Windows.Forms.Padding(2);
-            this.cmbCuenta.Name = "cmbCuenta";
-            this.cmbCuenta.Size = new System.Drawing.Size(193, 31);
-            this.cmbCuenta.TabIndex = 81;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(165, 27);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(69, 23);
-            this.label7.TabIndex = 82;
-            this.label7.Text = "Cuenta:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(942, 31);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(57, 23);
-            this.label6.TabIndex = 80;
-            this.label6.Text = "Hasta:";
-            // 
-            // dtpFechaHasta
-            // 
-            this.dtpFechaHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaHasta.Location = new System.Drawing.Point(988, 27);
-            this.dtpFechaHasta.Name = "dtpFechaHasta";
-            this.dtpFechaHasta.Size = new System.Drawing.Size(93, 29);
-            this.dtpFechaHasta.TabIndex = 79;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(788, 31);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 23);
-            this.label4.TabIndex = 78;
-            this.label4.Text = "Desde:";
-            // 
-            // dtpFechaDesde
-            // 
-            this.dtpFechaDesde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaDesde.Location = new System.Drawing.Point(834, 27);
-            this.dtpFechaDesde.Name = "dtpFechaDesde";
-            this.dtpFechaDesde.Size = new System.Drawing.Size(95, 29);
-            this.dtpFechaDesde.TabIndex = 77;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(656, 30);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(55, 23);
-            this.label3.TabIndex = 76;
-            this.label3.Text = "Color:";
-            // 
-            // txtColor
-            // 
-            this.txtColor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtColor.Location = new System.Drawing.Point(698, 27);
-            this.txtColor.Margin = new System.Windows.Forms.Padding(2);
-            this.txtColor.MaxLength = 250;
-            this.txtColor.Name = "txtColor";
-            this.txtColor.Size = new System.Drawing.Size(69, 29);
-            this.txtColor.TabIndex = 75;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(543, 30);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 23);
-            this.label2.TabIndex = 74;
-            this.label2.Text = "Talla:";
-            // 
-            // txtTalla
-            // 
-            this.txtTalla.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtTalla.Location = new System.Drawing.Point(578, 27);
-            this.txtTalla.Margin = new System.Windows.Forms.Padding(2);
-            this.txtTalla.MaxLength = 250;
-            this.txtTalla.Name = "txtTalla";
-            this.txtTalla.Size = new System.Drawing.Size(66, 29);
-            this.txtTalla.TabIndex = 73;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(414, 30);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(62, 23);
-            this.label5.TabIndex = 72;
-            this.label5.Text = "Grupo:";
-            // 
-            // cbxNivel
-            // 
-            this.cbxNivel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxNivel.FormattingEnabled = true;
-            this.cbxNivel.Location = new System.Drawing.Point(48, 26);
-            this.cbxNivel.Margin = new System.Windows.Forms.Padding(2);
-            this.cbxNivel.Name = "cbxNivel";
-            this.cbxNivel.Size = new System.Drawing.Size(104, 31);
-            this.cbxNivel.TabIndex = 69;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 28);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 23);
-            this.label1.TabIndex = 70;
-            this.label1.Text = "Nivel:";
-            // 
-            // txtGrupo
-            // 
-            this.txtGrupo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtGrupo.Location = new System.Drawing.Point(461, 27);
-            this.txtGrupo.Margin = new System.Windows.Forms.Padding(2);
-            this.txtGrupo.MaxLength = 250;
-            this.txtGrupo.Name = "txtGrupo";
-            this.txtGrupo.Size = new System.Drawing.Size(69, 29);
-            this.txtGrupo.TabIndex = 71;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.btnExcel);
-            this.panel2.Controls.Add(this.btnBuscar);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(1101, 24);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(225, 35);
-            this.panel2.TabIndex = 68;
-            // 
-            // btnExcel
-            // 
-            this.btnExcel.Image = global::SoftCotton.Properties.Resources.icon_excel;
-            this.btnExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExcel.Location = new System.Drawing.Point(112, 4);
-            this.btnExcel.Margin = new System.Windows.Forms.Padding(2);
-            this.btnExcel.Name = "btnExcel";
-            this.btnExcel.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.btnExcel.Size = new System.Drawing.Size(106, 28);
-            this.btnExcel.TabIndex = 58;
-            this.btnExcel.Text = "Excel";
-            this.btnExcel.UseVisualStyleBackColor = true;
-            this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click_1);
-            // 
-            // btnBuscar
-            // 
-            this.btnBuscar.Image = global::SoftCotton.Properties.Resources.icon_buscar;
-            this.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBuscar.Location = new System.Drawing.Point(5, 4);
-            this.btnBuscar.Margin = new System.Windows.Forms.Padding(2);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.btnBuscar.Size = new System.Drawing.Size(103, 28);
-            this.btnBuscar.TabIndex = 57;
-            this.btnBuscar.Text = "Buscar";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click_1);
             // 
             // orden
             // 
@@ -494,12 +282,242 @@
             this.cantidad.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.cantidad.Width = 125;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(3);
+            this.panel1.Size = new System.Drawing.Size(1424, 67);
+            this.panel1.TabIndex = 2;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.cmbCuenta);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.dtpFechaHasta);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.dtpFechaDesde);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.txtColor);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.txtTalla);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.cbxNivel);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.txtGrupo);
+            this.groupBox1.Controls.Add(this.panel2);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(1418, 61);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // cmbCuenta
+            // 
+            this.cmbCuenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCuenta.FormattingEnabled = true;
+            this.cmbCuenta.Location = new System.Drawing.Point(217, 25);
+            this.cmbCuenta.Margin = new System.Windows.Forms.Padding(2);
+            this.cmbCuenta.Name = "cmbCuenta";
+            this.cmbCuenta.Size = new System.Drawing.Size(174, 27);
+            this.cmbCuenta.TabIndex = 81;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(165, 27);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(56, 19);
+            this.label7.TabIndex = 82;
+            this.label7.Text = "Cuenta:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(928, 30);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(47, 19);
+            this.label6.TabIndex = 80;
+            this.label6.Text = "Hasta:";
+            // 
+            // dtpFechaHasta
+            // 
+            this.dtpFechaHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaHasta.Location = new System.Drawing.Point(974, 26);
+            this.dtpFechaHasta.Name = "dtpFechaHasta";
+            this.dtpFechaHasta.Size = new System.Drawing.Size(93, 26);
+            this.dtpFechaHasta.TabIndex = 79;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(774, 30);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(50, 19);
+            this.label4.TabIndex = 78;
+            this.label4.Text = "Desde:";
+            // 
+            // dtpFechaDesde
+            // 
+            this.dtpFechaDesde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaDesde.Location = new System.Drawing.Point(820, 26);
+            this.dtpFechaDesde.Name = "dtpFechaDesde";
+            this.dtpFechaDesde.Size = new System.Drawing.Size(95, 26);
+            this.dtpFechaDesde.TabIndex = 77;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(642, 29);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(45, 19);
+            this.label3.TabIndex = 76;
+            this.label3.Text = "Color:";
+            // 
+            // txtColor
+            // 
+            this.txtColor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtColor.Location = new System.Drawing.Point(684, 26);
+            this.txtColor.Margin = new System.Windows.Forms.Padding(2);
+            this.txtColor.MaxLength = 250;
+            this.txtColor.Name = "txtColor";
+            this.txtColor.Size = new System.Drawing.Size(69, 26);
+            this.txtColor.TabIndex = 75;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(529, 29);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(37, 19);
+            this.label2.TabIndex = 74;
+            this.label2.Text = "Talla:";
+            // 
+            // txtTalla
+            // 
+            this.txtTalla.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtTalla.Location = new System.Drawing.Point(564, 26);
+            this.txtTalla.Margin = new System.Windows.Forms.Padding(2);
+            this.txtTalla.MaxLength = 250;
+            this.txtTalla.Name = "txtTalla";
+            this.txtTalla.Size = new System.Drawing.Size(66, 26);
+            this.txtTalla.TabIndex = 73;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(400, 29);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(51, 19);
+            this.label5.TabIndex = 72;
+            this.label5.Text = "Grupo:";
+            // 
+            // cbxNivel
+            // 
+            this.cbxNivel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxNivel.FormattingEnabled = true;
+            this.cbxNivel.Location = new System.Drawing.Point(48, 26);
+            this.cbxNivel.Margin = new System.Windows.Forms.Padding(2);
+            this.cbxNivel.Name = "cbxNivel";
+            this.cbxNivel.Size = new System.Drawing.Size(104, 27);
+            this.cbxNivel.TabIndex = 69;
+            this.cbxNivel.SelectedIndexChanged += new System.EventHandler(this.cbxNivel_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 28);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(42, 19);
+            this.label1.TabIndex = 70;
+            this.label1.Text = "Nivel:";
+            // 
+            // txtGrupo
+            // 
+            this.txtGrupo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtGrupo.Location = new System.Drawing.Point(447, 26);
+            this.txtGrupo.Margin = new System.Windows.Forms.Padding(2);
+            this.txtGrupo.MaxLength = 250;
+            this.txtGrupo.Name = "txtGrupo";
+            this.txtGrupo.Size = new System.Drawing.Size(69, 26);
+            this.txtGrupo.TabIndex = 71;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.btnCongelar);
+            this.panel2.Controls.Add(this.btnExcel);
+            this.panel2.Controls.Add(this.btnBuscar);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel2.Location = new System.Drawing.Point(1088, 21);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(328, 38);
+            this.panel2.TabIndex = 68;
+            // 
+            // btnExcel
+            // 
+            this.btnExcel.Image = global::SoftCotton.Properties.Resources.icon_excel;
+            this.btnExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnExcel.Location = new System.Drawing.Point(112, 4);
+            this.btnExcel.Margin = new System.Windows.Forms.Padding(2);
+            this.btnExcel.Name = "btnExcel";
+            this.btnExcel.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.btnExcel.Size = new System.Drawing.Size(106, 28);
+            this.btnExcel.TabIndex = 58;
+            this.btnExcel.Text = "Excel";
+            this.btnExcel.UseVisualStyleBackColor = true;
+            this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click_1);
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.Image = global::SoftCotton.Properties.Resources.icon_buscar;
+            this.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBuscar.Location = new System.Drawing.Point(5, 4);
+            this.btnBuscar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.btnBuscar.Size = new System.Drawing.Size(103, 28);
+            this.btnBuscar.TabIndex = 57;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click_1);
+            // 
+            // btnCongelar
+            // 
+            this.btnCongelar.Enabled = false;
+            this.btnCongelar.Image = global::SoftCotton.Properties.Resources.icon_checked;
+            this.btnCongelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCongelar.Location = new System.Drawing.Point(219, 4);
+            this.btnCongelar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCongelar.Name = "btnCongelar";
+            this.btnCongelar.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.btnCongelar.Size = new System.Drawing.Size(103, 28);
+            this.btnCongelar.TabIndex = 59;
+            this.btnCongelar.Text = "Congelar";
+            this.btnCongelar.UseVisualStyleBackColor = true;
+            this.btnCongelar.Click += new System.EventHandler(this.btnCongelar_Click);
+            // 
             // BuscarKardexView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1334, 477);
+            this.ClientSize = new System.Drawing.Size(1424, 477);
             this.Controls.Add(this.dgvListado);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -560,5 +578,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn mes;
         private System.Windows.Forms.DataGridViewTextBoxColumn tipoMovimiento;
         private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
+        private System.Windows.Forms.Button btnCongelar;
     }
 }

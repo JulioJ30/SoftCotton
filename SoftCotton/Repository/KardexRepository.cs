@@ -479,6 +479,48 @@ namespace SoftCotton.Repository
             return respuesta;
         }
 
+        public bool RegistroCongeladoAcabados(
+                string codNivel, string codCuenta, string codGrupo, string codTalla, string codColor, string fechaIni, string fechafin
+            )
+        {
+            bool respuesta = true;
+            try
+            {
+                using (var sqlConnection = ConnectionBD.GetConnection())
+                {
+                    using (var sqlCommand = sqlConnection.CreateCommand())
+                    {
+                        sqlCommand.CommandText = @"uspSetCongeladoToAcabados";
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                        codNivel = (codNivel == "00") ? "" : codNivel;
+
+                        sqlCommand.Parameters.Add("@codNivel", SqlDbType.VarChar, 50).Value = codNivel;
+                        sqlCommand.Parameters.Add("@codCuenta", SqlDbType.VarChar, 50).Value = (codCuenta == "" ? "0" : codCuenta);
+                        sqlCommand.Parameters.Add("@codGrupo", SqlDbType.VarChar, 50).Value = codGrupo;
+                        sqlCommand.Parameters.Add("@codTalla", SqlDbType.VarChar, 50).Value = codTalla;
+                        sqlCommand.Parameters.Add("@codColor", SqlDbType.VarChar, 50).Value = codColor;
+                        sqlCommand.Parameters.Add("@fechaIni", SqlDbType.VarChar, 50).Value = fechaIni;
+                        sqlCommand.Parameters.Add("@fechafin", SqlDbType.VarChar, 50).Value = fechafin;
+                        sqlCommand.CommandTimeout = 3000;
+
+                        sqlConnection.Open();
+
+                        sqlCommand.ExecuteNonQuery();
+                        respuesta = true;
+
+                    }
+                }
+            }
+            catch
+            {
+                respuesta = false;
+            }
+
+            return respuesta;
+
+        }
+
         public string update_RequerimientoCabe(int tipo, double idRequerimiento, int usuario)
         {
             string respuesta = "";

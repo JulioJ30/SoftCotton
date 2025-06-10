@@ -251,5 +251,26 @@ namespace SoftCotton.Views.Kardex
                 }
             }
         }
+
+        private void btnCongelar_Click(object sender, EventArgs e)
+        {
+            bool rpt = _kardexBL.RegistroCongeladoAcabados(cbxNivel.SelectedValue.ToString(), cmbCuenta.SelectedValue.ToString(), txtGrupo.Text, txtTalla.Text, txtColor.Text, dtpFechaDesde.Value.ToString("yyyyMMdd"), dtpFechaHasta.Value.ToString("yyyyMMdd"));
+            if (rpt)
+            {
+              ResponseMessage.Message("Congelado Correctamente", "INFORMATION");
+            }
+            else
+            {
+                ResponseMessage.Message("Ocurrio un error","WARNING");
+
+            }
+
+        }
+
+        private void cbxNivel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string codNivel = cbxNivel.SelectedValue.ToString();
+            btnCongelar.Enabled = codNivel == "07";
+        }
     }
 }
