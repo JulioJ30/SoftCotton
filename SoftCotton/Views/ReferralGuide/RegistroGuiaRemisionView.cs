@@ -12,6 +12,8 @@ using SoftCotton.Model.Maintenance;
 using Newtonsoft.Json;
 using System.Text;
 using DocumentFormat.OpenXml.Drawing;
+using SoftCotton.Model.Movimientos;
+using SoftCotton.Views.Maintenance;
 
 
 namespace SoftCotton.Views.ReferralGuide
@@ -305,6 +307,7 @@ namespace SoftCotton.Views.ReferralGuide
                     txtVoucher.Text = grCab.voucher.ToString();
                     txtOtrosMotivos.Text = grCab.otrosMotivoTraslado;
                     txtObservaciones.Text = grCab.observaciones;
+                    lblIdMovimientoTela.Text = (grCab.IdMovimientoCabecera ?? 0).ToString();
 
                     //if (grCab.tipoOrden == "C")
                     //{
@@ -400,6 +403,8 @@ namespace SoftCotton.Views.ReferralGuide
                 _grCabParam.codTipoCpte = cbxTipoCpte.SelectedValue.ToString();
                 _grCabParam.numCptePago = txtNumCpte.Text;
                 _grCabParam.usuarioReg = UserApplication.USUARIO;
+                _grCabParam.IdUsuario = UserApplication.ID_USUARIO;
+
 
                 if (cbxTipoOrden.SelectedIndex == 1 && rbIngreso.Checked)
                 {
@@ -418,9 +423,6 @@ namespace SoftCotton.Views.ReferralGuide
                     _grCabParam.tipoOrden = "P"; // produccion
                 }
 
-
-
- 
 
 
 
@@ -486,6 +488,18 @@ namespace SoftCotton.Views.ReferralGuide
                 {
                     _grCabParam.idMotivoTraslado = 8;
                 }
+                else if (chkM14.Checked)
+                {
+                    _grCabParam.idMotivoTraslado = 9;
+                }
+                else if (chkM15.Checked)
+                {
+                    _grCabParam.idMotivoTraslado = 10;
+                }
+                else if (chkM16.Checked)
+                {
+                    _grCabParam.idMotivoTraslado = 11;
+                }
                 //else
                 //{
                 //    _grCabParam.idMotivoTraslado = 0;
@@ -493,6 +507,51 @@ namespace SoftCotton.Views.ReferralGuide
 
                 _grCabParam.observaciones = txtObservaciones.Text.Trim();
                 _grCabParam.otrosMotivoTraslado = txtOtrosMotivos.Text.Trim();
+
+                // VALORES PARA MOVIMIENTOS
+                _grCabParam.IdMovimientoCabecera = Convert.ToInt32(lblIdMovimientoTela.Text.Trim() == string.Empty ? "0" : lblIdMovimientoTela.Text.Trim());
+                _grCabParam.IdMovimientoCabecera = _grCabParam.IdMovimientoCabecera == 0 ? null : _grCabParam.IdMovimientoCabecera;
+
+                // RECORREMOS
+                List<MovimientosDetalle> listDetalle = new List<MovimientosDetalle>();
+                int contador = 1;
+
+                foreach (DataGridViewRow row in dgvGRDetalle.Rows)
+                {
+                    contador++;
+                    if (contador <= dgvGRDetalle.RowCount)
+                    {
+                        MovimientosDetalle param = new MovimientosDetalle();
+
+                        string CodigoProducto = row.Cells["dgvTxtCodigoProducto"].Value.ToString();
+                        string PartidaProveedor = row.Cells["DgvPartidaProveedor"].Value != null ? row.Cells["DgvPartidaProveedor"].Value.ToString() : "";
+                        int? IdPedidoColor = null;
+                        if (row.Cells["dgvIdPedidoColor"].Value != null)
+                        {
+                            IdPedidoColor = Convert.ToInt32(row.Cells["dgvIdPedidoColor"].Value.ToString());
+                        }
+
+
+                        string[] PartesCodigo = CodigoProducto.Split('.');
+
+                        param.CodigoNivel = PartesCodigo[0].ToString();
+                        param.CodGrupo = PartesCodigo[1].ToString();
+                        param.CodTalla = PartesCodigo[2].ToString();
+                        param.CodColor = PartesCodigo[3].ToString();
+                        param.Cantidad = row.Cells["dgvDecCantidad"].Value.ToString();
+                        param.Comentario = "COMENTARIO CARGADO";
+                        param.IdPedidoColor = IdPedidoColor;
+
+                        //param.IdPedidoColor = row.Cells["dgvTxtSecuenciaBD"].Value.ToString();
+                        param.PartidaProveedor = PartidaProveedor;
+
+                        listDetalle.Add(param);
+                    }
+                   
+
+                }
+
+                _grCabParam.ListDetalle = listDetalle;
 
                 Procesar(_grCabParam);
             }
@@ -504,6 +563,7 @@ namespace SoftCotton.Views.ReferralGuide
 
             if (responseGeneral.idResponse > 0)
             {
+                lblIdMovimientoTela.Text = responseGeneral.id.ToString();
                 ProcesarDetalle(Empresa.ID_EMPRESA, parametro.serie, parametro.numero, parametro.tipoOrden);
             }
             else
@@ -584,6 +644,13 @@ namespace SoftCotton.Views.ReferralGuide
                     _grDetParam.cantidadIngresada = Convert.ToDecimal(row.Cells["dgvDecCantIngresada"].Value);
                     _grDetParam.pesoIngresado = Convert.ToDecimal(row.Cells["dgvDecPesoIngresado"].Value);
                     _grDetParam.OP = row.Cells["OP"].Value.ToString();
+
+                    _grDetParam.IdPedidoColor = row.Cells["dgvIdPedidoColor"].Value != null && row.Cells["dgvIdPedidoColor"].Value.ToString() != ""
+                        ? Convert.ToInt32(row.Cells["dgvIdPedidoColor"].Value)
+                        : (int?)null;
+
+                    _grDetParam.PartidaProveedor = row.Cells["DgvPartidaProveedor"].Value != null ? row.Cells["DgvPartidaProveedor"].Value.ToString() : "";
+
 
 
 
@@ -718,6 +785,14 @@ namespace SoftCotton.Views.ReferralGuide
 
                 dgvGRDetalle.Rows[index].Cells["dgvIntIdOC"].Value = item.idOrden;
                 dgvGRDetalle.Rows[index].Cells["OP"].Value = item.OP;
+
+
+                dgvGRDetalle.Rows[index].Cells["dgvIdPedidoColor"].Value = item.IdPedidoColor;
+                dgvGRDetalle.Rows[index].Cells["dgvPedidoColor"].Value = item.PedidoColor;
+                dgvGRDetalle.Rows[index].Cells["DgvPartidaProveedor"].Value = item.PartidaProveedor;
+
+
+
 
 
                 PintarDataGridDetalle(index);
@@ -1355,6 +1430,23 @@ namespace SoftCotton.Views.ReferralGuide
             {
                 GuardarCambios();
             }
+            //else if (e.Control && e.KeyCode == Keys.I)
+            //{
+            //    BuscarPedidosColorView objFormulario = new BuscarPedidosColorView();
+            //    objFormulario.ShowDialog();
+
+            //    if (objFormulario.idPedidoColorParam != 0)
+            //    {
+            //        dgvGRDetalle.Rows[]
+
+            //        txtPedido.Text = objFormulario.pedidoParam;
+            //        txtEstilo.Text = objFormulario.estiloParam;
+            //        txtPrograma.Text = objFormulario.programaParam;
+            //        txtColorPedido.Text = objFormulario.colorParam;
+
+            //        IdPedidoColorParam = objFormulario.idPedidoColorParam;
+            //    }
+            //}
         }
 
 
@@ -1941,6 +2033,61 @@ namespace SoftCotton.Views.ReferralGuide
 
         private void rbSalida_CheckedChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void dgvGRDetalle_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgvGRDetalle_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //newRow.Cells["dgvTxtIdDet"].Value
+            //    BuscarPedidosColorView objFormulario = new BuscarPedidosColorView();
+            //    objFormulario.ShowDialog();
+
+            //    if (objFormulario.idPedidoColorParam != 0)
+            //    {
+            //        dgvGRDetalle.Rows[]
+
+            //        txtPedido.Text = objFormulario.pedidoParam;
+            //        txtEstilo.Text = objFormulario.estiloParam;
+            //        txtPrograma.Text = objFormulario.programaParam;
+            //        txtColorPedido.Text = objFormulario.colorParam;
+
+            //        IdPedidoColorParam = objFormulario.idPedidoColorParam;
+            //    }
+
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0) // Asegúrate de no estar en header
+            {
+                var columna = dgvGRDetalle.Columns[e.ColumnIndex];
+
+                if (columna.Name == "dgvPedidoColor")
+                {
+                    // Aquí va tu lógica si se hizo clic en la celda "cellBoton"
+                    //MessageBox.Show("¡Hiciste clic en cellBoton!");
+
+                    // Ejemplo: abrir el formulario y asignar valores
+                    BuscarPedidosColorView objFormulario = new BuscarPedidosColorView();
+                    objFormulario.ShowDialog();
+
+                    if (objFormulario.idPedidoColorParam != 0)
+                    {
+                        //txtPedido.Text = objFormulario.pedidoParam;
+                        //txtEstilo.Text = objFormulario.estiloParam;
+                        //txtPrograma.Text = objFormulario.programaParam;
+                        //txtColorPedido.Text = objFormulario.colorParam;
+
+                        dgvGRDetalle.Rows[e.RowIndex].Cells["dgvIdPedidoColor"].Value = objFormulario.idPedidoColorParam;
+                        dgvGRDetalle.Rows[e.RowIndex].Cells["dgvPedidoColor"].Value = $"{objFormulario.pedidoParam} {objFormulario.colorParam} {objFormulario.estiloParam} {objFormulario.programaParam}";
+                        //dgvGRDetalle.Rows[e.RowIndex].Cells["DgvPartidaProveedor"].Value = objFormulario.idPedidoColorParam;
+
+
+                        //dgvGRDetalle.CurrentRow.Cells["dgvTxtTotal"].Value
+                    }
+                }
+            }
 
         }
     }

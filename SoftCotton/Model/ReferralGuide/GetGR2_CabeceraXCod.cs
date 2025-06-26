@@ -99,6 +99,7 @@ namespace SoftCotton.Model.ReferralGuide
 
         public string DamDs { get; set; }
         public string cuo { get; set; }
+        public int? IdMovimientoCabecera { get; set; }
 
 
 

@@ -46,5 +46,12 @@ namespace SoftCotton.Model.ReferralGuide
         public decimal cantidadSaldo { get; set; }
 
         public int idOrden { get; set; }
+
+        public string PedidoColor { get; set; }
+        public string PartidaProveedor { get; set; }
+        public int? IdPedidoColor { get; set; }
+
+
+
     }
 }

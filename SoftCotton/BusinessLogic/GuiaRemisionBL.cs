@@ -26,9 +26,9 @@ namespace SoftCotton.BusinessLogic
         {
             return _guiaRemisionRepository.Get2_CabeceraXCod(idEmpresa, serie, numero, tipoorden);
         }
-        public List<GetGR3_DetalleXCod> Get3_DetalleXCod(int idEmpresa, string serie, string numero, string tipoOrden)
+        public List<GetGR3_DetalleXCod> Get3_DetalleXCod(int idEmpresa, string serie, string numero, string tipoOrden,int opcion = 3)
         {
-            return _guiaRemisionRepository.Get3_DetalleXCod(idEmpresa, serie, numero, tipoOrden);
+            return _guiaRemisionRepository.Get3_DetalleXCod(idEmpresa, serie, numero, tipoOrden,opcion);
         }
         public List<GetGR4_TipoCptes> Get4_TipoCptes()
         {

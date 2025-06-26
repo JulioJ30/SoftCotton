@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SoftCotton.Model.Movimientos;
 
 namespace SoftCotton.Model.ReferralGuide
 {
@@ -33,6 +34,12 @@ namespace SoftCotton.Model.ReferralGuide
         public string respuestaSunat { get; set; }
         public string otrosMotivoTraslado { get; set; }
         public string codTipoTransporte { get; set; }
+
+
+        public int?  IdMovimientoCabecera { get; set; }
+        public List<MovimientosDetalle> ListDetalle = new List<MovimientosDetalle>();
+
+        public int? IdUsuario { get; set; }
 
 
 
@@ -67,6 +74,9 @@ namespace SoftCotton.Model.ReferralGuide
             codTipoTransporte = "";
 
 
+            IdMovimientoCabecera = null;
+            ListDetalle = new List<MovimientosDetalle>();
+            IdUsuario = 0;
 
         }
 

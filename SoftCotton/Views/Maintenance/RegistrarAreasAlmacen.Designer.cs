@@ -85,7 +85,7 @@
             this.chkEstado.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkEstado.Location = new System.Drawing.Point(703, 42);
             this.chkEstado.Name = "chkEstado";
-            this.chkEstado.Size = new System.Drawing.Size(67, 23);
+            this.chkEstado.Size = new System.Drawing.Size(78, 21);
             this.chkEstado.TabIndex = 7;
             this.chkEstado.Text = "Estado:";
             this.chkEstado.UseVisualStyleBackColor = true;
@@ -96,7 +96,7 @@
             this.txtResumida.Location = new System.Drawing.Point(442, 43);
             this.txtResumida.MaxLength = 30;
             this.txtResumida.Name = "txtResumida";
-            this.txtResumida.Size = new System.Drawing.Size(259, 24);
+            this.txtResumida.Size = new System.Drawing.Size(259, 23);
             this.txtResumida.TabIndex = 6;
             // 
             // txtDescripcion
@@ -105,7 +105,7 @@
             this.txtDescripcion.Location = new System.Drawing.Point(82, 43);
             this.txtDescripcion.MaxLength = 250;
             this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(354, 24);
+            this.txtDescripcion.Size = new System.Drawing.Size(354, 23);
             this.txtDescripcion.TabIndex = 5;
             // 
             // txtCodigo
@@ -114,7 +114,7 @@
             this.txtCodigo.Enabled = false;
             this.txtCodigo.Location = new System.Drawing.Point(6, 43);
             this.txtCodigo.Name = "txtCodigo";
-            this.txtCodigo.Size = new System.Drawing.Size(70, 24);
+            this.txtCodigo.Size = new System.Drawing.Size(70, 23);
             this.txtCodigo.TabIndex = 4;
             // 
             // label3
@@ -122,7 +122,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(445, 22);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(66, 19);
+            this.label3.Size = new System.Drawing.Size(75, 17);
             this.label3.TabIndex = 2;
             this.label3.Text = "Resumida:";
             // 
@@ -131,7 +131,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(85, 22);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 19);
+            this.label2.Size = new System.Drawing.Size(86, 17);
             this.label2.TabIndex = 1;
             this.label2.Text = "Descripción:";
             // 
@@ -140,7 +140,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(9, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 19);
+            this.label1.Size = new System.Drawing.Size(56, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Codigo:";
             // 
@@ -164,10 +164,10 @@
             // lblCantRegistros
             // 
             this.lblCantRegistros.AutoSize = true;
-            this.lblCantRegistros.Font = new System.Drawing.Font("Poppins SemiBold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCantRegistros.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCantRegistros.Location = new System.Drawing.Point(623, 52);
             this.lblCantRegistros.Name = "lblCantRegistros";
-            this.lblCantRegistros.Size = new System.Drawing.Size(143, 19);
+            this.lblCantRegistros.Size = new System.Drawing.Size(188, 17);
             this.lblCantRegistros.TabIndex = 272;
             this.lblCantRegistros.Text = "Cantidad de Registros: 0";
             // 
@@ -183,7 +183,7 @@
             this.dgvListado.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(131)))), ((int)(((byte)(243)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Poppins", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(158)))), ((int)(((byte)(247)))));
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
@@ -199,7 +199,7 @@
             this.Eliminar});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Poppins", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(158)))), ((int)(((byte)(247)))));
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -212,16 +212,16 @@
             this.dgvListado.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Poppins", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(158)))), ((int)(((byte)(247)))));
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvListado.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvListado.RowHeadersWidth = 5;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Poppins", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgvListado.RowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.dgvListado.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Poppins", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgvListado.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgvListado.RowTemplate.Height = 30;
             this.dgvListado.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvListado.Size = new System.Drawing.Size(763, 347);
@@ -232,6 +232,7 @@
             // 
             this.Codigo.DataPropertyName = "Codigo";
             this.Codigo.HeaderText = "Codigo";
+            this.Codigo.MinimumWidth = 6;
             this.Codigo.Name = "Codigo";
             this.Codigo.ReadOnly = true;
             // 
@@ -239,6 +240,7 @@
             // 
             this.Descripcion.DataPropertyName = "Descripcion";
             this.Descripcion.HeaderText = "Descripcion";
+            this.Descripcion.MinimumWidth = 6;
             this.Descripcion.Name = "Descripcion";
             this.Descripcion.ReadOnly = true;
             // 
@@ -246,6 +248,7 @@
             // 
             this.Resumida.DataPropertyName = "Resumida";
             this.Resumida.HeaderText = "Resumida";
+            this.Resumida.MinimumWidth = 6;
             this.Resumida.Name = "Resumida";
             this.Resumida.ReadOnly = true;
             // 
@@ -253,6 +256,7 @@
             // 
             this.Estado.DataPropertyName = "Estado";
             this.Estado.HeaderText = "Estado";
+            this.Estado.MinimumWidth = 6;
             this.Estado.Name = "Estado";
             this.Estado.ReadOnly = true;
             this.Estado.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -263,6 +267,7 @@
             this.Editar.DataPropertyName = "Editar";
             this.Editar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Editar.HeaderText = "Editar";
+            this.Editar.MinimumWidth = 6;
             this.Editar.Name = "Editar";
             this.Editar.ReadOnly = true;
             this.Editar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -275,6 +280,7 @@
             this.Eliminar.DataPropertyName = "Eliminar";
             this.Eliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Eliminar.HeaderText = "Eliminar";
+            this.Eliminar.MinimumWidth = 6;
             this.Eliminar.Name = "Eliminar";
             this.Eliminar.ReadOnly = true;
             this.Eliminar.Text = "Eliminar";
@@ -286,7 +292,7 @@
             this.txtFiltro.Location = new System.Drawing.Point(6, 44);
             this.txtFiltro.MaxLength = 250;
             this.txtFiltro.Name = "txtFiltro";
-            this.txtFiltro.Size = new System.Drawing.Size(313, 24);
+            this.txtFiltro.Size = new System.Drawing.Size(313, 23);
             this.txtFiltro.TabIndex = 8;
             // 
             // label4
@@ -294,7 +300,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(9, 23);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(49, 19);
+            this.label4.Size = new System.Drawing.Size(56, 17);
             this.label4.TabIndex = 3;
             this.label4.Text = "Buscar:";
             // 
@@ -340,10 +346,11 @@
             this.btnGuardar.Size = new System.Drawing.Size(148, 58);
             this.btnGuardar.TabIndex = 270;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
+            this.btnGuardar.Paint += new System.Windows.Forms.PaintEventHandler(this.btnGuardar_Paint);
             // 
             // RegistrarAreasAlmacen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(784, 574);
@@ -352,7 +359,7 @@
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Font = new System.Drawing.Font("Poppins", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "RegistrarAreasAlmacen";

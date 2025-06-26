@@ -233,6 +233,7 @@
     <Compile Include="Model\Maintenance\GetMant54_Programas.cs" />
     <Compile Include="Model\Maintenance\GetMant55_Pedidos.cs" />
     <Compile Include="Model\Maintenance\GetMant56_PedidosColor.cs" />
+    <Compile Include="Model\Maintenance\GetMant73_TiposMovimientos.cs" />
     <Compile Include="Model\Maintenance\GetMantRpte2_Productos.cs" />
     <Compile Include="Model\Maintenance\GetUbigeos.cs" />
     <Compile Include="Model\Maintenance\SetAreasAlmacen.cs" />
@@ -247,6 +248,9 @@
     <Compile Include="Model\Maintenance\SetProgramaParam.cs" />
     <Compile Include="Model\Maintenance\SetServicioParam.cs" />
     <Compile Include="Model\Maintenance\SetUMParam.cs" />
+    <Compile Include="Model\Movimientos\MovimientosCabecera.cs" />
+    <Compile Include="Model\Movimientos\MovimientosDetalle.cs" />
+    <Compile Include="Model\Movimientos\RegistroTransformacionEntity.cs" />
     <Compile Include="Model\PurchaseOrder\GetOC19_Reporte.cs" />
     <Compile Include="Model\ReferralGuide\EnvioGuiaRemisionParam.cs" />
     <Compile Include="Model\ReferralGuide\GetGR7_CierrePeriodo.cs" />
@@ -336,6 +340,7 @@
     <Compile Include="Model\Shared\GetShared1_ProvClientes.cs" />
     <Compile Include="Model\Shared\GetShared3_BuscarCuenta.cs" />
     <Compile Include="Model\Shared\GetShared4_BuscarGR.cs" />
+    <Compile Include="Model\Transformacion\DetalleTransformacionEntity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\KardexValorizado\Rpt_KardexValorizadoNuevo.cs">
@@ -407,6 +412,7 @@
     <Compile Include="Repository\GuiaRemisionExportacionRepository.cs" />
     <Compile Include="Repository\KardexRepository.cs" />
     <Compile Include="Repository\MantenimientoRepository.cs" />
+    <Compile Include="Repository\MovimientosRepository.cs" />
     <Compile Include="Repository\OrdenServicioRepository.cs" />
     <Compile Include="Repository\OrdenCompraRepository.cs" />
     <Compile Include="Repository\GuiaRemisionRepository.cs" />
@@ -559,6 +565,12 @@
     <Compile Include="Views\Maintenance\BuscarProgramasView.Designer.cs">
       <DependentUpon>BuscarProgramasView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Maintenance\BuscarTallas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarTallas.Designer.cs">
+      <DependentUpon>BuscarTallas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Maintenance\RegistrarAreasAlmacen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -690,6 +702,42 @@
     </Compile>
     <Compile Include="Views\Maintenance\ReporteProductoView.Designer.cs">
       <DependentUpon>ReporteProductoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Movimientos\BusquedaMovimientosTela.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Movimientos\BusquedaMovimientosTela.Designer.cs">
+      <DependentUpon>BusquedaMovimientosTela.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Movimientos\IngresoDeProductosPorNivel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Movimientos\IngresoDeProductosPorNivel.Designer.cs">
+      <DependentUpon>IngresoDeProductosPorNivel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Movimientos\IngresoDeTelas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Movimientos\IngresoDeTelas.Designer.cs">
+      <DependentUpon>IngresoDeTelas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Movimientos\SalidaDeTela.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Movimientos\SalidaDeTela.Designer.cs">
+      <DependentUpon>SalidaDeTela.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Movimientos\Transformacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Movimientos\Transformacion.Designer.cs">
+      <DependentUpon>Transformacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Movimientos\TransformacionTallas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Movimientos\TransformacionTallas.Designer.cs">
+      <DependentUpon>TransformacionTallas.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\PurchaseOrder\ReporteOCView.cs">
       <SubType>Form</SubType>
@@ -1019,6 +1067,9 @@
     <EmbeddedResource Include="Views\Maintenance\BuscarProgramasView.resx">
       <DependentUpon>BuscarProgramasView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\BuscarTallas.resx">
+      <DependentUpon>BuscarTallas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Maintenance\RegistrarAreasAlmacen.resx">
       <DependentUpon>RegistrarAreasAlmacen.cs</DependentUpon>
     </EmbeddedResource>
@@ -1087,6 +1138,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Maintenance\ReporteProductoView.resx">
       <DependentUpon>ReporteProductoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Movimientos\BusquedaMovimientosTela.resx">
+      <DependentUpon>BusquedaMovimientosTela.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Movimientos\IngresoDeProductosPorNivel.resx">
+      <DependentUpon>IngresoDeProductosPorNivel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Movimientos\IngresoDeTelas.resx">
+      <DependentUpon>IngresoDeTelas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Movimientos\Transformacion.resx">
+      <DependentUpon>Transformacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Movimientos\TransformacionTallas.resx">
+      <DependentUpon>TransformacionTallas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\PurchaseOrder\ReporteOCView.resx">
       <DependentUpon>ReporteOCView.cs</DependentUpon>
