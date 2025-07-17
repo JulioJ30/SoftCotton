@@ -15,6 +15,8 @@ using SoftCotton.Model.ReferralGuide;
 using SoftCotton.Model.Transformacion;
 using SoftCotton.Repository;
 using SoftCotton.Util;
+using SoftCotton.Views.PurchaseOrder;
+using SoftCotton.Views.ServiceOrder;
 using static ClosedXML.Excel.XLPredefinedFormat;
 
 namespace SoftCotton.Views.Movimientos
@@ -24,6 +26,7 @@ namespace SoftCotton.Views.Movimientos
         GuiaRemisionBL _referralGuideBL;
         MantenimientoRepository _mantenimientoRepository;
         List<GetGR3_DetalleXCod> grDetsGenerales;
+        List<OrdenCompraServicio> listOrdenCompraServicio = new List<OrdenCompraServicio>();
 
 
         public Transformacion()
@@ -32,7 +35,13 @@ namespace SoftCotton.Views.Movimientos
 
             _referralGuideBL = new GuiaRemisionBL();
             _mantenimientoRepository = new MantenimientoRepository();
+        }
 
+
+        private void Transformacion_Load(object sender, EventArgs e)
+        {
+            ListarNiveles();
+            ListarTiposOrden();
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -87,10 +96,18 @@ namespace SoftCotton.Views.Movimientos
 
         }
 
-        private void Transformacion_Load(object sender, EventArgs e)
+        private void ListarTiposOrden()
         {
-            ListarNiveles();
+            //  AGREGAMOS
+            listOrdenCompraServicio.Add(new OrdenCompraServicio { IdTipo = 1, Tipo = "Orden Compra" });
+            listOrdenCompraServicio.Add(new OrdenCompraServicio { IdTipo = 2, Tipo = "Orden Servicio" });
+
+            // DESTINO
+            cboTipoOrdenCompraServicio.DataSource = listOrdenCompraServicio;
+            cboTipoOrdenCompraServicio.DisplayMember = "Tipo";
+            cboTipoOrdenCompraServicio.ValueMember = "IdTipo";
         }
+
 
         private void btnAgregarItem_Click(object sender, EventArgs e)
         {
@@ -161,5 +178,93 @@ namespace SoftCotton.Views.Movimientos
                 frm.ShowDialog();
             }
         }
+
+
+        private bool ValidarCrearOrden()
+        {
+            bool validacion = false;
+            string valorNivel = cboNivelDestino.SelectedValue.ToString();
+
+            if ((valorNivel == string.Empty || valorNivel == "00") && !validacion)
+            {
+                ResponseMessage.Message("Ingrese el nivel de destino por favor", "WARNING");
+                validacion = true;
+            }
+
+            if (txtSerieGuiaDestino.Text.Trim() == string.Empty && !validacion)
+            {
+                ResponseMessage.Message("Ingresa la serie Guia de destino por favor", "WARNING");
+                validacion = true;
+            }
+
+            if (txtNumeroGuiaDestino.Text.Trim() == string.Empty && !validacion)
+            {
+                ResponseMessage.Message("Ingresa el número Guia de destino por favor", "WARNING");
+                validacion = true;
+            }
+
+            //if (txtNumeroGuiaDestino.Text.Trim() == string.Empty && !validacion)
+            //{
+            //    ResponseMessage.Message("Ingresa el número Guia de destino por favor", "WARNING");
+            //    validacion = true;
+            //}
+
+
+            return validacion;
+        }
+
+        private void btnGenerarOrden_Click(object sender, EventArgs e)
+        {
+
+            if(ValidarCrearOrden())
+            {
+                return;
+            }
+
+
+            //obtenemos valor
+            string tipo = cboTipoOrdenCompraServicio.SelectedValue.ToString();
+                
+            // ORDEN COMPRA
+            if (tipo == "1")
+            {
+                RegistroOCView frmOrdenCompra = new RegistroOCView();
+                frmOrdenCompra.FlgCrearDeTransformacionInput = true;
+                frmOrdenCompra.SerieGuia = txtSerieGuiaOrigen.Text.Trim();
+                frmOrdenCompra.NumeroGuia = int.Parse(txtNumeroGuiaOrigen.Text.Trim());
+                frmOrdenCompra.RucGuia = txtProveedorGuiaOrigen.Text.Trim();
+
+                frmOrdenCompra.SerieGuiaDestino     = txtSerieGuiaDestino.Text.Trim();
+                frmOrdenCompra.NumeroGuiaDestino    = int.Parse(txtNumeroGuiaDestino.Text.Trim());
+
+                frmOrdenCompra.ShowDialog();
+            }
+
+
+            // ORDEN SERVICIO
+            if (tipo == "2")
+            {
+                RegistroOSView frmOrdenServicio = new RegistroOSView();
+                frmOrdenServicio.FlgCrearDeTransformacionInput = true;
+                frmOrdenServicio.SerieGuia = txtSerieGuiaOrigen.Text.Trim();
+                frmOrdenServicio.NumeroGuia = int.Parse(txtNumeroGuiaOrigen.Text.Trim());
+                frmOrdenServicio.RucGuia = txtProveedorGuiaOrigen.Text.Trim();
+
+                frmOrdenServicio.SerieGuiaDestino = txtSerieGuiaDestino.Text.Trim();
+                frmOrdenServicio.NumeroGuiaDestino = int.Parse(txtNumeroGuiaDestino.Text.Trim());
+
+                frmOrdenServicio.ShowDialog();
+            }
+
+        }
     }
+
+    public class OrdenCompraServicio
+    {
+        public int IdTipo { get; set; }
+        public string Tipo { get; set; }
+
+
+    }
+
 }

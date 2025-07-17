@@ -1323,11 +1323,16 @@ namespace SoftCotton.Views.ReferralGuide
 
             // OBTENEMOS ITEMS
             List<Items> itemsAgregar = new List<Items>();
+            int SERIE = 0;
             foreach (var item in grDetsGenerales)
             {
+                SERIE++;
                 Items itemNew = new Items();
+                
+                //itemNew.codigo_dam = grCabGenerales.DamDs;
+                //itemNew.codigo_dam = SERIE.ToString("D4")+"/"+grCabGenerales.DamDs;
+                itemNew.codigo_dam = "1/" + grCabGenerales.DamDs;
 
-                itemNew.codigo_dam = grCabGenerales.DamDs;
                 itemNew.unidad_de_medida = (grCabGenerales.codMotivoTrasladoSunat == "08" || grCabGenerales.codMotivoTrasladoSunat == "09") ? item.codUmDam : item.codUM;
 
                 itemNew.codigo = item.codigoProducto;

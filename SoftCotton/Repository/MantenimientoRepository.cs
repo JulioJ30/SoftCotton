@@ -1562,7 +1562,7 @@ namespace SoftCotton.Repository
                     sqlCommand.Parameters.Add("@apellido2", SqlDbType.VarChar, 20).Value = parametros.apellido2;
                     sqlCommand.Parameters.Add("@codTipoPC", SqlDbType.VarChar, 1).Value = parametros.codTipoPC;
                     sqlCommand.Parameters.Add("@telefono", SqlDbType.VarChar, 11).Value = parametros.telefono;
-                    sqlCommand.Parameters.Add("@direccion", SqlDbType.VarChar, 40).Value = parametros.direccion;
+                    sqlCommand.Parameters.Add("@direccion", SqlDbType.VarChar, 5000).Value = parametros.direccion;
                     sqlCommand.Parameters.Add("@contacto", SqlDbType.VarChar, 100).Value = parametros.contacto;
                     sqlCommand.Parameters.Add("@email", SqlDbType.VarChar, 100).Value = parametros.email;
 

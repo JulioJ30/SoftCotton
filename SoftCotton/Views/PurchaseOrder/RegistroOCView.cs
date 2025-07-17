@@ -1,7 +1,10 @@
 ﻿using SoftCotton.BusinessLogic;
 using SoftCotton.Model.PurchaseOrder;
+using SoftCotton.Model.Transformacion;
 using SoftCotton.Reports.PurchaseOrder.OrdenCompra;
+using SoftCotton.Repository;
 using SoftCotton.Util;
+using SoftCotton.Views.ReferralGuide;
 using SoftCotton.Views.Shared;
 using System;
 using System.Collections.Generic;
@@ -29,6 +32,16 @@ namespace SoftCotton.Views.PurchaseOrder
         ConstantesBL _constantesBL;
         List<Constantes> CONSTANTES;
         Constantes constanteIGV = new Constantes();
+
+        // VARIABLES DE ENTRADA
+        public bool FlgCrearDeTransformacionInput = false;
+        public string SerieGuia = string.Empty;
+        public int NumeroGuia = 0;
+        public string RucGuia = string.Empty;
+
+        public string SerieGuiaDestino = string.Empty;
+        public int NumeroGuiaDestino = 0;
+
 
         public RegistroOCView()
         {
@@ -78,9 +91,67 @@ namespace SoftCotton.Views.PurchaseOrder
 
 
             txtCodigo.Focus();
+
+            CargarCreacionDeOrdenCompraDeTransformacion();
         }
 
+
+        private void CargarCreacionDeOrdenCompraDeTransformacion()
+        {
+            if (FlgCrearDeTransformacionInput)
+            {
+
+                NuevoRegistro();
+
+                //  CARGAMOS DATA
+                GuiaRemisionRepository guiaRemisionRepository = new GuiaRemisionRepository();
+                DetalleTransformacionFiltroPorBusquedaEntity filtros = new DetalleTransformacionFiltroPorBusquedaEntity();
+                filtros.Serie = SerieGuia;
+                filtros.Numero = NumeroGuia;
+                filtros.Proveedor = RucGuia;
+
+                List<DetalleTransformacionEntity> detalleTransformacion = guiaRemisionRepository.GetTransformacionDetPorFiltrosSerieNumeroProveedor(filtros).ToList();
+
+                dgvOCDetalle.Rows.Clear();
+
+                //List<GetOS8_OSDetXCodigo> ocDets = _ordenServicioBL.Get8_OSDetXCodigo(idEmpresa, codigoOC);
+
+                foreach (var item in detalleTransformacion)
+                {
+                    int index = dgvOCDetalle.Rows.Add();
+
+                    dgvOCDetalle.Rows[index].Cells["dgvTxtSecuenciaBD"].Value = item.Item;
+
+                    dgvOCDetalle.Rows[index].Cells["dgvTxtCodNivel"].Value = item.CodNivel;
+                    dgvOCDetalle.Rows[index].Cells["dgvTxtCodGrupo"].Value = item.CodGrupo;
+                    dgvOCDetalle.Rows[index].Cells["dgvTxtCodTalla"].Value = item.CodTalla;
+                    dgvOCDetalle.Rows[index].Cells["dgvTxtCodColor"].Value = item.CodColor;
+                    dgvOCDetalle.Rows[index].Cells["dgvTxtProducto"].Value = item.Producto;
+                    dgvOCDetalle.Rows[index].Cells["dgvDecCantidad"].Value = item.Cantidad;
+                    dgvOCDetalle.Rows[index].Cells["dgvTxtUM"].Value = item.CodUM;
+                    dgvOCDetalle.Rows[index].Cells["dgvDescPrecioUnitario"].Value = 0;
+                    //dgvOCDetalle.Rows[index].Cells["dgvDecIGV"].Value = item.igv;
+
+                    dgvOCDetalle.Rows[index].Cells["dgvTxtObs1"].Value = item.Comentario;
+                    //dgvOCDetalle.Rows[index].Cells["dgvTxtObs2"].Value = item.obs2;
+                    //dgvOCDetalle.Rows[index].Cells["dgvTxtObs3"].Value = item.obs3;
+                    //dgvOCDetalle.Rows[index].Cells["dgvTxtObs4"].Value = item.obs4;
+                    //dgvOCDetalle.Rows[index].Cells["dgvTxtObs5"].Value = item.obs5;
+
+                    dgvOCDetalle.Rows[index].Cells["dgvTxtTotal"].Value = Math.Round((item.Cantidad * 0), 3);
+
+                }
+
+            }
+        }
+
+
         private void btnNuevo_Click(object sender, EventArgs e)
+        {
+            NuevoRegistro();
+        }
+
+        private void NuevoRegistro()
         {
             ListarTiposAnulados();
             Limpiar();
@@ -596,6 +667,18 @@ namespace SoftCotton.Views.PurchaseOrder
 
                 dgvOCDetalle.Rows.Clear();
                 ListarDetalle(Empresa.ID_EMPRESA, Convert.ToInt32(txtCodigo.Text));
+            }
+
+            // SI CREO CORRECTAMENTE
+            if (FlgCrearDeTransformacionInput)
+            {
+                RegistroGuiaRemisionView frmGuia = new RegistroGuiaRemisionView();
+                frmGuia.FlgCrearDeTransformacionInput = true;
+                frmGuia.SerieGuiaDestinoInput = SerieGuiaDestino;
+                frmGuia.NumeroGuiaDestinoInput = NumeroGuiaDestino;
+                frmGuia.TipoGuiaInput = "C";
+                frmGuia.NumeroOrdenCompraServicioInput = idOC;
+                frmGuia.ShowDialog();
             }
 
         }

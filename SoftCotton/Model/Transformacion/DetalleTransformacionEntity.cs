@@ -28,6 +28,15 @@ namespace SoftCotton.Model.Transformacion
         public float Cantidad { get; set; }
         public string Comentario { get; set; } = string.Empty;
 
+        public string CodNivel { get; set; } = string.Empty;
+        public string CodGrupo { get; set; } = string.Empty;
+        public string CodColor { get; set; } = string.Empty;
+        public string CodTalla { get; set; } = string.Empty;
+        public string CodUM { get; set; } = string.Empty;
+
+
+
+
     }
 
 

@@ -28,6 +28,8 @@ namespace SoftCotton.Model.ReferralGuide
 
         public int? IdPedidoColor { get; set; }
         public string PartidaProveedor { get; set; }
+        public string destCodigoPC { get; set; }
+
 
 
 
@@ -51,6 +53,8 @@ namespace SoftCotton.Model.ReferralGuide
             OP = "";
             IdPedidoColor = null;
             PartidaProveedor = "";
+            destCodigoPC = "";
+
         }
     }
 }

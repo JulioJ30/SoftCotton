@@ -77,6 +77,24 @@ namespace SoftCotton.Repository
 
         }
 
+        public IEnumerable<DetalleTransformacionEntity> GetTransformacionDetPorFiltrosSerieNumeroProveedor(DetalleTransformacionFiltroPorBusquedaEntity parametro)
+        {
+
+            using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+            {
+
+                var sp_parametros = new DynamicParameters();
+                sp_parametros.Add("@Serie", parametro.Serie, DbType.String, ParameterDirection.Input);
+                sp_parametros.Add("@Numero", parametro.Numero, DbType.Int32, ParameterDirection.Input);
+                sp_parametros.Add("@Proveedor", parametro.Proveedor, DbType.String, ParameterDirection.Input);
+
+                return sqlConnection.Query<DetalleTransformacionEntity>("uspGetTransformacionDetPorFiltrosSerieNumeroProveedor",
+                                                    sp_parametros,
+                                                    commandType: CommandType.StoredProcedure);
+            }
+
+        }
+
         public GetGR2_CabeceraXCod Get2_CabeceraXCod(int idEmpresa, string serie, string numero, string tipoorden)
         {
 
@@ -635,7 +653,7 @@ namespace SoftCotton.Repository
 
                     sqlCommand.Parameters.Add("@IdPedidoColor", SqlDbType.Int).Value = parametros.IdPedidoColor;
                     sqlCommand.Parameters.Add("@PartidaProveedor", SqlDbType.VarChar).Value = parametros.PartidaProveedor;
-
+                    sqlCommand.Parameters.Add("@destCodigoPC", SqlDbType.VarChar).Value = parametros.destCodigoPC;
 
 
                     sqlConnection.Open();

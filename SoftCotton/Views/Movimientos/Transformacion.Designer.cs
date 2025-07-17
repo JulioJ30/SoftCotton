@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnBuscar = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -37,10 +38,10 @@
             this.txtSerieGuiaOrigen = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cboNivelOrigen = new System.Windows.Forms.ComboBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.cboNivelDestino = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnGenerarOrden = new System.Windows.Forms.Button();
+            this.btnAgregarItem = new System.Windows.Forms.Button();
             this.dgvOrigenItems = new System.Windows.Forms.DataGridView();
             this.item = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgvSecuencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,9 +50,6 @@
             this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dgvDestinoItems = new System.Windows.Forms.DataGridView();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.btnAgregarItem = new System.Windows.Forms.Button();
-            this.btnBuscar = new System.Windows.Forms.Button();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,8 +57,15 @@
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgvBtnTallas = new System.Windows.Forms.DataGridViewButtonColumn();
             this.DgvIdTransformacionDet = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.cboTipoOrdenCompraServicio = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtNumeroGuiaDestino = new System.Windows.Forms.TextBox();
+            this.txtSerieGuiaDestino = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrigenItems)).BeginInit();
             this.groupBox4.SuspendLayout();
@@ -85,6 +90,18 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Origen";
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.Image = global::SoftCotton.Properties.Resources.icon_buscar;
+            this.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBuscar.Location = new System.Drawing.Point(683, 44);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.btnBuscar.Size = new System.Drawing.Size(35, 33);
+            this.btnBuscar.TabIndex = 54;
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // label4
             // 
@@ -155,43 +172,53 @@
             this.cboNivelOrigen.Size = new System.Drawing.Size(227, 24);
             this.cboNivelOrigen.TabIndex = 0;
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.cboNivelDestino);
-            this.groupBox2.Location = new System.Drawing.Point(742, 12);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(256, 91);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Destino";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 24);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(41, 16);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Nivel ";
-            // 
             // cboNivelDestino
             // 
             this.cboNivelDestino.FormattingEnabled = true;
-            this.cboNivelDestino.Location = new System.Drawing.Point(6, 47);
+            this.cboNivelDestino.Location = new System.Drawing.Point(203, 47);
             this.cboNivelDestino.Name = "cboNivelDestino";
-            this.cboNivelDestino.Size = new System.Drawing.Size(244, 24);
+            this.cboNivelDestino.Size = new System.Drawing.Size(162, 24);
             this.cboNivelDestino.TabIndex = 2;
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btnGenerarOrden);
+            this.groupBox3.Controls.Add(this.btnAgregarItem);
             this.groupBox3.Controls.Add(this.dgvOrigenItems);
             this.groupBox3.Location = new System.Drawing.Point(12, 109);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(608, 388);
+            this.groupBox3.Size = new System.Drawing.Size(677, 388);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Origen Items";
+            // 
+            // btnGenerarOrden
+            // 
+            this.btnGenerarOrden.Image = global::SoftCotton.Properties.Resources.icon_refrescar;
+            this.btnGenerarOrden.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGenerarOrden.Location = new System.Drawing.Point(12, 21);
+            this.btnGenerarOrden.Name = "btnGenerarOrden";
+            this.btnGenerarOrden.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.btnGenerarOrden.Size = new System.Drawing.Size(203, 33);
+            this.btnGenerarOrden.TabIndex = 56;
+            this.btnGenerarOrden.Text = "Generar Orden C/S";
+            this.btnGenerarOrden.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnGenerarOrden.UseVisualStyleBackColor = true;
+            this.btnGenerarOrden.Click += new System.EventHandler(this.btnGenerarOrden_Click);
+            // 
+            // btnAgregarItem
+            // 
+            this.btnAgregarItem.Image = global::SoftCotton.Properties.Resources.icon_nuevo;
+            this.btnAgregarItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAgregarItem.Location = new System.Drawing.Point(544, 21);
+            this.btnAgregarItem.Name = "btnAgregarItem";
+            this.btnAgregarItem.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.btnAgregarItem.Size = new System.Drawing.Size(127, 33);
+            this.btnAgregarItem.TabIndex = 55;
+            this.btnAgregarItem.Text = "Agregar Item";
+            this.btnAgregarItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAgregarItem.UseVisualStyleBackColor = true;
+            this.btnAgregarItem.Click += new System.EventHandler(this.btnAgregarItem_Click);
             // 
             // dgvOrigenItems
             // 
@@ -206,7 +233,7 @@
             this.CodigoItem,
             this.Producto,
             this.Cantidad});
-            this.dgvOrigenItems.Location = new System.Drawing.Point(6, 21);
+            this.dgvOrigenItems.Location = new System.Drawing.Point(6, 60);
             this.dgvOrigenItems.MultiSelect = false;
             this.dgvOrigenItems.Name = "dgvOrigenItems";
             this.dgvOrigenItems.ReadOnly = true;
@@ -214,7 +241,7 @@
             this.dgvOrigenItems.RowHeadersWidth = 51;
             this.dgvOrigenItems.RowTemplate.Height = 24;
             this.dgvOrigenItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvOrigenItems.Size = new System.Drawing.Size(596, 361);
+            this.dgvOrigenItems.Size = new System.Drawing.Size(665, 322);
             this.dgvOrigenItems.TabIndex = 1;
             this.dgvOrigenItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrigenItems_CellContentClick);
             // 
@@ -267,9 +294,9 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.dgvDestinoItems);
-            this.groupBox4.Location = new System.Drawing.Point(626, 109);
+            this.groupBox4.Location = new System.Drawing.Point(695, 109);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(645, 388);
+            this.groupBox4.Size = new System.Drawing.Size(710, 388);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Destino Items";
@@ -288,52 +315,16 @@
             this.dataGridViewTextBoxColumn5,
             this.DgvBtnTallas,
             this.DgvIdTransformacionDet});
-            this.dgvDestinoItems.Location = new System.Drawing.Point(12, 21);
+            this.dgvDestinoItems.Location = new System.Drawing.Point(6, 21);
             this.dgvDestinoItems.MultiSelect = false;
             this.dgvDestinoItems.Name = "dgvDestinoItems";
             this.dgvDestinoItems.ReadOnly = true;
             this.dgvDestinoItems.RowHeadersVisible = false;
             this.dgvDestinoItems.RowHeadersWidth = 51;
             this.dgvDestinoItems.RowTemplate.Height = 24;
-            this.dgvDestinoItems.Size = new System.Drawing.Size(622, 361);
+            this.dgvDestinoItems.Size = new System.Drawing.Size(698, 361);
             this.dgvDestinoItems.TabIndex = 2;
             this.dgvDestinoItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDestinoItems_CellContentClick);
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.btnAgregarItem);
-            this.groupBox5.Location = new System.Drawing.Point(1004, 12);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(256, 91);
-            this.groupBox5.TabIndex = 4;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Acciones";
-            // 
-            // btnAgregarItem
-            // 
-            this.btnAgregarItem.Image = global::SoftCotton.Properties.Resources.icon_nuevo;
-            this.btnAgregarItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAgregarItem.Location = new System.Drawing.Point(6, 44);
-            this.btnAgregarItem.Name = "btnAgregarItem";
-            this.btnAgregarItem.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.btnAgregarItem.Size = new System.Drawing.Size(127, 33);
-            this.btnAgregarItem.TabIndex = 55;
-            this.btnAgregarItem.Text = "Agregar Item";
-            this.btnAgregarItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnAgregarItem.UseVisualStyleBackColor = true;
-            this.btnAgregarItem.Click += new System.EventHandler(this.btnAgregarItem_Click);
-            // 
-            // btnBuscar
-            // 
-            this.btnBuscar.Image = global::SoftCotton.Properties.Resources.icon_buscar;
-            this.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBuscar.Location = new System.Drawing.Point(683, 44);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.btnBuscar.Size = new System.Drawing.Size(35, 33);
-            this.btnBuscar.TabIndex = 54;
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -401,28 +392,102 @@
             this.DgvIdTransformacionDet.Visible = false;
             this.DgvIdTransformacionDet.Width = 125;
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.label7);
+            this.groupBox5.Controls.Add(this.label8);
+            this.groupBox5.Controls.Add(this.txtNumeroGuiaDestino);
+            this.groupBox5.Controls.Add(this.txtSerieGuiaDestino);
+            this.groupBox5.Controls.Add(this.label5);
+            this.groupBox5.Controls.Add(this.label6);
+            this.groupBox5.Controls.Add(this.cboNivelDestino);
+            this.groupBox5.Controls.Add(this.cboTipoOrdenCompraServicio);
+            this.groupBox5.Location = new System.Drawing.Point(742, 12);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(663, 91);
+            this.groupBox5.TabIndex = 4;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Datos Orden / Guia";
+            // 
+            // cboTipoOrdenCompraServicio
+            // 
+            this.cboTipoOrdenCompraServicio.FormattingEnabled = true;
+            this.cboTipoOrdenCompraServicio.Location = new System.Drawing.Point(6, 47);
+            this.cboTipoOrdenCompraServicio.Name = "cboTipoOrdenCompraServicio";
+            this.cboTipoOrdenCompraServicio.Size = new System.Drawing.Size(191, 24);
+            this.cboTipoOrdenCompraServicio.TabIndex = 3;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 28);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(94, 20);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "Tipo Orden";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(200, 24);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(38, 16);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Nivel";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(474, 30);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(86, 16);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Número Guia";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(370, 30);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(70, 16);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "Serie Guia";
+            // 
+            // txtNumeroGuiaDestino
+            // 
+            this.txtNumeroGuiaDestino.Location = new System.Drawing.Point(477, 49);
+            this.txtNumeroGuiaDestino.Name = "txtNumeroGuiaDestino";
+            this.txtNumeroGuiaDestino.Size = new System.Drawing.Size(126, 22);
+            this.txtNumeroGuiaDestino.TabIndex = 10;
+            // 
+            // txtSerieGuiaDestino
+            // 
+            this.txtSerieGuiaDestino.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtSerieGuiaDestino.Location = new System.Drawing.Point(373, 49);
+            this.txtSerieGuiaDestino.Name = "txtSerieGuiaDestino";
+            this.txtSerieGuiaDestino.Size = new System.Drawing.Size(98, 22);
+            this.txtSerieGuiaDestino.TabIndex = 9;
+            // 
             // Transformacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1270, 504);
+            this.ClientSize = new System.Drawing.Size(1410, 507);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Transformacion";
             this.Text = "Tranformacion";
             this.Load += new System.EventHandler(this.Transformacion_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrigenItems)).EndInit();
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDestinoItems)).EndInit();
             this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -438,8 +503,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cboNivelDestino;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
@@ -460,5 +523,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewButtonColumn DgvBtnTallas;
         private System.Windows.Forms.DataGridViewTextBoxColumn DgvIdTransformacionDet;
+        private System.Windows.Forms.ComboBox cboTipoOrdenCompraServicio;
+        private System.Windows.Forms.Button btnGenerarOrden;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtNumeroGuiaDestino;
+        private System.Windows.Forms.TextBox txtSerieGuiaDestino;
+        private System.Windows.Forms.Label label5;
     }
 }
