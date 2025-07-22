@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnBuscar = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -40,8 +39,6 @@
             this.cboNivelOrigen = new System.Windows.Forms.ComboBox();
             this.cboNivelDestino = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnGenerarOrden = new System.Windows.Forms.Button();
-            this.btnAgregarItem = new System.Windows.Forms.Button();
             this.dgvOrigenItems = new System.Windows.Forms.DataGridView();
             this.item = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgvSecuencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,13 +55,16 @@
             this.DgvBtnTallas = new System.Windows.Forms.DataGridViewButtonColumn();
             this.DgvIdTransformacionDet = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.cboTipoOrdenCompraServicio = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.txtNumeroGuiaDestino = new System.Windows.Forms.TextBox();
             this.txtSerieGuiaDestino = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cboTipoOrdenCompraServicio = new System.Windows.Forms.ComboBox();
+            this.btnGenerarOrden = new System.Windows.Forms.Button();
+            this.btnAgregarItem = new System.Windows.Forms.Button();
+            this.btnBuscar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrigenItems)).BeginInit();
@@ -90,18 +90,6 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Origen";
-            // 
-            // btnBuscar
-            // 
-            this.btnBuscar.Image = global::SoftCotton.Properties.Resources.icon_buscar;
-            this.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBuscar.Location = new System.Drawing.Point(683, 44);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.btnBuscar.Size = new System.Drawing.Size(35, 33);
-            this.btnBuscar.TabIndex = 54;
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // label4
             // 
@@ -136,7 +124,6 @@
             this.txtProveedorGuiaOrigen.Name = "txtProveedorGuiaOrigen";
             this.txtProveedorGuiaOrigen.Size = new System.Drawing.Size(199, 22);
             this.txtProveedorGuiaOrigen.TabIndex = 4;
-            this.txtProveedorGuiaOrigen.Text = "20606836661";
             // 
             // txtNumeroGuiaOrigen
             // 
@@ -144,7 +131,6 @@
             this.txtNumeroGuiaOrigen.Name = "txtNumeroGuiaOrigen";
             this.txtNumeroGuiaOrigen.Size = new System.Drawing.Size(126, 22);
             this.txtNumeroGuiaOrigen.TabIndex = 3;
-            this.txtNumeroGuiaOrigen.Text = "550";
             // 
             // txtSerieGuiaOrigen
             // 
@@ -153,7 +139,6 @@
             this.txtSerieGuiaOrigen.Name = "txtSerieGuiaOrigen";
             this.txtSerieGuiaOrigen.Size = new System.Drawing.Size(98, 22);
             this.txtSerieGuiaOrigen.TabIndex = 2;
-            this.txtSerieGuiaOrigen.Text = "T006";
             // 
             // label1
             // 
@@ -191,34 +176,6 @@
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Origen Items";
-            // 
-            // btnGenerarOrden
-            // 
-            this.btnGenerarOrden.Image = global::SoftCotton.Properties.Resources.icon_refrescar;
-            this.btnGenerarOrden.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGenerarOrden.Location = new System.Drawing.Point(12, 21);
-            this.btnGenerarOrden.Name = "btnGenerarOrden";
-            this.btnGenerarOrden.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.btnGenerarOrden.Size = new System.Drawing.Size(203, 33);
-            this.btnGenerarOrden.TabIndex = 56;
-            this.btnGenerarOrden.Text = "Generar Orden C/S";
-            this.btnGenerarOrden.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnGenerarOrden.UseVisualStyleBackColor = true;
-            this.btnGenerarOrden.Click += new System.EventHandler(this.btnGenerarOrden_Click);
-            // 
-            // btnAgregarItem
-            // 
-            this.btnAgregarItem.Image = global::SoftCotton.Properties.Resources.icon_nuevo;
-            this.btnAgregarItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAgregarItem.Location = new System.Drawing.Point(544, 21);
-            this.btnAgregarItem.Name = "btnAgregarItem";
-            this.btnAgregarItem.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.btnAgregarItem.Size = new System.Drawing.Size(127, 33);
-            this.btnAgregarItem.TabIndex = 55;
-            this.btnAgregarItem.Text = "Agregar Item";
-            this.btnAgregarItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnAgregarItem.UseVisualStyleBackColor = true;
-            this.btnAgregarItem.Click += new System.EventHandler(this.btnAgregarItem_Click);
             // 
             // dgvOrigenItems
             // 
@@ -409,32 +366,6 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Datos Orden / Guia";
             // 
-            // cboTipoOrdenCompraServicio
-            // 
-            this.cboTipoOrdenCompraServicio.FormattingEnabled = true;
-            this.cboTipoOrdenCompraServicio.Location = new System.Drawing.Point(6, 47);
-            this.cboTipoOrdenCompraServicio.Name = "cboTipoOrdenCompraServicio";
-            this.cboTipoOrdenCompraServicio.Size = new System.Drawing.Size(191, 24);
-            this.cboTipoOrdenCompraServicio.TabIndex = 3;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 28);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(94, 20);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "Tipo Orden";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(200, 24);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(38, 16);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Nivel";
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -467,6 +398,72 @@
             this.txtSerieGuiaDestino.Name = "txtSerieGuiaDestino";
             this.txtSerieGuiaDestino.Size = new System.Drawing.Size(98, 22);
             this.txtSerieGuiaDestino.TabIndex = 9;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(200, 24);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(38, 16);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Nivel";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 28);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(75, 16);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "Tipo Orden";
+            // 
+            // cboTipoOrdenCompraServicio
+            // 
+            this.cboTipoOrdenCompraServicio.FormattingEnabled = true;
+            this.cboTipoOrdenCompraServicio.Location = new System.Drawing.Point(6, 47);
+            this.cboTipoOrdenCompraServicio.Name = "cboTipoOrdenCompraServicio";
+            this.cboTipoOrdenCompraServicio.Size = new System.Drawing.Size(191, 24);
+            this.cboTipoOrdenCompraServicio.TabIndex = 3;
+            // 
+            // btnGenerarOrden
+            // 
+            this.btnGenerarOrden.Image = global::SoftCotton.Properties.Resources.icon_refrescar;
+            this.btnGenerarOrden.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGenerarOrden.Location = new System.Drawing.Point(12, 21);
+            this.btnGenerarOrden.Name = "btnGenerarOrden";
+            this.btnGenerarOrden.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.btnGenerarOrden.Size = new System.Drawing.Size(203, 33);
+            this.btnGenerarOrden.TabIndex = 56;
+            this.btnGenerarOrden.Text = "Generar Orden C/S";
+            this.btnGenerarOrden.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnGenerarOrden.UseVisualStyleBackColor = true;
+            this.btnGenerarOrden.Click += new System.EventHandler(this.btnGenerarOrden_Click);
+            // 
+            // btnAgregarItem
+            // 
+            this.btnAgregarItem.Image = global::SoftCotton.Properties.Resources.icon_nuevo;
+            this.btnAgregarItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAgregarItem.Location = new System.Drawing.Point(544, 21);
+            this.btnAgregarItem.Name = "btnAgregarItem";
+            this.btnAgregarItem.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.btnAgregarItem.Size = new System.Drawing.Size(127, 33);
+            this.btnAgregarItem.TabIndex = 55;
+            this.btnAgregarItem.Text = "Agregar Item";
+            this.btnAgregarItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAgregarItem.UseVisualStyleBackColor = true;
+            this.btnAgregarItem.Click += new System.EventHandler(this.btnAgregarItem_Click);
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.Image = global::SoftCotton.Properties.Resources.icon_buscar;
+            this.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBuscar.Location = new System.Drawing.Point(683, 44);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.btnBuscar.Size = new System.Drawing.Size(35, 33);
+            this.btnBuscar.TabIndex = 54;
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // Transformacion
             // 

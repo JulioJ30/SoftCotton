@@ -159,6 +159,9 @@ namespace SoftCotton.Views.ReferralGuide
                         newRow.Cells["dgvDecCantSalidaTotal"].Value = 0;
                         newRow.Cells["dgvDecPesoIngresado"].Value = 0;
                         newRow.Cells["dgvDecCantidadSaldo"].Value = 0;
+
+
+                        
                     }
                     else
                     {
@@ -177,6 +180,10 @@ namespace SoftCotton.Views.ReferralGuide
                         newRow.Cells["dgvDecCantSalidaTotal"].Value = item.cantidadSalida;
                         newRow.Cells["dgvDecPesoIngresado"].Value = 0;
                         newRow.Cells["dgvDecCantidadSaldo"].Value = item.cantidadSaldo;
+
+
+                        newRow.Cells["OP"].Value = item.obs5;
+
                     }
 
                     // Asignar el tipo de movimiento
@@ -194,7 +201,9 @@ namespace SoftCotton.Views.ReferralGuide
                         newRow.Cells["dgvTxtTipoMov"].Value = "DEVOLUCION";
                     }
 
-                    newRow.Cells["dgvDecCantIngresada"].Value = 0;
+                    //newRow.Cells["dgvDecCantIngresada"].Value = 0;
+                    newRow.Cells["dgvDecCantIngresada"].Value = item.cantidad;
+
 
                     // Pintar la fila
                     PintarDataGridDetalle(newRow.Index);
@@ -458,6 +467,11 @@ namespace SoftCotton.Views.ReferralGuide
                         case 6: chkM11.Checked = true; break;
                         case 7: chkM12.Checked = true; break;
                         case 8: chkM13.Checked = true; break;
+                        case 9: chkM14.Checked = true; break;
+                        case 10: chkM15.Checked = true; break;
+                        case 11: chkM16.Checked = true; break;
+                        case 12: chkM17.Checked = true; break;
+
 
                     }
 
@@ -629,6 +643,10 @@ namespace SoftCotton.Views.ReferralGuide
                 else if (chkM16.Checked)
                 {
                     _grCabParam.idMotivoTraslado = 11;
+                }
+                else if (chkM17.Checked)
+                {
+                    _grCabParam.idMotivoTraslado = 12;
                 }
                 //else
                 //{

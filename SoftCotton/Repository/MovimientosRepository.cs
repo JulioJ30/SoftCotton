@@ -75,6 +75,8 @@ namespace SoftCotton.Repository
                     sp_parametros.Add("@CodColor", parametro.CodColor, DbType.String, ParameterDirection.Input);
                     sp_parametros.Add("@Cantidad", parametro.Cantidad, DbType.Decimal, ParameterDirection.Input);
                     sp_parametros.Add("@Comentario", parametro.Comentario, DbType.String, ParameterDirection.Input);
+                    sp_parametros.Add("@Pedido", parametro.Pedido, DbType.String, ParameterDirection.Input);
+
 
                     sqlConnection.Execute("uspSetTransformacion",
                                                         sp_parametros,

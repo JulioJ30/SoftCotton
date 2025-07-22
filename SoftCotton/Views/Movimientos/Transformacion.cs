@@ -55,7 +55,7 @@ namespace SoftCotton.Views.Movimientos
         {
             string serie = txtSerieGuiaOrigen.Text.Trim();
             string numero = txtNumeroGuiaOrigen.Text.Trim();
-            List<GetGR3_DetalleXCod> grDets = _referralGuideBL.Get3_DetalleXCod(Empresa.ID_EMPRESA, serie, numero, "C",10);
+            List<GetGR3_DetalleXCod> grDets = _referralGuideBL.Get3_DetalleXCod(Empresa.ID_EMPRESA, serie, numero, "C",10,"E");
             grDetsGenerales = grDets;
             dgvOrigenItems.Rows.Clear();
 
@@ -135,8 +135,10 @@ namespace SoftCotton.Views.Movimientos
                     CodTalla = objFormulario.TallaParam,
                     CodColor = objFormulario.ColorParam,
                     Cantidad = Convert.ToSingle(objFormulario.CantidadParam),
-                    Comentario = objFormulario.ComentarioParam
-                };
+                    Comentario = objFormulario.ComentarioParam,
+                    Pedido = $"{objFormulario.PedidoParam} {objFormulario.ColorPedidoParam} | {objFormulario.ProgramaParam} {objFormulario.EstiloParam}"
+
+                    };
 
                 movimientosRepository.setRegistroTransformacion(detalleTransformacion);
 

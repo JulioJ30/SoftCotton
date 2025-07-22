@@ -135,7 +135,8 @@ namespace SoftCotton.Views.ServiceOrder
                     //dgvOSDetalle.Rows[index].Cells["dgvTxtObs2"].Value = item.obs2;
                     //dgvOSDetalle.Rows[index].Cells["dgvTxtObs3"].Value = item.obs3;
                     //dgvOSDetalle.Rows[index].Cells["dgvTxtObs4"].Value = item.obs4;
-                    //dgvOSDetalle.Rows[index].Cells["dgvTxtObs5"].Value = item.obs5;
+                    dgvOSDetalle.Rows[index].Cells["dgvTxtObs5"].Value = item.Pedido;
+
 
                     dgvOSDetalle.Rows[index].Cells["dgvTxtTotal"].Value = Math.Round((item.Cantidad * 0), 3);
 

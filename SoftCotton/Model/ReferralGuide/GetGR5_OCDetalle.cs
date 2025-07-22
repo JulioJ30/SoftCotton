@@ -50,6 +50,7 @@ namespace SoftCotton.Model.ReferralGuide
         public decimal cantidadEntrada { get; set; }
 
         public decimal cantidadSalida { get; set; }
+        public string obs5 { get; set; }
     }
 
 

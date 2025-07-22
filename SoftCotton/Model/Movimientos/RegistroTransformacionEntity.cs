@@ -23,5 +23,7 @@ namespace SoftCotton.Model.Movimientos
         public string CodColor { get; set; }
         public float Cantidad { get; set; }
         public string Comentario { get; set; }
+        public string Pedido { get; set; }
+
     }
 }

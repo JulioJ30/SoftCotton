@@ -172,7 +172,7 @@ namespace SoftCotton.Repository
             //}
             //return grCab;
         }
-        public List<GetGR3_DetalleXCod> Get3_DetalleXCod(int idEmpresa, string serie, string numero, string tipoOrden,int opcion = 3)
+        public List<GetGR3_DetalleXCod> Get3_DetalleXCod(int idEmpresa, string serie, string numero, string tipoOrden,int opcion = 3,string tipoMovimiento = null)
         {
             List<GetGR3_DetalleXCod> grDets = new List<GetGR3_DetalleXCod>();
             //GetGR3_DetalleXCod grDet;
@@ -186,6 +186,7 @@ namespace SoftCotton.Repository
                 sp_parametros.Add("@filtroTxt1", serie, DbType.String, ParameterDirection.Input);
                 sp_parametros.Add("@filtroTxt2", numero, DbType.String, ParameterDirection.Input);
                 sp_parametros.Add("@filtroTxt3", tipoOrden, DbType.String, ParameterDirection.Input);
+                sp_parametros.Add("@filtroTxt4", tipoMovimiento, DbType.String, ParameterDirection.Input);
                 sp_parametros.Add("@filtroInt1", idEmpresa, DbType.Int32, ParameterDirection.Input);
                 sp_parametros.Add("@filtroInt2", 0, DbType.Int32, ParameterDirection.Input);
 
@@ -350,6 +351,7 @@ namespace SoftCotton.Repository
                             grDet.tienegrfact = Convert.ToInt32(reader["tienegrfact"].ToString());
                             grDet.cantidadEntrada = Convert.ToDecimal(reader["cantidadEntrada"].ToString());
                             grDet.cantidadSalida = Convert.ToDecimal(reader["cantidadSalida"].ToString());
+                            grDet.obs5 = reader["obs5"].ToString();
 
                             grDets.Add(grDet);
                         }

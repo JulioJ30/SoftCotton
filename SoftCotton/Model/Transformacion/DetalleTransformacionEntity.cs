@@ -17,6 +17,7 @@ namespace SoftCotton.Model.Transformacion
         public float Cantidad { get; set; }
         public string Observacion { get; set; } = string.Empty;
 
+
     }
 
     public class DetalleTransformacionEntity
@@ -34,6 +35,7 @@ namespace SoftCotton.Model.Transformacion
         public string CodTalla { get; set; } = string.Empty;
         public string CodUM { get; set; } = string.Empty;
 
+        public string Pedido { get; set; } = string.Empty;
 
 
 

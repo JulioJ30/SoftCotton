@@ -146,6 +146,7 @@
             this.dgvIdPedidoColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvPedidoColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgvPartidaProveedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chkM17 = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -876,6 +877,7 @@
             // groupBox4
             // 
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox4.Controls.Add(this.chkM17);
             this.groupBox4.Controls.Add(this.chkM16);
             this.groupBox4.Controls.Add(this.chkM15);
             this.groupBox4.Controls.Add(this.chkM14);
@@ -942,7 +944,7 @@
             // txtOtrosMotivos
             // 
             this.txtOtrosMotivos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtOtrosMotivos.Location = new System.Drawing.Point(440, 91);
+            this.txtOtrosMotivos.Location = new System.Drawing.Point(458, 85);
             this.txtOtrosMotivos.Name = "txtOtrosMotivos";
             this.txtOtrosMotivos.Size = new System.Drawing.Size(330, 26);
             this.txtOtrosMotivos.TabIndex = 39;
@@ -1382,6 +1384,17 @@
             this.DgvPartidaProveedor.Name = "DgvPartidaProveedor";
             this.DgvPartidaProveedor.Width = 125;
             // 
+            // chkM17
+            // 
+            this.chkM17.AutoSize = true;
+            this.chkM17.Location = new System.Drawing.Point(582, 88);
+            this.chkM17.Name = "chkM17";
+            this.chkM17.Size = new System.Drawing.Size(110, 23);
+            this.chkM17.TabIndex = 44;
+            this.chkM17.TabStop = true;
+            this.chkM17.Text = "Mov. Interno";
+            this.chkM17.UseVisualStyleBackColor = true;
+            // 
             // RegistroGuiaRemisionView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -1535,5 +1548,6 @@
         private System.Windows.Forms.RadioButton chkM15;
         private System.Windows.Forms.RadioButton chkM14;
         private System.Windows.Forms.RadioButton chkM16;
+        private System.Windows.Forms.RadioButton chkM17;
     }
 }
