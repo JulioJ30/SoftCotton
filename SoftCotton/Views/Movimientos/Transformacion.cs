@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DocumentFormat.OpenXml.Spreadsheet;
@@ -53,25 +54,41 @@ namespace SoftCotton.Views.Movimientos
         // BUSCAR DETALLE DE GUIAS
         private void BuscarDetalleGuias()
         {
+            dgvOrigenItems.Columns["DgvCheck"].ReadOnly = false;
+
+
             string serie = txtSerieGuiaOrigen.Text.Trim();
             string numero = txtNumeroGuiaOrigen.Text.Trim();
-            List<GetGR3_DetalleXCod> grDets = _referralGuideBL.Get3_DetalleXCod(Empresa.ID_EMPRESA, serie, numero, "C",10,"E");
+            string rucProveedor = txtProveedorGuiaOrigen.Text.Trim();
+            List<GetGR3_DetalleXCod> grDets = _referralGuideBL.Get3_DetalleXCod(Empresa.ID_EMPRESA, serie, numero, "C",10,"E", rucProveedor);
             grDetsGenerales = grDets;
             dgvOrigenItems.Rows.Clear();
 
-
+            int count = 0;
             foreach (var item in grDets)
             {
+                count++;
                 int index = dgvOrigenItems.Rows.Add();
 
                 dgvOrigenItems.Rows[index].Cells["item"].Value = index + 1;
 
-
+                dgvOrigenItems.Rows[index].Cells["DgvCheck"].Value = false;
                 dgvOrigenItems.Rows[index].Cells["DgvSecuencia"].Value = item.secuencia;
                 dgvOrigenItems.Rows[index].Cells["CodigoItem"].Value = item.codigoProducto;
                 dgvOrigenItems.Rows[index].Cells["Producto"].Value = item.producto;
                 dgvOrigenItems.Rows[index].Cells["Cantidad"].Value = item.cantidadIngresada;
-                //dgvOrigenItems.Rows[index].Cells["dgvTxtSecuenciaBD"].Value = item.secuencia;
+
+                if (count == 1)
+                {
+                    ListarDetallePorFiltro(new DetalleTransformacionFiltroPorBusquedaEntity
+                    {
+                        IdSencuenciaDet = item.secuencia,
+                        Serie = serie,
+                        Numero = int.Parse(numero.Trim()),
+                        Proveedor = rucProveedor
+                    }
+                    );
+                }
 
             }
 
@@ -111,6 +128,18 @@ namespace SoftCotton.Views.Movimientos
 
         private void btnAgregarItem_Click(object sender, EventArgs e)
         {
+
+            bool haySeleccionados = dgvOrigenItems.Rows
+                       .Cast<DataGridViewRow>()
+                       .Any(r => !r.IsNewRow && Convert.ToBoolean(r.Cells["DgvCheck"].Value));
+
+            if (!haySeleccionados)
+            {
+                ResponseMessage.Message("Debe seleccionar al menos un registro", "WARNING");
+                return;
+            }
+
+
             IngresoDeProductosPorNivel objFormulario = new IngresoDeProductosPorNivel();
             objFormulario.CodigoNivel = cboNivelDestino.SelectedValue.ToString();
             objFormulario.ShowDialog();
@@ -119,28 +148,52 @@ namespace SoftCotton.Views.Movimientos
             if (objFormulario.NivelParam != "")
             {
 
-                MovimientosRepository movimientosRepository = new MovimientosRepository();
-                RegistroTransformacionEntity detalleTransformacion = new RegistroTransformacionEntity
+               
+
+
+                foreach (DataGridViewRow row in dgvOrigenItems.Rows)
                 {
-                    IdTransformacionCab = null,
-                    Serie = txtSerieGuiaOrigen.Text.Trim(),
-                    Numero = Convert.ToInt32(txtNumeroGuiaOrigen.Text.Trim()),
-                    Proveedor = txtProveedorGuiaOrigen.Text.Trim(),
-                    CodigoNivelOrigen = cboNivelOrigen.SelectedValue.ToString(),
-                    CodigoNivelDestino = cboNivelDestino.SelectedValue.ToString(),
-                    IdUsuario = UserApplication.ID_USUARIO,
-                    IdSecuenciaDet = Convert.ToInt32(dgvOrigenItems.CurrentRow.Cells["DgvSecuencia"].Value),
-                    CodNivel = objFormulario.NivelParam,
-                    CodGrupo = objFormulario.GrupoParam,
-                    CodTalla = objFormulario.TallaParam,
-                    CodColor = objFormulario.ColorParam,
-                    Cantidad = Convert.ToSingle(objFormulario.CantidadParam),
-                    Comentario = objFormulario.ComentarioParam,
-                    Pedido = $"{objFormulario.PedidoParam} {objFormulario.ColorPedidoParam} | {objFormulario.ProgramaParam} {objFormulario.EstiloParam}"
 
-                    };
+                    if (!row.IsNewRow)
+                    {
+                        // Suponiendo que la columna CheckBox se llama "Seleccionar"
+                        bool isChecked = Convert.ToBoolean(row.Cells["DgvCheck"].Value);
 
-                movimientosRepository.setRegistroTransformacion(detalleTransformacion);
+                        if (isChecked)
+                        {
+
+                            MovimientosRepository movimientosRepository = new MovimientosRepository();
+                            RegistroTransformacionEntity detalleTransformacion = new RegistroTransformacionEntity
+                            {
+                                IdTransformacionCab = null,
+                                Serie = txtSerieGuiaOrigen.Text.Trim(),
+                                Numero = Convert.ToInt32(txtNumeroGuiaOrigen.Text.Trim()),
+                                Proveedor = txtProveedorGuiaOrigen.Text.Trim(),
+                                CodigoNivelOrigen = cboNivelOrigen.SelectedValue.ToString(),
+                                CodigoNivelDestino = cboNivelDestino.SelectedValue.ToString(),
+                                IdUsuario = UserApplication.ID_USUARIO,
+                                //IdSecuenciaDet = Convert.ToInt32(dgvOrigenItems.CurrentRow.Cells["DgvSecuencia"].Value),
+                                IdSecuenciaDet = Convert.ToInt32(row.Cells["DgvSecuencia"].Value),
+                                CodNivel = objFormulario.NivelParam,
+                                CodGrupo = objFormulario.GrupoParam,
+                                CodTalla = objFormulario.TallaParam,
+                                CodColor = objFormulario.ColorParam,
+                                Cantidad = Convert.ToSingle(objFormulario.CantidadParam),
+                                Comentario = objFormulario.ComentarioParam,
+                                Pedido = $"{objFormulario.PedidoParam} {objFormulario.ColorPedidoParam} | {objFormulario.ProgramaParam} {objFormulario.EstiloParam}"
+                            };
+
+                            movimientosRepository.setRegistroTransformacion(detalleTransformacion);
+                        }
+                    }
+
+                }
+
+                // LUEGO DEL REGISTRO ACTUALIZAMOS
+                BuscarDetalleGuias();
+
+
+
 
             }
 
@@ -156,16 +209,16 @@ namespace SoftCotton.Views.Movimientos
 
         private void dgvOrigenItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            DetalleTransformacionFiltroPorBusquedaEntity filtros = new DetalleTransformacionFiltroPorBusquedaEntity();
+            //DetalleTransformacionFiltroPorBusquedaEntity filtros = new DetalleTransformacionFiltroPorBusquedaEntity();
 
-            //OBTENEMOS DATA DE FILTROS
-            filtros.IdSencuenciaDet = Convert.ToInt32(dgvOrigenItems.Rows[e.RowIndex].Cells["DgvSecuencia"].Value.ToString());
-            filtros.Serie       = txtSerieGuiaOrigen.Text.Trim();
-            filtros.Numero      = Convert.ToInt32(txtNumeroGuiaOrigen.Text.Trim());
-            filtros.Proveedor   = txtProveedorGuiaOrigen.Text.Trim();
+            ////OBTENEMOS DATA DE FILTROS
+            //filtros.IdSencuenciaDet = Convert.ToInt32(dgvOrigenItems.Rows[e.RowIndex].Cells["DgvSecuencia"].Value.ToString());
+            //filtros.Serie       = txtSerieGuiaOrigen.Text.Trim();
+            //filtros.Numero      = Convert.ToInt32(txtNumeroGuiaOrigen.Text.Trim());
+            //filtros.Proveedor   = txtProveedorGuiaOrigen.Text.Trim();
 
 
-            ListarDetallePorFiltro(filtros);
+            //ListarDetallePorFiltro(filtros);
         }
 
 
@@ -258,6 +311,32 @@ namespace SoftCotton.Views.Movimientos
                 frmOrdenServicio.ShowDialog();
             }
 
+        }
+
+        private void dgvOrigenItems_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            DetalleTransformacionFiltroPorBusquedaEntity filtros = new DetalleTransformacionFiltroPorBusquedaEntity();
+
+            //OBTENEMOS DATA DE FILTROS
+            filtros.IdSencuenciaDet = Convert.ToInt32(dgvOrigenItems.Rows[e.RowIndex].Cells["DgvSecuencia"].Value.ToString());
+            filtros.Serie = txtSerieGuiaOrigen.Text.Trim();
+            filtros.Numero = Convert.ToInt32(txtNumeroGuiaOrigen.Text.Trim());
+            filtros.Proveedor = txtProveedorGuiaOrigen.Text.Trim();
+
+
+            ListarDetallePorFiltro(filtros);
+
+            if (e.RowIndex >= 0 && dgvOrigenItems.Columns[e.ColumnIndex].Name.Equals("DgvCheck"))
+            {
+                foreach (DataGridViewRow rowItem in dgvOrigenItems.Rows)
+                {
+                    if (rowItem.Index == e.RowIndex)
+                    {
+                        rowItem.Cells["DgvCheck"].Value = !Convert.ToBoolean(rowItem.Cells["DgvCheck"].Value);
+                    }
+                }
+            }
         }
     }
 

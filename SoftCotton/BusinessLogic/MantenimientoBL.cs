@@ -25,9 +25,9 @@ namespace SoftCotton.BusinessLogic
             return _mantenimientoRepository.GetEstilos();
         }
 
-        public IEnumerable<GetMant54_Programas> GetProgramas()
+        public IEnumerable<GetMant54_Programas> GetProgramas(int estado = 1, string programa = "")
         {
-            return _mantenimientoRepository.GetProgramas();
+            return _mantenimientoRepository.GetProgramas(estado,programa);
         }
 
         public IEnumerable<GetMant55_Pedidos> GetPedidos()

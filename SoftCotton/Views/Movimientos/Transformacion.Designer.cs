@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnBuscar = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -39,12 +40,9 @@
             this.cboNivelOrigen = new System.Windows.Forms.ComboBox();
             this.cboNivelDestino = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnGenerarOrden = new System.Windows.Forms.Button();
+            this.btnAgregarItem = new System.Windows.Forms.Button();
             this.dgvOrigenItems = new System.Windows.Forms.DataGridView();
-            this.item = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DgvSecuencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CodigoItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dgvDestinoItems = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,9 +60,12 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.cboTipoOrdenCompraServicio = new System.Windows.Forms.ComboBox();
-            this.btnGenerarOrden = new System.Windows.Forms.Button();
-            this.btnAgregarItem = new System.Windows.Forms.Button();
-            this.btnBuscar = new System.Windows.Forms.Button();
+            this.DgvCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.item = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgvSecuencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CodigoItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrigenItems)).BeginInit();
@@ -90,6 +91,18 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Origen";
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.Image = global::SoftCotton.Properties.Resources.icon_buscar;
+            this.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBuscar.Location = new System.Drawing.Point(683, 44);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.btnBuscar.Size = new System.Drawing.Size(35, 33);
+            this.btnBuscar.TabIndex = 54;
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // label4
             // 
@@ -177,6 +190,34 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Origen Items";
             // 
+            // btnGenerarOrden
+            // 
+            this.btnGenerarOrden.Image = global::SoftCotton.Properties.Resources.icon_refrescar;
+            this.btnGenerarOrden.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGenerarOrden.Location = new System.Drawing.Point(12, 21);
+            this.btnGenerarOrden.Name = "btnGenerarOrden";
+            this.btnGenerarOrden.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.btnGenerarOrden.Size = new System.Drawing.Size(203, 33);
+            this.btnGenerarOrden.TabIndex = 56;
+            this.btnGenerarOrden.Text = "Generar Orden C/S";
+            this.btnGenerarOrden.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnGenerarOrden.UseVisualStyleBackColor = true;
+            this.btnGenerarOrden.Click += new System.EventHandler(this.btnGenerarOrden_Click);
+            // 
+            // btnAgregarItem
+            // 
+            this.btnAgregarItem.Image = global::SoftCotton.Properties.Resources.icon_nuevo;
+            this.btnAgregarItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAgregarItem.Location = new System.Drawing.Point(544, 21);
+            this.btnAgregarItem.Name = "btnAgregarItem";
+            this.btnAgregarItem.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.btnAgregarItem.Size = new System.Drawing.Size(127, 33);
+            this.btnAgregarItem.TabIndex = 55;
+            this.btnAgregarItem.Text = "Agregar Item";
+            this.btnAgregarItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAgregarItem.UseVisualStyleBackColor = true;
+            this.btnAgregarItem.Click += new System.EventHandler(this.btnAgregarItem_Click);
+            // 
             // dgvOrigenItems
             // 
             this.dgvOrigenItems.AllowUserToAddRows = false;
@@ -185,6 +226,7 @@
             this.dgvOrigenItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvOrigenItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOrigenItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DgvCheck,
             this.item,
             this.DgvSecuencia,
             this.CodigoItem,
@@ -200,53 +242,8 @@
             this.dgvOrigenItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvOrigenItems.Size = new System.Drawing.Size(665, 322);
             this.dgvOrigenItems.TabIndex = 1;
+            this.dgvOrigenItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrigenItems_CellClick);
             this.dgvOrigenItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrigenItems_CellContentClick);
-            // 
-            // item
-            // 
-            this.item.DataPropertyName = "item";
-            this.item.HeaderText = "Item";
-            this.item.MinimumWidth = 6;
-            this.item.Name = "item";
-            this.item.ReadOnly = true;
-            this.item.Width = 61;
-            // 
-            // DgvSecuencia
-            // 
-            this.DgvSecuencia.DataPropertyName = "DgvSecuencia";
-            this.DgvSecuencia.HeaderText = "DgvSecuencia";
-            this.DgvSecuencia.MinimumWidth = 6;
-            this.DgvSecuencia.Name = "DgvSecuencia";
-            this.DgvSecuencia.ReadOnly = true;
-            this.DgvSecuencia.Visible = false;
-            this.DgvSecuencia.Width = 125;
-            // 
-            // CodigoItem
-            // 
-            this.CodigoItem.DataPropertyName = "CodigoItem";
-            this.CodigoItem.HeaderText = "Cod. Item";
-            this.CodigoItem.MinimumWidth = 6;
-            this.CodigoItem.Name = "CodigoItem";
-            this.CodigoItem.ReadOnly = true;
-            this.CodigoItem.Width = 92;
-            // 
-            // Producto
-            // 
-            this.Producto.DataPropertyName = "Producto";
-            this.Producto.HeaderText = "Producto";
-            this.Producto.MinimumWidth = 6;
-            this.Producto.Name = "Producto";
-            this.Producto.ReadOnly = true;
-            this.Producto.Width = 90;
-            // 
-            // Cantidad
-            // 
-            this.Cantidad.DataPropertyName = "Cantidad";
-            this.Cantidad.HeaderText = "Cantidad";
-            this.Cantidad.MinimumWidth = 6;
-            this.Cantidad.Name = "Cantidad";
-            this.Cantidad.ReadOnly = true;
-            this.Cantidad.Width = 90;
             // 
             // groupBox4
             // 
@@ -425,45 +422,60 @@
             this.cboTipoOrdenCompraServicio.Size = new System.Drawing.Size(191, 24);
             this.cboTipoOrdenCompraServicio.TabIndex = 3;
             // 
-            // btnGenerarOrden
+            // DgvCheck
             // 
-            this.btnGenerarOrden.Image = global::SoftCotton.Properties.Resources.icon_refrescar;
-            this.btnGenerarOrden.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGenerarOrden.Location = new System.Drawing.Point(12, 21);
-            this.btnGenerarOrden.Name = "btnGenerarOrden";
-            this.btnGenerarOrden.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.btnGenerarOrden.Size = new System.Drawing.Size(203, 33);
-            this.btnGenerarOrden.TabIndex = 56;
-            this.btnGenerarOrden.Text = "Generar Orden C/S";
-            this.btnGenerarOrden.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnGenerarOrden.UseVisualStyleBackColor = true;
-            this.btnGenerarOrden.Click += new System.EventHandler(this.btnGenerarOrden_Click);
+            this.DgvCheck.DataPropertyName = "DgvCheck";
+            this.DgvCheck.HeaderText = "X";
+            this.DgvCheck.MinimumWidth = 6;
+            this.DgvCheck.Name = "DgvCheck";
+            this.DgvCheck.ReadOnly = true;
+            this.DgvCheck.Width = 21;
             // 
-            // btnAgregarItem
+            // item
             // 
-            this.btnAgregarItem.Image = global::SoftCotton.Properties.Resources.icon_nuevo;
-            this.btnAgregarItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAgregarItem.Location = new System.Drawing.Point(544, 21);
-            this.btnAgregarItem.Name = "btnAgregarItem";
-            this.btnAgregarItem.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.btnAgregarItem.Size = new System.Drawing.Size(127, 33);
-            this.btnAgregarItem.TabIndex = 55;
-            this.btnAgregarItem.Text = "Agregar Item";
-            this.btnAgregarItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnAgregarItem.UseVisualStyleBackColor = true;
-            this.btnAgregarItem.Click += new System.EventHandler(this.btnAgregarItem_Click);
+            this.item.DataPropertyName = "item";
+            this.item.HeaderText = "Item";
+            this.item.MinimumWidth = 6;
+            this.item.Name = "item";
+            this.item.ReadOnly = true;
+            this.item.Width = 61;
             // 
-            // btnBuscar
+            // DgvSecuencia
             // 
-            this.btnBuscar.Image = global::SoftCotton.Properties.Resources.icon_buscar;
-            this.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBuscar.Location = new System.Drawing.Point(683, 44);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.btnBuscar.Size = new System.Drawing.Size(35, 33);
-            this.btnBuscar.TabIndex = 54;
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            this.DgvSecuencia.DataPropertyName = "DgvSecuencia";
+            this.DgvSecuencia.HeaderText = "DgvSecuencia";
+            this.DgvSecuencia.MinimumWidth = 6;
+            this.DgvSecuencia.Name = "DgvSecuencia";
+            this.DgvSecuencia.ReadOnly = true;
+            this.DgvSecuencia.Visible = false;
+            this.DgvSecuencia.Width = 125;
+            // 
+            // CodigoItem
+            // 
+            this.CodigoItem.DataPropertyName = "CodigoItem";
+            this.CodigoItem.HeaderText = "Cod. Item";
+            this.CodigoItem.MinimumWidth = 6;
+            this.CodigoItem.Name = "CodigoItem";
+            this.CodigoItem.ReadOnly = true;
+            this.CodigoItem.Width = 92;
+            // 
+            // Producto
+            // 
+            this.Producto.DataPropertyName = "Producto";
+            this.Producto.HeaderText = "Producto";
+            this.Producto.MinimumWidth = 6;
+            this.Producto.Name = "Producto";
+            this.Producto.ReadOnly = true;
+            this.Producto.Width = 90;
+            // 
+            // Cantidad
+            // 
+            this.Cantidad.DataPropertyName = "Cantidad";
+            this.Cantidad.HeaderText = "Cantidad";
+            this.Cantidad.MinimumWidth = 6;
+            this.Cantidad.Name = "Cantidad";
+            this.Cantidad.ReadOnly = true;
+            this.Cantidad.Width = 90;
             // 
             // Transformacion
             // 
@@ -508,11 +520,6 @@
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Button btnAgregarItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn item;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DgvSecuencia;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CodigoItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Producto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
@@ -528,5 +535,11 @@
         private System.Windows.Forms.TextBox txtNumeroGuiaDestino;
         private System.Windows.Forms.TextBox txtSerieGuiaDestino;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn DgvCheck;
+        private System.Windows.Forms.DataGridViewTextBoxColumn item;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DgvSecuencia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CodigoItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Producto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad;
     }
 }

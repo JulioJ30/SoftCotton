@@ -49,6 +49,8 @@ namespace SoftCotton.Model.ReferralGuide
 
         public string PedidoColor { get; set; }
         public string PartidaProveedor { get; set; }
+        public string Comentario { get; set; }
+
         public int? IdPedidoColor { get; set; }
 
 

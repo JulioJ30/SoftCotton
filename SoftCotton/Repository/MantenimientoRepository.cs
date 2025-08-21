@@ -33,7 +33,7 @@ namespace SoftCotton.Repository
         }
 
         // PROGRMAS
-        public IEnumerable<GetMant54_Programas> GetProgramas()
+        public IEnumerable<GetMant54_Programas> GetProgramas(int estado = 1,string programa = "")
         {
             //GetGR2_CabeceraXCod grCab = new GetGR2_CabeceraXCod();
             using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
@@ -41,6 +41,9 @@ namespace SoftCotton.Repository
 
                 var sp_parametros = new DynamicParameters();
                 sp_parametros.Add("@opcion", 54, DbType.Int32, ParameterDirection.Input);
+                sp_parametros.Add("@filtroInt1", estado, DbType.Int32, ParameterDirection.Input);
+                sp_parametros.Add("@filtroTxt1", programa, DbType.String, ParameterDirection.Input);
+
 
                 return sqlConnection.Query<GetMant54_Programas>("uspGetMantenimiento",
                                                     sp_parametros,

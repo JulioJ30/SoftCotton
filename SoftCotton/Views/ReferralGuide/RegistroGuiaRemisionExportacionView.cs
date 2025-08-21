@@ -13,6 +13,7 @@ using SoftCotton.Reports.RemittanceGuide.ExportGuide;
 
 using Newtonsoft.Json;
 using System.Text;
+using SoftCotton.Views.Maintenance;
 
 
 
@@ -830,35 +831,28 @@ namespace SoftCotton.Views.ReferralGuide
 
         private void dgvGRDetalle_KeyDown(object sender, KeyEventArgs e)
         {
-            int aa = Convert.ToInt32(dgvGRDetalle.CurrentRow.Cells["dgvDecCantidad"].Value);
+            if (e.Control && e.KeyCode == Keys.B)
+            {
 
-
-            //if (e.Control && e.KeyCode == Keys.G)
-            //{
-            //    GuardarCambios();
-            //}
-            //if (!e.Control || e.KeyCode != Keys.D || dgvGRDetalle.CurrentRow == null)
-            //{
-            //    return;
-            //}
-            //DialogResult resultadoMensaje = ResponseMessage.MessageQuestion("¿Esta seguro en eliminar el item seleccionado?");
-            //if (resultadoMensaje == DialogResult.OK)
-            //{
-            //    _grDetParam = new SetGRDetExportacionParam();
-            //    _grDetParam.opcion = 2;
-            //    _grDetParam.idEmpresa = Empresa.ID_EMPRESA;
-            //    _grDetParam.serie = txtSerie.Text.Trim();
-            //    _grDetParam.numero = txtNumero.Text.Trim();
-            //    _grDetParam.secuencia = Convert.ToInt32(dgvGRDetalle.CurrentRow.Cells["Secuencia"].Value);
-            //    _grDetParam.ruc = txtRuc.Text.Trim();
-            //    Response respuesta = _referralGuideBL.SetGRDetalleExportacion(_grDetParam);
-            //    if (respuesta.idResponse == 0)
-            //    {
-            //        ResponseMessage.Message(respuesta.messageResponse, respuesta.typeMessage);
-            //    }
-            //    dgvGRDetalle.Rows.Clear();
-            //    ListarDetalle(Empresa.ID_EMPRESA, _grDetParam.serie, _grDetParam.numero, _grDetParam.ruc);
-            //}
+                // Verificamos que la celda actual no sea nula
+                if (dgvGRDetalle.CurrentCell != null)
+                {
+                    // Validamos que la columna actual sea "OP"
+                    if (dgvGRDetalle.CurrentCell.OwningColumn.Name == "OP")
+                    {
+                        BuscarPedidosColorView buscarPedidosColorView = new BuscarPedidosColorView();
+                        buscarPedidosColorView.ShowDialog();
+                        if (buscarPedidosColorView.pedidoParam != null && buscarPedidosColorView.pedidoParam != "")
+                        {
+                            dgvGRDetalle.CurrentCell.Value = buscarPedidosColorView.pedidoParam;
+                        }
+                        //if (buscarPedidosColorView.codPedido != null)
+                        //{
+                        //    dgvGRDetalle.CurrentCell.Value = buscarPedidosColorView.codPedido;
+                        //}
+                    }
+                }
+            }
         }
 
 

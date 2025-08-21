@@ -95,7 +95,7 @@ namespace SoftCotton.Repository
 
         }
 
-        public GetGR2_CabeceraXCod Get2_CabeceraXCod(int idEmpresa, string serie, string numero, string tipoorden)
+        public GetGR2_CabeceraXCod Get2_CabeceraXCod(int idEmpresa, string serie, string numero, string tipoorden,string rucdestino)
         {
 
             GetGR2_CabeceraXCod grCab = new GetGR2_CabeceraXCod();
@@ -107,6 +107,7 @@ namespace SoftCotton.Repository
                 sp_parametros.Add("@filtroTxt1", serie, DbType.String, ParameterDirection.Input);
                 sp_parametros.Add("@filtroTxt2", numero, DbType.String, ParameterDirection.Input);
                 sp_parametros.Add("@filtroTxt3", tipoorden, DbType.String, ParameterDirection.Input);
+                sp_parametros.Add("@filtroTxt4", rucdestino, DbType.String, ParameterDirection.Input);
                 sp_parametros.Add("@filtroInt1", idEmpresa, DbType.Int32, ParameterDirection.Input);
                 sp_parametros.Add("@filtroInt2", 0, DbType.Int32, ParameterDirection.Input);
 
@@ -172,7 +173,7 @@ namespace SoftCotton.Repository
             //}
             //return grCab;
         }
-        public List<GetGR3_DetalleXCod> Get3_DetalleXCod(int idEmpresa, string serie, string numero, string tipoOrden,int opcion = 3,string tipoMovimiento = null)
+        public List<GetGR3_DetalleXCod> Get3_DetalleXCod(int idEmpresa, string serie, string numero, string tipoOrden,int opcion = 3,string tipoMovimiento = null,string rucdestino = null)
         {
             List<GetGR3_DetalleXCod> grDets = new List<GetGR3_DetalleXCod>();
             //GetGR3_DetalleXCod grDet;
@@ -187,6 +188,8 @@ namespace SoftCotton.Repository
                 sp_parametros.Add("@filtroTxt2", numero, DbType.String, ParameterDirection.Input);
                 sp_parametros.Add("@filtroTxt3", tipoOrden, DbType.String, ParameterDirection.Input);
                 sp_parametros.Add("@filtroTxt4", tipoMovimiento, DbType.String, ParameterDirection.Input);
+                sp_parametros.Add("@filtroTxt5", rucdestino, DbType.String, ParameterDirection.Input);
+
                 sp_parametros.Add("@filtroInt1", idEmpresa, DbType.Int32, ParameterDirection.Input);
                 sp_parametros.Add("@filtroInt2", 0, DbType.Int32, ParameterDirection.Input);
 
@@ -656,6 +659,8 @@ namespace SoftCotton.Repository
                     sqlCommand.Parameters.Add("@IdPedidoColor", SqlDbType.Int).Value = parametros.IdPedidoColor;
                     sqlCommand.Parameters.Add("@PartidaProveedor", SqlDbType.VarChar).Value = parametros.PartidaProveedor;
                     sqlCommand.Parameters.Add("@destCodigoPC", SqlDbType.VarChar).Value = parametros.destCodigoPC;
+                    sqlCommand.Parameters.Add("@Comentario", SqlDbType.VarChar).Value = parametros.Comentario;
+
 
 
                     sqlConnection.Open();

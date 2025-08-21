@@ -412,7 +412,7 @@ namespace SoftCotton.Views.ReferralGuide
 
 
 
-                GetGR2_CabeceraXCod grCab = _referralGuideBL.Get2_CabeceraXCod(Empresa.ID_EMPRESA, txtSerie.Text.Trim(), txtNumero.Text.Trim(), tipo_orden);
+                GetGR2_CabeceraXCod grCab = _referralGuideBL.Get2_CabeceraXCod(Empresa.ID_EMPRESA, txtSerie.Text.Trim(), txtNumero.Text.Trim(), tipo_orden,lblRUCDest.Text.Trim());
                 grCabGenerales = grCab;
 
                 if (grCab == null)
@@ -801,6 +801,10 @@ namespace SoftCotton.Views.ReferralGuide
                     _grDetParam.PartidaProveedor = row.Cells["DgvPartidaProveedor"].Value != null ? row.Cells["DgvPartidaProveedor"].Value.ToString() : "";
 
 
+                    
+                    _grDetParam.Comentario = row.Cells["DgvComentario"].Value != null ? row.Cells["DgvComentario"].Value.ToString() : "";
+
+
 
 
                     if (row.Cells["dgvTxtNumPartida"].Value == null)
@@ -861,7 +865,7 @@ namespace SoftCotton.Views.ReferralGuide
 
         private void ListarDetalle(int idEmpresa, string serie, string numero, string tipoOrden)
         {
-            List<GetGR3_DetalleXCod> grDets = _referralGuideBL.Get3_DetalleXCod(idEmpresa, serie, numero, tipoOrden);
+            List<GetGR3_DetalleXCod> grDets = _referralGuideBL.Get3_DetalleXCod(idEmpresa, serie, numero, tipoOrden,3,null,lblRUCDest.Text.Trim());
             grDetsGenerales = grDets;
             dgvGRDetalle.Rows.Clear();
 
@@ -939,6 +943,8 @@ namespace SoftCotton.Views.ReferralGuide
                 dgvGRDetalle.Rows[index].Cells["dgvIdPedidoColor"].Value = item.IdPedidoColor;
                 dgvGRDetalle.Rows[index].Cells["dgvPedidoColor"].Value = item.PedidoColor;
                 dgvGRDetalle.Rows[index].Cells["DgvPartidaProveedor"].Value = item.PartidaProveedor;
+                dgvGRDetalle.Rows[index].Cells["DgvComentario"].Value = item.Comentario;
+
 
 
 
@@ -1565,6 +1571,7 @@ namespace SoftCotton.Views.ReferralGuide
                     _grCabParam.idEmpresa = Empresa.ID_EMPRESA;
                     _grCabParam.serie = txtSerie.Text.Trim();
                     _grCabParam.numero = txtNumero.Text.Trim();
+                    _grCabParam.destCodigoPC = lblRUCDest.Text.Trim();
 
                     if (cbxTipoOrden.SelectedIndex == 1)
                     {
@@ -1636,7 +1643,7 @@ namespace SoftCotton.Views.ReferralGuide
 
                             }
 
-                            GetGR2_CabeceraXCod grCab = _referralGuideBL.Get2_CabeceraXCod(Empresa.ID_EMPRESA, txtSerie.Text.Trim(), txtNumero.Text.Trim(), tipo_orden);
+                            GetGR2_CabeceraXCod grCab = _referralGuideBL.Get2_CabeceraXCod(Empresa.ID_EMPRESA, txtSerie.Text.Trim(), txtNumero.Text.Trim(), tipo_orden,lblRUCDest.Text.Trim());
 
                             if (grCab.serie == "0")
                             {
@@ -1645,7 +1652,7 @@ namespace SoftCotton.Views.ReferralGuide
                             else
                             {
                                 if (cbxTipoOrden.SelectedIndex == 1) { tipoOrden = "C"; } else if (cbxTipoOrden.SelectedIndex == 2) { tipoOrden = "S"; }
-                                List<GetGR3_DetalleXCod> grDets = _referralGuideBL.Get3_DetalleXCod(Empresa.ID_EMPRESA, txtSerie.Text.Trim(), txtNumero.Text.Trim(), tipoOrden);
+                                List<GetGR3_DetalleXCod> grDets = _referralGuideBL.Get3_DetalleXCod(Empresa.ID_EMPRESA, txtSerie.Text.Trim(), txtNumero.Text.Trim(), tipoOrden,3,null,lblRUCDest.Text.Trim());
 
                                 ExcelReport.ExportarGuiaRemision(sfd.FileName, grCab, grDets);
                             }
@@ -1746,7 +1753,17 @@ namespace SoftCotton.Views.ReferralGuide
                 itemNew.unidad_de_medida = item.codUmDam.Trim();
 
                 itemNew.codigo = item.codigoProducto;
-                itemNew.descripcion = item.descripcion;
+
+                if (item.Comentario != null && item.Comentario != "")
+                {
+                    itemNew.descripcion = $"{item.descripcion} | {item.Comentario}";
+                }
+                else
+                {
+                    itemNew.descripcion = item.descripcion;
+                }
+
+
                 if (item.cantidadIngresada < 0)
                 {
                     itemNew.cantidad = (item.cantidadIngresada * -1);

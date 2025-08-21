@@ -97,6 +97,7 @@
             this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.chkM17 = new System.Windows.Forms.RadioButton();
             this.chkM16 = new System.Windows.Forms.RadioButton();
             this.chkM15 = new System.Windows.Forms.RadioButton();
             this.chkM14 = new System.Windows.Forms.RadioButton();
@@ -146,7 +147,7 @@
             this.dgvIdPedidoColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvPedidoColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgvPartidaProveedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chkM17 = new System.Windows.Forms.RadioButton();
+            this.DgvComentario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -898,6 +899,17 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Motivo de Traslado";
             // 
+            // chkM17
+            // 
+            this.chkM17.AutoSize = true;
+            this.chkM17.Location = new System.Drawing.Point(582, 88);
+            this.chkM17.Name = "chkM17";
+            this.chkM17.Size = new System.Drawing.Size(110, 23);
+            this.chkM17.TabIndex = 44;
+            this.chkM17.TabStop = true;
+            this.chkM17.Text = "Mov. Interno";
+            this.chkM17.UseVisualStyleBackColor = true;
+            // 
             // chkM16
             // 
             this.chkM16.AutoSize = true;
@@ -1131,7 +1143,8 @@
             this.OP,
             this.dgvIdPedidoColor,
             this.dgvPedidoColor,
-            this.DgvPartidaProveedor});
+            this.DgvPartidaProveedor,
+            this.DgvComentario});
             this.dgvGRDetalle.Location = new System.Drawing.Point(4, -1);
             this.dgvGRDetalle.Name = "dgvGRDetalle";
             this.dgvGRDetalle.RowHeadersWidth = 15;
@@ -1384,16 +1397,12 @@
             this.DgvPartidaProveedor.Name = "DgvPartidaProveedor";
             this.DgvPartidaProveedor.Width = 125;
             // 
-            // chkM17
+            // DgvComentario
             // 
-            this.chkM17.AutoSize = true;
-            this.chkM17.Location = new System.Drawing.Point(582, 88);
-            this.chkM17.Name = "chkM17";
-            this.chkM17.Size = new System.Drawing.Size(110, 23);
-            this.chkM17.TabIndex = 44;
-            this.chkM17.TabStop = true;
-            this.chkM17.Text = "Mov. Interno";
-            this.chkM17.UseVisualStyleBackColor = true;
+            this.DgvComentario.HeaderText = "Comentario";
+            this.DgvComentario.MinimumWidth = 6;
+            this.DgvComentario.Name = "DgvComentario";
+            this.DgvComentario.Width = 125;
             // 
             // RegistroGuiaRemisionView
             // 
@@ -1516,6 +1525,10 @@
         private System.Windows.Forms.Label lblFiltro;
         private System.Windows.Forms.Label lblcuo;
         private System.Windows.Forms.Label lblIdMovimientoTela;
+        private System.Windows.Forms.RadioButton chkM15;
+        private System.Windows.Forms.RadioButton chkM14;
+        private System.Windows.Forms.RadioButton chkM16;
+        private System.Windows.Forms.RadioButton chkM17;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvTxtItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvTxtSecuenciaBD;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvTxtIdDet;
@@ -1545,9 +1558,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvIdPedidoColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvPedidoColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn DgvPartidaProveedor;
-        private System.Windows.Forms.RadioButton chkM15;
-        private System.Windows.Forms.RadioButton chkM14;
-        private System.Windows.Forms.RadioButton chkM16;
-        private System.Windows.Forms.RadioButton chkM17;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DgvComentario;
     }
 }
