@@ -200,6 +200,7 @@
     <Compile Include="Model\Invoices\SetFacDetParam.cs" />
     <Compile Include="Model\Kardex\KardexElectronico.cs" />
     <Compile Include="Model\Kardex\KardexValorizado.cs" />
+    <Compile Include="Model\Maintenance\AuditoriasEntidad.cs" />
     <Compile Include="Model\Maintenance\GetMant10_TipoMoneda.cs" />
     <Compile Include="Model\Maintenance\GetMant11_TipoDoc.cs" />
     <Compile Include="Model\Maintenance\GetMant12_ProvClientesRpte.cs" />
@@ -570,6 +571,12 @@
     </Compile>
     <Compile Include="Views\Maintenance\BuscarTallas.Designer.cs">
       <DependentUpon>BuscarTallas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\LogRegistros.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\LogRegistros.Designer.cs">
+      <DependentUpon>LogRegistros.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Maintenance\RegistrarAreasAlmacen.cs">
       <SubType>Form</SubType>
@@ -1069,6 +1076,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Maintenance\BuscarTallas.resx">
       <DependentUpon>BuscarTallas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\LogRegistros.resx">
+      <DependentUpon>LogRegistros.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Maintenance\RegistrarAreasAlmacen.resx">
       <DependentUpon>RegistrarAreasAlmacen.cs</DependentUpon>

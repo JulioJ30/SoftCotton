@@ -141,6 +141,30 @@ namespace SoftCotton.Repository
             }
         }
 
+
+        public bool setRegistroTransformacionDetDelete(int IdTransformacionDet)
+        {
+            try
+            {
+                using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+                {
+
+                    var sp_parametros = new DynamicParameters();
+                    sp_parametros.Add("@IdTransformacionDet", IdTransformacionDet, DbType.Int32, ParameterDirection.Input);
+
+
+                    sqlConnection.Execute("uspSetTransformacionDetDelete",
+                                                        sp_parametros,
+                                                        commandType: CommandType.StoredProcedure);
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         // LISTAMOS
         public IEnumerable<DetalleTransformacionDetTallaEntity> GetRegistroTransformacionDetTallaPorIdDet(int IdTransformacionDet)
         {

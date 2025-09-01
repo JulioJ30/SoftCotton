@@ -27,7 +27,14 @@ namespace SoftCotton.Views.Maintenance
 
         private void BuscarEstilosView_Load(object sender, EventArgs e)
         {
-            dgvEstilos.DataSource = _mantenimientoBL.GetEstilos();
+            CargaLista();
+            txtEstilo.Focus();
+
+        }
+
+        private void CargaLista(string filtro = "")
+        {
+            dgvEstilos.DataSource = _mantenimientoBL.GetEstilos(filtro);
 
             if (dgvEstilos.Rows.Count > 0)
             {
@@ -35,7 +42,6 @@ namespace SoftCotton.Views.Maintenance
                 dgvEstilos.Rows[0].Selected = true;
             }
 
-            txtEstilo.Focus();
         }
 
         private void dgvEstilos_KeyUp(object sender, KeyEventArgs e)
@@ -56,6 +62,15 @@ namespace SoftCotton.Views.Maintenance
                     this.Close();
                 }
 
+            }
+        }
+
+        private void txtEstilo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string busqueda = txtEstilo.Text.Trim();
+                CargaLista(busqueda);
             }
         }
     }

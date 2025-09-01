@@ -16,8 +16,25 @@ namespace SoftCotton.Repository
     {
 
 
+        public IEnumerable<AuditoriasEntidad> GetAuditorias(string Tabla,string Filtro)
+        {
+            //GetGR2_CabeceraXCod grCab = new GetGR2_CabeceraXCod();
+            using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+            {
+
+                var sp_parametros = new DynamicParameters();
+                sp_parametros.Add("@Tabla", Tabla, DbType.String, ParameterDirection.Input);
+                sp_parametros.Add("@Filtro", Filtro, DbType.String, ParameterDirection.Input);
+
+
+                return sqlConnection.Query<AuditoriasEntidad>("uspGetAuditorias",
+                                                    sp_parametros,
+                                                    commandType: CommandType.StoredProcedure);
+            }
+        }
+
         // ESTILOS
-        public IEnumerable<GetMant53_Estilos> GetEstilos()
+        public IEnumerable<GetMant53_Estilos> GetEstilos(string filtro)
         {
             //GetGR2_CabeceraXCod grCab = new GetGR2_CabeceraXCod();
             using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
@@ -25,6 +42,8 @@ namespace SoftCotton.Repository
 
                 var sp_parametros = new DynamicParameters();
                 sp_parametros.Add("@opcion", 53, DbType.Int32, ParameterDirection.Input);
+                sp_parametros.Add("@filtroTxt1", filtro, DbType.String, ParameterDirection.Input);
+
 
                 return sqlConnection.Query<GetMant53_Estilos>("uspGetMantenimiento",
                                                     sp_parametros,

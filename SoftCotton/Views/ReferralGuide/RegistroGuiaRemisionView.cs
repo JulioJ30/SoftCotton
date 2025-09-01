@@ -61,7 +61,7 @@ namespace SoftCotton.Views.ReferralGuide
             cargarcb();
             cbxTipoOrden.SelectedIndex = 0;
 
-            UserApplication.USUARIO = "PRUEBA JMORAN";
+            //UserApplication.USUARIO = "PRUEBA JMORAN";
             Empresa.ID_EMPRESA = 1;
 
             // TIPO DE TRANSPORTE
@@ -1753,15 +1753,25 @@ namespace SoftCotton.Views.ReferralGuide
                 itemNew.unidad_de_medida = item.codUmDam.Trim();
 
                 itemNew.codigo = item.codigoProducto;
+                itemNew.descripcion = item.descripcion;
 
+
+                // OP
+                if (item.OP != null && item.OP != null)
+                {
+                    itemNew.descripcion = $"{item.descripcion} | {item.OP}";
+                }
+
+                // COMENTARIO
                 if (item.Comentario != null && item.Comentario != "")
                 {
                     itemNew.descripcion = $"{item.descripcion} | {item.Comentario}";
                 }
-                else
-                {
-                    itemNew.descripcion = item.descripcion;
-                }
+
+
+               
+
+                
 
 
                 if (item.cantidadIngresada < 0)

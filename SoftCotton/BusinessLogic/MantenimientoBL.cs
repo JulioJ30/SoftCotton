@@ -20,9 +20,9 @@ namespace SoftCotton.BusinessLogic
             return _mantenimientoRepository.Get76_Tallas(filtro);
         }
 
-        public IEnumerable<GetMant53_Estilos> GetEstilos()
+        public IEnumerable<GetMant53_Estilos> GetEstilos(string filtro = "")
         {
-            return _mantenimientoRepository.GetEstilos();
+            return _mantenimientoRepository.GetEstilos(filtro);
         }
 
         public IEnumerable<GetMant54_Programas> GetProgramas(int estado = 1, string programa = "")

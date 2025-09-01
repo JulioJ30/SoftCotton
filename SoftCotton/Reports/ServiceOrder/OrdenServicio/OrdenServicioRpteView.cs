@@ -194,7 +194,7 @@ namespace SoftCotton.Reports.ServiceOrder.OrdenServicio
                 new ReportParameter("pSegundaFirma", segundaFirma),
                 new ReportParameter("pSegundaFirmaImgPath", imgFirma2URIAbsoluto),
 
-                new ReportParameter("pPrograma", pModelo.osCab.programa),
+                new ReportParameter("pPrograma", ""/*pModelo.osCab.programa*/),
                 new ReportParameter("pServicio", pModelo.osCab.servicio),
 
             };

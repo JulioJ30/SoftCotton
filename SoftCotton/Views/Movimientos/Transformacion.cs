@@ -28,6 +28,7 @@ namespace SoftCotton.Views.Movimientos
         MantenimientoRepository _mantenimientoRepository;
         List<GetGR3_DetalleXCod> grDetsGenerales;
         List<OrdenCompraServicio> listOrdenCompraServicio = new List<OrdenCompraServicio>();
+        int secuenciaSeleccionada = 0;
 
 
         public Transformacion()
@@ -202,9 +203,42 @@ namespace SoftCotton.Views.Movimientos
         private void ListarDetallePorFiltro(DetalleTransformacionFiltroPorBusquedaEntity filtros)
         {
             GuiaRemisionRepository guiaRemisionRepository = new GuiaRemisionRepository();
-
             List<DetalleTransformacionEntity> detalleTransformacion = guiaRemisionRepository.GetTransformacionDetPorFiltros(filtros).ToList();
-            dgvDestinoItems.DataSource = detalleTransformacion;
+
+            dgvDestinoItems.Rows.Clear();
+
+
+            foreach (var item in detalleTransformacion)
+            {
+                //count++;
+                int index = dgvDestinoItems.Rows.Add();
+
+                dgvDestinoItems.Rows[index].Cells["dgvItem"].Value = index + 1;
+
+                dgvDestinoItems.Rows[index].Cells["dgvCodItem"].Value = item.CodigoProducto;
+                dgvDestinoItems.Rows[index].Cells["dgvProducto"].Value = item.Producto;
+                dgvDestinoItems.Rows[index].Cells["dgvCantidad"].Value = item.Cantidad;
+                dgvDestinoItems.Rows[index].Cells["dgvComentario"].Value = item.Comentario;
+                dgvDestinoItems.Rows[index].Cells["DgvIdTransformacionDet"].Value = item.IdTransformacionDet;
+
+                //dgvOrigenItems.Rows[index].Cells["dgvComentario"].Value = item.cantidadIngresada;
+
+
+                //if (count == 1)
+                //{
+                //    ListarDetallePorFiltro(new DetalleTransformacionFiltroPorBusquedaEntity
+                //    {
+                //        IdSencuenciaDet = item.secuencia,
+                //        Serie = serie,
+                //        Numero = int.Parse(numero.Trim()),
+                //        Proveedor = rucProveedor
+                //    }
+                //    );
+                //}
+
+            }
+
+            //dgvDestinoItems.DataSource = detalleTransformacion;
         }
 
         private void dgvOrigenItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -232,7 +266,45 @@ namespace SoftCotton.Views.Movimientos
                 frm.IdTransformacionDetParam = Convert.ToInt32(dgvDestinoItems.Rows[e.RowIndex].Cells["DgvIdTransformacionDet"].Value);
                 frm.ShowDialog();
             }
+
+            // ELIMINAR
+            //btnEliminarItem
+            if (dgvDestinoItems.Columns[e.ColumnIndex].Name.Equals("btnEliminarItem"))
+            {
+                
+
+                int IdTransformacionDet = Convert.ToInt32(dgvDestinoItems.Rows[e.RowIndex].Cells["DgvIdTransformacionDet"].Value);
+
+                //setRegistroTransformacionDetDelete
+                if (ResponseMessage.MessageQuestion("Confirme para eliminar item") == DialogResult.OK)
+                {
+                    EliminarDetalle(IdTransformacionDet);
+                }
+
+
+            }
         }
+
+        private void EliminarDetalle(int IdTransformacionDet)
+        {
+            MovimientosRepository movimientosRepository = new MovimientosRepository();
+            movimientosRepository.setRegistroTransformacionDetDelete(IdTransformacionDet);
+
+
+            DetalleTransformacionFiltroPorBusquedaEntity filtros = new DetalleTransformacionFiltroPorBusquedaEntity();
+
+            //OBTENEMOS DATA DE FILTROS
+            filtros.IdSencuenciaDet = secuenciaSeleccionada;
+            filtros.Serie = txtSerieGuiaOrigen.Text.Trim();
+            filtros.Numero = Convert.ToInt32(txtNumeroGuiaOrigen.Text.Trim());
+            filtros.Proveedor = txtProveedorGuiaOrigen.Text.Trim();
+
+
+            ListarDetallePorFiltro(filtros);
+
+        }
+
+
 
 
         private bool ValidarCrearOrden()
@@ -319,7 +391,8 @@ namespace SoftCotton.Views.Movimientos
             DetalleTransformacionFiltroPorBusquedaEntity filtros = new DetalleTransformacionFiltroPorBusquedaEntity();
 
             //OBTENEMOS DATA DE FILTROS
-            filtros.IdSencuenciaDet = Convert.ToInt32(dgvOrigenItems.Rows[e.RowIndex].Cells["DgvSecuencia"].Value.ToString());
+            secuenciaSeleccionada = Convert.ToInt32(dgvOrigenItems.Rows[e.RowIndex].Cells["DgvSecuencia"].Value.ToString());
+            filtros.IdSencuenciaDet = secuenciaSeleccionada;
             filtros.Serie = txtSerieGuiaOrigen.Text.Trim();
             filtros.Numero = Convert.ToInt32(txtNumeroGuiaOrigen.Text.Trim());
             filtros.Proveedor = txtProveedorGuiaOrigen.Text.Trim();

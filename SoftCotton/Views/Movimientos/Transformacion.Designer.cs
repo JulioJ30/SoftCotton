@@ -43,15 +43,14 @@
             this.btnGenerarOrden = new System.Windows.Forms.Button();
             this.btnAgregarItem = new System.Windows.Forms.Button();
             this.dgvOrigenItems = new System.Windows.Forms.DataGridView();
+            this.DgvCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.item = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgvSecuencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CodigoItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dgvDestinoItems = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DgvBtnTallas = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.DgvIdTransformacionDet = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -60,12 +59,14 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.cboTipoOrdenCompraServicio = new System.Windows.Forms.ComboBox();
-            this.DgvCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.item = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DgvSecuencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CodigoItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCodItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvComentario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgvBtnTallas = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.btnEliminarItem = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.DgvIdTransformacionDet = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrigenItems)).BeginInit();
@@ -245,6 +246,61 @@
             this.dgvOrigenItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrigenItems_CellClick);
             this.dgvOrigenItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrigenItems_CellContentClick);
             // 
+            // DgvCheck
+            // 
+            this.DgvCheck.DataPropertyName = "DgvCheck";
+            this.DgvCheck.HeaderText = "X";
+            this.DgvCheck.MinimumWidth = 6;
+            this.DgvCheck.Name = "DgvCheck";
+            this.DgvCheck.ReadOnly = true;
+            this.DgvCheck.Width = 21;
+            // 
+            // item
+            // 
+            this.item.DataPropertyName = "item";
+            this.item.HeaderText = "Item";
+            this.item.MinimumWidth = 6;
+            this.item.Name = "item";
+            this.item.ReadOnly = true;
+            this.item.Width = 61;
+            // 
+            // DgvSecuencia
+            // 
+            this.DgvSecuencia.DataPropertyName = "DgvSecuencia";
+            this.DgvSecuencia.HeaderText = "DgvSecuencia";
+            this.DgvSecuencia.MinimumWidth = 6;
+            this.DgvSecuencia.Name = "DgvSecuencia";
+            this.DgvSecuencia.ReadOnly = true;
+            this.DgvSecuencia.Visible = false;
+            this.DgvSecuencia.Width = 125;
+            // 
+            // CodigoItem
+            // 
+            this.CodigoItem.DataPropertyName = "CodigoItem";
+            this.CodigoItem.HeaderText = "Cod. Item";
+            this.CodigoItem.MinimumWidth = 6;
+            this.CodigoItem.Name = "CodigoItem";
+            this.CodigoItem.ReadOnly = true;
+            this.CodigoItem.Width = 92;
+            // 
+            // Producto
+            // 
+            this.Producto.DataPropertyName = "Producto";
+            this.Producto.HeaderText = "Producto";
+            this.Producto.MinimumWidth = 6;
+            this.Producto.Name = "Producto";
+            this.Producto.ReadOnly = true;
+            this.Producto.Width = 90;
+            // 
+            // Cantidad
+            // 
+            this.Cantidad.DataPropertyName = "Cantidad";
+            this.Cantidad.HeaderText = "Cantidad";
+            this.Cantidad.MinimumWidth = 6;
+            this.Cantidad.Name = "Cantidad";
+            this.Cantidad.ReadOnly = true;
+            this.Cantidad.Width = 90;
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.dgvDestinoItems);
@@ -262,12 +318,13 @@
             this.dgvDestinoItems.AllowUserToResizeRows = false;
             this.dgvDestinoItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDestinoItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5,
+            this.dgvItem,
+            this.dgvCodItem,
+            this.dgvProducto,
+            this.dgvCantidad,
+            this.dgvComentario,
             this.DgvBtnTallas,
+            this.btnEliminarItem,
             this.DgvIdTransformacionDet});
             this.dgvDestinoItems.Location = new System.Drawing.Point(6, 21);
             this.dgvDestinoItems.MultiSelect = false;
@@ -279,72 +336,6 @@
             this.dgvDestinoItems.Size = new System.Drawing.Size(698, 361);
             this.dgvDestinoItems.TabIndex = 2;
             this.dgvDestinoItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDestinoItems_CellContentClick);
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "Item";
-            this.dataGridViewTextBoxColumn1.HeaderText = "Item";
-            this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "CodigoProducto";
-            this.dataGridViewTextBoxColumn2.HeaderText = "Cod. Item";
-            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "Producto";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Producto";
-            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "Cantidad";
-            this.dataGridViewTextBoxColumn4.HeaderText = "Cantidad";
-            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            this.dataGridViewTextBoxColumn4.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Comentario";
-            this.dataGridViewTextBoxColumn5.HeaderText = "Comentario";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            this.dataGridViewTextBoxColumn5.Width = 125;
-            // 
-            // DgvBtnTallas
-            // 
-            this.DgvBtnTallas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DgvBtnTallas.HeaderText = "Tallas";
-            this.DgvBtnTallas.MinimumWidth = 6;
-            this.DgvBtnTallas.Name = "DgvBtnTallas";
-            this.DgvBtnTallas.ReadOnly = true;
-            this.DgvBtnTallas.Text = "Ver Tallas";
-            this.DgvBtnTallas.UseColumnTextForButtonValue = true;
-            this.DgvBtnTallas.Width = 125;
-            // 
-            // DgvIdTransformacionDet
-            // 
-            this.DgvIdTransformacionDet.DataPropertyName = "IdTransformacionDet";
-            this.DgvIdTransformacionDet.HeaderText = "IdTransformacionDet";
-            this.DgvIdTransformacionDet.MinimumWidth = 6;
-            this.DgvIdTransformacionDet.Name = "DgvIdTransformacionDet";
-            this.DgvIdTransformacionDet.ReadOnly = true;
-            this.DgvIdTransformacionDet.Visible = false;
-            this.DgvIdTransformacionDet.Width = 125;
             // 
             // groupBox5
             // 
@@ -422,60 +413,82 @@
             this.cboTipoOrdenCompraServicio.Size = new System.Drawing.Size(191, 24);
             this.cboTipoOrdenCompraServicio.TabIndex = 3;
             // 
-            // DgvCheck
+            // dgvItem
             // 
-            this.DgvCheck.DataPropertyName = "DgvCheck";
-            this.DgvCheck.HeaderText = "X";
-            this.DgvCheck.MinimumWidth = 6;
-            this.DgvCheck.Name = "DgvCheck";
-            this.DgvCheck.ReadOnly = true;
-            this.DgvCheck.Width = 21;
+            this.dgvItem.DataPropertyName = "Item";
+            this.dgvItem.HeaderText = "Item";
+            this.dgvItem.MinimumWidth = 6;
+            this.dgvItem.Name = "dgvItem";
+            this.dgvItem.ReadOnly = true;
+            this.dgvItem.Width = 125;
             // 
-            // item
+            // dgvCodItem
             // 
-            this.item.DataPropertyName = "item";
-            this.item.HeaderText = "Item";
-            this.item.MinimumWidth = 6;
-            this.item.Name = "item";
-            this.item.ReadOnly = true;
-            this.item.Width = 61;
+            this.dgvCodItem.DataPropertyName = "CodigoProducto";
+            this.dgvCodItem.HeaderText = "Cod. Item";
+            this.dgvCodItem.MinimumWidth = 6;
+            this.dgvCodItem.Name = "dgvCodItem";
+            this.dgvCodItem.ReadOnly = true;
+            this.dgvCodItem.Width = 125;
             // 
-            // DgvSecuencia
+            // dgvProducto
             // 
-            this.DgvSecuencia.DataPropertyName = "DgvSecuencia";
-            this.DgvSecuencia.HeaderText = "DgvSecuencia";
-            this.DgvSecuencia.MinimumWidth = 6;
-            this.DgvSecuencia.Name = "DgvSecuencia";
-            this.DgvSecuencia.ReadOnly = true;
-            this.DgvSecuencia.Visible = false;
-            this.DgvSecuencia.Width = 125;
+            this.dgvProducto.DataPropertyName = "Producto";
+            this.dgvProducto.HeaderText = "Producto";
+            this.dgvProducto.MinimumWidth = 6;
+            this.dgvProducto.Name = "dgvProducto";
+            this.dgvProducto.ReadOnly = true;
+            this.dgvProducto.Width = 125;
             // 
-            // CodigoItem
+            // dgvCantidad
             // 
-            this.CodigoItem.DataPropertyName = "CodigoItem";
-            this.CodigoItem.HeaderText = "Cod. Item";
-            this.CodigoItem.MinimumWidth = 6;
-            this.CodigoItem.Name = "CodigoItem";
-            this.CodigoItem.ReadOnly = true;
-            this.CodigoItem.Width = 92;
+            this.dgvCantidad.DataPropertyName = "Cantidad";
+            this.dgvCantidad.HeaderText = "Cantidad";
+            this.dgvCantidad.MinimumWidth = 6;
+            this.dgvCantidad.Name = "dgvCantidad";
+            this.dgvCantidad.ReadOnly = true;
+            this.dgvCantidad.Width = 125;
             // 
-            // Producto
+            // dgvComentario
             // 
-            this.Producto.DataPropertyName = "Producto";
-            this.Producto.HeaderText = "Producto";
-            this.Producto.MinimumWidth = 6;
-            this.Producto.Name = "Producto";
-            this.Producto.ReadOnly = true;
-            this.Producto.Width = 90;
+            this.dgvComentario.DataPropertyName = "Comentario";
+            this.dgvComentario.HeaderText = "Comentario";
+            this.dgvComentario.MinimumWidth = 6;
+            this.dgvComentario.Name = "dgvComentario";
+            this.dgvComentario.ReadOnly = true;
+            this.dgvComentario.Width = 125;
             // 
-            // Cantidad
+            // DgvBtnTallas
             // 
-            this.Cantidad.DataPropertyName = "Cantidad";
-            this.Cantidad.HeaderText = "Cantidad";
-            this.Cantidad.MinimumWidth = 6;
-            this.Cantidad.Name = "Cantidad";
-            this.Cantidad.ReadOnly = true;
-            this.Cantidad.Width = 90;
+            this.DgvBtnTallas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DgvBtnTallas.HeaderText = "Tallas";
+            this.DgvBtnTallas.MinimumWidth = 6;
+            this.DgvBtnTallas.Name = "DgvBtnTallas";
+            this.DgvBtnTallas.ReadOnly = true;
+            this.DgvBtnTallas.Text = "Ver Tallas";
+            this.DgvBtnTallas.UseColumnTextForButtonValue = true;
+            this.DgvBtnTallas.Width = 125;
+            // 
+            // btnEliminarItem
+            // 
+            this.btnEliminarItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEliminarItem.HeaderText = "Eliminar";
+            this.btnEliminarItem.MinimumWidth = 6;
+            this.btnEliminarItem.Name = "btnEliminarItem";
+            this.btnEliminarItem.ReadOnly = true;
+            this.btnEliminarItem.Text = "Eliminar";
+            this.btnEliminarItem.UseColumnTextForButtonValue = true;
+            this.btnEliminarItem.Width = 125;
+            // 
+            // DgvIdTransformacionDet
+            // 
+            this.DgvIdTransformacionDet.DataPropertyName = "IdTransformacionDet";
+            this.DgvIdTransformacionDet.HeaderText = "IdTransformacionDet";
+            this.DgvIdTransformacionDet.MinimumWidth = 6;
+            this.DgvIdTransformacionDet.Name = "DgvIdTransformacionDet";
+            this.DgvIdTransformacionDet.ReadOnly = true;
+            this.DgvIdTransformacionDet.Visible = false;
+            this.DgvIdTransformacionDet.Width = 125;
             // 
             // Transformacion
             // 
@@ -520,13 +533,6 @@
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Button btnAgregarItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewButtonColumn DgvBtnTallas;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DgvIdTransformacionDet;
         private System.Windows.Forms.ComboBox cboTipoOrdenCompraServicio;
         private System.Windows.Forms.Button btnGenerarOrden;
         private System.Windows.Forms.Label label6;
@@ -541,5 +547,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn CodigoItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn Producto;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCodItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCantidad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvComentario;
+        private System.Windows.Forms.DataGridViewButtonColumn DgvBtnTallas;
+        private System.Windows.Forms.DataGridViewButtonColumn btnEliminarItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DgvIdTransformacionDet;
     }
 }
