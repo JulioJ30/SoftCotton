@@ -14,6 +14,7 @@ namespace SoftCotton.Model.Kardex
 
         public string cod { get; set; }
         public string Nombre_Articulo { get; set; }
+        public string PedidoColor { get; set; }
         public string color { get; set; }
         public string cuo { get; set; }
         public string tpo_opera { get; set; }
@@ -62,6 +63,12 @@ namespace SoftCotton.Model.Kardex
         public string cod { get; set; }
         public string Nombre_Articulo { get; set; }
         public string color { get; set; }
+        public string OpPedido { get; set; }
+        public string OpColor { get; set; }
+        public string OpEstilo { get; set; }
+        public string OpPrograma { get; set; }
+
+
         //public string cuo { get; set; }
         //public string tpo_opera { get; set; }
         public DateTime Fecha_Guia { get; set; }

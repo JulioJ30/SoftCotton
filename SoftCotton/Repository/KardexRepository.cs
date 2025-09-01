@@ -118,6 +118,8 @@ namespace SoftCotton.Repository
                             det.SaldoTotalSolesS = Convert.ToDecimal(reader["SaldoValorSoles"].ToString());
 
                             det.tpo_opera = Convert.ToString(reader["tpo_opera"].ToString());
+                            det.PedidoColor = Convert.ToString(reader["PedidoColor"].ToString());
+
 
 
                             list.Add(det);
@@ -196,6 +198,13 @@ namespace SoftCotton.Repository
                             det.SaldoPUCalcSolesS = Convert.ToDecimal(reader["SaldoPuSoles"].ToString());
                             det.SaldoTotalSolesS = Convert.ToDecimal(reader["SaldoValorSoles"].ToString());
                             det.Secuencia = Convert.ToInt32(reader["Secuencia"].ToString());
+
+                            det.OpPedido = reader["OpPedido"].ToString();
+                            det.OpColor = reader["OpColor"].ToString();
+                            det.OpEstilo = reader["OpEstilo"].ToString();
+                            det.OpPrograma = reader["OpPrograma"].ToString();
+
+
 
 
 

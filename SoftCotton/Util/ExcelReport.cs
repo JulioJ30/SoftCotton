@@ -93,22 +93,22 @@ namespace SoftCotton.Util
                     var worksheet = workbook.Worksheets.Add("Hoja 1");
 
 
-                    worksheet.Cell(2, 21).Value = "ENTRADA S/.";
-                    worksheet.Cell(2, 21).Style.Fill.BackgroundColor = tituloArray[21].backgroundColor;
-                    worksheet.Cell(2, 21).Style.Font.FontColor = tituloArray[21].foreColor;
-                    worksheet.Cell(2, 21).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-                    worksheet.Range("U2:W2").Merge();
-                    worksheet.Cell(2, 24).Value = "SALIDA S/.";
-                    worksheet.Cell(2, 24).Style.Fill.BackgroundColor = tituloArray[24].backgroundColor;
-                    worksheet.Cell(2, 24).Style.Font.FontColor = tituloArray[24].foreColor;
-                    worksheet.Cell(2, 24).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-                    worksheet.Range("X2:Z2").Merge();
+                    worksheet.Cell(2, 25).Value = "ENTRADA S/.";
+                    worksheet.Cell(2, 25).Style.Fill.BackgroundColor = tituloArray[21].backgroundColor;
+                    worksheet.Cell(2, 25).Style.Font.FontColor = tituloArray[21].foreColor;
+                    worksheet.Cell(2, 25).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    worksheet.Range("Y2:AA2").Merge();
+                    worksheet.Cell(2, 28).Value = "SALIDA S/.";
+                    worksheet.Cell(2, 28).Style.Fill.BackgroundColor = tituloArray[24].backgroundColor;
+                    worksheet.Cell(2, 28).Style.Font.FontColor = tituloArray[24].foreColor;
+                    worksheet.Cell(2, 28).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    worksheet.Range("AB2:AD2").Merge();
 
-                    worksheet.Cell(2, 27).Value = "SALDO S/.";
-                    worksheet.Cell(2, 27).Style.Fill.BackgroundColor = tituloArray[27].backgroundColor;
-                    worksheet.Cell(2, 27).Style.Font.FontColor = tituloArray[27].foreColor;
-                    worksheet.Cell(2, 27).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-                    worksheet.Range("AA2:AC2").Merge();
+                    worksheet.Cell(2, 31).Value = "SALDO S/.";
+                    worksheet.Cell(2, 31).Style.Fill.BackgroundColor = tituloArray[27].backgroundColor;
+                    worksheet.Cell(2, 31).Style.Font.FontColor = tituloArray[27].foreColor;
+                    worksheet.Cell(2, 31).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    worksheet.Range("AE2:AG2").Merge();
                     //worksheet.Cell(2, 30).Value = "SALIDA S/.";
                     //worksheet.Cell(2, 30).Style.Fill.BackgroundColor = tituloArray[30].backgroundColor;
                     //worksheet.Cell(2, 30).Style.Font.FontColor = tituloArray[30].foreColor;
@@ -151,22 +151,22 @@ namespace SoftCotton.Util
                                     {
                                         worksheet.Cell(rowIndex, 2).Value = "TOTAL ";
                                         worksheet.Cell(rowIndex, 3).FormulaA1 = "C" + (rowIndex - 1); 
-                                        worksheet.Range("A" + rowIndex + ":AC" + rowIndex).Style.Fill.BackgroundColor = XLColor.LightBlue;
-                                        worksheet.Range("A" + rowIndex + ":AC" + rowIndex).Style.Font.FontColor = XLColor.Black;
+                                        worksheet.Range("A" + rowIndex + ":AG" + rowIndex).Style.Fill.BackgroundColor = XLColor.LightBlue;
+                                        worksheet.Range("A" + rowIndex + ":AG" + rowIndex).Style.Font.FontColor = XLColor.Black;
                                         worksheet.Cell(rowIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
                                         //Total Saldo
-                                        worksheet.Cell(rowIndex, 29).FormulaA1 = "AC" + (rowIndex - 1) ;
+                                        worksheet.Cell(rowIndex, 33).FormulaA1 = "AG" + (rowIndex - 1) ;
                                         //Cantidad Saldo 
-                                        worksheet.Cell(rowIndex, 27).FormulaA1 = "AA" + (rowIndex - 1) ;
+                                        worksheet.Cell(rowIndex, 31).FormulaA1 = "AE" + (rowIndex - 1) ;
                                         //Total De Cantidades Entradas
-                                        worksheet.Cell(rowIndex, 21).FormulaA1 = "SUM(U" + rowInicial + ":U" + (rowIndex - 1) + ")";
+                                        worksheet.Cell(rowIndex, 25).FormulaA1 = "SUM(Y" + rowInicial + ":Y" + (rowIndex - 1) + ")";
                                         //Total de Cantidades de Salidas
-                                        worksheet.Cell(rowIndex, 24).FormulaA1 = "SUM(X" + rowInicial + ":X" + (rowIndex - 1) + ")";
+                                        worksheet.Cell(rowIndex, 28).FormulaA1 = "SUM(AB" + rowInicial + ":AB" + (rowIndex - 1) + ")";
                                         //Total de Saldos Entrada 
-                                        worksheet.Cell(rowIndex, 23).FormulaA1 = "SUM(W" + rowInicial + ":W" + (rowIndex - 1) + ")";
+                                        worksheet.Cell(rowIndex, 27).FormulaA1 = "SUM(AA" + rowInicial + ":AA" + (rowIndex - 1) + ")";
                                         //Total de Saldos Salida
-                                        worksheet.Cell(rowIndex, 26).FormulaA1 = "SUM(Z" + rowInicial + ":Z" + (rowIndex - 1) + ")";
-                                        worksheet.Range("D" + rowIndex + ":T" + rowIndex).Merge();
+                                        worksheet.Cell(rowIndex, 30).FormulaA1 = "SUM(AD" + rowInicial + ":AD" + (rowIndex - 1) + ")";
+                                        worksheet.Range("D" + rowIndex + ":X" + rowIndex).Merge();
                                         rowIndex++;
                                         rowInicial = rowIndex;
                                     }
@@ -214,22 +214,22 @@ namespace SoftCotton.Util
                     worksheet.Cell(rowIndex, 2).Value = "TOTAL ";
                     worksheet.Cell(rowIndex, 3).FormulaA1 = "C" + (rowIndex - 1);
                     //Total Saldo
-                    worksheet.Cell(rowIndex, 29).FormulaA1 = "AC" + (rowIndex - 1);
+                    worksheet.Cell(rowIndex, 33).FormulaA1 = "AG" + (rowIndex - 1);
                     //Cantidad Saldo 
-                    worksheet.Cell(rowIndex, 27).FormulaA1 = "AA" + (rowIndex - 1);
+                    worksheet.Cell(rowIndex, 31).FormulaA1 = "AE" + (rowIndex - 1);
                     //Total De Cantidades Entradas
-                    worksheet.Cell(rowIndex, 21).FormulaA1 = "SUM(U" + rowInicial + ":U" + (rowIndex - 1) + ")";
+                    worksheet.Cell(rowIndex, 25).FormulaA1 = "SUM(Y" + rowInicial + ":Y" + (rowIndex - 1) + ")";
                     //Total de Cantidades de Salidas
-                    worksheet.Cell(rowIndex, 24).FormulaA1 = "SUM(X" + rowInicial + ":X" + (rowIndex - 1) + ")";
+                    worksheet.Cell(rowIndex, 28).FormulaA1 = "SUM(AB" + rowInicial + ":AB" + (rowIndex - 1) + ")";
                     //Total de Saldos Entrada 
-                    worksheet.Cell(rowIndex, 23).FormulaA1 = "SUM(W" + rowInicial + ":W" + (rowIndex - 1) + ")";
+                    worksheet.Cell(rowIndex, 27).FormulaA1 = "SUM(AA" + rowInicial + ":AA" + (rowIndex - 1) + ")";
                     //Total de Saldos Salida
-                    worksheet.Cell(rowIndex, 26).FormulaA1 = "SUM(Z" + rowInicial + ":Z" + (rowIndex - 1) + ")";
+                    worksheet.Cell(rowIndex, 30).FormulaA1 = "SUM(AD" + rowInicial + ":AD" + (rowIndex - 1) + ")";
 
 
-                    worksheet.Range("A" + rowIndex + ":AC" + rowIndex).Style.Fill.BackgroundColor = XLColor.LightBlue;
-                    worksheet.Range("A" + rowIndex + ":AC" + rowIndex).Style.Font.FontColor = XLColor.Black;
-                    worksheet.Range("D" + rowIndex + ":T" + rowIndex).Merge();
+                    worksheet.Range("A" + rowIndex + ":AG" + rowIndex).Style.Fill.BackgroundColor = XLColor.LightBlue;
+                    worksheet.Range("A" + rowIndex + ":AG" + rowIndex).Style.Font.FontColor = XLColor.Black;
+                    worksheet.Range("D" + rowIndex + ":X" + rowIndex).Merge();
                     worksheet.Columns().AdjustToContents();
 
                     //worksheet.Range("A" + (rowIndex + 2) + ":AC" + (rowIndex + 2)).Style.Fill.BackgroundColor = XLColor.DarkSeaGreen;

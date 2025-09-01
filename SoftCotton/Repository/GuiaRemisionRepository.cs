@@ -447,6 +447,12 @@ namespace SoftCotton.Repository
                             rpte.fobservacionNotaCredito = reader["fobservacionNotaCredito"].ToString();
                             rpte.Op = reader["Op"].ToString();
 
+                            rpte.OpPedido = reader["OpPedido"].ToString();
+                            rpte.OpColor = reader["OpColor"].ToString();
+                            rpte.OpEstilo = reader["OpEstilo"].ToString();
+                            rpte.OpPrograma = reader["OpPrograma"].ToString();
+
+
                             rptes.Add(rpte);
                         }
                     }

@@ -43,13 +43,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtGrupo = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnExcel = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.dgvListado = new System.Windows.Forms.DataGridView();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.orden = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nombre_Articulo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgvPedidoColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.color = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Fecha_Guia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serie = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,8 +71,6 @@
             this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cuo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpo_opera = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListado)).BeginInit();
@@ -92,11 +93,11 @@
             this.groupBox1.Controls.Add(this.txtGrupo);
             this.groupBox1.Controls.Add(this.panel2);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Location = new System.Drawing.Point(3, 2);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(1364, 61);
+            this.groupBox1.Size = new System.Drawing.Size(1212, 50);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
@@ -104,20 +105,20 @@
             // txtPeriodo
             // 
             this.txtPeriodo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtPeriodo.Location = new System.Drawing.Point(938, 27);
+            this.txtPeriodo.Location = new System.Drawing.Point(834, 22);
             this.txtPeriodo.Margin = new System.Windows.Forms.Padding(2);
             this.txtPeriodo.MaxLength = 250;
             this.txtPeriodo.Name = "txtPeriodo";
-            this.txtPeriodo.Size = new System.Drawing.Size(108, 26);
+            this.txtPeriodo.Size = new System.Drawing.Size(96, 22);
             this.txtPeriodo.TabIndex = 84;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(803, 30);
+            this.label4.Location = new System.Drawing.Point(714, 24);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(131, 20);
+            this.label4.Size = new System.Drawing.Size(116, 16);
             this.label4.TabIndex = 83;
             this.label4.Text = "Periodo(yyyymm):";
             // 
@@ -125,69 +126,69 @@
             // 
             this.cmbCuenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCuenta.FormattingEnabled = true;
-            this.cmbCuenta.Location = new System.Drawing.Point(266, 25);
+            this.cmbCuenta.Location = new System.Drawing.Point(236, 20);
             this.cmbCuenta.Margin = new System.Windows.Forms.Padding(2);
             this.cmbCuenta.Name = "cmbCuenta";
-            this.cmbCuenta.Size = new System.Drawing.Size(176, 28);
+            this.cmbCuenta.Size = new System.Drawing.Size(157, 24);
             this.cmbCuenta.TabIndex = 81;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(197, 27);
+            this.label7.Location = new System.Drawing.Point(175, 22);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 20);
+            this.label7.Size = new System.Drawing.Size(52, 16);
             this.label7.TabIndex = 82;
             this.label7.Text = "Cuenta:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(685, 30);
+            this.label3.Location = new System.Drawing.Point(609, 24);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(50, 20);
+            this.label3.Size = new System.Drawing.Size(42, 16);
             this.label3.TabIndex = 76;
             this.label3.Text = "Color:";
             // 
             // txtColor
             // 
             this.txtColor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtColor.Location = new System.Drawing.Point(730, 27);
+            this.txtColor.Location = new System.Drawing.Point(649, 22);
             this.txtColor.Margin = new System.Windows.Forms.Padding(2);
             this.txtColor.MaxLength = 250;
             this.txtColor.Name = "txtColor";
-            this.txtColor.Size = new System.Drawing.Size(69, 26);
+            this.txtColor.Size = new System.Drawing.Size(62, 22);
             this.txtColor.TabIndex = 75;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(575, 30);
+            this.label2.Location = new System.Drawing.Point(511, 24);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 20);
+            this.label2.Size = new System.Drawing.Size(41, 16);
             this.label2.TabIndex = 74;
             this.label2.Text = "Talla:";
             // 
             // txtTalla
             // 
             this.txtTalla.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtTalla.Location = new System.Drawing.Point(610, 27);
+            this.txtTalla.Location = new System.Drawing.Point(542, 22);
             this.txtTalla.Margin = new System.Windows.Forms.Padding(2);
             this.txtTalla.MaxLength = 250;
             this.txtTalla.Name = "txtTalla";
-            this.txtTalla.Size = new System.Drawing.Size(66, 26);
+            this.txtTalla.Size = new System.Drawing.Size(59, 22);
             this.txtTalla.TabIndex = 73;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(446, 30);
+            this.label5.Location = new System.Drawing.Point(396, 24);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(58, 20);
+            this.label5.Size = new System.Drawing.Size(47, 16);
             this.label5.TabIndex = 72;
             this.label5.Text = "Grupo:";
             // 
@@ -195,30 +196,30 @@
             // 
             this.cbxNivel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxNivel.FormattingEnabled = true;
-            this.cbxNivel.Location = new System.Drawing.Point(58, 26);
+            this.cbxNivel.Location = new System.Drawing.Point(52, 21);
             this.cbxNivel.Margin = new System.Windows.Forms.Padding(2);
             this.cbxNivel.Name = "cbxNivel";
-            this.cbxNivel.Size = new System.Drawing.Size(144, 28);
+            this.cbxNivel.Size = new System.Drawing.Size(128, 24);
             this.cbxNivel.TabIndex = 69;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 28);
+            this.label1.Location = new System.Drawing.Point(8, 22);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 20);
+            this.label1.Size = new System.Drawing.Size(41, 16);
             this.label1.TabIndex = 70;
             this.label1.Text = "Nivel:";
             // 
             // txtGrupo
             // 
             this.txtGrupo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtGrupo.Location = new System.Drawing.Point(493, 27);
+            this.txtGrupo.Location = new System.Drawing.Point(438, 22);
             this.txtGrupo.Margin = new System.Windows.Forms.Padding(2);
             this.txtGrupo.MaxLength = 250;
             this.txtGrupo.Name = "txtGrupo";
-            this.txtGrupo.Size = new System.Drawing.Size(78, 26);
+            this.txtGrupo.Size = new System.Drawing.Size(70, 22);
             this.txtGrupo.TabIndex = 71;
             // 
             // panel2
@@ -227,21 +228,35 @@
             this.panel2.Controls.Add(this.btnExcel);
             this.panel2.Controls.Add(this.btnBuscar);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(1050, 21);
+            this.panel2.Location = new System.Drawing.Point(933, 17);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(312, 38);
+            this.panel2.Size = new System.Drawing.Size(277, 31);
             this.panel2.TabIndex = 68;
+            // 
+            // button1
+            // 
+            this.button1.Image = global::SoftCotton.Properties.Resources.icon_print;
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.Location = new System.Drawing.Point(187, 6);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.button1.Size = new System.Drawing.Size(85, 22);
+            this.button1.TabIndex = 59;
+            this.button1.Text = "Print";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnExcel
             // 
             this.btnExcel.Image = global::SoftCotton.Properties.Resources.icon_excel;
             this.btnExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExcel.Location = new System.Drawing.Point(107, 8);
+            this.btnExcel.Location = new System.Drawing.Point(95, 6);
             this.btnExcel.Margin = new System.Windows.Forms.Padding(2);
             this.btnExcel.Name = "btnExcel";
             this.btnExcel.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.btnExcel.Size = new System.Drawing.Size(96, 28);
+            this.btnExcel.Size = new System.Drawing.Size(85, 22);
             this.btnExcel.TabIndex = 58;
             this.btnExcel.Text = "Excel";
             this.btnExcel.UseVisualStyleBackColor = true;
@@ -251,11 +266,11 @@
             // 
             this.btnBuscar.Image = global::SoftCotton.Properties.Resources.icon_buscar;
             this.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBuscar.Location = new System.Drawing.Point(13, 8);
+            this.btnBuscar.Location = new System.Drawing.Point(12, 6);
             this.btnBuscar.Margin = new System.Windows.Forms.Padding(2);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.btnBuscar.Size = new System.Drawing.Size(90, 28);
+            this.btnBuscar.Size = new System.Drawing.Size(80, 22);
             this.btnBuscar.TabIndex = 57;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
@@ -271,6 +286,7 @@
             this.tipo,
             this.cod,
             this.Nombre_Articulo,
+            this.DgvPedidoColor,
             this.color,
             this.Fecha_Guia,
             this.serie,
@@ -290,13 +306,24 @@
             this.cuo,
             this.tpo_opera});
             this.dgvListado.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvListado.Location = new System.Drawing.Point(0, 67);
+            this.dgvListado.Location = new System.Drawing.Point(0, 54);
             this.dgvListado.Margin = new System.Windows.Forms.Padding(2);
             this.dgvListado.Name = "dgvListado";
             this.dgvListado.ReadOnly = true;
             this.dgvListado.RowHeadersWidth = 51;
-            this.dgvListado.Size = new System.Drawing.Size(1370, 329);
+            this.dgvListado.Size = new System.Drawing.Size(1218, 263);
             this.dgvListado.TabIndex = 5;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel1.Size = new System.Drawing.Size(1218, 54);
+            this.panel1.TabIndex = 4;
             // 
             // orden
             // 
@@ -333,6 +360,14 @@
             this.Nombre_Articulo.ReadOnly = true;
             this.Nombre_Articulo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Nombre_Articulo.Width = 125;
+            // 
+            // DgvPedidoColor
+            // 
+            this.DgvPedidoColor.HeaderText = "Pedido Color";
+            this.DgvPedidoColor.MinimumWidth = 6;
+            this.DgvPedidoColor.Name = "DgvPedidoColor";
+            this.DgvPedidoColor.ReadOnly = true;
+            this.DgvPedidoColor.Width = 125;
             // 
             // color
             // 
@@ -494,39 +529,15 @@
             this.tpo_opera.ReadOnly = true;
             this.tpo_opera.Width = 150;
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(3);
-            this.panel1.Size = new System.Drawing.Size(1370, 67);
-            this.panel1.TabIndex = 4;
-            // 
-            // button1
-            // 
-            this.button1.Image = global::SoftCotton.Properties.Resources.icon_print;
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(210, 8);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.button1.Size = new System.Drawing.Size(96, 28);
-            this.button1.TabIndex = 59;
-            this.button1.Text = "Print";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // KardexValorizadoView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1370, 396);
+            this.ClientSize = new System.Drawing.Size(1218, 317);
             this.Controls.Add(this.dgvListado);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "KardexValorizadoView";
             this.Text = "Kardex Valorizado";
             this.Load += new System.EventHandler(this.KardexValorizadoView_Load);
@@ -556,10 +567,14 @@
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.DataGridView dgvListado;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtPeriodo;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn orden;
         private System.Windows.Forms.DataGridViewTextBoxColumn tipo;
         private System.Windows.Forms.DataGridViewTextBoxColumn cod;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nombre_Articulo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DgvPedidoColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn color;
         private System.Windows.Forms.DataGridViewTextBoxColumn Fecha_Guia;
         private System.Windows.Forms.DataGridViewTextBoxColumn serie;
@@ -578,8 +593,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn cuo;
         private System.Windows.Forms.DataGridViewTextBoxColumn tpo_opera;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtPeriodo;
-        private System.Windows.Forms.Button button1;
     }
 }

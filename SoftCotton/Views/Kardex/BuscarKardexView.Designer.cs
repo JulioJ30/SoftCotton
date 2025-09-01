@@ -30,27 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BuscarKardexView));
             this.dgvListado = new System.Windows.Forms.DataGridView();
-            this.orden = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.secuencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nombre_Articulo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.color = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Fecha_Guia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.serie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.numero = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.codigo_Proveedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.razonSocial = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.serie_fact = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Num_fact = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tipo_Moneda = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PU = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fact_tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mes = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tipoMovimiento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cmbCuenta = new System.Windows.Forms.ComboBox();
@@ -68,9 +47,34 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtGrupo = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnCongelar = new System.Windows.Forms.Button();
             this.btnExcel = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
-            this.btnCongelar = new System.Windows.Forms.Button();
+            this.orden = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.secuencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nombre_Articulo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.color = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgvOpPedido = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgvOpColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgvOpEstilo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgvOpPrograma = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Fecha_Guia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.serie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numero = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.codigo_Proveedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.razonSocial = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.serie_fact = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Num_fact = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tipo_Moneda = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PU = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fact_tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tipoMovimiento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListado)).BeginInit();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -89,6 +93,10 @@
             this.cod,
             this.Nombre_Articulo,
             this.color,
+            this.DgvOpPedido,
+            this.DgvOpColor,
+            this.DgvOpEstilo,
+            this.DgvOpPrograma,
             this.Fecha_Guia,
             this.serie,
             this.numero,
@@ -112,175 +120,6 @@
             this.dgvListado.Size = new System.Drawing.Size(1424, 410);
             this.dgvListado.TabIndex = 3;
             this.dgvListado.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListado_CellEndEdit);
-            // 
-            // orden
-            // 
-            this.orden.HeaderText = "Item";
-            this.orden.MinimumWidth = 6;
-            this.orden.Name = "orden";
-            this.orden.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.orden.Width = 125;
-            // 
-            // secuencia
-            // 
-            this.secuencia.DataPropertyName = "secuencia";
-            this.secuencia.HeaderText = "secuencia";
-            this.secuencia.MinimumWidth = 8;
-            this.secuencia.Name = "secuencia";
-            this.secuencia.Visible = false;
-            this.secuencia.Width = 150;
-            // 
-            // tipo
-            // 
-            this.tipo.HeaderText = "tipo";
-            this.tipo.MinimumWidth = 6;
-            this.tipo.Name = "tipo";
-            this.tipo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.tipo.Width = 125;
-            // 
-            // cod
-            // 
-            this.cod.HeaderText = "Cod Producto";
-            this.cod.MinimumWidth = 6;
-            this.cod.Name = "cod";
-            this.cod.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.cod.Width = 125;
-            // 
-            // Nombre_Articulo
-            // 
-            this.Nombre_Articulo.HeaderText = "Nombre_Articulo";
-            this.Nombre_Articulo.MinimumWidth = 6;
-            this.Nombre_Articulo.Name = "Nombre_Articulo";
-            this.Nombre_Articulo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Nombre_Articulo.Width = 125;
-            // 
-            // color
-            // 
-            this.color.HeaderText = "color";
-            this.color.MinimumWidth = 6;
-            this.color.Name = "color";
-            this.color.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.color.Width = 125;
-            // 
-            // Fecha_Guia
-            // 
-            this.Fecha_Guia.HeaderText = "Fecha_Guia";
-            this.Fecha_Guia.MinimumWidth = 6;
-            this.Fecha_Guia.Name = "Fecha_Guia";
-            this.Fecha_Guia.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Fecha_Guia.Width = 125;
-            // 
-            // serie
-            // 
-            this.serie.HeaderText = "serie";
-            this.serie.MinimumWidth = 6;
-            this.serie.Name = "serie";
-            this.serie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.serie.Width = 125;
-            // 
-            // numero
-            // 
-            this.numero.HeaderText = "numero";
-            this.numero.MinimumWidth = 6;
-            this.numero.Name = "numero";
-            this.numero.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.numero.Width = 125;
-            // 
-            // codigo_Proveedor
-            // 
-            this.codigo_Proveedor.HeaderText = "codigo Proveedor";
-            this.codigo_Proveedor.MinimumWidth = 6;
-            this.codigo_Proveedor.Name = "codigo_Proveedor";
-            this.codigo_Proveedor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.codigo_Proveedor.Width = 125;
-            // 
-            // razonSocial
-            // 
-            this.razonSocial.HeaderText = "razonSocial";
-            this.razonSocial.MinimumWidth = 6;
-            this.razonSocial.Name = "razonSocial";
-            this.razonSocial.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.razonSocial.Width = 125;
-            // 
-            // serie_fact
-            // 
-            this.serie_fact.HeaderText = "Serie Fact";
-            this.serie_fact.MinimumWidth = 6;
-            this.serie_fact.Name = "serie_fact";
-            this.serie_fact.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.serie_fact.Width = 125;
-            // 
-            // Num_fact
-            // 
-            this.Num_fact.HeaderText = "Numero Fact";
-            this.Num_fact.MinimumWidth = 6;
-            this.Num_fact.Name = "Num_fact";
-            this.Num_fact.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Num_fact.Width = 125;
-            // 
-            // Tipo_Moneda
-            // 
-            this.Tipo_Moneda.HeaderText = "Moneda";
-            this.Tipo_Moneda.MinimumWidth = 6;
-            this.Tipo_Moneda.Name = "Tipo_Moneda";
-            this.Tipo_Moneda.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Tipo_Moneda.Width = 125;
-            // 
-            // codigo
-            // 
-            this.codigo.HeaderText = "codigo";
-            this.codigo.MinimumWidth = 6;
-            this.codigo.Name = "codigo";
-            this.codigo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.codigo.Width = 125;
-            // 
-            // UM
-            // 
-            this.UM.HeaderText = "UM";
-            this.UM.MinimumWidth = 6;
-            this.UM.Name = "UM";
-            this.UM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.UM.Width = 125;
-            // 
-            // PU
-            // 
-            this.PU.HeaderText = "PU";
-            this.PU.MinimumWidth = 6;
-            this.PU.Name = "PU";
-            this.PU.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.PU.Width = 125;
-            // 
-            // fact_tipo
-            // 
-            this.fact_tipo.HeaderText = "fact_tipo";
-            this.fact_tipo.MinimumWidth = 6;
-            this.fact_tipo.Name = "fact_tipo";
-            this.fact_tipo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.fact_tipo.Width = 125;
-            // 
-            // mes
-            // 
-            this.mes.HeaderText = "mes";
-            this.mes.MinimumWidth = 6;
-            this.mes.Name = "mes";
-            this.mes.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.mes.Width = 125;
-            // 
-            // tipoMovimiento
-            // 
-            this.tipoMovimiento.HeaderText = "Entrada/Salida";
-            this.tipoMovimiento.MinimumWidth = 6;
-            this.tipoMovimiento.Name = "tipoMovimiento";
-            this.tipoMovimiento.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.tipoMovimiento.Width = 125;
-            // 
-            // cantidad
-            // 
-            this.cantidad.HeaderText = "cantidad";
-            this.cantidad.MinimumWidth = 6;
-            this.cantidad.Name = "cantidad";
-            this.cantidad.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.cantidad.Width = 125;
             // 
             // panel1
             // 
@@ -469,6 +308,21 @@
             this.panel2.Size = new System.Drawing.Size(328, 38);
             this.panel2.TabIndex = 68;
             // 
+            // btnCongelar
+            // 
+            this.btnCongelar.Enabled = false;
+            this.btnCongelar.Image = global::SoftCotton.Properties.Resources.icon_checked;
+            this.btnCongelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCongelar.Location = new System.Drawing.Point(219, 4);
+            this.btnCongelar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCongelar.Name = "btnCongelar";
+            this.btnCongelar.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.btnCongelar.Size = new System.Drawing.Size(103, 28);
+            this.btnCongelar.TabIndex = 59;
+            this.btnCongelar.Text = "Congelar";
+            this.btnCongelar.UseVisualStyleBackColor = true;
+            this.btnCongelar.Click += new System.EventHandler(this.btnCongelar_Click);
+            // 
             // btnExcel
             // 
             this.btnExcel.Image = global::SoftCotton.Properties.Resources.icon_excel;
@@ -497,20 +351,202 @@
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click_1);
             // 
-            // btnCongelar
+            // orden
             // 
-            this.btnCongelar.Enabled = false;
-            this.btnCongelar.Image = global::SoftCotton.Properties.Resources.icon_checked;
-            this.btnCongelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCongelar.Location = new System.Drawing.Point(219, 4);
-            this.btnCongelar.Margin = new System.Windows.Forms.Padding(2);
-            this.btnCongelar.Name = "btnCongelar";
-            this.btnCongelar.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.btnCongelar.Size = new System.Drawing.Size(103, 28);
-            this.btnCongelar.TabIndex = 59;
-            this.btnCongelar.Text = "Congelar";
-            this.btnCongelar.UseVisualStyleBackColor = true;
-            this.btnCongelar.Click += new System.EventHandler(this.btnCongelar_Click);
+            this.orden.HeaderText = "Item";
+            this.orden.MinimumWidth = 6;
+            this.orden.Name = "orden";
+            this.orden.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.orden.Width = 125;
+            // 
+            // secuencia
+            // 
+            this.secuencia.DataPropertyName = "secuencia";
+            this.secuencia.HeaderText = "secuencia";
+            this.secuencia.MinimumWidth = 8;
+            this.secuencia.Name = "secuencia";
+            this.secuencia.Visible = false;
+            this.secuencia.Width = 150;
+            // 
+            // tipo
+            // 
+            this.tipo.HeaderText = "tipo";
+            this.tipo.MinimumWidth = 6;
+            this.tipo.Name = "tipo";
+            this.tipo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.tipo.Width = 125;
+            // 
+            // cod
+            // 
+            this.cod.HeaderText = "Cod Producto";
+            this.cod.MinimumWidth = 6;
+            this.cod.Name = "cod";
+            this.cod.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cod.Width = 125;
+            // 
+            // Nombre_Articulo
+            // 
+            this.Nombre_Articulo.HeaderText = "Nombre_Articulo";
+            this.Nombre_Articulo.MinimumWidth = 6;
+            this.Nombre_Articulo.Name = "Nombre_Articulo";
+            this.Nombre_Articulo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Nombre_Articulo.Width = 125;
+            // 
+            // color
+            // 
+            this.color.HeaderText = "color";
+            this.color.MinimumWidth = 6;
+            this.color.Name = "color";
+            this.color.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.color.Width = 125;
+            // 
+            // DgvOpPedido
+            // 
+            this.DgvOpPedido.HeaderText = "Pedido";
+            this.DgvOpPedido.MinimumWidth = 6;
+            this.DgvOpPedido.Name = "DgvOpPedido";
+            this.DgvOpPedido.Width = 125;
+            // 
+            // DgvOpColor
+            // 
+            this.DgvOpColor.HeaderText = "Color";
+            this.DgvOpColor.MinimumWidth = 6;
+            this.DgvOpColor.Name = "DgvOpColor";
+            this.DgvOpColor.Width = 125;
+            // 
+            // DgvOpEstilo
+            // 
+            this.DgvOpEstilo.HeaderText = "Estilo";
+            this.DgvOpEstilo.MinimumWidth = 6;
+            this.DgvOpEstilo.Name = "DgvOpEstilo";
+            this.DgvOpEstilo.Width = 125;
+            // 
+            // DgvOpPrograma
+            // 
+            this.DgvOpPrograma.HeaderText = "Programa";
+            this.DgvOpPrograma.MinimumWidth = 6;
+            this.DgvOpPrograma.Name = "DgvOpPrograma";
+            this.DgvOpPrograma.Width = 125;
+            // 
+            // Fecha_Guia
+            // 
+            this.Fecha_Guia.HeaderText = "Fecha_Guia";
+            this.Fecha_Guia.MinimumWidth = 6;
+            this.Fecha_Guia.Name = "Fecha_Guia";
+            this.Fecha_Guia.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Fecha_Guia.Width = 125;
+            // 
+            // serie
+            // 
+            this.serie.HeaderText = "serie";
+            this.serie.MinimumWidth = 6;
+            this.serie.Name = "serie";
+            this.serie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.serie.Width = 125;
+            // 
+            // numero
+            // 
+            this.numero.HeaderText = "numero";
+            this.numero.MinimumWidth = 6;
+            this.numero.Name = "numero";
+            this.numero.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.numero.Width = 125;
+            // 
+            // codigo_Proveedor
+            // 
+            this.codigo_Proveedor.HeaderText = "codigo Proveedor";
+            this.codigo_Proveedor.MinimumWidth = 6;
+            this.codigo_Proveedor.Name = "codigo_Proveedor";
+            this.codigo_Proveedor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.codigo_Proveedor.Width = 125;
+            // 
+            // razonSocial
+            // 
+            this.razonSocial.HeaderText = "razonSocial";
+            this.razonSocial.MinimumWidth = 6;
+            this.razonSocial.Name = "razonSocial";
+            this.razonSocial.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.razonSocial.Width = 125;
+            // 
+            // serie_fact
+            // 
+            this.serie_fact.HeaderText = "Serie Fact";
+            this.serie_fact.MinimumWidth = 6;
+            this.serie_fact.Name = "serie_fact";
+            this.serie_fact.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.serie_fact.Width = 125;
+            // 
+            // Num_fact
+            // 
+            this.Num_fact.HeaderText = "Numero Fact";
+            this.Num_fact.MinimumWidth = 6;
+            this.Num_fact.Name = "Num_fact";
+            this.Num_fact.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Num_fact.Width = 125;
+            // 
+            // Tipo_Moneda
+            // 
+            this.Tipo_Moneda.HeaderText = "Moneda";
+            this.Tipo_Moneda.MinimumWidth = 6;
+            this.Tipo_Moneda.Name = "Tipo_Moneda";
+            this.Tipo_Moneda.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Tipo_Moneda.Width = 125;
+            // 
+            // codigo
+            // 
+            this.codigo.HeaderText = "codigo";
+            this.codigo.MinimumWidth = 6;
+            this.codigo.Name = "codigo";
+            this.codigo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.codigo.Width = 125;
+            // 
+            // UM
+            // 
+            this.UM.HeaderText = "UM";
+            this.UM.MinimumWidth = 6;
+            this.UM.Name = "UM";
+            this.UM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.UM.Width = 125;
+            // 
+            // PU
+            // 
+            this.PU.HeaderText = "PU";
+            this.PU.MinimumWidth = 6;
+            this.PU.Name = "PU";
+            this.PU.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.PU.Width = 125;
+            // 
+            // fact_tipo
+            // 
+            this.fact_tipo.HeaderText = "fact_tipo";
+            this.fact_tipo.MinimumWidth = 6;
+            this.fact_tipo.Name = "fact_tipo";
+            this.fact_tipo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.fact_tipo.Width = 125;
+            // 
+            // mes
+            // 
+            this.mes.HeaderText = "mes";
+            this.mes.MinimumWidth = 6;
+            this.mes.Name = "mes";
+            this.mes.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.mes.Width = 125;
+            // 
+            // tipoMovimiento
+            // 
+            this.tipoMovimiento.HeaderText = "Entrada/Salida";
+            this.tipoMovimiento.MinimumWidth = 6;
+            this.tipoMovimiento.Name = "tipoMovimiento";
+            this.tipoMovimiento.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.tipoMovimiento.Width = 125;
+            // 
+            // cantidad
+            // 
+            this.cantidad.HeaderText = "cantidad";
+            this.cantidad.MinimumWidth = 6;
+            this.cantidad.Name = "cantidad";
+            this.cantidad.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cantidad.Width = 125;
             // 
             // BuscarKardexView
             // 
@@ -557,12 +593,17 @@
         private System.Windows.Forms.DateTimePicker dtpFechaDesde;
         private System.Windows.Forms.ComboBox cmbCuenta;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnCongelar;
         private System.Windows.Forms.DataGridViewTextBoxColumn orden;
         private System.Windows.Forms.DataGridViewTextBoxColumn secuencia;
         private System.Windows.Forms.DataGridViewTextBoxColumn tipo;
         private System.Windows.Forms.DataGridViewTextBoxColumn cod;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nombre_Articulo;
         private System.Windows.Forms.DataGridViewTextBoxColumn color;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DgvOpPedido;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DgvOpColor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DgvOpEstilo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DgvOpPrograma;
         private System.Windows.Forms.DataGridViewTextBoxColumn Fecha_Guia;
         private System.Windows.Forms.DataGridViewTextBoxColumn serie;
         private System.Windows.Forms.DataGridViewTextBoxColumn numero;
@@ -578,6 +619,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn mes;
         private System.Windows.Forms.DataGridViewTextBoxColumn tipoMovimiento;
         private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
-        private System.Windows.Forms.Button btnCongelar;
     }
 }

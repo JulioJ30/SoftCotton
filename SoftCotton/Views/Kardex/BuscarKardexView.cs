@@ -93,7 +93,8 @@ namespace SoftCotton.Views.Kardex
                 dgvListado.Rows[index].Cells["orden"].Value = item.orden; 
                 dgvListado.Rows[index].Cells["tipo"].Value = item.tipo; 
                 dgvListado.Rows[index].Cells["cod"].Value = item.cod; 
-                dgvListado.Rows[index].Cells["Nombre_Articulo"].Value = item.Nombre_Articulo; 
+                dgvListado.Rows[index].Cells["Nombre_Articulo"].Value = item.Nombre_Articulo;
+
                 dgvListado.Rows[index].Cells["color"].Value = item.color; 
                 dgvListado.Rows[index].Cells["Fecha_Guia"].Value = item.Fecha_Guia; 
                 dgvListado.Rows[index].Cells["serie"].Value = item.serie; 
@@ -111,6 +112,14 @@ namespace SoftCotton.Views.Kardex
                 dgvListado.Rows[index].Cells["tipoMovimiento"].Value = item.tipoMovimiento;
                 dgvListado.Rows[index].Cells["cantidad"].Value = item.cantidadSolesE;
                 dgvListado.Rows[index].Cells["secuencia"].Value = item.Secuencia;
+
+
+                dgvListado.Rows[index].Cells["DgvOpPedido"].Value = item.OpPedido;
+                dgvListado.Rows[index].Cells["DgvOpColor"].Value = item.OpColor;
+                dgvListado.Rows[index].Cells["DgvOpEstilo"].Value = item.OpEstilo;
+                dgvListado.Rows[index].Cells["DgvOpPrograma"].Value = item.OpPrograma;
+
+
 
 
             }
@@ -145,7 +154,7 @@ namespace SoftCotton.Views.Kardex
                 {
                     if (!string.IsNullOrEmpty(sfd.FileName))
                     {
-                        ExcelReportTitulo[] arrayTitulo = new ExcelReportTitulo[29];
+                        ExcelReportTitulo[] arrayTitulo = new ExcelReportTitulo[33];
 
 
                         arrayTitulo[0] = new ExcelReportTitulo() { titulo = "orden", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
@@ -153,32 +162,39 @@ namespace SoftCotton.Views.Kardex
                         arrayTitulo[2] = new ExcelReportTitulo() { titulo = "cod", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
                         arrayTitulo[3] = new ExcelReportTitulo() { titulo = "Nombre_Articulo", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
                         arrayTitulo[4] = new ExcelReportTitulo() { titulo = "color", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[5] = new ExcelReportTitulo() { titulo = "Fecha_Guia", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[6] = new ExcelReportTitulo() { titulo = "serie", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[7] = new ExcelReportTitulo() { titulo = "numero", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[8] = new ExcelReportTitulo() { titulo = "codigo_Proveedor", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[9] = new ExcelReportTitulo() { titulo = "razonSocial", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[10] = new ExcelReportTitulo() { titulo = "serie_fact", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[11] = new ExcelReportTitulo() { titulo = "Num_fact", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[12] = new ExcelReportTitulo() { titulo = "tipoCambio", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[13] = new ExcelReportTitulo() { titulo = "Tipo Moneda", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[14] = new ExcelReportTitulo() { titulo = "codigo", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[15] = new ExcelReportTitulo() { titulo = "UM", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[16] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[17] = new ExcelReportTitulo() { titulo = "fact_tipo", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[18] = new ExcelReportTitulo() { titulo = "mes", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+
+                        arrayTitulo[5] = new ExcelReportTitulo() { titulo = "Pedido", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[6] = new ExcelReportTitulo() { titulo = "Color", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[7] = new ExcelReportTitulo() { titulo = "Estilo", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[8] = new ExcelReportTitulo() { titulo = "Programa", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+
+
+                        arrayTitulo[9] = new ExcelReportTitulo() { titulo = "Fecha_Guia", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[10] = new ExcelReportTitulo() { titulo = "serie", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[11] = new ExcelReportTitulo() { titulo = "numero", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[12] = new ExcelReportTitulo() { titulo = "codigo_Proveedor", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[13] = new ExcelReportTitulo() { titulo = "razonSocial", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[14] = new ExcelReportTitulo() { titulo = "serie_fact", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[15] = new ExcelReportTitulo() { titulo = "Num_fact", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[16] = new ExcelReportTitulo() { titulo = "tipoCambio", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[17] = new ExcelReportTitulo() { titulo = "Tipo Moneda", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[18] = new ExcelReportTitulo() { titulo = "codigo", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[19] = new ExcelReportTitulo() { titulo = "UM", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[20] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[21] = new ExcelReportTitulo() { titulo = "fact_tipo", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[22] = new ExcelReportTitulo() { titulo = "mes", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
                         //arrayTitulo[0] = new ExcelReportTitulo() { titulo = "cantidadOC", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White }; 
                         //arrayTitulo[0] = new ExcelReportTitulo() { titulo = "idEmpresa", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White }; 
-                        arrayTitulo[19] = new ExcelReportTitulo() { titulo = "Entrada / Salida", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[20] = new ExcelReportTitulo() { titulo = "CANTIDAD", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[21] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[22] = new ExcelReportTitulo() { titulo = "TOTAL", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[23] = new ExcelReportTitulo() { titulo = "CANTIDAD", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[24] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[25] = new ExcelReportTitulo() { titulo = "TOTAL", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[26] = new ExcelReportTitulo() { titulo = "CANTIDAD", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[27] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        arrayTitulo[28] = new ExcelReportTitulo() { titulo = "TOTAL", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[23] = new ExcelReportTitulo() { titulo = "Entrada / Salida", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[24] = new ExcelReportTitulo() { titulo = "CANTIDAD", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[25] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[26] = new ExcelReportTitulo() { titulo = "TOTAL", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[27] = new ExcelReportTitulo() { titulo = "CANTIDAD", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[28] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[29] = new ExcelReportTitulo() { titulo = "TOTAL", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[30] = new ExcelReportTitulo() { titulo = "CANTIDAD", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[31] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[32] = new ExcelReportTitulo() { titulo = "TOTAL", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
                         //arrayTitulo[29] = new ExcelReportTitulo() { titulo = "CANTIDAD", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
                         //arrayTitulo[30] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
                         //arrayTitulo[31] = new ExcelReportTitulo() { titulo = "TOTAL", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
