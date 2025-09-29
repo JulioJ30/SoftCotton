@@ -72,6 +72,7 @@ namespace SoftCotton.Model.ReferralGuide
         public string respuestaSunat { get; set; }
         public string DamDs { get; set; }
         public string otrosMotivoTraslado { get; set; }
+        public string FacturaReferencia { get; set; }
 
 
         public SetGRCabExportacionParam()
@@ -113,6 +114,7 @@ namespace SoftCotton.Model.ReferralGuide
 
             DamDs = "";
             otrosMotivoTraslado = "";
+            FacturaReferencia = "";
 
         }
     }

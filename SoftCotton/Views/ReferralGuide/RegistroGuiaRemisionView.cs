@@ -1756,11 +1756,11 @@ namespace SoftCotton.Views.ReferralGuide
                 itemNew.descripcion = item.descripcion;
 
 
-                // OP
-                if (item.OP != null && item.OP != null)
-                {
-                    itemNew.descripcion = $"{item.descripcion} | {item.OP}";
-                }
+                //// OP
+                //if (item.OP != null && item.OP != null)
+                //{
+                //    itemNew.descripcion = $"{item.descripcion} | {item.OP}";
+                //}
 
                 // COMENTARIO
                 if (item.Comentario != null && item.Comentario != "")
@@ -1769,9 +1769,8 @@ namespace SoftCotton.Views.ReferralGuide
                 }
 
 
-               
 
-                
+
 
 
                 if (item.cantidadIngresada < 0)

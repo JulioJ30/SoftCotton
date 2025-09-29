@@ -101,6 +101,7 @@ namespace SoftCotton.Model.ReferralGuide
         public string cuo { get; set; }
         public int? IdMovimientoCabecera { get; set; }
 
+        public string FacturaReferencia { get; set; }
 
 
     }

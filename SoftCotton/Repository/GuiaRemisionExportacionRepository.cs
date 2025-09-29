@@ -65,6 +65,16 @@ namespace SoftCotton.Repository
                         grDet.codUmDam = reader["codUmDam"].ToString();
                         grDet.descripcionUM = reader["descripcionUM"].ToString();
                         grDet.OP = reader["Op"].ToString();
+
+                        if (reader["IdPedidoColor"] == null)
+                        {
+                            grDet.IdPedidoColor = null;
+                        }
+                        else
+                        {
+                            grDet.IdPedidoColor = Convert.ToInt32(reader["IdPedidoColor"]);
+                        }
+
                         grDets.Add(grDet);
                     }
                 }
@@ -231,8 +241,7 @@ namespace SoftCotton.Repository
                 sqlCommand.Parameters.Add("@respuestasunat", SqlDbType.VarChar, 500).Value = parametros.respuestaSunat;
                 sqlCommand.Parameters.Add("@otrosmotivotraslado", SqlDbType.VarChar, 500).Value = parametros.otrosMotivoTraslado;
                 sqlCommand.Parameters.Add("@damds", SqlDbType.VarChar, 1000).Value = parametros.DamDs;
-
-
+                sqlCommand.Parameters.Add("@FacturaReferencia", SqlDbType.VarChar, 1000).Value = parametros.FacturaReferencia;
 
 
                 sqlConnection.Open();
@@ -266,6 +275,8 @@ namespace SoftCotton.Repository
                 sqlCommand.Parameters.Add("@codUM", SqlDbType.Char, 3).Value = parametros.codUM;
                 sqlCommand.Parameters.Add("@codigoproducto", SqlDbType.VarChar, 50).Value = parametros.codProducto;
                 sqlCommand.Parameters.Add("@OP", SqlDbType.VarChar, 1000).Value = parametros.OP;
+                sqlCommand.Parameters.Add("@IdPedidoColor", SqlDbType.Int).Value = parametros.IdPedidoColor;
+
 
                 sqlConnection.Open();
                 SqlDataReader reader = sqlCommand.ExecuteReader();

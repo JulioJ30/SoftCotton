@@ -66,6 +66,8 @@ namespace SoftCotton.Views.ReferralGuide
                 _grCabParam.idConstanciaInscripcion = Convert.ToInt32(cboConstanciaInscripcion.SelectedValue.ToString());
                 _grCabParam.idNumeroLicenciaConducir = Convert.ToInt32(cboLicenciaConducir.SelectedValue.ToString());
                 _grCabParam.usuarioReg = UserApplication.USUARIO;
+                _grCabParam.FacturaReferencia = txtFacturaReferencia.Text.Trim();
+
                 if (chkM1.Checked)
                 {
                     _grCabParam.idMotivoTraslado = 1;
@@ -213,6 +215,14 @@ namespace SoftCotton.Views.ReferralGuide
                     _grDetParam.cantidadIngresada = Convert.ToDecimal(row.Cells["dgvDecCantidad"].Value);
                     _grDetParam.codUM = row.Cells["dgvTxtUnidadMedida"].Value.ToString();
                     _grDetParam.OP = row.Cells["OP"].Value.ToString();
+                    if (row.Cells["DgvIdPedidoColor"].Value == null)
+                    {
+                        _grDetParam.IdPedidoColor = null;
+                    }
+                    else
+                    {
+                        _grDetParam.IdPedidoColor = Convert.ToInt32(row.Cells["DgvIdPedidoColor"].Value);
+                    }
 
 
                     respuestaDetalle = _referralGuideBL.SetGRDetalleExportacion(_grDetParam);
@@ -577,6 +587,8 @@ namespace SoftCotton.Views.ReferralGuide
                 txtObservaciones.Text = grCab.observaciones;
                 txtOtros.Text = grCab.otrosMotivoTraslado;
                 txtDamDua.Text = grCab.DamDs;
+                txtFacturaReferencia.Text = grCab.FacturaReferencia;
+
                 //txtDamDs.Text = grCab.DamDs;
 
                 switch (grCab.idMotivoTraslado)
@@ -630,6 +642,7 @@ namespace SoftCotton.Views.ReferralGuide
                 dgvGRDetalle.Rows[index].Cells["dgvTxtUnidadMedida"].Value = item.codUM;
                 dgvGRDetalle.Rows[index].Cells["Secuencia"].Value = item.secuencia;
                 dgvGRDetalle.Rows[index].Cells["OP"].Value = item.OP;
+                dgvGRDetalle.Rows[index].Cells["DgvIdPedidoColor"].Value = item.IdPedidoColor;
 
                 total_cantidad = total_cantidad + item.cantidadIngresada;
             }
@@ -845,6 +858,7 @@ namespace SoftCotton.Views.ReferralGuide
                         if (buscarPedidosColorView.pedidoParam != null && buscarPedidosColorView.pedidoParam != "")
                         {
                             dgvGRDetalle.CurrentCell.Value = buscarPedidosColorView.pedidoParam;
+                            dgvGRDetalle.Rows[dgvGRDetalle.CurrentCell.RowIndex].Cells["DgvIdPedidoColor"].Value = buscarPedidosColorView.idPedidoColorParam;
                         }
                         //if (buscarPedidosColorView.codPedido != null)
                         //{
