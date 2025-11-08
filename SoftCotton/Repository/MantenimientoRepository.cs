@@ -15,6 +15,84 @@ namespace SoftCotton.Repository
     public class MantenimientoRepository
     {
 
+        public IEnumerable<TemporadasEntidad> GetTemporadas(bool? FlgActivo = null)
+        {
+            using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+            {
+
+                var sp_parametros = new DynamicParameters();
+                sp_parametros.Add("@FlgActivo", FlgActivo, DbType.Boolean, ParameterDirection.Input);
+
+                return sqlConnection.Query<TemporadasEntidad>("uspGetTemporadasPorEstado",
+                                                    sp_parametros,
+                                                    commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public bool SetTemporadas(TemporadasEntidad Parametro, out  string mensaje)
+        {
+
+            bool retornar = false;
+            try
+            {
+                using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+                {
+
+                    var sp_parametros = new DynamicParameters();
+                    sp_parametros.Add("@IdTemporada", Parametro.IdTemporada, DbType.Int32, ParameterDirection.Input);
+                    sp_parametros.Add("@Anio", Parametro.Anio, DbType.Int32, ParameterDirection.Input);
+                    sp_parametros.Add("@Temporada", Parametro.Temporada, DbType.String, ParameterDirection.Input);
+                    sp_parametros.Add("@TemporadaDescripcion", Parametro.TemporadaDescripcion, DbType.String, ParameterDirection.Input);
+                    sp_parametros.Add("@IdUsuario", UserApplication.ID_USUARIO, DbType.Int32, ParameterDirection.Input);
+                    sp_parametros.Add("@Estacion", Environment.MachineName, DbType.String, ParameterDirection.Input);
+
+                    sqlConnection.Execute("uspSetTemporadas",
+                                                        sp_parametros,
+                                                        commandType: CommandType.StoredProcedure);
+
+                    retornar = true;
+                    mensaje = "Realizado correctamente";
+                }
+            }
+            catch(Exception ex)
+            {
+                mensaje = ex.Message;
+                retornar = false;
+            }
+
+            return retornar;
+        }
+
+        public bool SetTemporadasCambioEstado(int IdTemporada, out string mensaje)
+        {
+
+            bool retornar = false;
+            try
+            {
+                using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+                {
+
+                    var sp_parametros = new DynamicParameters();
+                    sp_parametros.Add("@IdTemporada", IdTemporada, DbType.Int32, ParameterDirection.Input);
+                    sp_parametros.Add("@IdUsuario", UserApplication.ID_USUARIO, DbType.Int32, ParameterDirection.Input);
+                    sp_parametros.Add("@Estacion", Environment.MachineName, DbType.String, ParameterDirection.Input);
+
+                    sqlConnection.Execute("uspSetTemporadasCambioEstado",
+                                                        sp_parametros,
+                                                        commandType: CommandType.StoredProcedure);
+
+                    retornar = true;
+                    mensaje = "Realizado correctamente";
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+                retornar = false;
+            }
+
+            return retornar;
+        }
 
         public IEnumerable<AuditoriasEntidad> GetAuditorias(string Tabla,string Filtro)
         {

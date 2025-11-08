@@ -847,6 +847,7 @@ namespace SoftCotton.Repository
                             firma.firmante = reader["firmante"].ToString();
                             firma.rutaImgFirma = reader["rutaImgFirma"].ToString();
                             firma.nivelAprobacion = Convert.ToInt32(reader["nivelAprobacion"]);
+                            firma.cargo = reader["cargo"].ToString();
 
                             firmas.Add(firma);
                         }

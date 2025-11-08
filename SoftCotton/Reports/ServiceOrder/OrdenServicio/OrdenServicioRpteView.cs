@@ -67,9 +67,11 @@ namespace SoftCotton.Reports.ServiceOrder.OrdenServicio
 
             // 2. Firmas
             string primeraFirma = "-";
+            string primeraFirmaCargo = "-";
             string imgFirma1URIAbsoluto = new Uri(string.Format("{0}Resources\\icono-oc-default.png", Path.GetFullPath(Path.Combine(directorioBase, @"..\..\")))).AbsoluteUri;
 
             string segundaFirma = "-";
+            string segundaFirmaCargo = "-";
             string imgFirma2URIAbsoluto = new Uri(string.Format("{0}Resources\\icono-oc-default.png", Path.GetFullPath(Path.Combine(directorioBase, @"..\..\")))).AbsoluteUri;
 
             foreach (var itemFirma in pModelo.osFirmas)
@@ -77,6 +79,7 @@ namespace SoftCotton.Reports.ServiceOrder.OrdenServicio
                 if (itemFirma.nivelAprobacion == 1)
                 {
                     primeraFirma = itemFirma.firmante;
+                    primeraFirmaCargo = itemFirma.Cargo;
                     if (File.Exists(itemFirma.rutaImgFirma))
                     {
                         imgFirma1URIAbsoluto = new Uri(itemFirma.rutaImgFirma).AbsoluteUri;
@@ -85,6 +88,7 @@ namespace SoftCotton.Reports.ServiceOrder.OrdenServicio
                 else if (itemFirma.nivelAprobacion == 2)
                 {
                     segundaFirma = itemFirma.firmante;
+                    segundaFirmaCargo = itemFirma.Cargo;
                     if (File.Exists(itemFirma.rutaImgFirma))
                     {
                         imgFirma2URIAbsoluto = new Uri(itemFirma.rutaImgFirma).AbsoluteUri;
@@ -189,9 +193,12 @@ namespace SoftCotton.Reports.ServiceOrder.OrdenServicio
                 new ReportParameter("pObservacion7", observacion7),
 
                 new ReportParameter("pPrimeraFirma", primeraFirma),
+                new ReportParameter("pPrimeraFirmaCargo", primeraFirmaCargo),
+
                 new ReportParameter("pPrimeraFirmaImgPath", imgFirma1URIAbsoluto),
 
                 new ReportParameter("pSegundaFirma", segundaFirma),
+                new ReportParameter("pSegundaFirmaCargo", segundaFirmaCargo),
                 new ReportParameter("pSegundaFirmaImgPath", imgFirma2URIAbsoluto),
 
                 new ReportParameter("pPrograma", ""/*pModelo.osCab.programa*/),

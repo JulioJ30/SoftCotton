@@ -10,5 +10,6 @@ namespace SoftCotton.Reports.ServiceOrder.OrdenServicio
         public string firmante { get; set; }
         public string rutaImgFirma { get; set; }
         public int nivelAprobacion { get; set; }
+        public string Cargo { get; set; }
     }
 }

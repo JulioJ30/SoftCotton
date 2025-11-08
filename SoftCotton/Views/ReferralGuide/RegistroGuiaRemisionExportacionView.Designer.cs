@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegistroGuiaRemisionExportacionView));
             this.tabRegistros = new System.Windows.Forms.TabControl();
             this.tabHRegistros = new System.Windows.Forms.TabPage();
+            this.txtFacturaReferencia = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -143,8 +145,6 @@
             this.dtpFechafinFiltro = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaInicioFiltro = new System.Windows.Forms.DateTimePicker();
             this.btnExportar = new System.Windows.Forms.Button();
-            this.label24 = new System.Windows.Forms.Label();
-            this.txtFacturaReferencia = new System.Windows.Forms.TextBox();
             this.tabRegistros.SuspendLayout();
             this.tabHRegistros.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -233,6 +233,28 @@
             this.tabHRegistros.TabIndex = 0;
             this.tabHRegistros.Text = "Registros";
             this.tabHRegistros.UseVisualStyleBackColor = true;
+            // 
+            // txtFacturaReferencia
+            // 
+            this.txtFacturaReferencia.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtFacturaReferencia.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtFacturaReferencia.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFacturaReferencia.Location = new System.Drawing.Point(887, 23);
+            this.txtFacturaReferencia.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtFacturaReferencia.MaxLength = 10;
+            this.txtFacturaReferencia.Name = "txtFacturaReferencia";
+            this.txtFacturaReferencia.Size = new System.Drawing.Size(197, 26);
+            this.txtFacturaReferencia.TabIndex = 77;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(812, 30);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(69, 20);
+            this.label24.TabIndex = 76;
+            this.label24.Text = "Fact. Ref.";
             // 
             // groupBox9
             // 
@@ -1294,7 +1316,7 @@
             this.groupBox10.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox10.Size = new System.Drawing.Size(1566, 343);
+            this.groupBox10.Size = new System.Drawing.Size(1033, 343);
             this.groupBox10.TabIndex = 2;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Información";
@@ -1314,12 +1336,13 @@
             this.dgvDataReporte.RowHeadersVisible = false;
             this.dgvDataReporte.RowHeadersWidth = 62;
             this.dgvDataReporte.RowTemplate.Height = 28;
-            this.dgvDataReporte.Size = new System.Drawing.Size(1556, 318);
+            this.dgvDataReporte.Size = new System.Drawing.Size(1022, 318);
             this.dgvDataReporte.TabIndex = 0;
             // 
             // gbFiltros
             // 
-            this.gbFiltros.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.gbFiltros.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbFiltros.Controls.Add(this.btnBuscarReporte);
             this.gbFiltros.Controls.Add(this.rdbRangoFechas);
@@ -1331,14 +1354,14 @@
             this.gbFiltros.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gbFiltros.Name = "gbFiltros";
             this.gbFiltros.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gbFiltros.Size = new System.Drawing.Size(1566, 103);
+            this.gbFiltros.Size = new System.Drawing.Size(1032, 103);
             this.gbFiltros.TabIndex = 1;
             this.gbFiltros.TabStop = false;
             // 
             // btnBuscarReporte
             // 
             this.btnBuscarReporte.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBuscarReporte.Location = new System.Drawing.Point(1433, 27);
+            this.btnBuscarReporte.Location = new System.Drawing.Point(910, 27);
             this.btnBuscarReporte.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnBuscarReporte.Name = "btnBuscarReporte";
             this.btnBuscarReporte.Size = new System.Drawing.Size(116, 28);
@@ -1487,7 +1510,7 @@
             // btnExportar
             // 
             this.btnExportar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExportar.Location = new System.Drawing.Point(1433, 60);
+            this.btnExportar.Location = new System.Drawing.Point(910, 64);
             this.btnExportar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnExportar.Name = "btnExportar";
             this.btnExportar.Size = new System.Drawing.Size(116, 28);
@@ -1495,28 +1518,6 @@
             this.btnExportar.Text = "Exportar";
             this.btnExportar.UseVisualStyleBackColor = true;
             this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(812, 30);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(69, 20);
-            this.label24.TabIndex = 76;
-            this.label24.Text = "Fact. Ref.";
-            // 
-            // txtFacturaReferencia
-            // 
-            this.txtFacturaReferencia.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtFacturaReferencia.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtFacturaReferencia.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFacturaReferencia.Location = new System.Drawing.Point(887, 23);
-            this.txtFacturaReferencia.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtFacturaReferencia.MaxLength = 10;
-            this.txtFacturaReferencia.Name = "txtFacturaReferencia";
-            this.txtFacturaReferencia.Size = new System.Drawing.Size(197, 26);
-            this.txtFacturaReferencia.TabIndex = 77;
             // 
             // RegistroGuiaRemisionExportacionView
             // 
