@@ -52,11 +52,7 @@ namespace SoftCotton.Reports.PurchaseOrder.OrdenCompra
             string directorioBase = AppDomain.CurrentDomain.BaseDirectory;
 
             // 1. Logo Empresa
-            string rutaImgEmpresa = string.Format("{0}Resources\\icono-oc.jpg", Path.GetFullPath(Path.Combine(directorioBase, @"..\..\")));
-            if (!File.Exists(rutaImgEmpresa))
-            {
-                rutaImgEmpresa = string.Format("{0}Resources\\icono-oc-default.png", Path.GetFullPath(Path.Combine(directorioBase, @"..\..\")));
-            }
+            string rutaImgEmpresa = Path.GetFullPath(Path.Combine(directorioBase, @"Resources\\icono-oc.jpg"));
             string ImgEmpresaURIAbsoluto = new Uri(rutaImgEmpresa).AbsoluteUri;
 
 
