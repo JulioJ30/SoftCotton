@@ -19,4 +19,18 @@ namespace SoftCotton.Util
             foreColor = XLColor.Black;
         }
     }
+
+
+    public class TituloPdf
+    {
+        public string Periodo { get; set; }
+        public string Ruc { get; set; }
+        public string RazonSocial { get; set; }
+        public string Establecimiento { get; set; }
+        public string CodigoExistencia { get; set; }
+        public string Tipo { get; set; }
+        public string TipoDescripcion { get; set; }
+        public string CodigoUnidadMedida { get; set; }
+        public string MetodoEvaluacion { get; set; }
+    }
 }

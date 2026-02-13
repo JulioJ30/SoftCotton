@@ -1,19 +1,14 @@
-﻿using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Drawing.Charts;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
+using ClosedXML.Excel;
 using SoftCotton.BusinessLogic;
 using SoftCotton.Model.Kardex;
 using SoftCotton.Model.Maintenance;
 using SoftCotton.Util;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows.Forms;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace SoftCotton.Views.Kardex
 {
@@ -22,6 +17,9 @@ namespace SoftCotton.Views.Kardex
         KardexBL _kardexBL;
         MantenimientoBL _mantenimientoBL;
         List<KardexValorizadoPrincipal> listaval;
+        List<KardexValorizadoPrincipalPdf> listavalPdf;
+        TituloPdf tituloPdf;
+        
 
         public BuscarKardexView()
         {
@@ -83,7 +81,8 @@ namespace SoftCotton.Views.Kardex
         private void btnBuscar_Click_1(object sender, EventArgs e)
         {
             listaval = _kardexBL.uspGetMovimientoKardex(cbxNivel.SelectedValue.ToString(), cmbCuenta.SelectedValue.ToString(), txtGrupo.Text, txtTalla.Text, txtColor.Text, dtpFechaDesde.Value.ToString("yyyyMMdd"), dtpFechaHasta.Value.ToString("yyyyMMdd"));
-
+            listavalPdf = _kardexBL.uspGetMovimientoKardexPdf(cbxNivel.SelectedValue.ToString(), cmbCuenta.SelectedValue.ToString(), txtGrupo.Text, txtTalla.Text, txtColor.Text, dtpFechaDesde.Value.ToString("yyyyMMdd"), dtpFechaHasta.Value.ToString("yyyyMMdd"));
+            tituloPdf = _kardexBL.uspGetMovimientoKardexTituloPdf(cbxNivel.SelectedValue.ToString(), cmbCuenta.SelectedValue.ToString(), txtGrupo.Text, txtTalla.Text, txtColor.Text, dtpFechaDesde.Value.ToString("yyyyMMdd"), dtpFechaHasta.Value.ToString("yyyyMMdd"));
             dgvListado.Rows.Clear();
 
             foreach (var item in listaval)
@@ -183,8 +182,6 @@ namespace SoftCotton.Views.Kardex
                         arrayTitulo[20] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
                         arrayTitulo[21] = new ExcelReportTitulo() { titulo = "fact_tipo", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
                         arrayTitulo[22] = new ExcelReportTitulo() { titulo = "mes", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        //arrayTitulo[0] = new ExcelReportTitulo() { titulo = "cantidadOC", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White }; 
-                        //arrayTitulo[0] = new ExcelReportTitulo() { titulo = "idEmpresa", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White }; 
                         arrayTitulo[23] = new ExcelReportTitulo() { titulo = "Entrada / Salida", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
                         arrayTitulo[24] = new ExcelReportTitulo() { titulo = "CANTIDAD", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
                         arrayTitulo[25] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
@@ -195,12 +192,6 @@ namespace SoftCotton.Views.Kardex
                         arrayTitulo[30] = new ExcelReportTitulo() { titulo = "CANTIDAD", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
                         arrayTitulo[31] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
                         arrayTitulo[32] = new ExcelReportTitulo() { titulo = "TOTAL", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        //arrayTitulo[29] = new ExcelReportTitulo() { titulo = "CANTIDAD", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        //arrayTitulo[30] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        //arrayTitulo[31] = new ExcelReportTitulo() { titulo = "TOTAL", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        //arrayTitulo[32] = new ExcelReportTitulo() { titulo = "CANTIDAD", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        //arrayTitulo[33] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
-                        //arrayTitulo[34] = new ExcelReportTitulo() { titulo = "TOTAL", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
                         
                         ExcelReport.GetExcelReportKardex<KardexValorizadoPrincipal>(sfd.FileName, arrayTitulo, listaval);
 
@@ -288,5 +279,73 @@ namespace SoftCotton.Views.Kardex
             string codNivel = cbxNivel.SelectedValue.ToString();
             btnCongelar.Enabled = codNivel == "07";
         }
+
+        private void btnPDF_Click(object sender, EventArgs e)
+        {
+            if (dgvListado.Rows.Count > 0)
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+                //sfd.InitialDirectory = @"C:\";
+                sfd.Title = "Guardar Archivo Como";
+                sfd.Filter = "PDF (*.pdf)|*.pdf";
+                sfd.DefaultExt = "pdf";
+
+                // Nombre por defecto: Kardexyyyymmdd.pdf
+                sfd.FileName = "Kardex" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".pdf";
+
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    if (!string.IsNullOrEmpty(sfd.FileName))
+                    {
+                        ExcelReportTitulo[] arrayTitulo = new ExcelReportTitulo[19];
+
+
+                        arrayTitulo[0] = new ExcelReportTitulo() { titulo = "orden", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[1] = new ExcelReportTitulo() { titulo = "tipo", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[2] = new ExcelReportTitulo() { titulo = "cod", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[3] = new ExcelReportTitulo() { titulo = "Nombre_Articulo", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[4] = new ExcelReportTitulo() { titulo = "Fecha_Guia", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[5] = new ExcelReportTitulo() { titulo = "Tipo_Documento", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+
+                        arrayTitulo[6] = new ExcelReportTitulo() { titulo = "serie", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[7] = new ExcelReportTitulo() { titulo = "numero", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[8] = new ExcelReportTitulo() { titulo = "Tipo_Operacion", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+
+                        arrayTitulo[9] = new ExcelReportTitulo() { titulo = "Entrada / Salida", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[10] = new ExcelReportTitulo() { titulo = "CANTIDAD", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[11] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[12] = new ExcelReportTitulo() { titulo = "TOTAL", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[13] = new ExcelReportTitulo() { titulo = "CANTIDAD", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[14] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[15] = new ExcelReportTitulo() { titulo = "TOTAL", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[16] = new ExcelReportTitulo() { titulo = "CANTIDAD", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[17] = new ExcelReportTitulo() { titulo = "PU", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+                        arrayTitulo[18] = new ExcelReportTitulo() { titulo = "TOTAL", backgroundColor = XLColor.DarkSeaGreen, foreColor = XLColor.White };
+
+                        string rutaPdf = ExcelReport.GenerarKardexDirectoAPdf<KardexValorizadoPrincipalPdf>(sfd.FileName, arrayTitulo, listavalPdf,tituloPdf);
+                        //ResponseMessage.Message("Exportado correctamente", "INFORMATION");
+                        AbrirPdf(rutaPdf);
+
+                    }
+
+                }
+            }
+        }
+
+        public static void AbrirPdf(string rutaPdf)
+        {
+            if (File.Exists(rutaPdf))
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = rutaPdf,
+                    UseShellExecute = true // 🔑 CLAVE
+                });
+            }
+        }
+
     }
+
+
 }

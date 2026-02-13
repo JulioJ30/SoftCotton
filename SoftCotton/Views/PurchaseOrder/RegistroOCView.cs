@@ -171,6 +171,25 @@ namespace SoftCotton.Views.PurchaseOrder
         {
             BuscarProvClienteView provClienteView = new BuscarProvClienteView();
             provClienteView.ShowDialog();
+
+            if (provClienteView.telefono == "")
+            {
+                ResponseMessage.Message("Proveedor no tiene registrado telefono", "WARNING");
+                return;
+            }
+
+            if (provClienteView.contacto == "")
+            {
+                ResponseMessage.Message("Proveedor no tiene registrado Contacto", "WARNING");
+                return;
+            }
+
+            if (provClienteView.email == "")
+            {
+                ResponseMessage.Message("Proveedor no tiene registrado email", "WARNING");
+                return;
+            }
+
             txtRUC.Text = provClienteView.codProvCliente;
             txtRS.Text = provClienteView.provCliente;
             txtDireccion.Text = provClienteView.direccion;
@@ -231,10 +250,10 @@ namespace SoftCotton.Views.PurchaseOrder
                 decimal cantidad = dgvOCDetalle.Rows[e.RowIndex].Cells["dgvDecCantidad"].Value == null ? 0 : Convert.ToDecimal(dgvOCDetalle.Rows[e.RowIndex].Cells["dgvDecCantidad"].Value);
                 decimal precioUnitario = dgvOCDetalle.Rows[e.RowIndex].Cells["dgvDescPrecioUnitario"].Value == null ? 0 : Convert.ToDecimal(dgvOCDetalle.Rows[e.RowIndex].Cells["dgvDescPrecioUnitario"].Value);
 
-                dgvOCDetalle.Rows[e.RowIndex].Cells["dgvDecCantidad"].Value = Math.Round(cantidad, 5);
-                dgvOCDetalle.Rows[e.RowIndex].Cells["dgvDescPrecioUnitario"].Value = Math.Round(precioUnitario, 5);
+                dgvOCDetalle.Rows[e.RowIndex].Cells["dgvDecCantidad"].Value = Math.Round(cantidad, 6);
+                dgvOCDetalle.Rows[e.RowIndex].Cells["dgvDescPrecioUnitario"].Value = Math.Round(precioUnitario, 6);
 
-                dgvOCDetalle.Rows[e.RowIndex].Cells["dgvTxtTotal"].Value = Math.Round((cantidad * precioUnitario), 5);
+                dgvOCDetalle.Rows[e.RowIndex].Cells["dgvTxtTotal"].Value = Math.Round((cantidad * precioUnitario), 6);
 
                 CalcularMontosFinales();
             }
@@ -399,17 +418,17 @@ namespace SoftCotton.Views.PurchaseOrder
             if (cbxTipoCompra.SelectedIndex == 1)
             {
                 // COMPRA NACIONAL
-                lblSubTotal.Text = Math.Round(subTotal, 2).ToString("N5");
-                lblIGV.Text = Math.Round((subTotal * (Convert.ToDecimal(constanteIGV.valor) / 100)), 2).ToString("N5");
-                lblTotal.Text = (Convert.ToDecimal(lblSubTotal.Text) + Convert.ToDecimal(lblIGV.Text)).ToString("N5");
+                lblSubTotal.Text = Math.Round(subTotal, 2).ToString("N6");
+                lblIGV.Text = Math.Round((subTotal * (Convert.ToDecimal(constanteIGV.valor) / 100)), 2).ToString("N6");
+                lblTotal.Text = (Convert.ToDecimal(lblSubTotal.Text) + Convert.ToDecimal(lblIGV.Text)).ToString("N6");
 
             }
             else if (cbxTipoCompra.SelectedIndex == 2)
             {
                 // COMPRA IMPORTADO
-                lblSubTotal.Text = Math.Round(subTotal, 3).ToString("N5");
+                lblSubTotal.Text = Math.Round(subTotal, 3).ToString("N6");
                 lblIGV.Text = "0.00000";
-                lblTotal.Text = (Convert.ToDecimal(lblSubTotal.Text) + Convert.ToDecimal(lblIGV.Text)).ToString("N5");
+                lblTotal.Text = (Convert.ToDecimal(lblSubTotal.Text) + Convert.ToDecimal(lblIGV.Text)).ToString("N6");
 
             }
         }

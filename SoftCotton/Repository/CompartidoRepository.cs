@@ -43,6 +43,12 @@ namespace SoftCotton.Repository
                             provCliente.codigo = reader["codigo"].ToString();
                             provCliente.razonSocial = reader["razonSocial"].ToString();
                             provCliente.direccion = reader["direccion"].ToString();
+
+                            provCliente.telefono = reader["telefono"].ToString();
+                            provCliente.contacto = reader["contacto"].ToString();
+                            provCliente.email = reader["email"].ToString();
+
+
                             provClientes.Add(provCliente);
                         }
                     }

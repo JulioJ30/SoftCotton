@@ -103,8 +103,35 @@ namespace SoftCotton.Model.Kardex
         public decimal SaldoTotalSolesS { get; set; }
         public int Secuencia { get; set; }
 
+    }
 
 
+    public class KardexValorizadoPrincipalPdf
+    {
+        //public int item { get; set; }
+        public int orden { get; set; }
+        public string tipo { get; set; }
+
+        public string cod { get; set; }
+        public string Nombre_Articulo { get; set; }
+        public DateTime Fecha_Guia { get; set; }
+        public string Tipo_Documento { get; set; }
+        public string serie { get; set; }
+        public string numero { get; set; }
+        public string Tipo_Operacion { get; set; }
+        public string tipoMovimiento { get; set; }
+        public decimal cantidadSolesE { get; set; }
+        public decimal PUCalcSolesE { get; set; }
+        public decimal TotalSolesE { get; set; }
+        public decimal cantidadSolesS { get; set; }
+        public decimal PUCalcSolesS { get; set; }
+        public decimal TotalSolesS { get; set; }
+        public decimal SaldocantidadSolesS { get; set; }
+        public decimal SaldoPUCalcSolesS { get; set; }
+        public decimal SaldoTotalSolesS { get; set; }
+        public int Secuencia { get; set; }
 
     }
+
+
 }

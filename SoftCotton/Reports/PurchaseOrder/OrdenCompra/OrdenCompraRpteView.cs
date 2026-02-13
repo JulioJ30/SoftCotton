@@ -192,7 +192,7 @@ namespace SoftCotton.Reports.PurchaseOrder.OrdenCompra
                 new ReportParameter("pSegundaFirma", segundaFirma),
                 new ReportParameter("pSegundaFirmaCargo", segundaFirmaCargo),
                 new ReportParameter("pSegundaFirmaImgPath", imgFirma2URIAbsoluto),
-                new ReportParameter("pPrograma","" /*pModelo.ocCab.programa*/)
+                new ReportParameter("pPrograma",pModelo.ocCab.programa)
 
             };
 
