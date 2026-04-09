@@ -163,6 +163,9 @@ namespace SoftCotton.Views.ReferralGuide
                 _grCabParam.total_um = cbxTotalUM.SelectedValue.ToString();
                 _grCabParam.gross_weight_um = cbxGrossWeightUM.SelectedValue.ToString();
                 _grCabParam.net_weight_um = cbxNetWeightUM.SelectedValue.ToString();
+                _grCabParam.NumeroBultos = float.TryParse(txtNumberPackages.Text?.Trim(), out float valor) ? valor : 1;
+
+
 
                 // AGREGADO
                 _grCabParam.fechaVencimiento = dtpFechaVencimiento.Value.ToString("yyyyMMdd");
@@ -588,6 +591,7 @@ namespace SoftCotton.Views.ReferralGuide
                 txtOtros.Text = grCab.otrosMotivoTraslado;
                 txtDamDua.Text = grCab.DamDs;
                 txtFacturaReferencia.Text = grCab.FacturaReferencia;
+                txtNumberPackages.Text = grCab.NumeroBultos.ToString();
 
                 //txtDamDs.Text = grCab.DamDs;
 
@@ -1293,7 +1297,7 @@ namespace SoftCotton.Views.ReferralGuide
 
             invoice.peso_bruto_total = grCabGenerales.gross_weight.ToString();
             invoice.peso_bruto_unidad_de_medida = "KGM";
-            invoice.numero_de_bultos = "1";
+            invoice.numero_de_bultos = grCabGenerales.NumeroBultos.ToString(); //"1";
             invoice.tipo_de_transporte = cboTipoTransporte.SelectedValue.ToString();
             invoice.transportista_documento_tipo = "6";
             invoice.transportista_documento_numero = grCabGenerales.transCodigoPC;

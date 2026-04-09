@@ -41,7 +41,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblcuo = new System.Windows.Forms.Label();
-            this.btnVer = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.lblFiltro = new System.Windows.Forms.Label();
             this.rbSalida = new System.Windows.Forms.RadioButton();
@@ -66,7 +65,6 @@
             this.cboConstanciaInscripcion = new System.Windows.Forms.ComboBox();
             this.cboTipoTransporte = new System.Windows.Forms.ComboBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.txtNumPlaca = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -149,6 +147,11 @@
             this.DgvPartidaProveedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgvComentario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PrecioGr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label21 = new System.Windows.Forms.Label();
+            this.txtNumeroBultos = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.txtPesoBruto = new System.Windows.Forms.TextBox();
+            this.txtNumPlaca = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -217,8 +220,11 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtPesoBruto);
+            this.groupBox1.Controls.Add(this.label23);
+            this.groupBox1.Controls.Add(this.txtNumeroBultos);
+            this.groupBox1.Controls.Add(this.label21);
             this.groupBox1.Controls.Add(this.lblcuo);
-            this.groupBox1.Controls.Add(this.btnVer);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.lblFiltro);
             this.groupBox1.Controls.Add(this.rbSalida);
@@ -260,19 +266,6 @@
             this.lblcuo.Size = new System.Drawing.Size(174, 19);
             this.lblcuo.TabIndex = 61;
             this.lblcuo.Text = "Número de movimiento:";
-            // 
-            // btnVer
-            // 
-            this.btnVer.BackgroundImage = global::SoftCotton.Properties.Resources.icon_buscar;
-            this.btnVer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnVer.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnVer.Location = new System.Drawing.Point(382, 199);
-            this.btnVer.Name = "btnVer";
-            this.btnVer.Size = new System.Drawing.Size(10, 20);
-            this.btnVer.TabIndex = 60;
-            this.btnVer.UseVisualStyleBackColor = true;
-            this.btnVer.Visible = false;
-            this.btnVer.Click += new System.EventHandler(this.btnVer_Click);
             // 
             // textBox1
             // 
@@ -495,11 +488,11 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.txtNumPlaca);
             this.groupBox2.Controls.Add(this.cboLicenciaConducir);
             this.groupBox2.Controls.Add(this.cboConstanciaInscripcion);
             this.groupBox2.Controls.Add(this.cboTipoTransporte);
             this.groupBox2.Controls.Add(this.label16);
-            this.groupBox2.Controls.Add(this.txtNumPlaca);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.label13);
@@ -549,16 +542,6 @@
             this.label16.Size = new System.Drawing.Size(107, 19);
             this.label16.TabIndex = 54;
             this.label16.Text = "Tipo Transporte:";
-            // 
-            // txtNumPlaca
-            // 
-            this.txtNumPlaca.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtNumPlaca.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNumPlaca.Location = new System.Drawing.Point(489, 15);
-            this.txtNumPlaca.MaxLength = 100;
-            this.txtNumPlaca.Name = "txtNumPlaca";
-            this.txtNumPlaca.Size = new System.Drawing.Size(90, 26);
-            this.txtNumPlaca.TabIndex = 30;
             // 
             // label4
             // 
@@ -1147,10 +1130,10 @@
             this.DgvPartidaProveedor,
             this.DgvComentario,
             this.PrecioGr});
-            this.dgvGRDetalle.Location = new System.Drawing.Point(4, -1);
+            this.dgvGRDetalle.Location = new System.Drawing.Point(4, 30);
             this.dgvGRDetalle.Name = "dgvGRDetalle";
             this.dgvGRDetalle.RowHeadersWidth = 15;
-            this.dgvGRDetalle.Size = new System.Drawing.Size(1143, 329);
+            this.dgvGRDetalle.Size = new System.Drawing.Size(1143, 298);
             this.dgvGRDetalle.TabIndex = 45;
             this.dgvGRDetalle.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGRDetalle_CellClick);
             this.dgvGRDetalle.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGRDetalle_CellContentClick);
@@ -1413,6 +1396,58 @@
             this.PrecioGr.Name = "PrecioGr";
             this.PrecioGr.Width = 125;
             // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(398, 204);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(86, 24);
+            this.label21.TabIndex = 62;
+            this.label21.Text = "N° Bultos:";
+            // 
+            // txtNumeroBultos
+            // 
+            this.txtNumeroBultos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNumeroBultos.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNumeroBultos.Location = new System.Drawing.Point(466, 198);
+            this.txtNumeroBultos.MaxLength = 100;
+            this.txtNumeroBultos.Name = "txtNumeroBultos";
+            this.txtNumeroBultos.Size = new System.Drawing.Size(52, 26);
+            this.txtNumeroBultos.TabIndex = 63;
+            this.txtNumeroBultos.Text = "1";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(524, 203);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(98, 24);
+            this.label23.TabIndex = 65;
+            this.label23.Text = "Peso Bruto:";
+            // 
+            // txtPesoBruto
+            // 
+            this.txtPesoBruto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPesoBruto.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPesoBruto.Location = new System.Drawing.Point(604, 199);
+            this.txtPesoBruto.MaxLength = 100;
+            this.txtPesoBruto.Name = "txtPesoBruto";
+            this.txtPesoBruto.Size = new System.Drawing.Size(52, 26);
+            this.txtPesoBruto.TabIndex = 66;
+            this.txtPesoBruto.Text = "1";
+            // 
+            // txtNumPlaca
+            // 
+            this.txtNumPlaca.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNumPlaca.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNumPlaca.Location = new System.Drawing.Point(498, 13);
+            this.txtNumPlaca.MaxLength = 100;
+            this.txtNumPlaca.Name = "txtNumPlaca";
+            this.txtNumPlaca.Size = new System.Drawing.Size(93, 26);
+            this.txtNumPlaca.TabIndex = 68;
+            // 
             // RegistroGuiaRemisionView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -1491,7 +1526,6 @@
         private System.Windows.Forms.Label lblRUCTransporte;
         private System.Windows.Forms.Button btnBuscarProvTransp;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox txtNumPlaca;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbxTipoCpte;
         private System.Windows.Forms.Label label5;
@@ -1529,7 +1563,6 @@
         private System.Windows.Forms.TextBox txtOtrosMotivos;
         private System.Windows.Forms.RadioButton rbSalida;
         private System.Windows.Forms.RadioButton rbIngreso;
-        private System.Windows.Forms.Button btnVer;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label lblFiltro;
         private System.Windows.Forms.Label lblcuo;
@@ -1569,5 +1602,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DgvPartidaProveedor;
         private System.Windows.Forms.DataGridViewTextBoxColumn DgvComentario;
         private System.Windows.Forms.DataGridViewTextBoxColumn PrecioGr;
+        private System.Windows.Forms.TextBox txtNumeroBultos;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox txtPesoBruto;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TextBox txtNumPlaca;
     }
 }

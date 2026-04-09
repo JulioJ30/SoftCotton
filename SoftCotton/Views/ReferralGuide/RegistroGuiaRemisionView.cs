@@ -448,6 +448,9 @@ namespace SoftCotton.Views.ReferralGuide
                     txtObservaciones.Text = grCab.observaciones;
                     lblIdMovimientoTela.Text = (grCab.IdMovimientoCabecera ?? 0).ToString();
 
+                    txtNumeroBultos.Text = grCab.NumeroBultos.ToString();
+                    txtPesoBruto.Text = grCab.PesoBruto.ToString();
+
                     //if (grCab.tipoOrden == "C")
                     //{
                     //    cbxTipoOrden.SelectedIndex = 1;
@@ -548,6 +551,10 @@ namespace SoftCotton.Views.ReferralGuide
                 _grCabParam.numCptePago = txtNumCpte.Text;
                 _grCabParam.usuarioReg = UserApplication.USUARIO;
                 _grCabParam.IdUsuario = UserApplication.ID_USUARIO;
+
+                _grCabParam.NumeroBultos = float.TryParse(txtNumeroBultos.Text?.Trim(), out float valor) ? valor : 1;
+                _grCabParam.PesoBruto = float.TryParse(txtPesoBruto.Text?.Trim(), out float valorPeso) ? valorPeso : 1;
+
 
 
                 if (cbxTipoOrden.SelectedIndex == 1 && rbIngreso.Checked)
@@ -1714,9 +1721,9 @@ namespace SoftCotton.Views.ReferralGuide
             invoice.motivo_de_traslado = grCabGenerales.codMotivoTrasladoSunat;
             invoice.motivo_de_traslado_otros_descripcion = grCabGenerales.otrosMotivoTraslado;
 
-            invoice.peso_bruto_total = "1";
+            invoice.peso_bruto_total = grCabGenerales.PesoBruto.ToString();
             invoice.peso_bruto_unidad_de_medida = "KGM";
-            invoice.numero_de_bultos = "1";
+            invoice.numero_de_bultos = grCabGenerales.NumeroBultos.ToString();
             invoice.tipo_de_transporte = cboTipoTransporte.SelectedValue.ToString();
             invoice.transportista_documento_tipo = "6";
             invoice.transportista_documento_numero = grCabGenerales.transCodigoPC;

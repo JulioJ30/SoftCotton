@@ -234,6 +234,9 @@ namespace SoftCotton.Repository
                 sqlCommand.Parameters.Add("@gross_weight_um", SqlDbType.VarChar, 3).Value = parametros.gross_weight_um;
                 sqlCommand.Parameters.Add("@net_weight_um", SqlDbType.VarChar, 3).Value = parametros.net_weight_um;
 
+                sqlCommand.Parameters.Add("@NumeroBultos", SqlDbType.Float).Value = parametros.NumeroBultos;
+
+
                 sqlCommand.Parameters.Add("@fechavencimiento", SqlDbType.VarChar, 8).Value = parametros.fechaVencimiento;
                 sqlCommand.Parameters.Add("@observaciones", SqlDbType.VarChar, 500).Value = parametros.observaciones;
 
