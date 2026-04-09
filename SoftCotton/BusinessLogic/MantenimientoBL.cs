@@ -15,14 +15,35 @@ namespace SoftCotton.BusinessLogic
             _mantenimientoRepository = new MantenimientoRepository();
         }
 
-        public IEnumerable<GetMant53_Estilos> GetEstilos()
+
+        public IEnumerable<TemporadasEntidad> GetTemporadas(bool? FlgActivo = null)
         {
-            return _mantenimientoRepository.GetEstilos();
+            return _mantenimientoRepository.GetTemporadas(FlgActivo);
         }
 
-        public IEnumerable<GetMant54_Programas> GetProgramas()
+        public bool SetTemporadas(TemporadasEntidad Parametro, out string mensaje)
         {
-            return _mantenimientoRepository.GetProgramas();
+            return _mantenimientoRepository.SetTemporadas(Parametro, out mensaje);
+        }
+
+        public bool SetTemporadasCambioEstado(int IdTemporada, out string mensaje)
+        {
+            return _mantenimientoRepository.SetTemporadasCambioEstado(IdTemporada, out mensaje);
+        }
+
+        public IEnumerable<GetMant21_TallasNuevo> Get76_Tallas(string filtro = null)
+        {
+            return _mantenimientoRepository.Get76_Tallas(filtro);
+        }
+
+        public IEnumerable<GetMant53_Estilos> GetEstilos(string filtro = "")
+        {
+            return _mantenimientoRepository.GetEstilos(filtro);
+        }
+
+        public IEnumerable<GetMant54_Programas> GetProgramas(int estado = 1, string programa = "")
+        {
+            return _mantenimientoRepository.GetProgramas(estado,programa);
         }
 
         public IEnumerable<GetMant55_Pedidos> GetPedidos()

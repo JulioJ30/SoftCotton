@@ -35,6 +35,23 @@ namespace SoftCotton.BusinessLogic
         {
             return _kardexRepository.uspGetMovimientoKardex(codNivel, codCuenta, codGrupo, codTalla, codColor,fechaIni,fechafin);
         }
+
+        public TituloPdf uspGetMovimientoKardexTituloPdf(string codNivel, string codCuenta, string codGrupo, string codTalla, string codColor, string fechaIni, string fechafin)
+        {
+            return _kardexRepository.uspGetMovimientoKardexTituloPdf(codNivel, codCuenta, codGrupo, codTalla, codColor, fechaIni, fechafin);
+        }
+
+        public List<KardexValorizadoPrincipalPdf> uspGetMovimientoKardexPdf(string codNivel, string codCuenta, string codGrupo, string codTalla, string codColor, string fechaIni, string fechafin)
+        {
+            return _kardexRepository.uspGetMovimientoKardexPdf(codNivel, codCuenta, codGrupo, codTalla, codColor, fechaIni, fechafin);
+        }
+
+
+        public bool RegistroCongeladoAcabados(string codNivel, string codCuenta, string codGrupo, string codTalla, string codColor, string fechaIni, string fechafin)
+        {
+            return _kardexRepository.RegistroCongeladoAcabados(codNivel, codCuenta, codGrupo, codTalla, codColor, fechaIni, fechafin);
+        }
+
         public List<KardexElectronico> uspGetkardexElectronicovalorizado(string codNivel, string codCuenta, string desde, string hasta, string codigo)
         {
             return _kardexRepository.uspGetkardexElectronicovalorizado(codNivel, codCuenta, desde, hasta, codigo);

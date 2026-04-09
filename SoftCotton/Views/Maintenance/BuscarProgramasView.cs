@@ -44,7 +44,14 @@ namespace SoftCotton.Views.Maintenance
 
         private void BuscarProgramasView_Load_1(object sender, EventArgs e)
         {
-            dgvProgramas.DataSource = _mantenimientoBL.GetProgramas();
+            Busqueda();
+        }
+
+        private void Busqueda()
+        {
+            string filtro = txtPrograma.Text.Trim();
+
+            dgvProgramas.DataSource = _mantenimientoBL.GetProgramas(1, filtro);
 
             if (dgvProgramas.Rows.Count > 0)
             {
@@ -76,6 +83,18 @@ namespace SoftCotton.Views.Maintenance
         private void dgvProgramas_KeyUp(object sender, KeyEventArgs e)
         {
 
+        }
+
+        private void txtPrograma_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Acción al presionar Enter
+                Busqueda();
+
+                // Opcional: evitar que suene el "beep" al presionar Enter
+                e.SuppressKeyPress = true;
+            }
         }
     }
 }

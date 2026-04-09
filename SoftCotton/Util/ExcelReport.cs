@@ -1,12 +1,14 @@
-﻿using ClosedXML.Excel;
-using SoftCotton.Model.ReferralGuide;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using ClosedXML.Excel;
+using iTextSharp.text.pdf;
+using SoftCotton.Model.ReferralGuide;
 using Excel = Microsoft.Office.Interop.Excel;
 
 
@@ -93,22 +95,22 @@ namespace SoftCotton.Util
                     var worksheet = workbook.Worksheets.Add("Hoja 1");
 
 
-                    worksheet.Cell(2, 21).Value = "ENTRADA S/.";
-                    worksheet.Cell(2, 21).Style.Fill.BackgroundColor = tituloArray[21].backgroundColor;
-                    worksheet.Cell(2, 21).Style.Font.FontColor = tituloArray[21].foreColor;
-                    worksheet.Cell(2, 21).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-                    worksheet.Range("U2:W2").Merge();
-                    worksheet.Cell(2, 24).Value = "SALIDA S/.";
-                    worksheet.Cell(2, 24).Style.Fill.BackgroundColor = tituloArray[24].backgroundColor;
-                    worksheet.Cell(2, 24).Style.Font.FontColor = tituloArray[24].foreColor;
-                    worksheet.Cell(2, 24).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-                    worksheet.Range("X2:Z2").Merge();
+                    worksheet.Cell(2, 25).Value = "ENTRADA S/.";
+                    worksheet.Cell(2, 25).Style.Fill.BackgroundColor = tituloArray[21].backgroundColor;
+                    worksheet.Cell(2, 25).Style.Font.FontColor = tituloArray[21].foreColor;
+                    worksheet.Cell(2, 25).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    worksheet.Range("Y2:AA2").Merge();
+                    worksheet.Cell(2, 28).Value = "SALIDA S/.";
+                    worksheet.Cell(2, 28).Style.Fill.BackgroundColor = tituloArray[24].backgroundColor;
+                    worksheet.Cell(2, 28).Style.Font.FontColor = tituloArray[24].foreColor;
+                    worksheet.Cell(2, 28).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    worksheet.Range("AB2:AD2").Merge();
 
-                    worksheet.Cell(2, 27).Value = "SALDO S/.";
-                    worksheet.Cell(2, 27).Style.Fill.BackgroundColor = tituloArray[27].backgroundColor;
-                    worksheet.Cell(2, 27).Style.Font.FontColor = tituloArray[27].foreColor;
-                    worksheet.Cell(2, 27).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-                    worksheet.Range("AA2:AC2").Merge();
+                    worksheet.Cell(2, 31).Value = "SALDO S/.";
+                    worksheet.Cell(2, 31).Style.Fill.BackgroundColor = tituloArray[27].backgroundColor;
+                    worksheet.Cell(2, 31).Style.Font.FontColor = tituloArray[27].foreColor;
+                    worksheet.Cell(2, 31).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    worksheet.Range("AE2:AG2").Merge();
                     //worksheet.Cell(2, 30).Value = "SALIDA S/.";
                     //worksheet.Cell(2, 30).Style.Fill.BackgroundColor = tituloArray[30].backgroundColor;
                     //worksheet.Cell(2, 30).Style.Font.FontColor = tituloArray[30].foreColor;
@@ -150,23 +152,23 @@ namespace SoftCotton.Util
                                     if (valorparticion == 1)
                                     {
                                         worksheet.Cell(rowIndex, 2).Value = "TOTAL ";
-                                        worksheet.Cell(rowIndex, 3).FormulaA1 = "C" + (rowIndex - 1); 
-                                        worksheet.Range("A" + rowIndex + ":AC" + rowIndex).Style.Fill.BackgroundColor = XLColor.LightBlue;
-                                        worksheet.Range("A" + rowIndex + ":AC" + rowIndex).Style.Font.FontColor = XLColor.Black;
+                                        worksheet.Cell(rowIndex, 3).FormulaA1 = "C" + (rowIndex - 1);
+                                        worksheet.Range("A" + rowIndex + ":AG" + rowIndex).Style.Fill.BackgroundColor = XLColor.LightBlue;
+                                        worksheet.Range("A" + rowIndex + ":AG" + rowIndex).Style.Font.FontColor = XLColor.Black;
                                         worksheet.Cell(rowIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
                                         //Total Saldo
-                                        worksheet.Cell(rowIndex, 29).FormulaA1 = "AC" + (rowIndex - 1) ;
+                                        worksheet.Cell(rowIndex, 33).FormulaA1 = "AG" + (rowIndex - 1);
                                         //Cantidad Saldo 
-                                        worksheet.Cell(rowIndex, 27).FormulaA1 = "AA" + (rowIndex - 1) ;
+                                        worksheet.Cell(rowIndex, 31).FormulaA1 = "AE" + (rowIndex - 1);
                                         //Total De Cantidades Entradas
-                                        worksheet.Cell(rowIndex, 21).FormulaA1 = "SUM(U" + rowInicial + ":U" + (rowIndex - 1) + ")";
+                                        worksheet.Cell(rowIndex, 25).FormulaA1 = "SUM(Y" + rowInicial + ":Y" + (rowIndex - 1) + ")";
                                         //Total de Cantidades de Salidas
-                                        worksheet.Cell(rowIndex, 24).FormulaA1 = "SUM(X" + rowInicial + ":X" + (rowIndex - 1) + ")";
+                                        worksheet.Cell(rowIndex, 28).FormulaA1 = "SUM(AB" + rowInicial + ":AB" + (rowIndex - 1) + ")";
                                         //Total de Saldos Entrada 
-                                        worksheet.Cell(rowIndex, 23).FormulaA1 = "SUM(W" + rowInicial + ":W" + (rowIndex - 1) + ")";
+                                        worksheet.Cell(rowIndex, 27).FormulaA1 = "SUM(AA" + rowInicial + ":AA" + (rowIndex - 1) + ")";
                                         //Total de Saldos Salida
-                                        worksheet.Cell(rowIndex, 26).FormulaA1 = "SUM(Z" + rowInicial + ":Z" + (rowIndex - 1) + ")";
-                                        worksheet.Range("D" + rowIndex + ":T" + rowIndex).Merge();
+                                        worksheet.Cell(rowIndex, 30).FormulaA1 = "SUM(AD" + rowInicial + ":AD" + (rowIndex - 1) + ")";
+                                        worksheet.Range("D" + rowIndex + ":X" + rowIndex).Merge();
                                         rowIndex++;
                                         rowInicial = rowIndex;
                                     }
@@ -214,22 +216,22 @@ namespace SoftCotton.Util
                     worksheet.Cell(rowIndex, 2).Value = "TOTAL ";
                     worksheet.Cell(rowIndex, 3).FormulaA1 = "C" + (rowIndex - 1);
                     //Total Saldo
-                    worksheet.Cell(rowIndex, 29).FormulaA1 = "AC" + (rowIndex - 1);
+                    worksheet.Cell(rowIndex, 33).FormulaA1 = "AG" + (rowIndex - 1);
                     //Cantidad Saldo 
-                    worksheet.Cell(rowIndex, 27).FormulaA1 = "AA" + (rowIndex - 1);
+                    worksheet.Cell(rowIndex, 31).FormulaA1 = "AE" + (rowIndex - 1);
                     //Total De Cantidades Entradas
-                    worksheet.Cell(rowIndex, 21).FormulaA1 = "SUM(U" + rowInicial + ":U" + (rowIndex - 1) + ")";
+                    worksheet.Cell(rowIndex, 25).FormulaA1 = "SUM(Y" + rowInicial + ":Y" + (rowIndex - 1) + ")";
                     //Total de Cantidades de Salidas
-                    worksheet.Cell(rowIndex, 24).FormulaA1 = "SUM(X" + rowInicial + ":X" + (rowIndex - 1) + ")";
+                    worksheet.Cell(rowIndex, 28).FormulaA1 = "SUM(AB" + rowInicial + ":AB" + (rowIndex - 1) + ")";
                     //Total de Saldos Entrada 
-                    worksheet.Cell(rowIndex, 23).FormulaA1 = "SUM(W" + rowInicial + ":W" + (rowIndex - 1) + ")";
+                    worksheet.Cell(rowIndex, 27).FormulaA1 = "SUM(AA" + rowInicial + ":AA" + (rowIndex - 1) + ")";
                     //Total de Saldos Salida
-                    worksheet.Cell(rowIndex, 26).FormulaA1 = "SUM(Z" + rowInicial + ":Z" + (rowIndex - 1) + ")";
+                    worksheet.Cell(rowIndex, 30).FormulaA1 = "SUM(AD" + rowInicial + ":AD" + (rowIndex - 1) + ")";
 
 
-                    worksheet.Range("A" + rowIndex + ":AC" + rowIndex).Style.Fill.BackgroundColor = XLColor.LightBlue;
-                    worksheet.Range("A" + rowIndex + ":AC" + rowIndex).Style.Font.FontColor = XLColor.Black;
-                    worksheet.Range("D" + rowIndex + ":T" + rowIndex).Merge();
+                    worksheet.Range("A" + rowIndex + ":AG" + rowIndex).Style.Fill.BackgroundColor = XLColor.LightBlue;
+                    worksheet.Range("A" + rowIndex + ":AG" + rowIndex).Style.Font.FontColor = XLColor.Black;
+                    worksheet.Range("D" + rowIndex + ":X" + rowIndex).Merge();
                     worksheet.Columns().AdjustToContents();
 
                     //worksheet.Range("A" + (rowIndex + 2) + ":AC" + (rowIndex + 2)).Style.Fill.BackgroundColor = XLColor.DarkSeaGreen;
@@ -253,11 +255,1344 @@ namespace SoftCotton.Util
             catch
             {
             }
-            
+
+        }
+
+        public static void GetExcelReportKardexParaPdf<T>(string rutaArchivo, ExcelReportTitulo[] tituloArray, List<T> contenidoArray)
+        {
+            try
+            {
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add("Hoja 1");
+
+
+                    worksheet.Cell(2, 25).Value = "ENTRADA S/.";
+                    worksheet.Cell(2, 25).Style.Fill.BackgroundColor = tituloArray[21].backgroundColor;
+                    worksheet.Cell(2, 25).Style.Font.FontColor = tituloArray[21].foreColor;
+                    worksheet.Cell(2, 25).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    worksheet.Range("Y2:AA2").Merge();
+                    worksheet.Cell(2, 28).Value = "SALIDA S/.";
+                    worksheet.Cell(2, 28).Style.Fill.BackgroundColor = tituloArray[24].backgroundColor;
+                    worksheet.Cell(2, 28).Style.Font.FontColor = tituloArray[24].foreColor;
+                    worksheet.Cell(2, 28).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    worksheet.Range("AB2:AD2").Merge();
+
+                    worksheet.Cell(2, 31).Value = "SALDO S/.";
+                    worksheet.Cell(2, 31).Style.Fill.BackgroundColor = tituloArray[27].backgroundColor;
+                    worksheet.Cell(2, 31).Style.Font.FontColor = tituloArray[27].foreColor;
+                    worksheet.Cell(2, 31).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    worksheet.Range("AE2:AG2").Merge();
+
+                    // Titulo
+                    for (int i = 0; i < tituloArray.Length; i++)
+                    {
+                        worksheet.Cell(3, i + 1).Value = tituloArray[i].titulo.ToString();
+                        worksheet.Cell(3, i + 1).Style.Fill.BackgroundColor = tituloArray[i].backgroundColor;
+                        worksheet.Cell(3, i + 1).Style.Font.FontColor = tituloArray[i].foreColor;
+                    }
+
+
+                    // Contenido
+                    int columnIndex = 1;
+                    int rowIndex = 4;
+                    int rowInicial = 4;
+                    string valorCodigo = "";
+                    foreach (T t in contenidoArray)
+                    {
+                        foreach (PropertyInfo info in typeof(T).GetProperties())
+                        {
+                            if (rowIndex > 4)
+                            {
+                                if (columnIndex == 1)
+                                {
+                                    var valorparticion = Convert.ToInt32(info.GetValue(t, null) ?? DBNull.Value);
+                                    if (valorparticion == 1)
+                                    {
+                                        worksheet.Cell(rowIndex, 2).Value = "TOTAL ";
+                                        worksheet.Cell(rowIndex, 3).FormulaA1 = "C" + (rowIndex - 1);
+                                        worksheet.Range("A" + rowIndex + ":AG" + rowIndex).Style.Fill.BackgroundColor = XLColor.LightBlue;
+                                        worksheet.Range("A" + rowIndex + ":AG" + rowIndex).Style.Font.FontColor = XLColor.Black;
+                                        worksheet.Cell(rowIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                                        //Total Saldo
+                                        worksheet.Cell(rowIndex, 33).FormulaA1 = "AG" + (rowIndex - 1);
+                                        //Cantidad Saldo 
+                                        worksheet.Cell(rowIndex, 31).FormulaA1 = "AE" + (rowIndex - 1);
+                                        //Total De Cantidades Entradas
+                                        worksheet.Cell(rowIndex, 25).FormulaA1 = "SUM(Y" + rowInicial + ":Y" + (rowIndex - 1) + ")";
+                                        //Total de Cantidades de Salidas
+                                        worksheet.Cell(rowIndex, 28).FormulaA1 = "SUM(AB" + rowInicial + ":AB" + (rowIndex - 1) + ")";
+                                        //Total de Saldos Entrada 
+                                        worksheet.Cell(rowIndex, 27).FormulaA1 = "SUM(AA" + rowInicial + ":AA" + (rowIndex - 1) + ")";
+                                        //Total de Saldos Salida
+                                        worksheet.Cell(rowIndex, 30).FormulaA1 = "SUM(AD" + rowInicial + ":AD" + (rowIndex - 1) + ")";
+                                        worksheet.Range("D" + rowIndex + ":X" + rowIndex).Merge();
+                                        rowIndex++;
+                                        rowInicial = rowIndex;
+                                    }
+                                }
+                                else if (columnIndex == 3)
+                                {
+                                    valorCodigo = Convert.ToString(info.GetValue(t, null) ?? DBNull.Value);
+                                }
+                            }
+
+
+                            if (info.PropertyType.Name.ToUpper().StartsWith("INT"))
+                            {
+                                worksheet.Cell(rowIndex, columnIndex).Style.NumberFormat.NumberFormatId = 0;
+                            }
+                            else if (info.PropertyType.Name.ToUpper().StartsWith("DECIMAL"))
+                            {
+                                worksheet.Cell(rowIndex, columnIndex).Style.NumberFormat.NumberFormatId = 4;
+                            }
+                            else if (info.PropertyType.Name.ToUpper().StartsWith("STRING"))
+                            {
+                                worksheet.Cell(rowIndex, columnIndex).Style.NumberFormat.Format = "@";
+                            }
+                            else if (info.PropertyType.Name.ToUpper().StartsWith("CHAR"))
+                            {
+                                worksheet.Cell(rowIndex, columnIndex).Style.NumberFormat.Format = "@";
+                            }
+                            else if (info.PropertyType.Name.ToUpper().StartsWith("DATE"))
+                            {
+                                worksheet.Cell(rowIndex, columnIndex).Style.NumberFormat.Format = "dd/mm/yyyy";
+                            }
+
+                            worksheet.Cell(rowIndex, columnIndex).Value = (info.GetValue(t, null) ?? DBNull.Value);
+
+
+                            columnIndex++;
+                        }
+
+                        rowIndex++;
+                        columnIndex = 1;
+                    }
+
+
+
+                    worksheet.Cell(rowIndex, 2).Value = "TOTAL ";
+                    worksheet.Cell(rowIndex, 3).FormulaA1 = "C" + (rowIndex - 1);
+                    //Total Saldo
+                    worksheet.Cell(rowIndex, 33).FormulaA1 = "AG" + (rowIndex - 1);
+                    //Cantidad Saldo 
+                    worksheet.Cell(rowIndex, 31).FormulaA1 = "AE" + (rowIndex - 1);
+                    //Total De Cantidades Entradas
+                    worksheet.Cell(rowIndex, 25).FormulaA1 = "SUM(Y" + rowInicial + ":Y" + (rowIndex - 1) + ")";
+                    //Total de Cantidades de Salidas
+                    worksheet.Cell(rowIndex, 28).FormulaA1 = "SUM(AB" + rowInicial + ":AB" + (rowIndex - 1) + ")";
+                    //Total de Saldos Entrada 
+                    worksheet.Cell(rowIndex, 27).FormulaA1 = "SUM(AA" + rowInicial + ":AA" + (rowIndex - 1) + ")";
+                    //Total de Saldos Salida
+                    worksheet.Cell(rowIndex, 30).FormulaA1 = "SUM(AD" + rowInicial + ":AD" + (rowIndex - 1) + ")";
+
+
+                    worksheet.Range("A" + rowIndex + ":AG" + rowIndex).Style.Fill.BackgroundColor = XLColor.LightBlue;
+                    worksheet.Range("A" + rowIndex + ":AG" + rowIndex).Style.Font.FontColor = XLColor.Black;
+                    worksheet.Range("D" + rowIndex + ":X" + rowIndex).Merge();
+                    worksheet.Columns().AdjustToContents();
+
+                    workbook.SaveAs(rutaArchivo);
+                }
+            }
+            catch
+            {
+            }
+
         }
 
 
-        public static void GetExcelReportKardexValorizado<T>(string rutaArchivo, ExcelReportTitulo[] tituloArray, List<T> contenidoArray,string periodo,string nivel )
+        public static string GenerarKardexDirectoAPdf_Old<T>(string rutaPdf, ExcelReportTitulo[] tituloArray, List<T> contenidoArray, TituloPdf titulopdf)
+        {
+            // 👉 Excel temporal (misma ruta, nombre oculto)
+            string carpeta = Path.GetDirectoryName(rutaPdf);
+            string nombreTemp = Guid.NewGuid().ToString();
+            string rutaExcelTemp = Path.Combine(carpeta, nombreTemp + ".xlsx");
+
+            // =============================
+            // 1️⃣ CREAR EXCEL (ClosedXML)
+            // =============================
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Hoja 1");
+
+
+                int filaEncabezado = 1;
+
+                // ENCABEZADO
+
+                // Etiquetas
+                worksheet.Cell(filaEncabezado, 3).Value = "PERIODO:";
+                worksheet.Cell(filaEncabezado + 1, 3).Value = "RUC:";
+                worksheet.Cell(filaEncabezado + 2, 3).Value = "APELLIDOS Y NOMBRES, DENOMINACIÓN O RAZÓN SOCIAL:";
+                worksheet.Cell(filaEncabezado + 3, 3).Value = "ESTABLECIMIENTO (1):";
+                worksheet.Cell(filaEncabezado + 4, 3).Value = "CÓDIGO DE LA EXISTENCIA:";
+                worksheet.Cell(filaEncabezado + 5, 3).Value = "TIPO (TABLA 5):";
+                worksheet.Cell(filaEncabezado + 6, 3).Value = "DESCRIPCIÓN:";
+                worksheet.Cell(filaEncabezado + 7, 3).Value = "CÓDIGO DE LA UNIDAD DE MEDIDA (TABLA 6):";
+                worksheet.Cell(filaEncabezado + 8, 3).Value = "MÉTODO DE VALUACIÓN:";
+
+                // Valores ficticios
+                worksheet.Cell(filaEncabezado, 4).Value = titulopdf.Periodo;
+                worksheet.Cell(filaEncabezado + 1, 4).Value = titulopdf.Ruc;
+                worksheet.Cell(filaEncabezado + 2, 4).Value = titulopdf.RazonSocial;
+                worksheet.Cell(filaEncabezado + 3, 4).Value = titulopdf.Establecimiento;
+                worksheet.Cell(filaEncabezado + 4, 4).Value = titulopdf.CodigoExistencia;
+                worksheet.Cell(filaEncabezado + 5, 4).Value = titulopdf.Tipo;
+                worksheet.Cell(filaEncabezado + 6, 4).Value = titulopdf.TipoDescripcion;
+                worksheet.Cell(filaEncabezado + 7, 4).Value = titulopdf.CodigoUnidadMedida;
+                worksheet.Cell(filaEncabezado + 8, 4).Value = titulopdf.MetodoEvaluacion;
+
+                // END ENCABEZADO
+
+                // Estilo
+                worksheet.Range("C1:C9").Style.Font.Bold = true;
+                worksheet.Range("C1:O9").Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+
+
+
+                worksheet.Cell(10, 11).Value = "ENTRADA S/.";
+                worksheet.Cell(10, 11).Style.Fill.BackgroundColor = tituloArray[6].backgroundColor;
+                worksheet.Cell(10, 11).Style.Font.FontColor = tituloArray[6].foreColor;
+                worksheet.Cell(10, 11).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                worksheet.Range("K10:M10").Merge();
+                worksheet.Cell(10, 14).Value = "SALIDA S/.";
+                worksheet.Cell(10, 14).Style.Fill.BackgroundColor = tituloArray[6].backgroundColor;
+                worksheet.Cell(10, 14).Style.Font.FontColor = tituloArray[6].foreColor;
+                worksheet.Cell(10, 14).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                worksheet.Range("N10:P10").Merge();
+
+                worksheet.Cell(10, 17).Value = "SALDO S/.";
+                worksheet.Cell(10, 17).Style.Fill.BackgroundColor = tituloArray[6].backgroundColor;
+                worksheet.Cell(10, 17).Style.Font.FontColor = tituloArray[6].foreColor;
+                worksheet.Cell(10, 17).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                worksheet.Range("Q10:S10").Merge();
+
+                // Titulo
+                for (int i = 0; i < tituloArray.Length; i++)
+                {
+                    worksheet.Cell(11, i + 1).Value = tituloArray[i].titulo.ToString();
+                    worksheet.Cell(11, i + 1).Style.Fill.BackgroundColor = tituloArray[i].backgroundColor;
+                    worksheet.Cell(11, i + 1).Style.Font.FontColor = tituloArray[i].foreColor;
+                }
+
+
+                // Contenido
+                int columnIndex = 1;
+                //int rowIndex = 4;
+                //int rowInicial = 4;
+                int rowIndex = 12; // antes era 4
+                int rowInicial = 12;
+                string valorCodigo = "";
+                var filasTotalesItems = new List<int>();
+
+                foreach (T t in contenidoArray)
+                {
+                    foreach (PropertyInfo info in typeof(T).GetProperties())
+                    {
+                        if (rowIndex > 12)
+                        {
+                            if (columnIndex == 1)
+                            {
+                                var valorparticion = Convert.ToInt32(info.GetValue(t, null) ?? DBNull.Value);
+                                if (valorparticion == 1)
+                                {
+                                    worksheet.Cell(rowIndex, 2).Value = "TOTAL ";
+                                    worksheet.Cell(rowIndex, 3).FormulaA1 = "C" + (rowIndex - 1);
+                                    worksheet.Range("A" + rowIndex + ":S" + rowIndex).Style.Fill.BackgroundColor = XLColor.LightBlue;
+                                    worksheet.Range("A" + rowIndex + ":S" + rowIndex).Style.Font.FontColor = XLColor.Black;
+                                    worksheet.Cell(rowIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                                    //Total Saldo
+                                    worksheet.Cell(rowIndex, 19).FormulaA1 = "S" + (rowIndex - 1);
+                                    //Cantidad Saldo 
+                                    worksheet.Cell(rowIndex, 18).FormulaA1 = "Q" + (rowIndex - 1);
+                                    //Total De Cantidades Entradas
+                                    worksheet.Cell(rowIndex, 11).FormulaA1 = "SUM(K" + rowInicial + ":K" + (rowIndex - 1) + ")";
+                                    //Total de Cantidades de Salidas
+                                    worksheet.Cell(rowIndex, 14).FormulaA1 = "SUM(N" + rowInicial + ":N" + (rowIndex - 1) + ")";
+                                    //Total de Saldos Entrada 
+                                    worksheet.Cell(rowIndex, 13).FormulaA1 = "SUM(M" + rowInicial + ":M" + (rowIndex - 1) + ")";
+                                    //Total de Saldos Salida
+                                    worksheet.Cell(rowIndex, 16).FormulaA1 = "SUM(P" + rowInicial + ":P" + (rowIndex - 1) + ")";
+                                    worksheet.Range("D" + rowIndex + ":J" + rowIndex).Merge();
+
+                                    filasTotalesItems.Add(rowIndex);
+
+                                    rowIndex++;
+                                    rowInicial = rowIndex;
+                                }
+                            }
+                            else if (columnIndex == 3)
+                            {
+                                valorCodigo = Convert.ToString(info.GetValue(t, null) ?? DBNull.Value);
+                            }
+                        }
+
+
+                        if (info.PropertyType.Name.ToUpper().StartsWith("INT"))
+                        {
+                            worksheet.Cell(rowIndex, columnIndex).Style.NumberFormat.NumberFormatId = 0;
+                        }
+                        else if (info.PropertyType.Name.ToUpper().StartsWith("DECIMAL"))
+                        {
+                            worksheet.Cell(rowIndex, columnIndex).Style.NumberFormat.NumberFormatId = 4;
+                        }
+                        else if (info.PropertyType.Name.ToUpper().StartsWith("STRING"))
+                        {
+                            worksheet.Cell(rowIndex, columnIndex).Style.NumberFormat.Format = "@";
+                        }
+                        else if (info.PropertyType.Name.ToUpper().StartsWith("CHAR"))
+                        {
+                            worksheet.Cell(rowIndex, columnIndex).Style.NumberFormat.Format = "@";
+                        }
+                        else if (info.PropertyType.Name.ToUpper().StartsWith("DATE"))
+                        {
+                            worksheet.Cell(rowIndex, columnIndex).Style.NumberFormat.Format = "dd/mm/yyyy";
+                        }
+
+                        worksheet.Cell(rowIndex, columnIndex).Value = (info.GetValue(t, null) ?? DBNull.Value);
+
+
+                        columnIndex++;
+                    }
+
+                    rowIndex++;
+                    columnIndex = 1;
+                }
+
+
+
+                worksheet.Cell(rowIndex, 2).Value = "TOTAL ";
+                worksheet.Cell(rowIndex, 3).FormulaA1 = "C" + (rowIndex - 1);
+                //Total Saldo
+                worksheet.Cell(rowIndex, 19).FormulaA1 = "S" + (rowIndex - 1);
+                //Cantidad Saldo 
+                worksheet.Cell(rowIndex, 18).FormulaA1 = "Q" + (rowIndex - 1);
+                //Total De Cantidades Entradas
+                worksheet.Cell(rowIndex, 11).FormulaA1 = "SUM(K" + rowInicial + ":K" + (rowIndex - 1) + ")";
+                //Total de Cantidades de Salidas
+                worksheet.Cell(rowIndex, 14).FormulaA1 = "SUM(N" + rowInicial + ":N" + (rowIndex - 1) + ")";
+                //Total de Saldos Entrada 
+                worksheet.Cell(rowIndex, 13).FormulaA1 = "SUM(M" + rowInicial + ":M" + (rowIndex - 1) + ")";
+                //Total de Saldos Salida
+                worksheet.Cell(rowIndex, 16).FormulaA1 = "SUM(P" + rowInicial + ":P" + (rowIndex - 1) + ")";
+
+
+                worksheet.Range("A" + rowIndex + ":S" + rowIndex).Style.Fill.BackgroundColor = XLColor.LightBlue;
+                worksheet.Range("A" + rowIndex + ":S" + rowIndex).Style.Font.FontColor = XLColor.Black;
+                worksheet.Range("D" + rowIndex + ":J" + rowIndex).Merge();
+
+                filasTotalesItems.Add(rowIndex);
+                rowIndex++;
+
+                worksheet.Cell(rowIndex, 2).Value = "TOTAL GENERAL";
+                worksheet.Range("A" + rowIndex + ":S" + rowIndex)
+                    .Style.Fill.BackgroundColor = XLColor.DarkBlue;
+                worksheet.Range("A" + rowIndex + ":S" + rowIndex)
+                    .Style.Font.FontColor = XLColor.White;
+                worksheet.Range("A" + rowIndex + ":S" + rowIndex)
+                    .Style.Font.Bold = true;
+
+                worksheet.Range("D" + rowIndex + ":J" + rowIndex).Merge();
+
+                // Construir fórmula SUM manual
+                string filas = string.Join(",", filasTotalesItems);
+
+                // Entradas
+                worksheet.Cell(rowIndex, 11).FormulaA1 = $"SUM(K{string.Join(",K", filasTotalesItems)})";
+
+                // Salidas
+                worksheet.Cell(rowIndex, 14).FormulaA1 = $"SUM(N{string.Join(",N", filasTotalesItems)})";
+
+                // Totales entrada
+                worksheet.Cell(rowIndex, 13).FormulaA1 = $"SUM(M{string.Join(",M", filasTotalesItems)})";
+
+                // Totales salida
+                worksheet.Cell(rowIndex, 16).FormulaA1 = $"SUM(P{string.Join(",P", filasTotalesItems)})";
+
+                // Cantidad saldo
+                worksheet.Cell(rowIndex, 18).FormulaA1 = $"SUM(Q{string.Join(",Q", filasTotalesItems)})";
+
+                // Total saldo
+                worksheet.Cell(rowIndex, 19).FormulaA1 = $"SUM(S{string.Join(",S", filasTotalesItems)})";
+
+
+                worksheet.Column(11).Style.NumberFormat.Format = "#,##0.00";
+                worksheet.Column(13).Style.NumberFormat.Format = "#,##0.00";
+                worksheet.Column(14).Style.NumberFormat.Format = "#,##0.00";
+                worksheet.Column(16).Style.NumberFormat.Format = "#,##0.00";
+                worksheet.Column(18).Style.NumberFormat.Format = "#,##0.00";
+                worksheet.Column(19).Style.NumberFormat.Format = "#,##0.00";
+
+
+
+
+                //worksheet.Columns().AdjustToContents();
+                worksheet.ColumnsUsed().AdjustToContents();
+
+
+                // 🔥 Repetir encabezado
+                worksheet.PageSetup.SetRowsToRepeatAtTop(1, 11);
+
+                // Centrar
+                worksheet.PageSetup.CenterHorizontally = true;
+
+                // Márgenes
+                worksheet.PageSetup.Margins.Left = 0.3;
+                worksheet.PageSetup.Margins.Right = 0.3;
+                worksheet.PageSetup.Margins.Top = 0.5;
+                worksheet.PageSetup.Margins.Bottom = 0.5;
+
+
+                // Por las siguientes líneas, usando los códigos de campo de Excel:
+                worksheet.PageSetup.Header.Right.AddText("&P");
+                worksheet.PageSetup.Header.Right.AddText(" de ");
+                worksheet.PageSetup.Header.Right.AddText("&N");
+
+
+                workbook.SaveAs(rutaExcelTemp);
+            }
+
+            // =============================
+            // 2️⃣ CONVERTIR A PDF (Interop)
+            // =============================
+            Excel.Application excelApp = new Excel.Application();
+            Excel.Workbook workbookInterop = excelApp.Workbooks.Open(rutaExcelTemp);
+            Excel.Worksheet sheet = workbookInterop.ActiveSheet;
+
+            // 👉 Forzar área de impresión
+            sheet.PageSetup.PrintArea = sheet.UsedRange.Address;
+
+            // 👉 Ajuste de página
+            sheet.PageSetup.Zoom = false;
+            sheet.PageSetup.FitToPagesWide = 1;
+            sheet.PageSetup.FitToPagesTall = false;
+
+            // 👉 HEADER paginado (arriba derecha)
+            sheet.PageSetup.RightHeader = "Página &P de &N";
+
+            // 👉 Forzar recalculo visual
+            sheet.Activate();
+            excelApp.Calculate();
+
+            // 👉 Exportar PDF
+            workbookInterop.ExportAsFixedFormat(
+                Excel.XlFixedFormatType.xlTypePDF,
+                rutaPdf
+            );
+
+            workbookInterop.Close(false);
+            excelApp.Quit();
+
+            // =============================
+            // 3️⃣ LIMPIEZA
+            // =============================
+            //File.Delete(rutaExcelTemp);
+
+            return rutaPdf;
+        }
+
+        //public static string GenerarKardexDirectoAPdf<T>(
+        //string rutaPdf,
+        //ExcelReportTitulo[] tituloArray,
+        //List<T> contenidoArray,
+        //TituloPdf titulopdf)
+        //    {
+        //        string carpeta = Path.GetDirectoryName(rutaPdf);
+        //        string rutaExcelTemp = Path.Combine(carpeta, Guid.NewGuid() + ".xlsx");
+
+        //        // Cache reflection (🔥 clave rendimiento)
+        //        var props = typeof(T).GetProperties();
+
+        //        using (var workbook = new XLWorkbook(XLEventTracking.Disabled))
+        //        {
+        //            var ws = workbook.Worksheets.Add("Hoja 1");
+
+        //            //---------------------------------------------------
+        //            // ENCABEZADO (sin cambios funcionales)
+        //            //---------------------------------------------------
+        //            int f = 1;
+
+        //            string[] labels =
+        //            {
+        //        "PERIODO:",
+        //        "RUC:",
+        //        "APELLIDOS Y NOMBRES, DENOMINACIÓN O RAZÓN SOCIAL:",
+        //        "ESTABLECIMIENTO (1):",
+        //        "CÓDIGO DE LA EXISTENCIA:",
+        //        "TIPO (TABLA 5):",
+        //        "DESCRIPCIÓN:",
+        //        "CÓDIGO DE LA UNIDAD DE MEDIDA (TABLA 6):",
+        //        "MÉTODO DE VALUACIÓN:"
+        //    };
+
+        //            string[] values =
+        //            {
+        //        titulopdf.Periodo,
+        //        titulopdf.Ruc,
+        //        titulopdf.RazonSocial,
+        //        titulopdf.Establecimiento,
+        //        titulopdf.CodigoExistencia,
+        //        titulopdf.Tipo,
+        //        titulopdf.TipoDescripcion,
+        //        titulopdf.CodigoUnidadMedida,
+        //        titulopdf.MetodoEvaluacion
+        //    };
+
+        //            for (int i = 0; i < labels.Length; i++)
+        //            {
+        //                ws.Cell(f + i, 3).Value = labels[i];
+        //                ws.Cell(f + i, 4).Value = values[i];
+        //            }
+
+        //            ws.Range("C1:C9").Style.Font.Bold = true;
+
+        //            //---------------------------------------------------
+        //            // TITULOS
+        //            //---------------------------------------------------
+        //            for (int i = 0; i < tituloArray.Length; i++)
+        //            {
+        //                var cell = ws.Cell(11, i + 1);
+        //                cell.Value = tituloArray[i].titulo;
+        //                cell.Style.Fill.BackgroundColor = tituloArray[i].backgroundColor;
+        //                cell.Style.Font.FontColor = tituloArray[i].foreColor;
+        //            }
+
+        //            //---------------------------------------------------
+        //            // CONTENIDO (🔥 ultra optimizado)
+        //            //---------------------------------------------------
+        //            int row = 12;
+
+        //            foreach (var item in contenidoArray)
+        //            {
+        //                for (int col = 0; col < props.Length; col++)
+        //                {
+        //                    ws.Cell(row, col + 1).Value =
+        //                        props[col].GetValue(item);
+        //                }
+
+        //                row++;
+        //            }
+
+        //            //---------------------------------------------------
+        //            // Ajuste ligero (🔥 NO global)
+        //            //---------------------------------------------------
+        //            ws.Columns(1, tituloArray.Length)
+        //              .AdjustToContents(1, 50);
+
+        //            //---------------------------------------------------
+        //            // Config impresión
+        //            //---------------------------------------------------
+        //            ws.PageSetup.SetRowsToRepeatAtTop(1, 11);
+        //            ws.PageSetup.CenterHorizontally = true;
+
+        //            workbook.SaveAs(rutaExcelTemp);
+        //        }
+
+        //        //---------------------------------------------------
+        //        // PDF (Interop seguro)
+        //        //---------------------------------------------------
+        //        Excel.Application excel = null;
+        //        Excel.Workbook wb = null;
+
+        //        try
+        //        {
+        //            excel = new Excel.Application
+        //            {
+        //                ScreenUpdating = false,
+        //                DisplayAlerts = false
+        //            };
+
+        //            wb = excel.Workbooks.Open(rutaExcelTemp);
+
+        //            Excel.Worksheet sheet = wb.ActiveSheet;
+
+        //            sheet.PageSetup.Orientation =
+        //                Excel.XlPageOrientation.xlLandscape;
+
+        //            sheet.PageSetup.Zoom = false;
+        //            sheet.PageSetup.FitToPagesWide = 1;
+
+        //            wb.ExportAsFixedFormat(
+        //                Excel.XlFixedFormatType.xlTypePDF,
+        //                rutaPdf);
+        //        }
+        //        finally
+        //        {
+        //            wb?.Close(false);
+        //            excel?.Quit();
+
+        //            Marshal.ReleaseComObject(wb);
+        //            Marshal.ReleaseComObject(excel);
+
+        //            GC.Collect();
+        //            GC.WaitForPendingFinalizers();
+        //        }
+
+        //        File.Delete(rutaExcelTemp);
+
+        //        return rutaPdf;
+        //    }
+
+
+
+        public static string GenerarKardexDirectoAPdfOld<T>(
+            string rutaPdf,
+            ExcelReportTitulo[] tituloArray,
+            List<T> contenidoArray,
+            TituloPdf titulopdf)
+        {
+            string carpeta = Path.GetDirectoryName(rutaPdf);
+            string rutaExcelTemp = Path.Combine(carpeta, Guid.NewGuid() + ".xlsx");
+
+            var props = typeof(T).GetProperties();
+
+            using (var workbook = new XLWorkbook(XLEventTracking.Disabled))
+            {
+                var ws = workbook.Worksheets.Add("Kardex");
+
+                decimal accK = 0;
+                decimal accM = 0;
+                decimal accN = 0;
+                decimal accP = 0;
+
+                decimal saldoQ = 0;
+                decimal saldoS = 0;
+
+                //------------------------------------------------
+                // ENCABEZADO
+                //------------------------------------------------
+                string[] labels =
+                {
+                    "PERIODO:",
+                    "RUC:",
+                    "RAZÓN SOCIAL:",
+                    "ESTABLECIMIENTO:",
+                    "CÓDIGO EXISTENCIA:",
+                    "TIPO:",
+                    "DESCRIPCIÓN:",
+                    "UNIDAD MEDIDA:",
+                    "MÉTODO VALUACIÓN:"
+                };
+
+                string[] values =
+                {
+                    titulopdf.Periodo,
+                    titulopdf.Ruc,
+                    titulopdf.RazonSocial,
+                    titulopdf.Establecimiento,
+                    titulopdf.CodigoExistencia,
+                    titulopdf.Tipo,
+                    titulopdf.TipoDescripcion,
+                    titulopdf.CodigoUnidadMedida,
+                    titulopdf.MetodoEvaluacion
+                };
+
+                for (int i = 0; i < labels.Length; i++)
+                {
+                    ws.Cell(i + 1, 3).Value = labels[i];
+                    ws.Cell(i + 1, 4).Value = values[i];
+                }
+
+                ws.Range("C1:C9").Style.Font.Bold = true;
+
+                //------------------------------------------------
+                // TITULOS
+                //------------------------------------------------
+                for (int i = 0; i < tituloArray.Length; i++)
+                {
+                    var c = ws.Cell(11, i + 1);
+                    c.Value = tituloArray[i].titulo;
+                    c.Style.Fill.BackgroundColor = tituloArray[i].backgroundColor;
+                    c.Style.Font.FontColor = tituloArray[i].foreColor;
+                }
+
+                //------------------------------------------------
+                // CONTENIDO + TOTALES
+                //------------------------------------------------
+                int row = 12;
+                int bloqueInicio = row;
+                var filasTotales = new List<int>();
+
+                bool primerItem = true;
+
+                foreach (var item in contenidoArray)
+                {
+                    int particion = Convert.ToInt32(props[0].GetValue(item) ?? 0);
+
+                    //------------------------------------------------
+                    // 👉 SI EMPIEZA NUEVO BLOQUE → cerrar anterior
+                    //------------------------------------------------
+                    if (!primerItem && particion == 1)
+                    {
+                        int totalRow = row;
+
+                        ws.Cell(totalRow, 2).Value = "TOTAL";
+
+                        ws.Cell(totalRow, 11).FormulaA1 =
+                            $"SUM(K{bloqueInicio}:K{row - 1})";
+
+                        ws.Cell(totalRow, 14).FormulaA1 =
+                            $"SUM(N{bloqueInicio}:N{row - 1})";
+
+                        ws.Cell(totalRow, 13).FormulaA1 =
+                            $"SUM(M{bloqueInicio}:M{row - 1})";
+
+                        ws.Cell(totalRow, 16).FormulaA1 =
+                            $"SUM(P{bloqueInicio}:P{row - 1})";
+
+                        ws.Cell(totalRow, 17).FormulaA1 = $"Q{row - 1}";
+                        ws.Cell(totalRow, 19).FormulaA1 = $"S{row - 1}";
+
+
+                        ws.Range($"A{totalRow}:S{totalRow}")
+                            .Style.Fill.BackgroundColor = XLColor.LightBlue;
+
+
+                        filasTotales.Add(totalRow);
+
+                        //decimal valK = ws.Cell(totalRow, 11).GetValue<decimal>();
+                        //decimal valM = ws.Cell(totalRow, 13).GetValue<decimal>();
+                        //decimal valN = ws.Cell(totalRow, 14).GetValue<decimal>();
+                        //decimal valP = ws.Cell(totalRow, 16).GetValue<decimal>();
+
+                        //accK += valK;
+                        //accM += valM;
+                        //accN += valN;
+                        //accP += valP;
+
+                        //// saldo final = último bloque
+                        //saldoQ += ws.Cell(totalRow, 17).GetValue<decimal>();
+                        //saldoS += ws.Cell(totalRow, 19).GetValue<decimal>();
+
+                        row++;
+                        bloqueInicio = row;
+                    }
+
+                    //------------------------------------------------
+                    // escribir fila normal
+                    //------------------------------------------------
+                    int col = 1;
+
+                    foreach (var p in props)
+                    {
+                        ws.Cell(row, col).Value = p.GetValue(item);
+                        col++;
+                    }
+
+                    row++;
+                    primerItem = false;
+                }
+
+                //------------------------------------------------
+                // 👉 cerrar último bloque
+                //------------------------------------------------
+                int totalFinal = row;
+
+                ws.Cell(totalFinal, 2).Value = "TOTAL";
+
+                ws.Cell(totalFinal, 11).FormulaA1 =
+                    $"SUM(K{bloqueInicio}:K{row - 1})";
+
+                ws.Cell(totalFinal, 14).FormulaA1 =
+                    $"SUM(N{bloqueInicio}:N{row - 1})";
+
+                ws.Cell(totalFinal, 13).FormulaA1 =
+                    $"SUM(M{bloqueInicio}:M{row - 1})";
+
+                ws.Cell(totalFinal, 16).FormulaA1 =
+                    $"SUM(P{bloqueInicio}:P{row - 1})";
+
+                ws.Cell(totalFinal, 17).FormulaA1 = $"Q{row - 1}";
+                ws.Cell(totalFinal, 19).FormulaA1 = $"S{row - 1}";
+
+
+                ws.Range($"A{totalFinal}:S{totalFinal}")
+                    .Style.Fill.BackgroundColor = XLColor.LightBlue;
+
+
+                filasTotales.Add(totalFinal);
+
+                //decimal valK2 = ws.Cell(totalFinal, 11).GetValue<decimal>();
+                //decimal valM2 = ws.Cell(totalFinal, 13).GetValue<decimal>();
+                //decimal valN2 = ws.Cell(totalFinal, 14).GetValue<decimal>();
+                //decimal valP2 = ws.Cell(totalFinal, 16).GetValue<decimal>();
+
+                //accK += valK2;
+                //accM += valM2;
+                //accN += valN2;
+                //accP += valP2;
+
+                // saldo final = último bloque
+                //saldoQ = ws.Cell(totalFinal, 17).GetValue<decimal>();
+                //saldoS = ws.Cell(totalFinal, 19).GetValue<decimal>();
+
+                row++;
+
+                string formatoNumero = "#,##0.###";
+
+                ws.Column(11).Style.NumberFormat.Format = formatoNumero;
+                ws.Column(12).Style.NumberFormat.Format = formatoNumero;
+                ws.Column(13).Style.NumberFormat.Format = formatoNumero;
+
+                ws.Column(14).Style.NumberFormat.Format = formatoNumero;
+                ws.Column(15).Style.NumberFormat.Format = formatoNumero;
+                ws.Column(16).Style.NumberFormat.Format = formatoNumero;
+
+                ws.Column(17).Style.NumberFormat.Format = formatoNumero;
+                ws.Column(18).Style.NumberFormat.Format = formatoNumero;
+                ws.Column(19).Style.NumberFormat.Format = formatoNumero;
+
+
+                //------------------------------------------------
+                // 👉 TOTAL GENERAL
+                //------------------------------------------------
+                //int generalRow = row;
+
+                //ws.Cell(generalRow, 2).Value = "TOTAL GENERAL";
+
+                //ws.Cell(generalRow, 11).Value = accK;
+                //ws.Cell(generalRow, 13).Value = accM;
+                //ws.Cell(generalRow, 14).Value = accN;
+                //ws.Cell(generalRow, 16).Value = accP;
+
+                //ws.Cell(generalRow, 17).Value = saldoQ;
+                //ws.Cell(generalRow, 19).Value = saldoS;
+
+                //ws.Range($"A{generalRow}:S{generalRow}")
+                //    .Style.Fill.BackgroundColor = XLColor.DarkBlue;
+
+                //ws.Range($"A{generalRow}:S{generalRow}")
+                //    .Style.Font.FontColor = XLColor.White;
+
+                //row++;
+
+
+                //------------------------------------------------
+                // COLUMNAS + IMPRESIÓN
+                //------------------------------------------------
+                ws.Columns(1, tituloArray.Length)
+                  .AdjustToContents(1, 80);
+
+                ws.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+                ws.PageSetup.PagesWide = 1;
+                ws.PageSetup.PagesTall = 0;
+                ws.PageSetup.SetRowsToRepeatAtTop(1, 11);
+
+                workbook.SaveAs(rutaExcelTemp);
+            }
+
+            //------------------------------------------------
+            // EXPORTAR PDF
+            //------------------------------------------------
+            Excel.Application excel = new Excel.Application
+            {
+                ScreenUpdating = false,
+                DisplayAlerts = false
+            };
+
+            var wb = excel.Workbooks.Open(rutaExcelTemp);
+            var sheet = wb.ActiveSheet;
+
+            sheet.PageSetup.Zoom = false;
+            sheet.PageSetup.FitToPagesWide = 1;
+
+
+            // Configuración impresión
+            sheet.PageSetup.PrintArea = sheet.UsedRange.Address;
+            sheet.PageSetup.Zoom = false;
+            sheet.PageSetup.FitToPagesWide = 1;
+            sheet.PageSetup.FitToPagesTall = false;
+            // 👉 Forzar cálculo completo
+            sheet.DisplayPageBreaks = true;
+            excel.Calculate();
+
+            // 👉 Dar tiempo a Excel para terminar el layout
+            System.Threading.Thread.Sleep(500);
+
+            // 👉 Refrescar vista
+            excel.ActiveWindow.View = Excel.XlWindowView.xlPageBreakPreview;
+            excel.Calculate();
+
+            // 🔥 Obtener páginas reales
+            var paginas = excel.ExecuteExcel4Macro(
+                $"GET.DOCUMENT(50,\"{sheet.Name}\")"
+            );
+
+            int totalPaginas = Convert.ToInt32(paginas);
+
+            Console.WriteLine("Total real de páginas: " + totalPaginas);
+
+            // Header correcto
+            sheet.PageSetup.RightHeader = $"Página &P de {totalPaginas}";
+
+            // Exportar PDF
+            wb.ExportAsFixedFormat(
+                Excel.XlFixedFormatType.xlTypePDF,
+                rutaPdf);
+
+            wb.Close(false);
+            excel.Quit();
+
+            File.Delete(rutaExcelTemp);
+
+            return rutaPdf;
+        }
+
+        public static string GenerarKardexDirectoAPdfSinTotalGeneral<T>(
+            string rutaPdf,
+            ExcelReportTitulo[] tituloArray,
+            List<T> contenidoArray,
+            TituloPdf titulopdf)
+        {
+            string carpeta = Path.GetDirectoryName(rutaPdf);
+            string rutaExcelTemp = Path.Combine(carpeta, Guid.NewGuid() + ".xlsx");
+            string rutaPdfTemp = Path.Combine(carpeta, Guid.NewGuid() + ".pdf");
+
+            var props = typeof(T).GetProperties();
+
+            //------------------------------------------------
+            // CREAR EXCEL CON CLOSEDXML
+            //------------------------------------------------
+            using (var workbook = new XLWorkbook(XLEventTracking.Disabled))
+            {
+                var ws = workbook.Worksheets.Add("Kardex");
+
+                #region Encabezado
+
+                string[] labels =
+                            {
+                            "PERIODO:", "RUC:", "RAZÓN SOCIAL:", "ESTABLECIMIENTO:",
+                            "CÓDIGO EXISTENCIA:", "TIPO:", "DESCRIPCIÓN:",
+                            "UNIDAD MEDIDA:", "MÉTODO VALUACIÓN:"
+                        };
+
+                string[] values =
+                        {
+                    titulopdf.Periodo, titulopdf.Ruc, titulopdf.RazonSocial,
+                    titulopdf.Establecimiento, titulopdf.CodigoExistencia,
+                    titulopdf.Tipo, titulopdf.TipoDescripcion,
+                    titulopdf.CodigoUnidadMedida, titulopdf.MetodoEvaluacion
+                };
+
+                for (int i = 0; i < labels.Length; i++)
+                {
+                    ws.Cell(i + 1, 3).Value = labels[i];
+                    ws.Cell(i + 1, 4).Value = values[i];
+                }
+
+                ws.Range("C1:C9").Style.Font.Bold = true;
+
+                #endregion
+
+                #region Títulos
+
+                for (int i = 0; i < tituloArray.Length; i++)
+                {
+                    var c = ws.Cell(11, i + 1);
+                    c.Value = tituloArray[i].titulo;
+                    c.Style.Fill.BackgroundColor = tituloArray[i].backgroundColor;
+                    c.Style.Font.FontColor = tituloArray[i].foreColor;
+                }
+
+                #endregion
+
+                #region Contenido + Totales
+
+                int row = 12;
+                int bloqueInicio = row;
+                bool primerItem = true;
+
+                foreach (var item in contenidoArray)
+                {
+                    int particion = Convert.ToInt32(props[0].GetValue(item) ?? 0);
+
+                    if (!primerItem && particion == 1)
+                    {
+                        InsertarFilaTotal(ws, row, bloqueInicio);
+                        row++;
+                        bloqueInicio = row;
+                    }
+
+                    int col = 1;
+                    foreach (var p in props)
+                        ws.Cell(row, col++).Value = p.GetValue(item);
+
+                    row++;
+                    primerItem = false;
+                }
+
+                InsertarFilaTotal(ws, row, bloqueInicio);
+
+                #endregion
+
+                #region Formatos
+
+                string formatoNumero = "#,##0.###";
+
+                for (int c = 11; c <= 19; c++)
+                    ws.Column(c).Style.NumberFormat.Format = formatoNumero;
+
+                ws.Columns(1, tituloArray.Length)
+                    .AdjustToContents(1, 80);
+
+                ws.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+                ws.PageSetup.PagesWide = 1;
+                ws.PageSetup.PagesTall = 0;
+                ws.PageSetup.SetRowsToRepeatAtTop(1, 11);
+
+                #endregion
+
+                workbook.SaveAs(rutaExcelTemp);
+            }
+
+            //------------------------------------------------
+            // EXCEL INTEROP → PDF
+            //------------------------------------------------
+            var excel = new Excel.Application
+            {
+                ScreenUpdating = false,
+                DisplayAlerts = false
+            };
+
+            Excel.Workbook wb = excel.Workbooks.Open(rutaExcelTemp);
+            Excel.Worksheet sheet = wb.ActiveSheet;
+
+            sheet.PageSetup.PrintArea = sheet.UsedRange.Address;
+            sheet.PageSetup.Zoom = false;
+            sheet.PageSetup.FitToPagesWide = 1;
+            sheet.PageSetup.FitToPagesTall = false;
+
+            //------------------------------------------------
+            // 👉 EXPORTAR PDF TEMPORAL
+            //------------------------------------------------
+            wb.ExportAsFixedFormat(
+                Excel.XlFixedFormatType.xlTypePDF,
+                rutaPdfTemp);
+
+            //------------------------------------------------
+            // 👉 CONTAR PÁGINAS REALES
+            //------------------------------------------------
+            int totalPaginas;
+
+            using (var reader = new iTextSharp.text.pdf.PdfReader(rutaPdfTemp))
+                totalPaginas = reader.NumberOfPages;
+
+            //------------------------------------------------
+            // 👉 HEADER FINAL
+            //------------------------------------------------
+            sheet.PageSetup.RightHeader =
+                $"Página &P de {totalPaginas}";
+
+            //------------------------------------------------
+            // 👉 EXPORTAR PDF FINAL
+            //------------------------------------------------
+            wb.ExportAsFixedFormat(
+                Excel.XlFixedFormatType.xlTypePDF,
+                rutaPdf);
+
+            //------------------------------------------------
+            // LIMPIEZA
+            //------------------------------------------------
+            wb.Close(false);
+            excel.Quit();
+
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(sheet);
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(wb);
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
+
+            File.Delete(rutaExcelTemp);
+            File.Delete(rutaPdfTemp);
+
+            return rutaPdf;
+        }
+
+        public static string GenerarKardexDirectoAPdf<T>(
+            string rutaPdf,
+            ExcelReportTitulo[] tituloArray,
+            List<T> contenidoArray,
+            TituloPdf titulopdf)
+        {
+            string carpeta = Path.GetDirectoryName(rutaPdf);
+            string rutaExcelTemp = Path.Combine(carpeta, Guid.NewGuid() + ".xlsx");
+            string rutaPdfTemp = Path.Combine(carpeta, Guid.NewGuid() + ".pdf");
+
+            var props = typeof(T).GetProperties();
+
+            //------------------------------------------------
+            // CREAR EXCEL
+            //------------------------------------------------
+            using (var workbook = new XLWorkbook(XLEventTracking.Disabled))
+            {
+                var ws = workbook.Worksheets.Add("Kardex");
+
+                #region ENCABEZADO
+
+                string[] labels =
+                {
+                    "PERIODO:","RUC:","RAZÓN SOCIAL:","ESTABLECIMIENTO:",
+                    "CÓDIGO EXISTENCIA:","TIPO:","DESCRIPCIÓN:",
+                    "UNIDAD MEDIDA:","MÉTODO VALUACIÓN:"
+                };
+
+                string[] values =
+                {
+                    titulopdf.Periodo,titulopdf.Ruc,titulopdf.RazonSocial,
+                    titulopdf.Establecimiento,titulopdf.CodigoExistencia,
+                    titulopdf.Tipo,titulopdf.TipoDescripcion,
+                    titulopdf.CodigoUnidadMedida,titulopdf.MetodoEvaluacion
+                };
+
+                for (int i = 0; i < labels.Length; i++)
+                {
+                    ws.Cell(i + 1, 3).Value = labels[i];
+                    ws.Cell(i + 1, 4).Value = values[i];
+                }
+
+                ws.Range("C1:C9").Style.Font.Bold = true;
+
+                #endregion
+
+                #region TITULOS
+
+                for (int i = 0; i < tituloArray.Length; i++)
+                {
+                    var c = ws.Cell(11, i + 1);
+                    c.Value = tituloArray[i].titulo;
+                    c.Style.Fill.BackgroundColor = tituloArray[i].backgroundColor;
+                    c.Style.Font.FontColor = tituloArray[i].foreColor;
+                }
+
+                #endregion
+
+                #region CONTENIDO + TOTALES SIN FORMULAS
+
+                int row = 12;
+                int bloqueInicio = row;
+                bool primerItem = true;
+
+                decimal totalGeneralK = 0;
+                decimal totalGeneralM = 0;
+                decimal totalGeneralN = 0;
+                decimal totalGeneralP = 0;
+
+                decimal saldoFinalQ = 0;
+                decimal saldoFinalS = 0;
+
+                decimal accK = 0, accM = 0, accN = 0, accP = 0, saldoFinalQM = 0, saldoFinalSM = 0;
+
+                foreach (var item in contenidoArray)
+                {
+                    int particion = Convert.ToInt32(props[0].GetValue(item) ?? 0);
+
+                    if (!primerItem && particion == 1)
+                    {
+                        InsertarTotalBloque(
+                            ws, row, bloqueInicio,
+                            ref accK, ref accM, ref accN, ref accP,
+                            ref totalGeneralK, ref totalGeneralM,
+                            ref totalGeneralN, ref totalGeneralP,
+                            ref saldoFinalQM,
+                            ref saldoFinalSM,
+                            ref saldoFinalQ,
+                            ref saldoFinalS);
+
+                        row++;
+                        bloqueInicio = row;
+                    }
+
+                    int col = 1;
+                    foreach (var p in props)
+                    {
+                        var val = p.GetValue(item);
+                        ws.Cell(row, col).Value = val;
+
+                        if (col == 11) accK += ToDecimal(val);
+                        if (col == 13) accM += ToDecimal(val);
+                        if (col == 14) accN += ToDecimal(val);
+                        if (col == 16) accP += ToDecimal(val);
+
+                        if (col == 17) saldoFinalQM += ToDecimal(val);
+                        if (col == 19) saldoFinalSM += ToDecimal(val);
+
+                        col++;
+                    }
+
+                    row++;
+                    primerItem = false;
+                }
+
+                // cerrar último bloque
+                InsertarTotalBloque(
+                   ws, row, bloqueInicio,
+                   ref accK, ref accM, ref accN, ref accP,
+                   ref totalGeneralK, ref totalGeneralM,
+                   ref totalGeneralN, ref totalGeneralP,
+                   ref saldoFinalQM,
+                   ref saldoFinalSM,
+                   ref saldoFinalQ,
+                   ref saldoFinalS);
+
+                row++;
+
+                //------------------------------------------------
+                // TOTAL GENERAL
+                //------------------------------------------------
+
+                ws.Cell(row, 2).Value = "TOTAL GENERAL";
+
+                ws.Cell(row, 11).Value = totalGeneralK;
+                ws.Cell(row, 13).Value = totalGeneralM;
+                ws.Cell(row, 14).Value = totalGeneralN;
+                ws.Cell(row, 16).Value = totalGeneralP;
+
+                ws.Cell(row, 17).Value = totalGeneralK - totalGeneralN;
+                ws.Cell(row, 19).Value = totalGeneralM - totalGeneralP;
+
+                ws.Range($"A{row}:S{row}").Style.Fill.BackgroundColor = XLColor.DarkBlue;
+                ws.Range($"A{row}:S{row}").Style.Font.FontColor = XLColor.White;
+                ws.Range($"A{row}:S{row}").Style.Font.Bold = true;
+
+                #endregion
+
+                #region FORMATO
+
+                string fmt = "#,##0.###";
+
+                for (int c = 11; c <= 19; c++)
+                    ws.Column(c).Style.NumberFormat.Format = fmt;
+
+                ws.Columns(1, tituloArray.Length).AdjustToContents(1, 80);
+
+                ws.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+                ws.PageSetup.PagesWide = 1;
+                ws.PageSetup.PagesTall = 0;
+                ws.PageSetup.SetRowsToRepeatAtTop(1, 11);
+
+                // 👉 ÚLTIMO PASO VISUAL
+                ws.Columns(11, 19).AdjustToContents(1, 80);
+
+                #endregion
+
+                workbook.SaveAs(rutaExcelTemp);
+            }
+
+            //------------------------------------------------
+            // EXPORTAR PDF CON CONTEO REAL
+            //------------------------------------------------
+
+            var excel = new Excel.Application
+            {
+                ScreenUpdating = false,
+                DisplayAlerts = false
+            };
+
+            var wb = excel.Workbooks.Open(rutaExcelTemp);
+            var sheet = wb.ActiveSheet;
+
+            sheet.PageSetup.PrintArea = sheet.UsedRange.Address;
+            sheet.PageSetup.Zoom = false;
+            sheet.PageSetup.FitToPagesWide = 1;
+            sheet.PageSetup.FitToPagesTall = false;
+
+            wb.ExportAsFixedFormat(Excel.XlFixedFormatType.xlTypePDF, rutaPdfTemp);
+
+            int totalPaginas;
+            using (var reader = new PdfReader(rutaPdfTemp))
+                totalPaginas = reader.NumberOfPages;
+
+            sheet.PageSetup.RightHeader = $"Página &P de {totalPaginas}";
+
+            wb.ExportAsFixedFormat(Excel.XlFixedFormatType.xlTypePDF, rutaPdf);
+
+            wb.Close(false);
+            excel.Quit();
+
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(sheet);
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(wb);
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
+
+            File.Delete(rutaExcelTemp);
+            File.Delete(rutaPdfTemp);
+
+            return rutaPdf;
+        }
+
+        static void InsertarTotalBloque(
+            IXLWorksheet ws,
+            int row,
+            int inicio,
+            ref decimal accK,
+            ref decimal accM,
+            ref decimal accN,
+            ref decimal accP,
+            ref decimal totalK,
+            ref decimal totalM,
+            ref decimal totalN,
+            ref decimal totalP,
+            ref decimal saldoQ,
+            ref decimal saldoS,
+            ref decimal saldoFinalQ,
+            ref decimal saldoFinalS)
+                {
+                    ws.Cell(row, 2).Value = "TOTAL";
+
+                    ws.Cell(row, 11).Value = accK;
+                    ws.Cell(row, 13).Value = accM;
+                    ws.Cell(row, 14).Value = accN;
+                    ws.Cell(row, 16).Value = accP;
+
+                    ws.Cell(row, 17).Value = accK - accN;//saldoQ;
+                    ws.Cell(row, 19).Value = accM - accP;//saldoS;
+
+                    ws.Range($"A{row}:S{row}")
+                        .Style.Fill.BackgroundColor = XLColor.LightBlue;
+
+                    // acumuladores generales
+
+                    totalK += accK;
+                    totalM += accM;
+                    totalN += accN;
+                    totalP += accP;
+
+                    // saldo final real
+                    saldoFinalQ += saldoQ;
+                    saldoFinalS += saldoS;
+
+                    accK = accM = accN = accP = saldoQ = saldoS = 0;
+        }
+
+
+        static decimal ToDecimal(object val)
+        {
+            if (val == null) return 0;
+            decimal.TryParse(val.ToString(), out decimal d);
+            return d;
+        }
+
+
+        //------------------------------------------------
+        // Helper — insertar fila total
+        //------------------------------------------------
+        static void InsertarFilaTotal(IXLWorksheet ws, int row, int inicio)
+        {
+            ws.Cell(row, 2).Value = "TOTAL";
+
+            ws.Cell(row, 11).FormulaA1 = $"SUM(K{inicio}:K{row - 1})";
+            ws.Cell(row, 13).FormulaA1 = $"SUM(M{inicio}:M{row - 1})";
+            ws.Cell(row, 14).FormulaA1 = $"SUM(N{inicio}:N{row - 1})";
+            ws.Cell(row, 16).FormulaA1 = $"SUM(P{inicio}:P{row - 1})";
+
+            ws.Cell(row, 17).FormulaA1 = $"Q{row - 1}";
+            ws.Cell(row, 19).FormulaA1 = $"S{row - 1}";
+
+            ws.Range($"A{row}:S{row}")
+                .Style.Fill.BackgroundColor = XLColor.LightBlue;
+        }
+
+
+
+        public static void GetExcelReportKardexValorizado<T>(string rutaArchivo, ExcelReportTitulo[] tituloArray, List<T> contenidoArray, string periodo, string nivel)
         {
             try
             {
@@ -321,7 +1656,7 @@ namespace SoftCotton.Util
 
                     int inicioFilas = 5;
 
-                    worksheet.Cell(inicioFilas, 23).Value = "ENTRADA S/.";  
+                    worksheet.Cell(inicioFilas, 23).Value = "ENTRADA S/.";
                     worksheet.Cell(inicioFilas, 23).Style.Fill.BackgroundColor = tituloArray[23].backgroundColor;
                     worksheet.Cell(inicioFilas, 23).Style.Font.FontColor = tituloArray[23].foreColor;
                     worksheet.Cell(inicioFilas, 23).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
@@ -467,7 +1802,7 @@ namespace SoftCotton.Util
                     workbook.SaveAs(rutaArchivo);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.ToString());
             }
@@ -484,7 +1819,7 @@ namespace SoftCotton.Util
                 var worksheet = workbook.Worksheets.Add("Hoja 1");
 
                 worksheet.SheetView.SetView(XLSheetViewOptions.PageBreakPreview);
-                
+
                 worksheet.Range("A1:Q200").Style.Font.FontSize = 15;
                 worksheet.ShowGridLines = false;
 
@@ -505,8 +1840,8 @@ namespace SoftCotton.Util
                 worksheet.Column(15).Width = 20;    // O
 
                 worksheet.Row(6).Height = 38;
-                worksheet.Row(8).Height = 2;        
-                worksheet.Row(13).Height = 20;       
+                worksheet.Row(8).Height = 2;
+                worksheet.Row(13).Height = 20;
 
                 worksheet.Range("D10:H10").Row(1).Merge();
                 worksheet.Range("J19:K19").Row(1).Merge();
@@ -525,7 +1860,7 @@ namespace SoftCotton.Util
                 {
                     worksheet.Cell(11, 3).Value = cabecera.puntoPartida;
                 }
-                
+
                 if (cabecera.puntoLlegada.Length > 52)
                 {
                     worksheet.Cell(11, 11).Value = cabecera.puntoLlegada.Substring(0, 52);
@@ -554,7 +1889,7 @@ namespace SoftCotton.Util
 
                 worksheet.Cell(19, 10).Style.NumberFormat.Format = "@";
                 worksheet.Cell(19, 10).Value = cabecera.transCodigoPC;
-                
+
                 // DETALLE
                 index = 26;
                 string primer_valor = "";
@@ -562,7 +1897,7 @@ namespace SoftCotton.Util
                 {
                     worksheet.Cell(index, 1).Value = item.codigoProducto.Trim();
                     worksheet.Cell(index, 4).Value = item.producto.Trim();
-                    
+
                     worksheet.Cell(index, 12).Value = item.numeroPartida;
 
                     worksheet.Cell(index, 14).Value = item.cantidadIngresada;
@@ -577,7 +1912,7 @@ namespace SoftCotton.Util
                     cantidadTotal += item.cantidadIngresada;
                 }
 
-                worksheet.Cell(index + 2, 14).Value = Math.Round(cantidadTotal,2);
+                worksheet.Cell(index + 2, 14).Value = Math.Round(cantidadTotal, 2);
                 worksheet.Cell(index + 2, 14).Style.NumberFormat.Format = "#,##0.000";
 
                 int finalColumnPrint = (index + 10);
@@ -620,7 +1955,7 @@ namespace SoftCotton.Util
                 for (int i = 0; i < (rango.Length / 2); i++)
                 {
                     var ccc = rango;
-                    xlWorkSheet.get_Range(rango[i, 0]).NumberFormat = rango[i, 1];                   
+                    xlWorkSheet.get_Range(rango[i, 0]).NumberFormat = rango[i, 1];
                 }
             }
 

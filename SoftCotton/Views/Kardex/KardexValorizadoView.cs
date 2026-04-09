@@ -104,6 +104,8 @@ namespace SoftCotton.Views.Kardex
 
                 dgvListado.Rows[index].Cells["cod"].Value = item.cod;
                 dgvListado.Rows[index].Cells["Nombre_Articulo"].Value = item.Nombre_Articulo;
+                dgvListado.Rows[index].Cells["DgvPedidoColor"].Value = item.PedidoColor;
+
                 dgvListado.Rows[index].Cells["color"].Value = item.color;
                 dgvListado.Rows[index].Cells["Fecha_Guia"].Value = item.Fecha_Guia;
                 dgvListado.Rows[index].Cells["serie"].Value = item.serie;

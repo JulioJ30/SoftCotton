@@ -13,6 +13,7 @@ using SoftCotton.Reports.RemittanceGuide.ExportGuide;
 
 using Newtonsoft.Json;
 using System.Text;
+using SoftCotton.Views.Maintenance;
 
 
 
@@ -65,6 +66,8 @@ namespace SoftCotton.Views.ReferralGuide
                 _grCabParam.idConstanciaInscripcion = Convert.ToInt32(cboConstanciaInscripcion.SelectedValue.ToString());
                 _grCabParam.idNumeroLicenciaConducir = Convert.ToInt32(cboLicenciaConducir.SelectedValue.ToString());
                 _grCabParam.usuarioReg = UserApplication.USUARIO;
+                _grCabParam.FacturaReferencia = txtFacturaReferencia.Text.Trim();
+
                 if (chkM1.Checked)
                 {
                     _grCabParam.idMotivoTraslado = 1;
@@ -212,6 +215,14 @@ namespace SoftCotton.Views.ReferralGuide
                     _grDetParam.cantidadIngresada = Convert.ToDecimal(row.Cells["dgvDecCantidad"].Value);
                     _grDetParam.codUM = row.Cells["dgvTxtUnidadMedida"].Value.ToString();
                     _grDetParam.OP = row.Cells["OP"].Value.ToString();
+                    if (row.Cells["DgvIdPedidoColor"].Value == null)
+                    {
+                        _grDetParam.IdPedidoColor = null;
+                    }
+                    else
+                    {
+                        _grDetParam.IdPedidoColor = Convert.ToInt32(row.Cells["DgvIdPedidoColor"].Value);
+                    }
 
 
                     respuestaDetalle = _referralGuideBL.SetGRDetalleExportacion(_grDetParam);
@@ -576,6 +587,8 @@ namespace SoftCotton.Views.ReferralGuide
                 txtObservaciones.Text = grCab.observaciones;
                 txtOtros.Text = grCab.otrosMotivoTraslado;
                 txtDamDua.Text = grCab.DamDs;
+                txtFacturaReferencia.Text = grCab.FacturaReferencia;
+
                 //txtDamDs.Text = grCab.DamDs;
 
                 switch (grCab.idMotivoTraslado)
@@ -629,6 +642,7 @@ namespace SoftCotton.Views.ReferralGuide
                 dgvGRDetalle.Rows[index].Cells["dgvTxtUnidadMedida"].Value = item.codUM;
                 dgvGRDetalle.Rows[index].Cells["Secuencia"].Value = item.secuencia;
                 dgvGRDetalle.Rows[index].Cells["OP"].Value = item.OP;
+                dgvGRDetalle.Rows[index].Cells["DgvIdPedidoColor"].Value = item.IdPedidoColor;
 
                 total_cantidad = total_cantidad + item.cantidadIngresada;
             }
@@ -830,35 +844,29 @@ namespace SoftCotton.Views.ReferralGuide
 
         private void dgvGRDetalle_KeyDown(object sender, KeyEventArgs e)
         {
-            int aa = Convert.ToInt32(dgvGRDetalle.CurrentRow.Cells["dgvDecCantidad"].Value);
+            if (e.Control && e.KeyCode == Keys.B)
+            {
 
-
-            //if (e.Control && e.KeyCode == Keys.G)
-            //{
-            //    GuardarCambios();
-            //}
-            //if (!e.Control || e.KeyCode != Keys.D || dgvGRDetalle.CurrentRow == null)
-            //{
-            //    return;
-            //}
-            //DialogResult resultadoMensaje = ResponseMessage.MessageQuestion("¿Esta seguro en eliminar el item seleccionado?");
-            //if (resultadoMensaje == DialogResult.OK)
-            //{
-            //    _grDetParam = new SetGRDetExportacionParam();
-            //    _grDetParam.opcion = 2;
-            //    _grDetParam.idEmpresa = Empresa.ID_EMPRESA;
-            //    _grDetParam.serie = txtSerie.Text.Trim();
-            //    _grDetParam.numero = txtNumero.Text.Trim();
-            //    _grDetParam.secuencia = Convert.ToInt32(dgvGRDetalle.CurrentRow.Cells["Secuencia"].Value);
-            //    _grDetParam.ruc = txtRuc.Text.Trim();
-            //    Response respuesta = _referralGuideBL.SetGRDetalleExportacion(_grDetParam);
-            //    if (respuesta.idResponse == 0)
-            //    {
-            //        ResponseMessage.Message(respuesta.messageResponse, respuesta.typeMessage);
-            //    }
-            //    dgvGRDetalle.Rows.Clear();
-            //    ListarDetalle(Empresa.ID_EMPRESA, _grDetParam.serie, _grDetParam.numero, _grDetParam.ruc);
-            //}
+                // Verificamos que la celda actual no sea nula
+                if (dgvGRDetalle.CurrentCell != null)
+                {
+                    // Validamos que la columna actual sea "OP"
+                    if (dgvGRDetalle.CurrentCell.OwningColumn.Name == "OP")
+                    {
+                        BuscarPedidosColorView buscarPedidosColorView = new BuscarPedidosColorView();
+                        buscarPedidosColorView.ShowDialog();
+                        if (buscarPedidosColorView.pedidoParam != null && buscarPedidosColorView.pedidoParam != "")
+                        {
+                            dgvGRDetalle.CurrentCell.Value = buscarPedidosColorView.pedidoParam;
+                            dgvGRDetalle.Rows[dgvGRDetalle.CurrentCell.RowIndex].Cells["DgvIdPedidoColor"].Value = buscarPedidosColorView.idPedidoColorParam;
+                        }
+                        //if (buscarPedidosColorView.codPedido != null)
+                        //{
+                        //    dgvGRDetalle.CurrentCell.Value = buscarPedidosColorView.codPedido;
+                        //}
+                    }
+                }
+            }
         }
 
 
@@ -1323,11 +1331,16 @@ namespace SoftCotton.Views.ReferralGuide
 
             // OBTENEMOS ITEMS
             List<Items> itemsAgregar = new List<Items>();
+            int SERIE = 0;
             foreach (var item in grDetsGenerales)
             {
+                SERIE++;
                 Items itemNew = new Items();
+                
+                //itemNew.codigo_dam = grCabGenerales.DamDs;
+                //itemNew.codigo_dam = SERIE.ToString("D4")+"/"+grCabGenerales.DamDs;
+                itemNew.codigo_dam = "1/" + grCabGenerales.DamDs;
 
-                itemNew.codigo_dam = grCabGenerales.DamDs;
                 itemNew.unidad_de_medida = (grCabGenerales.codMotivoTrasladoSunat == "08" || grCabGenerales.codMotivoTrasladoSunat == "09") ? item.codUmDam : item.codUM;
 
                 itemNew.codigo = item.codigoProducto;

@@ -18,6 +18,11 @@ namespace SoftCotton.Views.Shared
         public string provCliente = "";
         public string direccion = "";
 
+        public string telefono = "";
+        public string contacto = "";
+        public string email = "";
+
+
         public BuscarProvClienteView()
         {
             InitializeComponent();
@@ -43,6 +48,11 @@ namespace SoftCotton.Views.Shared
                 dgvProvCliente.Rows[index].Cells["ctxtCodigo"].Value = item.codigo;
                 dgvProvCliente.Rows[index].Cells["ctxtRazonSocial"].Value = item.razonSocial;
                 dgvProvCliente.Rows[index].Cells["ctxtDireccion"].Value = item.direccion;
+
+                dgvProvCliente.Rows[index].Cells["ctxtTelefono"].Value = item.telefono;
+                dgvProvCliente.Rows[index].Cells["ctxtContacto"].Value = item.contacto;
+                dgvProvCliente.Rows[index].Cells["ctxtEmail"].Value = item.email;
+
             }
 
             if (dgvProvCliente.Rows.Count > 0)
@@ -74,6 +84,11 @@ namespace SoftCotton.Views.Shared
                     codProvCliente = dgr.Cells["ctxtCodigo"].Value.ToString().Trim();
                     provCliente = dgr.Cells["ctxtRazonSocial"].Value.ToString().Trim();
                     direccion = dgr.Cells["ctxtDireccion"].Value.ToString().Trim();
+
+                    telefono = dgr.Cells["ctxtTelefono"].Value.ToString().Trim();
+                    contacto = dgr.Cells["ctxtContacto"].Value.ToString().Trim();
+                    email = dgr.Cells["ctxtEmail"].Value.ToString().Trim();
+
 
                     this.Hide();
                 }

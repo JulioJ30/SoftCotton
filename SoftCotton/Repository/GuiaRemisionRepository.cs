@@ -8,6 +8,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using Dapper;
+using Newtonsoft.Json;
+using System.Security.Cryptography;
+using SoftCotton.Model.Transformacion;
 
 
 namespace SoftCotton.Repository
@@ -53,7 +56,46 @@ namespace SoftCotton.Repository
             }
             return motivos;
         }
-        public GetGR2_CabeceraXCod Get2_CabeceraXCod(int idEmpresa, string serie, string numero, string tipoorden)
+
+
+        public IEnumerable<DetalleTransformacionEntity> GetTransformacionDetPorFiltros(DetalleTransformacionFiltroPorBusquedaEntity parametro)
+        {
+
+            using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+            {
+
+                var sp_parametros = new DynamicParameters();
+                sp_parametros.Add("@IdSencuenciaDet", parametro.IdSencuenciaDet, DbType.Int32, ParameterDirection.Input);
+                sp_parametros.Add("@Serie", parametro.Serie, DbType.String, ParameterDirection.Input);
+                sp_parametros.Add("@Numero", parametro.Numero, DbType.Int32, ParameterDirection.Input);
+                sp_parametros.Add("@Proveedor", parametro.Proveedor, DbType.String, ParameterDirection.Input);
+
+                return sqlConnection.Query<DetalleTransformacionEntity>("uspGetTransformacionDetPorFiltros",
+                                                    sp_parametros,
+                                                    commandType: CommandType.StoredProcedure);
+            }
+
+        }
+
+        public IEnumerable<DetalleTransformacionEntity> GetTransformacionDetPorFiltrosSerieNumeroProveedor(DetalleTransformacionFiltroPorBusquedaEntity parametro)
+        {
+
+            using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+            {
+
+                var sp_parametros = new DynamicParameters();
+                sp_parametros.Add("@Serie", parametro.Serie, DbType.String, ParameterDirection.Input);
+                sp_parametros.Add("@Numero", parametro.Numero, DbType.Int32, ParameterDirection.Input);
+                sp_parametros.Add("@Proveedor", parametro.Proveedor, DbType.String, ParameterDirection.Input);
+
+                return sqlConnection.Query<DetalleTransformacionEntity>("uspGetTransformacionDetPorFiltrosSerieNumeroProveedor",
+                                                    sp_parametros,
+                                                    commandType: CommandType.StoredProcedure);
+            }
+
+        }
+
+        public GetGR2_CabeceraXCod Get2_CabeceraXCod(int idEmpresa, string serie, string numero, string tipoorden,string rucdestino)
         {
 
             GetGR2_CabeceraXCod grCab = new GetGR2_CabeceraXCod();
@@ -65,6 +107,7 @@ namespace SoftCotton.Repository
                 sp_parametros.Add("@filtroTxt1", serie, DbType.String, ParameterDirection.Input);
                 sp_parametros.Add("@filtroTxt2", numero, DbType.String, ParameterDirection.Input);
                 sp_parametros.Add("@filtroTxt3", tipoorden, DbType.String, ParameterDirection.Input);
+                sp_parametros.Add("@filtroTxt4", rucdestino, DbType.String, ParameterDirection.Input);
                 sp_parametros.Add("@filtroInt1", idEmpresa, DbType.Int32, ParameterDirection.Input);
                 sp_parametros.Add("@filtroInt2", 0, DbType.Int32, ParameterDirection.Input);
 
@@ -130,7 +173,7 @@ namespace SoftCotton.Repository
             //}
             //return grCab;
         }
-        public List<GetGR3_DetalleXCod> Get3_DetalleXCod(int idEmpresa, string serie, string numero, string tipoOrden)
+        public List<GetGR3_DetalleXCod> Get3_DetalleXCod(int idEmpresa, string serie, string numero, string tipoOrden,int opcion = 3,string tipoMovimiento = null,string rucdestino = null)
         {
             List<GetGR3_DetalleXCod> grDets = new List<GetGR3_DetalleXCod>();
             //GetGR3_DetalleXCod grDet;
@@ -140,10 +183,13 @@ namespace SoftCotton.Repository
             {
 
                 var sp_parametros = new DynamicParameters();
-                sp_parametros.Add("@opcion", 3, DbType.Int32, ParameterDirection.Input);
+                sp_parametros.Add("@opcion", opcion, DbType.Int32, ParameterDirection.Input);
                 sp_parametros.Add("@filtroTxt1", serie, DbType.String, ParameterDirection.Input);
                 sp_parametros.Add("@filtroTxt2", numero, DbType.String, ParameterDirection.Input);
                 sp_parametros.Add("@filtroTxt3", tipoOrden, DbType.String, ParameterDirection.Input);
+                sp_parametros.Add("@filtroTxt4", tipoMovimiento, DbType.String, ParameterDirection.Input);
+                sp_parametros.Add("@filtroTxt5", rucdestino, DbType.String, ParameterDirection.Input);
+
                 sp_parametros.Add("@filtroInt1", idEmpresa, DbType.Int32, ParameterDirection.Input);
                 sp_parametros.Add("@filtroInt2", 0, DbType.Int32, ParameterDirection.Input);
 
@@ -308,6 +354,7 @@ namespace SoftCotton.Repository
                             grDet.tienegrfact = Convert.ToInt32(reader["tienegrfact"].ToString());
                             grDet.cantidadEntrada = Convert.ToDecimal(reader["cantidadEntrada"].ToString());
                             grDet.cantidadSalida = Convert.ToDecimal(reader["cantidadSalida"].ToString());
+                            grDet.obs5 = reader["obs5"].ToString();
 
                             grDets.Add(grDet);
                         }
@@ -399,6 +446,12 @@ namespace SoftCotton.Repository
                             rpte.fnumeroNotaCredito = reader["fnumeroNotaCredito"].ToString();
                             rpte.fobservacionNotaCredito = reader["fobservacionNotaCredito"].ToString();
                             rpte.Op = reader["Op"].ToString();
+
+                            rpte.OpPedido = reader["OpPedido"].ToString();
+                            rpte.OpColor = reader["OpColor"].ToString();
+                            rpte.OpEstilo = reader["OpEstilo"].ToString();
+                            rpte.OpPrograma = reader["OpPrograma"].ToString();
+
 
                             rptes.Add(rpte);
                         }
@@ -537,6 +590,19 @@ namespace SoftCotton.Repository
 
                     sqlCommand.Parameters.Add("@codTipoTransporte", SqlDbType.Char, 2).Value = parametros.codTipoTransporte;
 
+                    sqlCommand.Parameters.Add("@IdUsuario", SqlDbType.Int, 1).Value = parametros.IdUsuario;
+
+
+                    sqlCommand.Parameters.Add("@IdMovimientoCabecera", SqlDbType.Int, 1).Value = parametros.IdMovimientoCabecera;
+
+                    string JsonDetalle = JsonConvert.SerializeObject(parametros.ListDetalle, Formatting.Indented);
+                    sqlCommand.Parameters.Add("@JsonDetalle", SqlDbType.NVarChar).Value = JsonDetalle;
+
+                    // CODIGO NIVEL DE TELA
+                    if (parametros.ListDetalle.Where(obj => obj.CodigoNivel == "03").ToList().Count > 0)
+                    {
+                        sqlCommand.Parameters.Add("@CodigoNivel", SqlDbType.VarChar, 500).Value = "03";
+                    }
 
 
 
@@ -551,6 +617,8 @@ namespace SoftCotton.Repository
                             response.idResponse = Convert.ToInt32(reader["idResponse"]);
                             response.messageResponse = reader["messageResponse"].ToString();
                             response.typeMessage = reader["typeMessage"].ToString();
+                            response.id = reader["id"].ToString();
+
                         }
                     }
 
@@ -592,6 +660,13 @@ namespace SoftCotton.Repository
 
                     sqlCommand.Parameters.Add("@tipoOrden", SqlDbType.VarChar).Value = parametros.tipoOrden;
                     sqlCommand.Parameters.Add("@OP", SqlDbType.VarChar).Value = parametros.OP;
+
+
+                    sqlCommand.Parameters.Add("@IdPedidoColor", SqlDbType.Int).Value = parametros.IdPedidoColor;
+                    sqlCommand.Parameters.Add("@PartidaProveedor", SqlDbType.VarChar).Value = parametros.PartidaProveedor;
+                    sqlCommand.Parameters.Add("@destCodigoPC", SqlDbType.VarChar).Value = parametros.destCodigoPC;
+                    sqlCommand.Parameters.Add("@Comentario", SqlDbType.VarChar).Value = parametros.Comentario;
+                    sqlCommand.Parameters.Add("@PrecioGr", SqlDbType.VarChar).Value = parametros.PrecioGr;
 
 
                     sqlConnection.Open();

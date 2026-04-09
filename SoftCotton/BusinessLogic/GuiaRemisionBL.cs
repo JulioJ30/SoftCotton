@@ -22,13 +22,13 @@ namespace SoftCotton.BusinessLogic
         {
             return _guiaRemisionRepository.Get1_Motivo();
         }
-        public GetGR2_CabeceraXCod Get2_CabeceraXCod(int idEmpresa, string serie, string numero, string tipoorden)
+        public GetGR2_CabeceraXCod Get2_CabeceraXCod(int idEmpresa, string serie, string numero, string tipoorden,string rucdestino)
         {
-            return _guiaRemisionRepository.Get2_CabeceraXCod(idEmpresa, serie, numero, tipoorden);
+            return _guiaRemisionRepository.Get2_CabeceraXCod(idEmpresa, serie, numero, tipoorden, rucdestino);
         }
-        public List<GetGR3_DetalleXCod> Get3_DetalleXCod(int idEmpresa, string serie, string numero, string tipoOrden)
+        public List<GetGR3_DetalleXCod> Get3_DetalleXCod(int idEmpresa, string serie, string numero, string tipoOrden,int opcion = 3,string tipoMovimiento= null,string rucdestino = null)
         {
-            return _guiaRemisionRepository.Get3_DetalleXCod(idEmpresa, serie, numero, tipoOrden);
+            return _guiaRemisionRepository.Get3_DetalleXCod(idEmpresa, serie, numero, tipoOrden,opcion, tipoMovimiento,rucdestino);
         }
         public List<GetGR4_TipoCptes> Get4_TipoCptes()
         {

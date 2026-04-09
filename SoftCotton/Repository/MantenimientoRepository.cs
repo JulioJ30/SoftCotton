@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using Dapper;
+using SoftCotton.Model.Movimientos;
 //using SoftCotton.Model.DispatchControl;
 
 
@@ -14,9 +15,104 @@ namespace SoftCotton.Repository
     public class MantenimientoRepository
     {
 
+        public IEnumerable<TemporadasEntidad> GetTemporadas(bool? FlgActivo = null)
+        {
+            using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+            {
+
+                var sp_parametros = new DynamicParameters();
+                sp_parametros.Add("@FlgActivo", FlgActivo, DbType.Boolean, ParameterDirection.Input);
+
+                return sqlConnection.Query<TemporadasEntidad>("uspGetTemporadasPorEstado",
+                                                    sp_parametros,
+                                                    commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public bool SetTemporadas(TemporadasEntidad Parametro, out  string mensaje)
+        {
+
+            bool retornar = false;
+            try
+            {
+                using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+                {
+
+                    var sp_parametros = new DynamicParameters();
+                    sp_parametros.Add("@IdTemporada", Parametro.IdTemporada, DbType.Int32, ParameterDirection.Input);
+                    sp_parametros.Add("@Anio", Parametro.Anio, DbType.Int32, ParameterDirection.Input);
+                    sp_parametros.Add("@Temporada", Parametro.Temporada, DbType.String, ParameterDirection.Input);
+                    sp_parametros.Add("@TemporadaDescripcion", Parametro.TemporadaDescripcion, DbType.String, ParameterDirection.Input);
+                    sp_parametros.Add("@IdUsuario", UserApplication.ID_USUARIO, DbType.Int32, ParameterDirection.Input);
+                    sp_parametros.Add("@Estacion", Environment.MachineName, DbType.String, ParameterDirection.Input);
+
+                    sqlConnection.Execute("uspSetTemporadas",
+                                                        sp_parametros,
+                                                        commandType: CommandType.StoredProcedure);
+
+                    retornar = true;
+                    mensaje = "Realizado correctamente";
+                }
+            }
+            catch(Exception ex)
+            {
+                mensaje = ex.Message;
+                retornar = false;
+            }
+
+            return retornar;
+        }
+
+        public bool SetTemporadasCambioEstado(int IdTemporada, out string mensaje)
+        {
+
+            bool retornar = false;
+            try
+            {
+                using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+                {
+
+                    var sp_parametros = new DynamicParameters();
+                    sp_parametros.Add("@IdTemporada", IdTemporada, DbType.Int32, ParameterDirection.Input);
+                    sp_parametros.Add("@IdUsuario", UserApplication.ID_USUARIO, DbType.Int32, ParameterDirection.Input);
+                    sp_parametros.Add("@Estacion", Environment.MachineName, DbType.String, ParameterDirection.Input);
+
+                    sqlConnection.Execute("uspSetTemporadasCambioEstado",
+                                                        sp_parametros,
+                                                        commandType: CommandType.StoredProcedure);
+
+                    retornar = true;
+                    mensaje = "Realizado correctamente";
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+                retornar = false;
+            }
+
+            return retornar;
+        }
+
+        public IEnumerable<AuditoriasEntidad> GetAuditorias(string Tabla,string Filtro)
+        {
+            //GetGR2_CabeceraXCod grCab = new GetGR2_CabeceraXCod();
+            using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+            {
+
+                var sp_parametros = new DynamicParameters();
+                sp_parametros.Add("@Tabla", Tabla, DbType.String, ParameterDirection.Input);
+                sp_parametros.Add("@Filtro", Filtro, DbType.String, ParameterDirection.Input);
+
+
+                return sqlConnection.Query<AuditoriasEntidad>("uspGetAuditorias",
+                                                    sp_parametros,
+                                                    commandType: CommandType.StoredProcedure);
+            }
+        }
 
         // ESTILOS
-        public IEnumerable<GetMant53_Estilos> GetEstilos()
+        public IEnumerable<GetMant53_Estilos> GetEstilos(string filtro)
         {
             //GetGR2_CabeceraXCod grCab = new GetGR2_CabeceraXCod();
             using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
@@ -24,6 +120,8 @@ namespace SoftCotton.Repository
 
                 var sp_parametros = new DynamicParameters();
                 sp_parametros.Add("@opcion", 53, DbType.Int32, ParameterDirection.Input);
+                sp_parametros.Add("@filtroTxt1", filtro, DbType.String, ParameterDirection.Input);
+
 
                 return sqlConnection.Query<GetMant53_Estilos>("uspGetMantenimiento",
                                                     sp_parametros,
@@ -32,7 +130,7 @@ namespace SoftCotton.Repository
         }
 
         // PROGRMAS
-        public IEnumerable<GetMant54_Programas> GetProgramas()
+        public IEnumerable<GetMant54_Programas> GetProgramas(int estado = 1,string programa = "")
         {
             //GetGR2_CabeceraXCod grCab = new GetGR2_CabeceraXCod();
             using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
@@ -40,6 +138,9 @@ namespace SoftCotton.Repository
 
                 var sp_parametros = new DynamicParameters();
                 sp_parametros.Add("@opcion", 54, DbType.Int32, ParameterDirection.Input);
+                sp_parametros.Add("@filtroInt1", estado, DbType.Int32, ParameterDirection.Input);
+                sp_parametros.Add("@filtroTxt1", programa, DbType.String, ParameterDirection.Input);
+
 
                 return sqlConnection.Query<GetMant54_Programas>("uspGetMantenimiento",
                                                     sp_parametros,
@@ -117,6 +218,28 @@ namespace SoftCotton.Repository
                     //sp_parametros.Add("@filtroTxt1", codigo, DbType.String, ParameterDirection.Input);
 
                     return sqlConnection.Query<GetMant21_Tallas>("uspGetMantenimiento",
+                                                        sp_parametros,
+                                                        commandType: CommandType.StoredProcedure);
+                }
+            }
+            //return tallas;
+        }
+
+        // MTALLAS MATRIZ
+        public IEnumerable<GetMant21_TallasNuevo> Get76_Tallas(string filtro = null)
+        {
+            //List<GetMant21_Tallas> tallas = new List<GetMant21_Tallas>();
+            //GetMant21_Tallas talla;
+
+            using (var sqlConnection = ConnectionBD.GetConnection())
+            {
+                using (var sqlCommand = sqlConnection.CreateCommand())
+                {
+                    var sp_parametros = new DynamicParameters();
+                    sp_parametros.Add("@opcion", 76, DbType.Int32, ParameterDirection.Input);
+                    sp_parametros.Add("@filtroTxt1", filtro, DbType.String, ParameterDirection.Input);
+
+                    return sqlConnection.Query<GetMant21_TallasNuevo>("uspGetMantenimiento",
                                                         sp_parametros,
                                                         commandType: CommandType.StoredProcedure);
                 }
@@ -1539,7 +1662,7 @@ namespace SoftCotton.Repository
                     sqlCommand.Parameters.Add("@apellido2", SqlDbType.VarChar, 20).Value = parametros.apellido2;
                     sqlCommand.Parameters.Add("@codTipoPC", SqlDbType.VarChar, 1).Value = parametros.codTipoPC;
                     sqlCommand.Parameters.Add("@telefono", SqlDbType.VarChar, 11).Value = parametros.telefono;
-                    sqlCommand.Parameters.Add("@direccion", SqlDbType.VarChar, 40).Value = parametros.direccion;
+                    sqlCommand.Parameters.Add("@direccion", SqlDbType.VarChar, 5000).Value = parametros.direccion;
                     sqlCommand.Parameters.Add("@contacto", SqlDbType.VarChar, 100).Value = parametros.contacto;
                     sqlCommand.Parameters.Add("@email", SqlDbType.VarChar, 100).Value = parametros.email;
 
@@ -2525,6 +2648,23 @@ namespace SoftCotton.Repository
             }
         }
 
+        public IEnumerable<GetMant73_TiposMovimientos> getTiposMovimientos(string filtro = "")
+        {
+            //GetGR2_CabeceraXCod grCab = new GetGR2_CabeceraXCod();
+            using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+            {
+
+                var sp_parametros = new DynamicParameters();
+                sp_parametros.Add("@opcion", 73, DbType.Int32, ParameterDirection.Input);
+                sp_parametros.Add("@filtroTxt1", filtro, DbType.String, ParameterDirection.Input);
+
+
+                return sqlConnection.Query<GetMant73_TiposMovimientos>("uspGetMantenimiento",
+                                                    sp_parametros,
+                                                    commandType: CommandType.StoredProcedure);
+            }
+        }
+
 
         public List<SetAreasAlmacen> GetListarAreasAlmacen(string filtro)
         {
@@ -2655,6 +2795,41 @@ namespace SoftCotton.Repository
             }
         }
 
+
+        // MOVIMIENTOS CABECERA
+        public IEnumerable<MovimientosCabecera> GetMovimientosCabecera()
+        {
+            //GetGR2_CabeceraXCod grCab = new GetGR2_CabeceraXCod();
+            using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+            {
+
+                var sp_parametros = new DynamicParameters();
+                sp_parametros.Add("@opcion", 74, DbType.Int32, ParameterDirection.Input);
+
+                return sqlConnection.Query<MovimientosCabecera>("uspGetMantenimiento",
+                                                    sp_parametros,
+                                                    commandType: CommandType.StoredProcedure);
+            }
+        }
+
+
+        // MOVIMIENTOS DETALLE
+        public IEnumerable<MovimientosDetalle> GetMovimientosDetallePorIdCabecera( int IdMovimientoCabecera)
+        {
+            //GetGR2_CabeceraXCod grCab = new GetGR2_CabeceraXCod();
+            using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+            {
+
+                var sp_parametros = new DynamicParameters();
+                sp_parametros.Add("@opcion", 75, DbType.Int32, ParameterDirection.Input);
+                sp_parametros.Add("@filtroInt1", IdMovimientoCabecera, DbType.Int32, ParameterDirection.Input);
+
+
+                return sqlConnection.Query<MovimientosDetalle>("uspGetMantenimiento",
+                                                    sp_parametros,
+                                                    commandType: CommandType.StoredProcedure);
+            }
+        }
 
     }
 }

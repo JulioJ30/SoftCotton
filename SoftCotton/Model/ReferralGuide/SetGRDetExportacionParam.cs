@@ -21,6 +21,7 @@ namespace SoftCotton.Model.ReferralGuide
         public string codUM { get; set; }
         public string OP { get; set; }
 
+        public int? IdPedidoColor { get; set; }
 
 
         public SetGRDetExportacionParam()
@@ -36,7 +37,7 @@ namespace SoftCotton.Model.ReferralGuide
             descripcion = "";
             codUM = "";
             OP = "";
-
+            IdPedidoColor = null;
         }
     }
 }

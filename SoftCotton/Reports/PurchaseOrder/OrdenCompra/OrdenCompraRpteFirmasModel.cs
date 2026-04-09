@@ -10,5 +10,7 @@ namespace SoftCotton.Reports.PurchaseOrder.OrdenCompra
         public string firmante { get; set; }
         public string rutaImgFirma { get; set; }
         public int nivelAprobacion { get; set; }
+        public string cargo { get; set; }
+
     }
 }

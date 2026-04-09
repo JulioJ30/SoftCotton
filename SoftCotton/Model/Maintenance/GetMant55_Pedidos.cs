@@ -13,6 +13,8 @@ namespace SoftCotton.Model.Maintenance
         public int idPrograma { get; set; }
         public int idUsuarioCrea { get; set; }
         public string pedido { get; set; }
+        public string codigoEstilo { get; set; }
+
         public string programa { get; set; }
         public string fechaCrea { get; set; }
         public string estilo { get; set; }

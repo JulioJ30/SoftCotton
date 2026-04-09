@@ -202,6 +202,8 @@ namespace SoftCotton.Views.Invoices
                 _facCabParam.opcion = 1;
 
                 _facCabParam.idEmpresa = Empresa.ID_EMPRESA;
+                //_facCabParam.usuarioReg = Empresa.ID_EMPRESA;
+
                 _facCabParam.serie = txtSerie.Text.Trim();
                 _facCabParam.numero = Convert.ToInt32(txtNumero.Text.Trim());
                 _facCabParam.fechaEmision = dtpFechaEmision.Value.ToString("yyyyMMdd");

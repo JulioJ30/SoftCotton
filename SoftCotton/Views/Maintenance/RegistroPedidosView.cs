@@ -27,8 +27,6 @@ namespace SoftCotton.Views.Maintenance
         public string codColorParam = "";
 
 
-
-
         public RegistroPedidosView()
         {
             InitializeComponent();
@@ -231,6 +229,8 @@ namespace SoftCotton.Views.Maintenance
                 dgvPedidos.Rows[index].Cells["fechaCrea"].Value = item.fechaCrea;
                 dgvPedidos.Rows[index].Cells["estilo"].Value = item.estilo;
                 dgvPedidos.Rows[index].Cells["programa"].Value = item.programa;
+                dgvPedidos.Rows[index].Cells["CodigoEstilo"].Value = item.codigoEstilo;
+
 
 
 
@@ -389,17 +389,43 @@ namespace SoftCotton.Views.Maintenance
                 {
                     row.Cells["estado"].Value = valorCheck;
 
-                    //_TallaParam = new SetTallaParam();
-
-                    //_TallaParam.opcion = 3; // INHABILITAR
-                    //_TallaParam.codTalla = row.Cells["ctxtCodTalla"].Value.ToString();
-                    //_TallaParam.usuarioReg = UserApplication.USUARIO;
-                    //_TallaParam.estado = valorCheck;
                     _pedidoParam = new SetPedidosParam();
                     _pedidoParam.opcion = 3; // ACTUALIZAR
                     _pedidoParam.estado = valorCheck;
                     _pedidoParam.idpedido = Convert.ToInt32( row.Cells["idPedido"].Value.ToString());
                     Procesar(_pedidoParam);
+                }
+            }
+        }
+
+        private void dgvPedidosColor_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dgvPedidosColor.Columns[e.ColumnIndex].Name.Equals("estadoColor"))
+            {
+                DataGridViewRow row = dgvPedidosColor.Rows[e.RowIndex];
+                bool valorCheck = !Convert.ToBoolean(row.Cells["estadoColor"].Value);
+                string pregunta = "";
+
+                if (valorCheck)
+                {
+                    pregunta = "¿Desea activar el pedido?";
+                }
+                else
+                {
+                    pregunta = "¿Desea deshabilitar el pedido?";
+                }
+
+                DialogResult resultadoPregunta = ResponseMessage.MessageQuestion(pregunta);
+
+                if (resultadoPregunta.Equals(DialogResult.OK))
+                {
+                    row.Cells["estadoColor"].Value = valorCheck;
+
+                    _pedidoColorParam = new SetPedidosColorParam();
+                    _pedidoColorParam.opcion = 3; // HABILITAR DESHABILITAR
+                    _pedidoColorParam.estado = valorCheck;
+                    _pedidoColorParam.idpedidocolor = Convert.ToInt32(row.Cells["idPedidoColor"].Value.ToString());
+                    ProcesarPedidoColor(_pedidoColorParam);
                 }
             }
         }

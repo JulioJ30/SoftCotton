@@ -26,6 +26,12 @@ namespace SoftCotton.Model.ReferralGuide
         public string tipoOrden { get; set; }
         public string OP { get; set; }
 
+        public int? IdPedidoColor { get; set; }
+        public string PartidaProveedor { get; set; }
+        public string destCodigoPC { get; set; }
+        public string Comentario { get; set; }
+
+        public decimal PrecioGr { get; set; }
 
 
         public SetGRDetParam()
@@ -45,6 +51,11 @@ namespace SoftCotton.Model.ReferralGuide
             codCuenta = "";
             tipoOrden = "";
             OP = "";
+            IdPedidoColor = null;
+            PartidaProveedor = "";
+            destCodigoPC = "";
+            Comentario = "";
+            PrecioGr = 0;
         }
     }
 }

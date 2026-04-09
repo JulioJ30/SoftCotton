@@ -191,5 +191,10 @@ namespace SoftCotton.Views.Maintenance
         {
             Listar();
         }
+
+        private void btnGuardar_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

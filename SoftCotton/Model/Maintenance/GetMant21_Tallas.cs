@@ -14,4 +14,11 @@ namespace SoftCotton.Model.Maintenance
         public string fechaReg { get; set; }
 
     }
+
+    public class GetMant21_TallasNuevo
+    {
+        public string codTalla { get; set; }
+        public string descripcion { get; set; }
+
+    }
 }

@@ -50,19 +50,19 @@ namespace SoftCotton.Reports.PurchaseOrder.OrdenCompra
             string directorioBase = AppDomain.CurrentDomain.BaseDirectory;
 
             // 1. Logo Empresa
-            string rutaImgEmpresa = string.Format("{0}Resources\\icono-oc.jpg", Path.GetFullPath(Path.Combine(directorioBase, @"..\..\")));
-            if (!File.Exists(rutaImgEmpresa))
-            {
-                rutaImgEmpresa = string.Format("{0}Resources\\icono-oc-default.png", Path.GetFullPath(Path.Combine(directorioBase, @"..\..\")));
-            }
+            string rutaImgEmpresa = Path.GetFullPath(Path.Combine(directorioBase, @"Resources\\icono-oc.jpg"));
             string ImgEmpresaURIAbsoluto = new Uri(rutaImgEmpresa).AbsoluteUri;
 
 
             // 2. Firmas
             string primeraFirma = "-";
+            string primeraFirmaCargo = "-";
+
             string imgFirma1URIAbsoluto = new Uri(string.Format("{0}Resources\\icono-oc-default.png", Path.GetFullPath(Path.Combine(directorioBase, @"..\..\")))).AbsoluteUri;
 
             string segundaFirma = "-";
+            string segundaFirmaCargo = "-";
+
             string imgFirma2URIAbsoluto = new Uri(string.Format("{0}Resources\\icono-oc-default.png", Path.GetFullPath(Path.Combine(directorioBase, @"..\..\")))).AbsoluteUri;
 
             foreach (var itemFirma in pModelo.ocFirmas)
@@ -70,6 +70,8 @@ namespace SoftCotton.Reports.PurchaseOrder.OrdenCompra
                 if (itemFirma.nivelAprobacion == 1)
                 {
                     primeraFirma = itemFirma.firmante;
+                    primeraFirmaCargo = itemFirma.cargo;
+
                     if (File.Exists(itemFirma.rutaImgFirma))
                     {
                         imgFirma1URIAbsoluto = new Uri(itemFirma.rutaImgFirma).AbsoluteUri;
@@ -78,6 +80,8 @@ namespace SoftCotton.Reports.PurchaseOrder.OrdenCompra
                 else if (itemFirma.nivelAprobacion == 2)
                 {
                     segundaFirma = itemFirma.firmante;
+                    segundaFirmaCargo = itemFirma.cargo;
+
                     if (File.Exists(itemFirma.rutaImgFirma))
                     {
                         imgFirma2URIAbsoluto = new Uri(itemFirma.rutaImgFirma).AbsoluteUri;
@@ -182,11 +186,13 @@ namespace SoftCotton.Reports.PurchaseOrder.OrdenCompra
                 new ReportParameter("pObservacion7", observacion7),
 
                 new ReportParameter("pPrimeraFirma", primeraFirma),
+                new ReportParameter("pPrimeraFirmaCargo", primeraFirmaCargo),
                 new ReportParameter("pPrimeraFirmaImgPath", imgFirma1URIAbsoluto),
 
                 new ReportParameter("pSegundaFirma", segundaFirma),
+                new ReportParameter("pSegundaFirmaCargo", segundaFirmaCargo),
                 new ReportParameter("pSegundaFirmaImgPath", imgFirma2URIAbsoluto),
-                new ReportParameter("pPrograma", pModelo.ocCab.programa)
+                new ReportParameter("pPrograma",pModelo.ocCab.programa)
 
             };
 

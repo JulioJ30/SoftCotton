@@ -20,6 +20,8 @@ namespace SoftCotton.Views.Maintenance
         public string colorParam = "";
         public string estiloParam = "";
         public string codigoEstiloParam = "";
+        public string programaParam = "";
+
 
 
 
@@ -72,6 +74,8 @@ namespace SoftCotton.Views.Maintenance
                     colorParam = dgr.Cells["color"].Value.ToString().Trim();
                     estiloParam = dgr.Cells["estilo"].Value.ToString().Trim();
                     codigoEstiloParam = dgr.Cells["codigoEstilo"].Value.ToString().Trim();
+                    programaParam = dgr.Cells["programa"].Value.ToString().Trim();
+
 
 
                     this.Hide();

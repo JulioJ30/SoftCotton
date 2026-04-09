@@ -118,6 +118,8 @@ namespace SoftCotton.Repository
                             det.SaldoTotalSolesS = Convert.ToDecimal(reader["SaldoValorSoles"].ToString());
 
                             det.tpo_opera = Convert.ToString(reader["tpo_opera"].ToString());
+                            det.PedidoColor = Convert.ToString(reader["PedidoColor"].ToString());
+
 
 
                             list.Add(det);
@@ -196,6 +198,132 @@ namespace SoftCotton.Repository
                             det.SaldoPUCalcSolesS = Convert.ToDecimal(reader["SaldoPuSoles"].ToString());
                             det.SaldoTotalSolesS = Convert.ToDecimal(reader["SaldoValorSoles"].ToString());
                             det.Secuencia = Convert.ToInt32(reader["Secuencia"].ToString());
+
+                            det.OpPedido = reader["OpPedido"].ToString();
+                            det.OpColor = reader["OpColor"].ToString();
+                            det.OpEstilo = reader["OpEstilo"].ToString();
+                            det.OpPrograma = reader["OpPrograma"].ToString();
+
+
+
+
+
+                            list.Add(det);
+
+                        }
+                    }
+                }
+            }
+
+            //listv2 = list.OrderBy(x => x.item).ToList();
+            return list;
+        }
+
+
+        public TituloPdf uspGetMovimientoKardexTituloPdf(string codNivel, string codCuenta, string codGrupo, string codTalla, string codColor, string fechaIni, string fechafin)
+        {
+            TituloPdf tituloPdf  = new TituloPdf();
+            using (var sqlConnection = ConnectionBD.GetConnection())
+            {
+                using (var sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = @"uspGetkardexPrincipalTituloReporte";
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    codNivel = (codNivel == "00") ? "" : codNivel;
+
+                    sqlCommand.Parameters.Add("@codNivel", SqlDbType.VarChar, 50).Value = codNivel;
+                    sqlCommand.Parameters.Add("@codCuenta", SqlDbType.VarChar, 50).Value = (codCuenta == "" ? "0" : codCuenta);
+                    sqlCommand.Parameters.Add("@codGrupo", SqlDbType.VarChar, 50).Value = codGrupo;
+                    sqlCommand.Parameters.Add("@codTalla", SqlDbType.VarChar, 50).Value = codTalla;
+                    sqlCommand.Parameters.Add("@codColor", SqlDbType.VarChar, 50).Value = codColor;
+                    sqlCommand.Parameters.Add("@fechaIni", SqlDbType.VarChar, 50).Value = fechaIni;
+                    sqlCommand.Parameters.Add("@fechafin", SqlDbType.VarChar, 50).Value = fechafin;
+                    sqlCommand.CommandTimeout = 3000;
+                    sqlConnection.Open();
+
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+                    int c = 0;
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            tituloPdf = new TituloPdf();
+
+                            tituloPdf.Periodo = reader["Periodo"].ToString();
+                            tituloPdf.Ruc = reader["Ruc"].ToString();
+                            tituloPdf.RazonSocial = reader["RazonSocial"].ToString();
+                            tituloPdf.Establecimiento = reader["Establecimiento"].ToString();
+                            tituloPdf.CodigoExistencia = reader["CodigoExistencia"].ToString();
+                            tituloPdf.Tipo = reader["Tipo"].ToString();
+                            tituloPdf.TipoDescripcion = reader["TipoDescripcion"].ToString();
+                            tituloPdf.CodigoUnidadMedida = reader["CodigoUnidadMedida"].ToString();
+                            tituloPdf.MetodoEvaluacion = reader["MetodoEvaluacion"].ToString();
+
+                        }
+                    }
+                }
+            }
+
+            //listv2 = list.OrderBy(x => x.item).ToList();
+            return tituloPdf;
+        }
+
+        public List<KardexValorizadoPrincipalPdf> uspGetMovimientoKardexPdf(string codNivel, string codCuenta, string codGrupo, string codTalla, string codColor, string fechaIni, string fechafin)
+        {
+            List<KardexValorizadoPrincipalPdf> listv2 = new List<KardexValorizadoPrincipalPdf>();
+            List<KardexValorizadoPrincipalPdf> list = new List<KardexValorizadoPrincipalPdf>();
+            KardexValorizadoPrincipalPdf det = new KardexValorizadoPrincipalPdf();
+
+            using (var sqlConnection = ConnectionBD.GetConnection())
+            {
+                using (var sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = @"uspGetkardexPrincipal";
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    codNivel = (codNivel == "00") ? "" : codNivel;
+
+                    sqlCommand.Parameters.Add("@codNivel", SqlDbType.VarChar, 50).Value = codNivel;
+                    sqlCommand.Parameters.Add("@codCuenta", SqlDbType.VarChar, 50).Value = (codCuenta == "" ? "0" : codCuenta);
+                    sqlCommand.Parameters.Add("@codGrupo", SqlDbType.VarChar, 50).Value = codGrupo;
+                    sqlCommand.Parameters.Add("@codTalla", SqlDbType.VarChar, 50).Value = codTalla;
+                    sqlCommand.Parameters.Add("@codColor", SqlDbType.VarChar, 50).Value = codColor;
+                    sqlCommand.Parameters.Add("@fechaIni", SqlDbType.VarChar, 50).Value = fechaIni;
+                    sqlCommand.Parameters.Add("@fechafin", SqlDbType.VarChar, 50).Value = fechafin;
+                    sqlCommand.CommandTimeout = 3000;
+                    sqlConnection.Open();
+
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+                    int c = 0;
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            det = new KardexValorizadoPrincipalPdf();
+
+                            det.orden = Convert.ToInt32(reader["orden"].ToString());
+                            det.tipo = Convert.ToString(reader["tipo"].ToString());
+                            det.cod = Convert.ToString(reader["cod"].ToString());
+                            det.Nombre_Articulo = Convert.ToString(reader["Nombre_Articulo"].ToString());
+                            det.Fecha_Guia = Convert.ToDateTime(reader["Fecha_Guia"].ToString());
+                            det.serie = Convert.ToString(reader["serie"].ToString());
+                            det.numero = Convert.ToString(reader["numero"].ToString());
+                            det.tipoMovimiento = Convert.ToString(reader["tipoMovimiento"].ToString());
+                            det.cantidadSolesE = Convert.ToDecimal(reader["cantidadSolesE"].ToString());
+                            det.PUCalcSolesE = Convert.ToDecimal(reader["PUCalcSolesE"].ToString());
+                            det.TotalSolesE = Convert.ToDecimal(reader["TotalSolesE"].ToString());
+                            det.cantidadSolesS = Convert.ToDecimal(reader["cantidadSolesS"].ToString());
+                            det.PUCalcSolesS = Convert.ToDecimal(reader["PUCalcSolesS"].ToString());
+                            det.TotalSolesS = Convert.ToDecimal(reader["TotalSolesS"].ToString());
+                            det.SaldocantidadSolesS = Convert.ToDecimal(reader["saldoCantidad"].ToString());
+                            det.SaldoPUCalcSolesS = Convert.ToDecimal(reader["SaldoPuSoles"].ToString());
+                            det.SaldoTotalSolesS = Convert.ToDecimal(reader["SaldoValorSoles"].ToString());
+                            det.Secuencia = Convert.ToInt32(reader["Secuencia"].ToString());
+
+
+                            det.Tipo_Operacion = reader["Tipo_Operacion"].ToString();
+                            det.Tipo_Documento = reader["Tipo_Documento"].ToString();
 
 
 
@@ -477,6 +605,48 @@ namespace SoftCotton.Repository
             }
 
             return respuesta;
+        }
+
+        public bool RegistroCongeladoAcabados(
+                string codNivel, string codCuenta, string codGrupo, string codTalla, string codColor, string fechaIni, string fechafin
+            )
+        {
+            bool respuesta = true;
+            try
+            {
+                using (var sqlConnection = ConnectionBD.GetConnection())
+                {
+                    using (var sqlCommand = sqlConnection.CreateCommand())
+                    {
+                        sqlCommand.CommandText = @"uspSetCongeladoToAcabados";
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                        codNivel = (codNivel == "00") ? "" : codNivel;
+
+                        sqlCommand.Parameters.Add("@codNivel", SqlDbType.VarChar, 50).Value = codNivel;
+                        sqlCommand.Parameters.Add("@codCuenta", SqlDbType.VarChar, 50).Value = (codCuenta == "" ? "0" : codCuenta);
+                        sqlCommand.Parameters.Add("@codGrupo", SqlDbType.VarChar, 50).Value = codGrupo;
+                        sqlCommand.Parameters.Add("@codTalla", SqlDbType.VarChar, 50).Value = codTalla;
+                        sqlCommand.Parameters.Add("@codColor", SqlDbType.VarChar, 50).Value = codColor;
+                        sqlCommand.Parameters.Add("@fechaIni", SqlDbType.VarChar, 50).Value = fechaIni;
+                        sqlCommand.Parameters.Add("@fechafin", SqlDbType.VarChar, 50).Value = fechafin;
+                        sqlCommand.CommandTimeout = 3000;
+
+                        sqlConnection.Open();
+
+                        sqlCommand.ExecuteNonQuery();
+                        respuesta = true;
+
+                    }
+                }
+            }
+            catch
+            {
+                respuesta = false;
+            }
+
+            return respuesta;
+
         }
 
         public string update_RequerimientoCabe(int tipo, double idRequerimiento, int usuario)
