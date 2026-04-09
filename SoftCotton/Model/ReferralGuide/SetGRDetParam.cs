@@ -31,8 +31,7 @@ namespace SoftCotton.Model.ReferralGuide
         public string destCodigoPC { get; set; }
         public string Comentario { get; set; }
 
-
-
+        public decimal PrecioGr { get; set; }
 
 
         public SetGRDetParam()
@@ -56,6 +55,7 @@ namespace SoftCotton.Model.ReferralGuide
             PartidaProveedor = "";
             destCodigoPC = "";
             Comentario = "";
+            PrecioGr = 0;
         }
     }
 }

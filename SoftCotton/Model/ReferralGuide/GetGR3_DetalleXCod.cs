@@ -53,6 +53,7 @@ namespace SoftCotton.Model.ReferralGuide
 
         public int? IdPedidoColor { get; set; }
 
+        public decimal? PrecioGr { get; set; }
 
 
     }

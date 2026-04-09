@@ -148,6 +148,7 @@
             this.dgvPedidoColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgvPartidaProveedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgvComentario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PrecioGr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -1144,7 +1145,8 @@
             this.dgvIdPedidoColor,
             this.dgvPedidoColor,
             this.DgvPartidaProveedor,
-            this.DgvComentario});
+            this.DgvComentario,
+            this.PrecioGr});
             this.dgvGRDetalle.Location = new System.Drawing.Point(4, -1);
             this.dgvGRDetalle.Name = "dgvGRDetalle";
             this.dgvGRDetalle.RowHeadersWidth = 15;
@@ -1404,6 +1406,13 @@
             this.DgvComentario.Name = "DgvComentario";
             this.DgvComentario.Width = 125;
             // 
+            // PrecioGr
+            // 
+            this.PrecioGr.HeaderText = "PrecioGr";
+            this.PrecioGr.MinimumWidth = 6;
+            this.PrecioGr.Name = "PrecioGr";
+            this.PrecioGr.Width = 125;
+            // 
             // RegistroGuiaRemisionView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -1559,5 +1568,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvPedidoColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn DgvPartidaProveedor;
         private System.Windows.Forms.DataGridViewTextBoxColumn DgvComentario;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PrecioGr;
     }
 }

@@ -666,7 +666,7 @@ namespace SoftCotton.Repository
                     sqlCommand.Parameters.Add("@PartidaProveedor", SqlDbType.VarChar).Value = parametros.PartidaProveedor;
                     sqlCommand.Parameters.Add("@destCodigoPC", SqlDbType.VarChar).Value = parametros.destCodigoPC;
                     sqlCommand.Parameters.Add("@Comentario", SqlDbType.VarChar).Value = parametros.Comentario;
-
+                    sqlCommand.Parameters.Add("@PrecioGr", SqlDbType.VarChar).Value = parametros.PrecioGr;
 
 
                     sqlConnection.Open();

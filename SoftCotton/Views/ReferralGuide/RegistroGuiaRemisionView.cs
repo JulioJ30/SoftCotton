@@ -776,6 +776,10 @@ namespace SoftCotton.Views.ReferralGuide
                     var codigoProducto = row.Cells["dgvTxtCodigoProducto"].Value.ToString();
                     var cantidadInresada = Convert.ToDecimal(row.Cells["dgvDecCantIngresada"].Value);
                     var precioUniCompra = Convert.ToDecimal(row.Cells["dgvDescPrecioUnitario"].Value);
+                    var precioGr = Convert.ToDecimal(row.Cells["PrecioGr"].Value != null ? row.Cells["PrecioGr"].Value : 0);
+
+                    _grDetParam.PrecioGr = precioGr;
+
 
                     if (row.Cells["dgvTxtTipoMov"].Value.ToString() == "ENTRADA")
                     {
@@ -946,6 +950,7 @@ namespace SoftCotton.Views.ReferralGuide
                 dgvGRDetalle.Rows[index].Cells["DgvComentario"].Value = item.Comentario;
 
 
+                dgvGRDetalle.Rows[index].Cells["PrecioGr"].Value = item.PrecioGr;
 
 
 
