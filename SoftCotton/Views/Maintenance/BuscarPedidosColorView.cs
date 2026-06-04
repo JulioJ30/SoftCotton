@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using SoftCotton.BusinessLogic;
 using SoftCotton.Model.Maintenance;
+using SoftCotton.Util;
 
 namespace SoftCotton.Views.Maintenance
 {
@@ -16,19 +12,25 @@ namespace SoftCotton.Views.Maintenance
     {
         MantenimientoBL _mantenimientoBL;
         public int idPedidoColorParam = 0;
+        public int idPedidoColorInput = 0;
         public string pedidoParam = "";
         public string colorParam = "";
         public string estiloParam = "";
         public string codigoEstiloParam = "";
         public string programaParam = "";
+        public bool showDetalleInterno = false;
 
 
 
-
-        public BuscarPedidosColorView()
+        public BuscarPedidosColorView(bool mostrarDetalle = false)
         {
             InitializeComponent();
             _mantenimientoBL = new MantenimientoBL();
+            this.showDetalleInterno = mostrarDetalle;
+
+
+            // Opción 1: por nombre de columna (recomendado)
+            dgvLista.Columns["btnVerDetalle"].Visible = mostrarDetalle;
 
         }
 
@@ -69,18 +71,44 @@ namespace SoftCotton.Views.Maintenance
                 {
                     DataGridViewRow dgr = dgvLista.CurrentRow;
 
-                    idPedidoColorParam = Convert.ToInt32(dgr.Cells["idPedidoColor"].Value.ToString());
-                    pedidoParam = dgr.Cells["pedido"].Value.ToString().Trim();
-                    colorParam = dgr.Cells["color"].Value.ToString().Trim();
-                    estiloParam = dgr.Cells["estilo"].Value.ToString().Trim();
-                    codigoEstiloParam = dgr.Cells["codigoEstilo"].Value.ToString().Trim();
-                    programaParam = dgr.Cells["programa"].Value.ToString().Trim();
+                    bool permitirRegistro = Convert.ToInt32(dgr.Cells["ColPermitirRegistro"].Value) > 0;
+
+                    if (permitirRegistro)
+                    {
+                        idPedidoColorParam = Convert.ToInt32(dgr.Cells["idPedidoColor"].Value.ToString());
+                        pedidoParam = dgr.Cells["pedido"].Value.ToString().Trim();
+                        colorParam = dgr.Cells["color"].Value.ToString().Trim();
+                        estiloParam = dgr.Cells["estilo"].Value.ToString().Trim();
+                        codigoEstiloParam = dgr.Cells["codigoEstilo"].Value.ToString().Trim();
+                        programaParam = dgr.Cells["programa"].Value.ToString().Trim();
 
 
 
-                    this.Hide();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        ResponseMessage.Message("Pedido Color no tiene registro en proceso de acabados, verifique el detalle", "WARNING");
+                    }
+
+
                 }
 
+            }
+        }
+
+        private void dgvLista_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+           
+
+            //VER 
+            if (dgvLista.Columns[e.ColumnIndex].Name.Equals("btnVerDetalle"))
+            {
+
+                idPedidoColorInput = Convert.ToInt32(dgvLista.Rows[e.RowIndex].Cells["idPedidoColor"].Value.ToString());
+
+                BuscarAvancesGuiasPorIdPedidoColorView frm = new BuscarAvancesGuiasPorIdPedidoColorView(idPedidoColorInput);
+                frm.ShowDialog();
             }
         }
     }

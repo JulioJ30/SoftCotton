@@ -327,6 +327,12 @@ namespace SoftCotton.BusinessLogic
 
         }
 
+        public IEnumerable<PedidosColorAvance> getPedidosColorAvance(int IdPedidoColor)
+        {
+            return _mantenimientoRepository.getPedidosColorAvance(IdPedidoColor);
+
+        }
+
         // GCAA 04052024
         public List<SetAreasAlmacen> GetListarAreasAlmacen(string filtro)
         {

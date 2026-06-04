@@ -534,6 +534,12 @@
     <Compile Include="Views\Maintenance\BuscarArticulo.Designer.cs">
       <DependentUpon>BuscarArticulo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Maintenance\BuscarAvancesGuiasPorIdPedidoColorView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\BuscarAvancesGuiasPorIdPedidoColorView.Designer.cs">
+      <DependentUpon>BuscarAvancesGuiasPorIdPedidoColorView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Maintenance\BuscarColorProductoView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1065,6 +1071,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Maintenance\BuscarArticulo.resx">
       <DependentUpon>BuscarArticulo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Maintenance\BuscarAvancesGuiasPorIdPedidoColorView.resx">
+      <DependentUpon>BuscarAvancesGuiasPorIdPedidoColorView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Maintenance\BuscarColorProductoView.resx">
       <DependentUpon>BuscarColorProductoView.cs</DependentUpon>
