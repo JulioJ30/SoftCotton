@@ -12,6 +12,8 @@ namespace SoftCotton.Model.Maintenance
         public int idPedido { get; set; }
         public int idEstilo { get; set; }
         public int idPrograma { get; set; }
+        public int PermitirRegistro { get; set; }
+
         public string pedido { get; set; }
 
         public string codColor { get; set; }
@@ -21,6 +23,21 @@ namespace SoftCotton.Model.Maintenance
         public string fechaCrea { get; set; }
         public bool estado { get; set; }
         public string codigoEstilo { get; set; }
+
+    }
+
+
+    public class PedidosColorAvance
+    {
+        public string CodigoNivel { get; set; }
+        public string DescripcionNivel { get; set; }
+        public string Serie { get; set; }
+        public string Numero { get; set; }
+        public string RucDestinatario { get; set; }
+
+        public decimal Cantidad { get; set; }
+
+        public string RazonSocial { get; set; }
 
     }
 }   

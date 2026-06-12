@@ -107,6 +107,7 @@ namespace SoftCotton.Model.ReferralGuide
         public string numero_de_bultos { get; set; }
         public string tipo_de_transporte { get; set; }
         public DateTime fecha_de_inicio_de_traslado { get; set; }
+        public DateTime fecha_de_entrega_al_transportista { get; set; }
         public string transportista_documento_tipo { get; set; }
         public string transportista_documento_numero { get; set; }
         public string transportista_denominacion { get; set; }

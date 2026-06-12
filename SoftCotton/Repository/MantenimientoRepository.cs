@@ -2648,6 +2648,22 @@ namespace SoftCotton.Repository
             }
         }
 
+        public IEnumerable<PedidosColorAvance> getPedidosColorAvance(int IdPedidoColor)
+        {
+            //GetGR2_CabeceraXCod grCab = new GetGR2_CabeceraXCod();
+            using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
+            {
+
+                var sp_parametros = new DynamicParameters();
+                sp_parametros.Add("@IdPedidoColor", IdPedidoColor, DbType.Int32, ParameterDirection.Input);
+
+                return sqlConnection.Query<PedidosColorAvance>("uspGetAvancesGuiasPorIdPedido",
+                                                    sp_parametros,
+                                                    commandType: CommandType.StoredProcedure);
+            }
+        }
+
+
         public IEnumerable<GetMant73_TiposMovimientos> getTiposMovimientos(string filtro = "")
         {
             //GetGR2_CabeceraXCod grCab = new GetGR2_CabeceraXCod();

@@ -1716,6 +1716,7 @@ namespace SoftCotton.Views.ReferralGuide
                 invoice.fecha_de_vencimiento = Convert.ToDateTime(grCabGenerales.fechaVencimiento);
             }
             invoice.fecha_de_inicio_de_traslado = Convert.ToDateTime(grCabGenerales.fechaInicioTraslado);
+            invoice.fecha_de_entrega_al_transportista = Convert.ToDateTime(grCabGenerales.fechaInicioTraslado);
 
             invoice.documento_relacionado_codigo = "50";//grCabGenerales.50;
             invoice.motivo_de_traslado = grCabGenerales.codMotivoTrasladoSunat;

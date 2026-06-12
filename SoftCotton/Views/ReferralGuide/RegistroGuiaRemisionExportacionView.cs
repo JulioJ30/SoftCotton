@@ -857,7 +857,7 @@ namespace SoftCotton.Views.ReferralGuide
                     // Validamos que la columna actual sea "OP"
                     if (dgvGRDetalle.CurrentCell.OwningColumn.Name == "OP")
                     {
-                        BuscarPedidosColorView buscarPedidosColorView = new BuscarPedidosColorView();
+                        BuscarPedidosColorView buscarPedidosColorView = new BuscarPedidosColorView(true);
                         buscarPedidosColorView.ShowDialog();
                         if (buscarPedidosColorView.pedidoParam != null && buscarPedidosColorView.pedidoParam != "")
                         {
@@ -1277,7 +1277,7 @@ namespace SoftCotton.Views.ReferralGuide
             //invoice.sunat_transaction = 1;
             invoice.sunat_transaction = 2;
 
-            invoice.cliente_tipo_de_documento = 6;
+            invoice.cliente_tipo_de_documento = grCabGenerales.ruc.Length == 11 ?  6 : 1;
             //invoice.cliente_numero_de_documento = "20600695771";
             invoice.cliente_numero_de_documento = grCabGenerales.ruc;
 
@@ -1290,14 +1290,14 @@ namespace SoftCotton.Views.ReferralGuide
             invoice.fecha_de_emision = Convert.ToDateTime(grCabGenerales.fechaEmision);
             invoice.fecha_de_vencimiento = Convert.ToDateTime(grCabGenerales.fechaVencimiento);
             invoice.fecha_de_inicio_de_traslado = Convert.ToDateTime(grCabGenerales.fechaInicioTraslado);
-
+            invoice.fecha_de_entrega_al_transportista = Convert.ToDateTime(grCabGenerales.fechaInicioTraslado);
             //invoice.documento_relacionado_codigo = "50";//grCabGenerales.50;
             invoice.motivo_de_traslado = grCabGenerales.codMotivoTrasladoSunat;
             invoice.motivo_de_traslado_otros_descripcion = grCabGenerales.otrosMotivoTraslado;
 
             invoice.peso_bruto_total = grCabGenerales.gross_weight.ToString();
             invoice.peso_bruto_unidad_de_medida = "KGM";
-            invoice.numero_de_bultos = grCabGenerales.NumeroBultos.ToString(); //"1";
+            invoice.numero_de_bultos = txtTotal.Text.Trim() != "" ? txtTotal.Text.Trim() : "1";
             invoice.tipo_de_transporte = cboTipoTransporte.SelectedValue.ToString();
             invoice.transportista_documento_tipo = "6";
             invoice.transportista_documento_numero = grCabGenerales.transCodigoPC;

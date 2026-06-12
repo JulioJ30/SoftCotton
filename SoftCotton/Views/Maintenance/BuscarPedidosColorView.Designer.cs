@@ -44,23 +44,27 @@
             this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fechaCrea = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.codigoEstilo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnVerDetalle = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.ColPermitirRegistro = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLista)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(16, 11);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 13);
+            this.label1.Size = new System.Drawing.Size(54, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "Pedido:";
             // 
             // txtPedido
             // 
-            this.txtPedido.Location = new System.Drawing.Point(278, 9);
+            this.txtPedido.Location = new System.Drawing.Point(371, 11);
+            this.txtPedido.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPedido.Name = "txtPedido";
-            this.txtPedido.Size = new System.Drawing.Size(285, 20);
+            this.txtPedido.Size = new System.Drawing.Size(379, 22);
             this.txtPedido.TabIndex = 5;
             this.txtPedido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPedido_KeyPress);
             // 
@@ -82,21 +86,27 @@
             this.estilo,
             this.estado,
             this.fechaCrea,
-            this.codigoEstilo});
-            this.dgvLista.Location = new System.Drawing.Point(4, 35);
+            this.codigoEstilo,
+            this.btnVerDetalle,
+            this.ColPermitirRegistro});
+            this.dgvLista.Location = new System.Drawing.Point(5, 43);
+            this.dgvLista.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvLista.MultiSelect = false;
             this.dgvLista.Name = "dgvLista";
             this.dgvLista.ReadOnly = true;
             this.dgvLista.RowHeadersVisible = false;
+            this.dgvLista.RowHeadersWidth = 51;
             this.dgvLista.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvLista.Size = new System.Drawing.Size(559, 343);
+            this.dgvLista.Size = new System.Drawing.Size(745, 422);
             this.dgvLista.TabIndex = 6;
+            this.dgvLista.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLista_CellContentClick);
             this.dgvLista.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvLista_KeyDown);
             // 
             // idPedidoColor
             // 
             this.idPedidoColor.DataPropertyName = "idPedidoColor";
             this.idPedidoColor.HeaderText = "idPedidoColor";
+            this.idPedidoColor.MinimumWidth = 6;
             this.idPedidoColor.Name = "idPedidoColor";
             this.idPedidoColor.ReadOnly = true;
             this.idPedidoColor.Visible = false;
@@ -105,6 +115,7 @@
             // 
             this.idPedido.DataPropertyName = "idPedido";
             this.idPedido.HeaderText = "idPedido";
+            this.idPedido.MinimumWidth = 6;
             this.idPedido.Name = "idPedido";
             this.idPedido.ReadOnly = true;
             this.idPedido.Visible = false;
@@ -113,6 +124,7 @@
             // 
             this.idEstilo.DataPropertyName = "idEstilo";
             this.idEstilo.HeaderText = "idEstilo";
+            this.idEstilo.MinimumWidth = 6;
             this.idEstilo.Name = "idEstilo";
             this.idEstilo.ReadOnly = true;
             this.idEstilo.Visible = false;
@@ -121,6 +133,7 @@
             // 
             this.idPrograma.DataPropertyName = "idPrograma";
             this.idPrograma.HeaderText = "idPrograma";
+            this.idPrograma.MinimumWidth = 6;
             this.idPrograma.Name = "idPrograma";
             this.idPrograma.ReadOnly = true;
             this.idPrograma.Visible = false;
@@ -129,6 +142,7 @@
             // 
             this.codColor.DataPropertyName = "codColor";
             this.codColor.HeaderText = "codColor";
+            this.codColor.MinimumWidth = 6;
             this.codColor.Name = "codColor";
             this.codColor.ReadOnly = true;
             this.codColor.Visible = false;
@@ -137,6 +151,7 @@
             // 
             this.pedido.DataPropertyName = "pedido";
             this.pedido.HeaderText = "Pedido";
+            this.pedido.MinimumWidth = 6;
             this.pedido.Name = "pedido";
             this.pedido.ReadOnly = true;
             // 
@@ -144,6 +159,7 @@
             // 
             this.color.DataPropertyName = "color";
             this.color.HeaderText = "Color";
+            this.color.MinimumWidth = 6;
             this.color.Name = "color";
             this.color.ReadOnly = true;
             // 
@@ -151,6 +167,7 @@
             // 
             this.programa.DataPropertyName = "programa";
             this.programa.HeaderText = "Programa";
+            this.programa.MinimumWidth = 6;
             this.programa.Name = "programa";
             this.programa.ReadOnly = true;
             // 
@@ -158,6 +175,7 @@
             // 
             this.estilo.DataPropertyName = "estilo";
             this.estilo.HeaderText = "Estilo";
+            this.estilo.MinimumWidth = 6;
             this.estilo.Name = "estilo";
             this.estilo.ReadOnly = true;
             // 
@@ -165,6 +183,7 @@
             // 
             this.estado.DataPropertyName = "estado";
             this.estado.HeaderText = "estado";
+            this.estado.MinimumWidth = 6;
             this.estado.Name = "estado";
             this.estado.ReadOnly = true;
             this.estado.Visible = false;
@@ -173,6 +192,7 @@
             // 
             this.fechaCrea.DataPropertyName = "fechaCrea";
             this.fechaCrea.HeaderText = "fechaCrea";
+            this.fechaCrea.MinimumWidth = 6;
             this.fechaCrea.Name = "fechaCrea";
             this.fechaCrea.ReadOnly = true;
             this.fechaCrea.Visible = false;
@@ -181,20 +201,42 @@
             // 
             this.codigoEstilo.DataPropertyName = "codigoEstilo";
             this.codigoEstilo.HeaderText = "codigoEstilo";
+            this.codigoEstilo.MinimumWidth = 6;
             this.codigoEstilo.Name = "codigoEstilo";
             this.codigoEstilo.ReadOnly = true;
             this.codigoEstilo.Visible = false;
             // 
+            // btnVerDetalle
+            // 
+            this.btnVerDetalle.HeaderText = "Detalle";
+            this.btnVerDetalle.MinimumWidth = 6;
+            this.btnVerDetalle.Name = "btnVerDetalle";
+            this.btnVerDetalle.ReadOnly = true;
+            this.btnVerDetalle.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnVerDetalle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.btnVerDetalle.Text = "VER DETALLE";
+            this.btnVerDetalle.UseColumnTextForButtonValue = true;
+            // 
+            // ColPermitirRegistro
+            // 
+            this.ColPermitirRegistro.DataPropertyName = "PermitirRegistro";
+            this.ColPermitirRegistro.HeaderText = "PermitirRegistro";
+            this.ColPermitirRegistro.MinimumWidth = 6;
+            this.ColPermitirRegistro.Name = "ColPermitirRegistro";
+            this.ColPermitirRegistro.ReadOnly = true;
+            this.ColPermitirRegistro.Visible = false;
+            // 
             // BuscarPedidosColorView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(567, 390);
+            this.ClientSize = new System.Drawing.Size(756, 480);
             this.Controls.Add(this.dgvLista);
             this.Controls.Add(this.txtPedido);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "BuscarPedidosColorView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Busqueda de Pedidos Color";
@@ -222,5 +264,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn estado;
         private System.Windows.Forms.DataGridViewTextBoxColumn fechaCrea;
         private System.Windows.Forms.DataGridViewTextBoxColumn codigoEstilo;
+        private System.Windows.Forms.DataGridViewButtonColumn btnVerDetalle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColPermitirRegistro;
     }
 }
