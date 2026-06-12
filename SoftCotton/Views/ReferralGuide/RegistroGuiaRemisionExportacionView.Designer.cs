@@ -145,6 +145,8 @@
             this.dtpFechafinFiltro = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaInicioFiltro = new System.Windows.Forms.DateTimePicker();
             this.btnExportar = new System.Windows.Forms.Button();
+            this.txtNumberPackages = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
             this.tabRegistros.SuspendLayout();
             this.tabHRegistros.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -180,11 +182,13 @@
             this.tabRegistros.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabRegistros.Name = "tabRegistros";
             this.tabRegistros.SelectedIndex = 0;
-            this.tabRegistros.Size = new System.Drawing.Size(1682, 647);
+            this.tabRegistros.Size = new System.Drawing.Size(1682, 670);
             this.tabRegistros.TabIndex = 10;
             // 
             // tabHRegistros
             // 
+            this.tabHRegistros.Controls.Add(this.txtNumberPackages);
+            this.tabHRegistros.Controls.Add(this.label25);
             this.tabHRegistros.Controls.Add(this.txtFacturaReferencia);
             this.tabHRegistros.Controls.Add(this.label24);
             this.tabHRegistros.Controls.Add(this.groupBox9);
@@ -229,7 +233,7 @@
             this.tabHRegistros.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabHRegistros.Name = "tabHRegistros";
             this.tabHRegistros.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabHRegistros.Size = new System.Drawing.Size(1674, 614);
+            this.tabHRegistros.Size = new System.Drawing.Size(1674, 637);
             this.tabHRegistros.TabIndex = 0;
             this.tabHRegistros.Text = "Registros";
             this.tabHRegistros.UseVisualStyleBackColor = true;
@@ -1519,12 +1523,31 @@
             this.btnExportar.UseVisualStyleBackColor = true;
             this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
             // 
+            // txtNumberPackages
+            // 
+            this.txtNumberPackages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNumberPackages.Location = new System.Drawing.Point(1268, 604);
+            this.txtNumberPackages.Margin = new System.Windows.Forms.Padding(4);
+            this.txtNumberPackages.Name = "txtNumberPackages";
+            this.txtNumberPackages.Size = new System.Drawing.Size(389, 27);
+            this.txtNumberPackages.TabIndex = 79;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(1089, 611);
+            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(169, 20);
+            this.label25.TabIndex = 78;
+            this.label25.Text = "NUMBER OF PACKAGES:";
+            // 
             // RegistroGuiaRemisionExportacionView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1710, 670);
+            this.ClientSize = new System.Drawing.Size(1710, 693);
             this.Controls.Add(this.tabRegistros);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -1686,5 +1709,7 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn dgvTxtUnidadMedida;
         private System.Windows.Forms.TextBox txtFacturaReferencia;
         private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox txtNumberPackages;
+        private System.Windows.Forms.Label label25;
     }
 }

@@ -163,6 +163,9 @@ namespace SoftCotton.Views.ReferralGuide
                 _grCabParam.total_um = cbxTotalUM.SelectedValue.ToString();
                 _grCabParam.gross_weight_um = cbxGrossWeightUM.SelectedValue.ToString();
                 _grCabParam.net_weight_um = cbxNetWeightUM.SelectedValue.ToString();
+                _grCabParam.NumeroBultos = float.TryParse(txtNumberPackages.Text?.Trim(), out float valor) ? valor : 1;
+
+
 
                 // AGREGADO
                 _grCabParam.fechaVencimiento = dtpFechaVencimiento.Value.ToString("yyyyMMdd");
@@ -588,6 +591,7 @@ namespace SoftCotton.Views.ReferralGuide
                 txtOtros.Text = grCab.otrosMotivoTraslado;
                 txtDamDua.Text = grCab.DamDs;
                 txtFacturaReferencia.Text = grCab.FacturaReferencia;
+                txtNumberPackages.Text = grCab.NumeroBultos.ToString();
 
                 //txtDamDs.Text = grCab.DamDs;
 

@@ -595,6 +595,11 @@ namespace SoftCotton.Repository
 
                     sqlCommand.Parameters.Add("@IdMovimientoCabecera", SqlDbType.Int, 1).Value = parametros.IdMovimientoCabecera;
 
+
+                    sqlCommand.Parameters.Add("@PesoBruto", SqlDbType.Float).Value = parametros.PesoBruto;
+                    sqlCommand.Parameters.Add("@NumeroBultos", SqlDbType.Float).Value = parametros.NumeroBultos;
+
+
                     string JsonDetalle = JsonConvert.SerializeObject(parametros.ListDetalle, Formatting.Indented);
                     sqlCommand.Parameters.Add("@JsonDetalle", SqlDbType.NVarChar).Value = JsonDetalle;
 

@@ -35,6 +35,10 @@ namespace SoftCotton.Model.ReferralGuide
         public string otrosMotivoTraslado { get; set; }
         public string codTipoTransporte { get; set; }
 
+        public float NumeroBultos { get; set; }
+        public float PesoBruto { get; set; }
+
+
 
         public int?  IdMovimientoCabecera { get; set; }
         public List<MovimientosDetalle> ListDetalle = new List<MovimientosDetalle>();
@@ -73,6 +77,8 @@ namespace SoftCotton.Model.ReferralGuide
             otrosMotivoTraslado = "";
             codTipoTransporte = "";
 
+            PesoBruto = 0;
+            NumeroBultos = 0;
 
             IdMovimientoCabecera = null;
             ListDetalle = new List<MovimientosDetalle>();

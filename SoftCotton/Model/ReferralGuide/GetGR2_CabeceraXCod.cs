@@ -103,6 +103,10 @@ namespace SoftCotton.Model.ReferralGuide
 
         public string FacturaReferencia { get; set; }
 
+        public float PesoBruto { get; set; }
+        public float NumeroBultos { get; set; }
+
+
 
     }
 }
