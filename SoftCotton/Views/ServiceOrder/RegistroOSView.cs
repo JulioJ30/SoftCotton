@@ -5,6 +5,7 @@ using SoftCotton.Model.Transformacion;
 using SoftCotton.Reports.ServiceOrder.OrdenServicio;
 using SoftCotton.Repository;
 using SoftCotton.Util;
+using SoftCotton.Views.Maintenance;
 using SoftCotton.Views.ReferralGuide;
 using SoftCotton.Views.Shared;
 using System;
@@ -784,6 +785,15 @@ namespace SoftCotton.Views.ServiceOrder
                         ocDetParam.obs5 = row.Cells["dgvTxtObs5"].Value.ToString();
                     }
 
+                    if (row.Cells["IdPedidoColor"].Value == null)
+                    {
+                        ocDetParam.IdPedidoColor = null;
+                    }
+                    else
+                    {
+                        ocDetParam.IdPedidoColor = Convert.ToInt32(row.Cells["IdPedidoColor"].Value.ToString());
+                    }
+
 
                     Response respuesta = _ordenServicioBL.SetOSDetalle(ocDetParam);
 
@@ -1088,6 +1098,10 @@ namespace SoftCotton.Views.ServiceOrder
                 dgvOSDetalle.Rows[index].Cells["dgvTxtObs4"].Value = item.obs4;
                 dgvOSDetalle.Rows[index].Cells["dgvTxtObs5"].Value = item.obs5;
 
+                dgvOSDetalle.Rows[index].Cells["IdPedidoColor"].Value = item.IdPedidoColor;
+                dgvOSDetalle.Rows[index].Cells["PedidoColor"].Value = item.PedidoColor;
+
+
                 dgvOSDetalle.Rows[index].Cells["dgvTxtTotal"].Value = Math.Round((item.cantidad * item.precioUnitario), 3);
 
             }
@@ -1325,6 +1339,47 @@ namespace SoftCotton.Views.ServiceOrder
 
             txtCodServicio.Text = programaView.codigo;
             txtServicio.Text = programaView.nombre;
+        }
+
+        private void dgvOSDetalle_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0) // Asegúrate de no estar en header
+            {
+                var columna = dgvOSDetalle.Columns[e.ColumnIndex];
+
+                if (columna.Name == "PedidoColor")
+                {
+                    // Aquí va tu lógica si se hizo clic en la celda "cellBoton"
+                    //MessageBox.Show("¡Hiciste clic en cellBoton!");
+
+                    // Ejemplo: abrir el formulario y asignar valores
+                    BuscarPedidosColorView objFormulario = new BuscarPedidosColorView(true);
+                    objFormulario.ShowDialog();
+
+                    if (objFormulario.idPedidoColorParam != 0)
+                    {
+                        //txtPedido.Text = objFormulario.pedidoParam;
+                        //txtEstilo.Text = objFormulario.estiloParam;
+                        //txtPrograma.Text = objFormulario.programaParam;
+                        //txtColorPedido.Text = objFormulario.colorParam;
+
+                        dgvOSDetalle.Rows[e.RowIndex].Cells["IdPedidoColor"].Value = objFormulario.idPedidoColorParam;
+                        dgvOSDetalle.Rows[e.RowIndex].Cells["PedidoColor"].Value = $"{objFormulario.pedidoParam} {objFormulario.colorParam} {objFormulario.estiloParam} {objFormulario.programaParam}";
+                        //dgvGRDetalle.Rows[e.RowIndex].Cells["DgvPartidaProveedor"].Value = objFormulario.idPedidoColorParam;
+
+
+                        //dgvGRDetalle.CurrentRow.Cells["dgvTxtTotal"].Value
+                    }
+                }
+            }
+
+
+        }
+
+        private void txtCodigo_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

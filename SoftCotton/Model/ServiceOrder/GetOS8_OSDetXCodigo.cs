@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Org.BouncyCastle.Asn1.Mozilla;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,5 +26,9 @@ namespace SoftCotton.Model.ServiceOrder
         public string obs3 { get; set; }
         public string obs4 { get; set; }
         public string obs5 { get; set; }
+
+        public int? IdPedidoColor { get; set; }
+        public string PedidoColor { get; set; }
+
     }
 }

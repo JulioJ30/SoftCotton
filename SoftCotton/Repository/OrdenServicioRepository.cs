@@ -481,6 +481,17 @@ namespace SoftCotton.Repository
                             ocDet.obs3 = reader["obs3"].ToString();
                             ocDet.obs4 = reader["obs4"].ToString();
                             ocDet.obs5 = reader["obs5"].ToString();
+                            if (reader["IdPedidoColor"].ToString() != null && reader["IdPedidoColor"].ToString() != "")
+                            {
+                                ocDet.IdPedidoColor = Convert.ToInt32(reader["IdPedidoColor"]);
+                            }
+                            else
+                            {
+                                ocDet.IdPedidoColor = null;
+                            }
+                            ocDet.PedidoColor = reader["PedidoColor"].ToString();
+
+
 
                             ocDets.Add(ocDet);
                         }
@@ -1424,6 +1435,9 @@ namespace SoftCotton.Repository
                     sqlCommand.Parameters.Add("@obs3", SqlDbType.VarChar).Value = parametros.obs3;
                     sqlCommand.Parameters.Add("@obs4", SqlDbType.VarChar).Value = parametros.obs4;
                     sqlCommand.Parameters.Add("@obs5", SqlDbType.VarChar).Value = parametros.obs5;
+
+                    sqlCommand.Parameters.Add("@IdPedidoColor", SqlDbType.Int).Value = parametros.IdPedidoColor;
+
 
                     sqlConnection.Open();
 

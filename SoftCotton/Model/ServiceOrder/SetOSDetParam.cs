@@ -25,6 +25,8 @@ namespace SoftCotton.Model.ServiceOrder
         public string obs4 { get; set; }
         public string obs5 { get; set; }
 
+        public int? IdPedidoColor { get; set; }
+
         public SetOSDetParam()
         {
             opcion = 0;
@@ -44,6 +46,7 @@ namespace SoftCotton.Model.ServiceOrder
             obs3 = "";
             obs4 = "";
             obs5 = "";
+            IdPedidoColor = null;
         }
     }
 }
