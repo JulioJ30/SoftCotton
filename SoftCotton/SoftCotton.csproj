@@ -124,6 +124,15 @@
     <Reference Include="Microsoft.SqlServer.Types, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SqlServer.Types.160.1000.6\lib\net462\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.4022.49, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.4022.49\lib\net462\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.4022.49, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.4022.49\lib\net462\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Wpf, Version=1.0.4022.49, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.4022.49\lib\net462\Microsoft.Web.WebView2.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net35\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -581,6 +590,12 @@
     </Compile>
     <Compile Include="Views\Maintenance\BuscarTallas.Designer.cs">
       <DependentUpon>BuscarTallas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Maintenance\FormVisorPdf.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Maintenance\FormVisorPdf.Designer.cs">
+      <DependentUpon>FormVisorPdf.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Maintenance\LogRegistros.cs">
       <SubType>Form</SubType>
@@ -1447,5 +1462,7 @@
       <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.4022.49\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.4022.49\build\Microsoft.Web.WebView2.targets'))" />
   </Target>
+  <Import Project="..\packages\Microsoft.Web.WebView2.1.0.4022.49\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.4022.49\build\Microsoft.Web.WebView2.targets')" />
 </Project>
