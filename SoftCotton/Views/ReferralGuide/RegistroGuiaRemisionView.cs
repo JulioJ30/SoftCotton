@@ -15,6 +15,7 @@ using DocumentFormat.OpenXml.Drawing;
 using SoftCotton.Model.Movimientos;
 using SoftCotton.Views.Maintenance;
 using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml.Vml.Spreadsheet;
 
 
 namespace SoftCotton.Views.ReferralGuide
@@ -480,6 +481,8 @@ namespace SoftCotton.Views.ReferralGuide
 
                     lblcuo.Text = $"Número de Movimiento:{grCab.cuo}";
                     btnEnviarNubefact.Enabled = !grCab.enviadoSunat;
+                    btnVerPdfNubefact.Enabled = grCab.enviadoSunat;
+
 
                     ListarDetalle(Empresa.ID_EMPRESA, grCab.serie, grCab.numero, grCab.tipoOrden);
                 }
@@ -1782,10 +1785,6 @@ namespace SoftCotton.Views.ReferralGuide
                 }
 
 
-
-
-
-
                 if (item.cantidadIngresada < 0)
                 {
                     itemNew.cantidad = (item.cantidadIngresada * -1);
@@ -2184,6 +2183,53 @@ namespace SoftCotton.Views.ReferralGuide
                 }
             }
 
+        }
+
+        private void btnVerPdfNubefact_Click(object sender, EventArgs e)
+        {
+            InvoiceConsultar invoice = new InvoiceConsultar();
+            invoice.operacion = "consultar_guia";
+            invoice.tipo_de_comprobante = 7;
+            invoice.serie = txtSerie.Text.Trim();
+            invoice.numero = txtNumero.Text.Trim();
+
+            string json = JsonConvert.SerializeObject(invoice, Formatting.Indented);
+
+            byte[] bytes = Encoding.Default.GetBytes(json);
+            string json_en_utf_8 = Encoding.UTF8.GetString(bytes);
+
+            string json_de_respuesta = EnviarGuiaRemisionBL.SendJson(json_en_utf_8);
+
+            Respuesta leer_respuesta = JsonConvert.DeserializeObject<Respuesta>(json_de_respuesta);
+
+            if (leer_respuesta.aceptada_por_sunat)
+            {
+                string urlPdf = leer_respuesta.enlace_del_pdf;
+
+                if (!string.IsNullOrEmpty(urlPdf))
+                {
+                    FormVisorPdf visor = new FormVisorPdf(urlPdf);
+                    visor.ShowDialog(); // o visor.ShowDialog() si quieres modal
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "La guía fue aceptada por SUNAT, pero no se encontró el enlace del PDF.",
+                        "Sin enlace",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                }
+            }
+            else
+            {
+                MessageBox.Show(
+                    "La guía de remisión NO fue aceptada por SUNAT.",
+                    "No aceptada",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
         }
     }
 }

@@ -40,6 +40,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtPesoBruto = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.txtNumeroBultos = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
             this.lblcuo = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.lblFiltro = new System.Windows.Forms.Label();
@@ -61,6 +65,7 @@
             this.btnBuscarProvTransp = new System.Windows.Forms.Button();
             this.label17 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtNumPlaca = new System.Windows.Forms.TextBox();
             this.cboLicenciaConducir = new System.Windows.Forms.ComboBox();
             this.cboConstanciaInscripcion = new System.Windows.Forms.ComboBox();
             this.cboTipoTransporte = new System.Windows.Forms.ComboBox();
@@ -147,11 +152,7 @@
             this.DgvPartidaProveedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgvComentario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PrecioGr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label21 = new System.Windows.Forms.Label();
-            this.txtNumeroBultos = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.txtPesoBruto = new System.Windows.Forms.TextBox();
-            this.txtNumPlaca = new System.Windows.Forms.TextBox();
+            this.btnVerPdfNubefact = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -256,6 +257,48 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "REGISTRO";
+            // 
+            // txtPesoBruto
+            // 
+            this.txtPesoBruto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPesoBruto.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPesoBruto.Location = new System.Drawing.Point(604, 199);
+            this.txtPesoBruto.MaxLength = 100;
+            this.txtPesoBruto.Name = "txtPesoBruto";
+            this.txtPesoBruto.Size = new System.Drawing.Size(52, 26);
+            this.txtPesoBruto.TabIndex = 66;
+            this.txtPesoBruto.Text = "1";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(524, 203);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(78, 19);
+            this.label23.TabIndex = 65;
+            this.label23.Text = "Peso Bruto:";
+            // 
+            // txtNumeroBultos
+            // 
+            this.txtNumeroBultos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNumeroBultos.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNumeroBultos.Location = new System.Drawing.Point(466, 198);
+            this.txtNumeroBultos.MaxLength = 100;
+            this.txtNumeroBultos.Name = "txtNumeroBultos";
+            this.txtNumeroBultos.Size = new System.Drawing.Size(52, 26);
+            this.txtNumeroBultos.TabIndex = 63;
+            this.txtNumeroBultos.Text = "1";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(398, 204);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(69, 19);
+            this.label21.TabIndex = 62;
+            this.label21.Text = "N° Bultos:";
             // 
             // lblcuo
             // 
@@ -506,6 +549,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "UNIDAD DE TRANSPORTE Y CONDUCTOR(ES)";
             // 
+            // txtNumPlaca
+            // 
+            this.txtNumPlaca.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNumPlaca.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNumPlaca.Location = new System.Drawing.Point(498, 13);
+            this.txtNumPlaca.MaxLength = 100;
+            this.txtNumPlaca.Name = "txtNumPlaca";
+            this.txtNumPlaca.Size = new System.Drawing.Size(93, 26);
+            this.txtNumPlaca.TabIndex = 68;
+            // 
             // cboLicenciaConducir
             // 
             this.cboLicenciaConducir.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -716,6 +769,7 @@
             // 
             // panel9
             // 
+            this.panel9.Controls.Add(this.btnVerPdfNubefact);
             this.panel9.Controls.Add(this.panel4);
             this.panel9.Controls.Add(this.panel3);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -1396,57 +1450,18 @@
             this.PrecioGr.Name = "PrecioGr";
             this.PrecioGr.Width = 125;
             // 
-            // label21
+            // btnVerPdfNubefact
             // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(398, 204);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(86, 24);
-            this.label21.TabIndex = 62;
-            this.label21.Text = "N° Bultos:";
-            // 
-            // txtNumeroBultos
-            // 
-            this.txtNumeroBultos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtNumeroBultos.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNumeroBultos.Location = new System.Drawing.Point(466, 198);
-            this.txtNumeroBultos.MaxLength = 100;
-            this.txtNumeroBultos.Name = "txtNumeroBultos";
-            this.txtNumeroBultos.Size = new System.Drawing.Size(52, 26);
-            this.txtNumeroBultos.TabIndex = 63;
-            this.txtNumeroBultos.Text = "1";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(524, 203);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(98, 24);
-            this.label23.TabIndex = 65;
-            this.label23.Text = "Peso Bruto:";
-            // 
-            // txtPesoBruto
-            // 
-            this.txtPesoBruto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPesoBruto.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPesoBruto.Location = new System.Drawing.Point(604, 199);
-            this.txtPesoBruto.MaxLength = 100;
-            this.txtPesoBruto.Name = "txtPesoBruto";
-            this.txtPesoBruto.Size = new System.Drawing.Size(52, 26);
-            this.txtPesoBruto.TabIndex = 66;
-            this.txtPesoBruto.Text = "1";
-            // 
-            // txtNumPlaca
-            // 
-            this.txtNumPlaca.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtNumPlaca.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNumPlaca.Location = new System.Drawing.Point(498, 13);
-            this.txtNumPlaca.MaxLength = 100;
-            this.txtNumPlaca.Name = "txtNumPlaca";
-            this.txtNumPlaca.Size = new System.Drawing.Size(93, 26);
-            this.txtNumPlaca.TabIndex = 68;
+            this.btnVerPdfNubefact.Enabled = false;
+            this.btnVerPdfNubefact.Image = global::SoftCotton.Properties.Resources.icon_print;
+            this.btnVerPdfNubefact.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnVerPdfNubefact.Location = new System.Drawing.Point(480, 2);
+            this.btnVerPdfNubefact.Name = "btnVerPdfNubefact";
+            this.btnVerPdfNubefact.Size = new System.Drawing.Size(180, 26);
+            this.btnVerPdfNubefact.TabIndex = 76;
+            this.btnVerPdfNubefact.Text = "Ver Pdf Nubefact";
+            this.btnVerPdfNubefact.UseVisualStyleBackColor = true;
+            this.btnVerPdfNubefact.Click += new System.EventHandler(this.btnVerPdfNubefact_Click);
             // 
             // RegistroGuiaRemisionView
             // 
@@ -1607,5 +1622,6 @@
         private System.Windows.Forms.TextBox txtPesoBruto;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox txtNumPlaca;
+        private System.Windows.Forms.Button btnVerPdfNubefact;
     }
 }

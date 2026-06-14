@@ -14,6 +14,15 @@ namespace SoftCotton.Model.ReferralGuide
 
     //}
 
+    public class InvoiceConsultar
+    {
+        public string operacion { get; set; }
+        public int tipo_de_comprobante { get; set; }
+        public string serie { get; set; }
+        public string numero { get; set; }
+
+    }
+
     public class Invoice
     {
         public string operacion { get; set; }
@@ -164,6 +173,7 @@ namespace SoftCotton.Model.ReferralGuide
 
     public class Respuesta
     {
+        public string enlace_del_pdf { get; set; }
         public string errors { get; set; }
         public int tipo { get; set; }
         public string serie { get; set; }

@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegistroGuiaRemisionExportacionView));
             this.tabRegistros = new System.Windows.Forms.TabControl();
             this.tabHRegistros = new System.Windows.Forms.TabPage();
+            this.txtNumberPackages = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
             this.txtFacturaReferencia = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
@@ -145,8 +147,7 @@
             this.dtpFechafinFiltro = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaInicioFiltro = new System.Windows.Forms.DateTimePicker();
             this.btnExportar = new System.Windows.Forms.Button();
-            this.txtNumberPackages = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
+            this.btnVerPdfNubefact = new System.Windows.Forms.Button();
             this.tabRegistros.SuspendLayout();
             this.tabHRegistros.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -187,6 +188,7 @@
             // 
             // tabHRegistros
             // 
+            this.tabHRegistros.Controls.Add(this.btnVerPdfNubefact);
             this.tabHRegistros.Controls.Add(this.txtNumberPackages);
             this.tabHRegistros.Controls.Add(this.label25);
             this.tabHRegistros.Controls.Add(this.txtFacturaReferencia);
@@ -237,6 +239,25 @@
             this.tabHRegistros.TabIndex = 0;
             this.tabHRegistros.Text = "Registros";
             this.tabHRegistros.UseVisualStyleBackColor = true;
+            // 
+            // txtNumberPackages
+            // 
+            this.txtNumberPackages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNumberPackages.Location = new System.Drawing.Point(1268, 604);
+            this.txtNumberPackages.Margin = new System.Windows.Forms.Padding(4);
+            this.txtNumberPackages.Name = "txtNumberPackages";
+            this.txtNumberPackages.Size = new System.Drawing.Size(389, 27);
+            this.txtNumberPackages.TabIndex = 79;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(1089, 611);
+            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(169, 20);
+            this.label25.TabIndex = 78;
+            this.label25.Text = "NUMBER OF PACKAGES:";
             // 
             // txtFacturaReferencia
             // 
@@ -1305,7 +1326,7 @@
             this.tabHReporte.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabHReporte.Name = "tabHReporte";
             this.tabHReporte.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabHReporte.Size = new System.Drawing.Size(1674, 614);
+            this.tabHReporte.Size = new System.Drawing.Size(1674, 637);
             this.tabHReporte.TabIndex = 1;
             this.tabHReporte.Text = "Reportes";
             this.tabHReporte.UseVisualStyleBackColor = true;
@@ -1523,24 +1544,18 @@
             this.btnExportar.UseVisualStyleBackColor = true;
             this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
             // 
-            // txtNumberPackages
+            // btnVerPdfNubefact
             // 
-            this.txtNumberPackages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtNumberPackages.Location = new System.Drawing.Point(1268, 604);
-            this.txtNumberPackages.Margin = new System.Windows.Forms.Padding(4);
-            this.txtNumberPackages.Name = "txtNumberPackages";
-            this.txtNumberPackages.Size = new System.Drawing.Size(389, 27);
-            this.txtNumberPackages.TabIndex = 79;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(1089, 611);
-            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(169, 20);
-            this.label25.TabIndex = 78;
-            this.label25.Text = "NUMBER OF PACKAGES:";
+            this.btnVerPdfNubefact.Enabled = false;
+            this.btnVerPdfNubefact.Image = global::SoftCotton.Properties.Resources.icon_print;
+            this.btnVerPdfNubefact.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnVerPdfNubefact.Location = new System.Drawing.Point(610, 594);
+            this.btnVerPdfNubefact.Name = "btnVerPdfNubefact";
+            this.btnVerPdfNubefact.Size = new System.Drawing.Size(191, 37);
+            this.btnVerPdfNubefact.TabIndex = 80;
+            this.btnVerPdfNubefact.Text = "Ver Pdf Nubefact";
+            this.btnVerPdfNubefact.UseVisualStyleBackColor = true;
+            this.btnVerPdfNubefact.Click += new System.EventHandler(this.btnVerPdfNubefact_Click);
             // 
             // RegistroGuiaRemisionExportacionView
             // 
@@ -1711,5 +1726,6 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox txtNumberPackages;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button btnVerPdfNubefact;
     }
 }
