@@ -858,7 +858,7 @@ namespace SoftCotton.Views.ReferralGuide
                     // Validamos que la columna actual sea "OP"
                     if (dgvGRDetalle.CurrentCell.OwningColumn.Name == "OP")
                     {
-                        BuscarPedidosColorView buscarPedidosColorView = new BuscarPedidosColorView(true);
+                        BuscarPedidosColorView buscarPedidosColorView = new BuscarPedidosColorView(true,"20");
                         buscarPedidosColorView.ShowDialog();
                         if (buscarPedidosColorView.pedidoParam != null && buscarPedidosColorView.pedidoParam != "")
                         {

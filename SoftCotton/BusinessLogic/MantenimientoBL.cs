@@ -321,9 +321,9 @@ namespace SoftCotton.BusinessLogic
         }
 
 
-        public IEnumerable<GetMant56_PedidosColor> getPedidosColorFiltro(string filtro)
+        public IEnumerable<GetMant56_PedidosColor> getPedidosColorFiltro(string filtro,string nivel)
         {
-            return _mantenimientoRepository.getPedidosColorFiltro(filtro);
+            return _mantenimientoRepository.getPedidosColorFiltro(filtro,nivel);
 
         }
 

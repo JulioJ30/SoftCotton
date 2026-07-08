@@ -2631,7 +2631,7 @@ namespace SoftCotton.Repository
             }
         }
 
-        public IEnumerable<GetMant56_PedidosColor> getPedidosColorFiltro(string filtro)
+        public IEnumerable<GetMant56_PedidosColor> getPedidosColorFiltro(string filtro,string nivel)
         {
             //GetGR2_CabeceraXCod grCab = new GetGR2_CabeceraXCod();
             using (SqlConnection sqlConnection = ConnectionBD.GetConnection())
@@ -2640,6 +2640,8 @@ namespace SoftCotton.Repository
                 var sp_parametros = new DynamicParameters();
                 sp_parametros.Add("@opcion", 57, DbType.Int32, ParameterDirection.Input);
                 sp_parametros.Add("@filtroTxt1", filtro, DbType.String, ParameterDirection.Input);
+                sp_parametros.Add("@filtroTxt2", nivel, DbType.String, ParameterDirection.Input);
+
 
 
                 return sqlConnection.Query<GetMant56_PedidosColor>("uspGetMantenimiento",

@@ -19,15 +19,17 @@ namespace SoftCotton.Views.Maintenance
         public string codigoEstiloParam = "";
         public string programaParam = "";
         public bool showDetalleInterno = false;
+        public string nivelInterno = "";
 
 
 
-        public BuscarPedidosColorView(bool mostrarDetalle = false)
+
+        public BuscarPedidosColorView(bool mostrarDetalle = false,string nivel = "20")
         {
             InitializeComponent();
             _mantenimientoBL = new MantenimientoBL();
             this.showDetalleInterno = mostrarDetalle;
-
+            this.nivelInterno = nivel;
 
             // Opción 1: por nombre de columna (recomendado)
             dgvLista.Columns["btnVerDetalle"].Visible = mostrarDetalle;
@@ -40,15 +42,15 @@ namespace SoftCotton.Views.Maintenance
             {
                 if (!string.IsNullOrEmpty(txtPedido.Text.Trim()))
                 {
-                    BuscarPedidosColor(txtPedido.Text.Trim());
+                    BuscarPedidosColor(txtPedido.Text.Trim(),nivelInterno);
                 }
             }
         }
 
-        private void BuscarPedidosColor(string filtro)
+        private void BuscarPedidosColor(string filtro,string nivel)
         {
 
-            List<GetMant56_PedidosColor> lista = _mantenimientoBL.getPedidosColorFiltro(filtro).ToList();
+            List<GetMant56_PedidosColor> lista = _mantenimientoBL.getPedidosColorFiltro(filtro,nivel).ToList();
             
             dgvLista.DataSource = lista;
             if (dgvLista.Rows.Count > 0)

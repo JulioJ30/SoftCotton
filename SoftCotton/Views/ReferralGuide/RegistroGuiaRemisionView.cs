@@ -2162,8 +2162,19 @@ namespace SoftCotton.Views.ReferralGuide
                     // Aquí va tu lógica si se hizo clic en la celda "cellBoton"
                     //MessageBox.Show("¡Hiciste clic en cellBoton!");
 
+
+                    //dgvTxtCodigoProducto
+
+                    string codigoProducto = dgvGRDetalle.CurrentRow
+                                     .Cells["dgvTxtCodigoProducto"]
+                                     .Value?.ToString();
+
+
+                    string nivel = codigoProducto.Length > 2 ? codigoProducto.Substring(0, 2) : string.Empty;
+                    
+
                     // Ejemplo: abrir el formulario y asignar valores
-                    BuscarPedidosColorView objFormulario = new BuscarPedidosColorView();
+                    BuscarPedidosColorView objFormulario = new BuscarPedidosColorView(true,nivel);
                     objFormulario.ShowDialog();
 
                     if (objFormulario.idPedidoColorParam != 0)
