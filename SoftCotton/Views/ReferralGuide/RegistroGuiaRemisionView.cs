@@ -1701,10 +1701,8 @@ namespace SoftCotton.Views.ReferralGuide
             invoice.serie = grCabGenerales.serie;
             invoice.numero = Convert.ToInt32(grCabGenerales.numero);
             invoice.sunat_transaction = 1;
-            //invoice.sunat_transaction = 2;
 
-            invoice.cliente_tipo_de_documento = 6;
-            //invoice.cliente_numero_de_documento = "20600695771";
+            invoice.cliente_tipo_de_documento = grCabGenerales.ruc.Length == 8 ? 1 : 6;
             invoice.cliente_numero_de_documento = grCabGenerales.ruc;
 
             invoice.cliente_denominacion = grCabGenerales.descripcionCliente;
