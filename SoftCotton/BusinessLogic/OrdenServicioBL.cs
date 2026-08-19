@@ -191,5 +191,19 @@ namespace SoftCotton.BusinessLogic
         {
             return _ordenServicioRepository.SetOrdenSalidaAprobacion(parametros, tipoOrden);
         }
+
+        // ### ADJUNTOS (COTIZACIONES) ###
+        public List<GetOS28_AdjuntoXOS> Get28_AdjuntosXOS(int idEmpresa, int idOS)
+        {
+            return _ordenServicioRepository.Get28_AdjuntosXOS(idEmpresa, idOS);
+        }
+        public GetOS29_AdjuntoContenido Get29_AdjuntoContenido(int idAdjunto)
+        {
+            return _ordenServicioRepository.Get29_AdjuntoContenido(idAdjunto);
+        }
+        public Response SetOSAdjunto(SetOSAdjuntoParam parametros)
+        {
+            return _ordenServicioRepository.SetOSAdjunto(parametros);
+        }
     }
 }

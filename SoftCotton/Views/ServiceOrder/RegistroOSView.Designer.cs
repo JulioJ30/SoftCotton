@@ -34,6 +34,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnImprimir = new System.Windows.Forms.Button();
+            this.btnAdjuntos = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
             this.dtpFechaEmision = new System.Windows.Forms.DateTimePicker();
             this.label9 = new System.Windows.Forms.Label();
@@ -174,7 +175,20 @@
             this.btnImprimir.Text = "Imprimir";
             this.btnImprimir.UseVisualStyleBackColor = true;
             this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
-            // 
+            //
+            // btnAdjuntos
+            //
+            this.btnAdjuntos.Image = global::SoftCotton.Properties.Resources.icon_imagen;
+            this.btnAdjuntos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAdjuntos.Location = new System.Drawing.Point(426, 3);
+            this.btnAdjuntos.Name = "btnAdjuntos";
+            this.btnAdjuntos.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.btnAdjuntos.Size = new System.Drawing.Size(200, 25);
+            this.btnAdjuntos.TabIndex = 65;
+            this.btnAdjuntos.Text = "Cotizaciones Adjuntas";
+            this.btnAdjuntos.UseVisualStyleBackColor = true;
+            this.btnAdjuntos.Click += new System.EventHandler(this.btnAdjuntos_Click);
+            //
             // panel8
             // 
             this.panel8.Controls.Add(this.dtpFechaEmision);
@@ -865,6 +879,7 @@
             // 
             // panel9
             // 
+            this.panel9.Controls.Add(this.btnAdjuntos);
             this.panel9.Controls.Add(this.panel4);
             this.panel9.Controls.Add(this.panel3);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -1122,6 +1137,7 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button btnImprimir;
+        private System.Windows.Forms.Button btnAdjuntos;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.DateTimePicker dtpFechaEmision;
         private System.Windows.Forms.Label label9;

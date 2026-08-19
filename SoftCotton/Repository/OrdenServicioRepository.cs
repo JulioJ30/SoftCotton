@@ -1738,6 +1738,131 @@ namespace SoftCotton.Repository
 
             return response;
         }
+
+        // ### ADJUNTOS (COTIZACIONES) ###
+        public List<GetOS28_AdjuntoXOS> Get28_AdjuntosXOS(int idEmpresa, int idOS)
+        {
+            List<GetOS28_AdjuntoXOS> adjuntos = new List<GetOS28_AdjuntoXOS>();
+            GetOS28_AdjuntoXOS adjunto;
+
+            using (var sqlConnection = ConnectionBD.GetConnection())
+            {
+                using (var sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = @"uspGetOSAdjunto";
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.Add("@opcion", SqlDbType.Int).Value = 1;
+                    sqlCommand.Parameters.Add("@idEmpresa", SqlDbType.Int).Value = idEmpresa;
+                    sqlCommand.Parameters.Add("@idOS", SqlDbType.Int).Value = idOS;
+                    sqlCommand.Parameters.Add("@idAdjunto", SqlDbType.Int).Value = 0;
+
+                    sqlConnection.Open();
+
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            adjunto = new GetOS28_AdjuntoXOS();
+
+                            adjunto.idAdjunto = Convert.ToInt32(reader["idAdjunto"]);
+                            adjunto.idEmpresa = Convert.ToInt32(reader["idEmpresa"]);
+                            adjunto.idOS = Convert.ToInt32(reader["idOS"]);
+                            adjunto.nombreArchivo = reader["nombreArchivo"].ToString();
+                            adjunto.extension = reader["extension"].ToString();
+                            adjunto.tipoAdjunto = reader["tipoAdjunto"].ToString();
+                            adjunto.tamanioKB = Convert.ToDecimal(reader["tamanioKB"]);
+                            adjunto.usuarioReg = reader["usuarioReg"].ToString();
+                            adjunto.fechaReg = reader["fechaReg"].ToString();
+
+                            adjuntos.Add(adjunto);
+                        }
+                    }
+                }
+            }
+
+            return adjuntos;
+        }
+
+        public GetOS29_AdjuntoContenido Get29_AdjuntoContenido(int idAdjunto)
+        {
+            GetOS29_AdjuntoContenido adjunto = null;
+
+            using (var sqlConnection = ConnectionBD.GetConnection())
+            {
+                using (var sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = @"uspGetOSAdjunto";
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.Add("@opcion", SqlDbType.Int).Value = 2;
+                    sqlCommand.Parameters.Add("@idEmpresa", SqlDbType.Int).Value = 0;
+                    sqlCommand.Parameters.Add("@idOS", SqlDbType.Int).Value = 0;
+                    sqlCommand.Parameters.Add("@idAdjunto", SqlDbType.Int).Value = idAdjunto;
+
+                    sqlConnection.Open();
+
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        if (reader.Read())
+                        {
+                            adjunto = new GetOS29_AdjuntoContenido();
+
+                            adjunto.idAdjunto = Convert.ToInt32(reader["idAdjunto"]);
+                            adjunto.nombreArchivo = reader["nombreArchivo"].ToString();
+                            adjunto.extension = reader["extension"].ToString();
+                            adjunto.contenido = (byte[])reader["contenido"];
+                        }
+                    }
+                }
+            }
+
+            return adjunto;
+        }
+
+        public Response SetOSAdjunto(SetOSAdjuntoParam parametros)
+        {
+            Response response = new Response();
+
+            using (var sqlConnection = ConnectionBD.GetConnection())
+            {
+                using (var sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = @"uspSetOSAdjunto";
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.Add("@opcion", SqlDbType.Int).Value = parametros.opcion;
+                    sqlCommand.Parameters.Add("@idAdjunto", SqlDbType.Int).Value = parametros.idAdjunto;
+                    sqlCommand.Parameters.Add("@idEmpresa", SqlDbType.Int).Value = parametros.idEmpresa;
+                    sqlCommand.Parameters.Add("@idOS", SqlDbType.Int).Value = parametros.idOS;
+                    sqlCommand.Parameters.Add("@nombreArchivo", SqlDbType.VarChar, 255).Value = parametros.nombreArchivo ?? "";
+                    sqlCommand.Parameters.Add("@extension", SqlDbType.VarChar, 10).Value = parametros.extension ?? "";
+                    sqlCommand.Parameters.Add("@contenido", SqlDbType.VarBinary, -1).Value = (object)parametros.contenido ?? DBNull.Value;
+                    sqlCommand.Parameters.Add("@tipoAdjunto", SqlDbType.VarChar, 20).Value = parametros.tipoAdjunto ?? "COTIZACION";
+                    sqlCommand.Parameters.Add("@usuarioReg", SqlDbType.VarChar, 50).Value = parametros.usuarioReg ?? "";
+
+                    sqlConnection.Open();
+
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        if (reader.Read())
+                        {
+                            response.idResponse = Convert.ToInt32(reader["idResponse"]);
+                            response.messageResponse = reader["messageResponse"].ToString();
+                            response.typeMessage = reader["typeMessage"].ToString();
+                        }
+                    }
+                }
+            }
+
+            return response;
+        }
     }
 }
 

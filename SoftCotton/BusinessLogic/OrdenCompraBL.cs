@@ -141,6 +141,18 @@ namespace SoftCotton.BusinessLogic
             return _ordenCompraRepository.SetOCAprobacion(parametros);
         }
 
-
+        // ### ADJUNTOS (COTIZACIONES) ###
+        public List<GetOC28_AdjuntoXOC> Get28_AdjuntosXOC(int idEmpresa, int idOC)
+        {
+            return _ordenCompraRepository.Get28_AdjuntosXOC(idEmpresa, idOC);
+        }
+        public GetOC29_AdjuntoContenido Get29_AdjuntoContenido(int idAdjunto)
+        {
+            return _ordenCompraRepository.Get29_AdjuntoContenido(idAdjunto);
+        }
+        public Response SetOCAdjunto(SetOCAdjuntoParam parametros)
+        {
+            return _ordenCompraRepository.SetOCAdjunto(parametros);
+        }
     }
 }

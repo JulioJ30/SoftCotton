@@ -28,6 +28,8 @@ namespace SoftCotton.Views.PurchaseOrder
         int ID_PrimerTipoAprobacion;
         string Nombre_PrimerTipoAprobacion;
 
+        List<AdjuntoOCItem> _adjuntosOC = new List<AdjuntoOCItem>();
+
         // test 
         ConstantesBL _constantesBL;
         List<Constantes> CONSTANTES;
@@ -280,6 +282,12 @@ namespace SoftCotton.Views.PurchaseOrder
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             GuardarCambios();
+        }
+
+        private void btnAdjuntos_Click(object sender, EventArgs e)
+        {
+            AdjuntosOCView adjuntosView = new AdjuntosOCView(_adjuntosOC);
+            adjuntosView.ShowDialog();
         }
 
         private void btnBuscarOC_Click(object sender, EventArgs e)
@@ -686,6 +694,8 @@ namespace SoftCotton.Views.PurchaseOrder
 
                 dgvOCDetalle.Rows.Clear();
                 ListarDetalle(Empresa.ID_EMPRESA, Convert.ToInt32(txtCodigo.Text));
+
+                GuardarAdjuntosPendientes(idEmpresa, idOC);
             }
 
             // SI CREO CORRECTAMENTE
@@ -890,6 +900,8 @@ namespace SoftCotton.Views.PurchaseOrder
             lblFirmante1.Text = "-";
             lblFirmante2.Text = "-";
             lblFirmante3.Text = "-";
+
+            _adjuntosOC = new List<AdjuntoOCItem>();
         }
 
         private void BuscarOC(int idEmpresa, int codigoOC)
@@ -930,6 +942,51 @@ namespace SoftCotton.Views.PurchaseOrder
 
             ListarFirmantes(Empresa.ID_EMPRESA, codigoOC);
             ListarDetalle(Empresa.ID_EMPRESA, codigoOC);
+            CargarAdjuntos(Empresa.ID_EMPRESA, codigoOC);
+        }
+
+        private void CargarAdjuntos(int idEmpresa, int idOC)
+        {
+            _adjuntosOC = _ordenCompraBL.Get28_AdjuntosXOC(idEmpresa, idOC)
+                .Select(x => new AdjuntoOCItem
+                {
+                    idAdjunto = x.idAdjunto,
+                    nombreArchivo = x.nombreArchivo,
+                    extension = x.extension,
+                    tamanioKB = x.tamanioKB,
+                    usuarioReg = x.usuarioReg,
+                    fechaReg = x.fechaReg
+                }).ToList();
+        }
+
+        private void GuardarAdjuntosPendientes(int idEmpresa, int idOC)
+        {
+            foreach (var item in _adjuntosOC.Where(x => !x.Guardado))
+            {
+                SetOCAdjuntoParam parametro = new SetOCAdjuntoParam
+                {
+                    opcion = 1,
+                    idEmpresa = idEmpresa,
+                    idOC = idOC,
+                    nombreArchivo = item.nombreArchivo,
+                    extension = item.extension,
+                    contenido = item.contenido,
+                    tipoAdjunto = "COTIZACION",
+                    usuarioReg = UserApplication.USUARIO
+                };
+
+                Response respuesta = _ordenCompraBL.SetOCAdjunto(parametro);
+
+                if (respuesta.idResponse > 0)
+                {
+                    item.idAdjunto = respuesta.idResponse;
+                    item.contenido = null;
+                }
+                else
+                {
+                    ResponseMessage.Message("No se pudo guardar el adjunto \"" + item.nombreArchivo + "\": " + respuesta.messageResponse, respuesta.typeMessage);
+                }
+            }
         }
 
 

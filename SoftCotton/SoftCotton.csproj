@@ -283,6 +283,10 @@
     <Compile Include="Model\ServiceOrder\GetOS6_TipoAnulado.cs" />
     <Compile Include="Model\ServiceOrder\GetOS7_OSCabXCodigo.cs" />
     <Compile Include="Model\ServiceOrder\GetOS8_OSDetXCodigo.cs" />
+    <Compile Include="Model\ServiceOrder\GetOS28_AdjuntoXOS.cs" />
+    <Compile Include="Model\ServiceOrder\GetOS29_AdjuntoContenido.cs" />
+    <Compile Include="Model\ServiceOrder\AdjuntoOSItem.cs" />
+    <Compile Include="Model\ServiceOrder\SetOSAdjuntoParam.cs" />
     <Compile Include="Model\ServiceOrder\SetOSAprobacionParam.cs" />
     <Compile Include="Model\ServiceOrder\SetOSTipoAnuladoParam.cs" />
     <Compile Include="Model\ServiceOrder\SetOSTipoAprobParam.cs" />
@@ -321,6 +325,10 @@
     <Compile Include="Model\PurchaseOrder\GetOC6_TipoAnulado.cs" />
     <Compile Include="Model\PurchaseOrder\GetOC7_OCCabXCodigo.cs" />
     <Compile Include="Model\PurchaseOrder\GetOC8_OCDetXCodigo.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC28_AdjuntoXOC.cs" />
+    <Compile Include="Model\PurchaseOrder\GetOC29_AdjuntoContenido.cs" />
+    <Compile Include="Model\PurchaseOrder\AdjuntoOCItem.cs" />
+    <Compile Include="Model\PurchaseOrder\SetOCAdjuntoParam.cs" />
     <Compile Include="Model\PurchaseOrder\SetOCAprobacionParam.cs" />
     <Compile Include="Model\PurchaseOrder\SetOCDetParam.cs" />
     <Compile Include="Model\PurchaseOrder\SetOCFirmantesParam.cs" />
@@ -862,6 +870,9 @@
     <Compile Include="Views\ServiceOrder\RegistroOSView.Designer.cs">
       <DependentUpon>RegistroOSView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\ServiceOrder\AdjuntosOSView.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views\ServiceOrder\ReporteOSView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -933,6 +944,9 @@
     </Compile>
     <Compile Include="Views\PurchaseOrder\RegistroOCView.Designer.cs">
       <DependentUpon>RegistroOCView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PurchaseOrder\AdjuntosOCView.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\PurchaseOrder\TipoAnuladoView.cs">
       <SubType>Form</SubType>
