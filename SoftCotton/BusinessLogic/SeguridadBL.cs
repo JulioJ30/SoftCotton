@@ -37,6 +37,16 @@ namespace SoftCotton.BusinessLogic
             return _seguridadRepository.Get4_Personas();
         }
 
+        public List<GetAcceso5_Accesos> GetAcceso5_Accesos(int idUsuario)
+        {
+            return _seguridadRepository.GetAcceso5_Accesos(idUsuario);
+        }
+
+        public GetAcceso6_PermisosGuia GetAcceso6_PermisosGuia(int idUsuario, string rutaForm)
+        {
+            return _seguridadRepository.GetAcceso6_PermisosGuia(idUsuario, rutaForm);
+        }
+
 
         public List<GetMant1_Usuarios> GetMant1_Usuarios()
         {

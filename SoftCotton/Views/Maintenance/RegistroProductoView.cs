@@ -195,6 +195,12 @@ namespace SoftCotton.Views.Maintenance
             }
             else if (dgvListadoGrupos.Columns[e.ColumnIndex].Name.Equals("cdgvBtnEditar"))
             {
+                if (UserApplication.USUARIO != "ADMIN")
+                {
+                    ResponseMessage.Message("Solo el usuario ADMIN puede modificar productos", "INFORMATION");
+                    return;
+                }
+
                 cbxNivel.SelectedValue = dgvListadoGrupos.Rows[e.RowIndex].Cells["cdgvGPTxtCodNivel"].Value.ToString();
                 txtCodGrupo.Text = dgvListadoGrupos.Rows[e.RowIndex].Cells["cdgvGPTxtCodGrupo"].Value.ToString();
                 txtGrupo.Text = dgvListadoGrupos.Rows[e.RowIndex].Cells["cdgvGPTxtGrupo"].Value.ToString();
@@ -302,6 +308,12 @@ namespace SoftCotton.Views.Maintenance
 
                 if (txtCodGrupo.Text != "00000")
                 {
+                    if (UserApplication.USUARIO != "ADMIN")
+                    {
+                        ResponseMessage.Message("Solo el usuario ADMIN puede modificar productos", "INFORMATION");
+                        return;
+                    }
+
                     _grupoParam.opcion = 2; // ACTUALIZAR
                     _grupoParam.codNivel = cbxNivel.SelectedValue.ToString();
                     _grupoParam.codGrupo = txtCodGrupo.Text;

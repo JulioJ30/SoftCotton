@@ -101,6 +101,9 @@
             this.cbxTipoDocumento = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panelBuscar = new System.Windows.Forms.Panel();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.lblBuscar = new System.Windows.Forms.Label();
             this.panel5.SuspendLayout();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListado)).BeginInit();
@@ -110,6 +113,7 @@
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panelBuscar.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel5
@@ -804,15 +808,43 @@
             this.panel1.TabIndex = 16;
             // 
             // panel2
-            // 
+            //
             this.panel2.Controls.Add(this.dgvListado);
+            this.panel2.Controls.Add(this.panelBuscar);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 183);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(5);
             this.panel2.Size = new System.Drawing.Size(982, 276);
             this.panel2.TabIndex = 17;
-            // 
+            //
+            // panelBuscar
+            //
+            this.panelBuscar.Controls.Add(this.txtBuscar);
+            this.panelBuscar.Controls.Add(this.lblBuscar);
+            this.panelBuscar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelBuscar.Location = new System.Drawing.Point(5, 5);
+            this.panelBuscar.Name = "panelBuscar";
+            this.panelBuscar.Size = new System.Drawing.Size(972, 34);
+            this.panelBuscar.TabIndex = 1;
+            //
+            // txtBuscar
+            //
+            this.txtBuscar.Location = new System.Drawing.Point(69, 5);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(300, 26);
+            this.txtBuscar.TabIndex = 1;
+            this.txtBuscar.TextChanged += new System.EventHandler(this.txtBuscar_TextChanged);
+            //
+            // lblBuscar
+            //
+            this.lblBuscar.AutoSize = true;
+            this.lblBuscar.Location = new System.Drawing.Point(3, 8);
+            this.lblBuscar.Name = "lblBuscar";
+            this.lblBuscar.Size = new System.Drawing.Size(58, 19);
+            this.lblBuscar.TabIndex = 0;
+            this.lblBuscar.Text = "Buscar:";
+            //
             // RegistroProvClientesView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -838,6 +870,8 @@
             this.panel3.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.panelBuscar.ResumeLayout(false);
+            this.panelBuscar.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -914,5 +948,8 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn cbxActivo;
         private System.Windows.Forms.DataGridViewButtonColumn cbtnEditar;
         private System.Windows.Forms.DataGridViewButtonColumn cbtnEliminar;
+        private System.Windows.Forms.Panel panelBuscar;
+        private System.Windows.Forms.TextBox txtBuscar;
+        private System.Windows.Forms.Label lblBuscar;
     }
 }

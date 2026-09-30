@@ -11,6 +11,9 @@ namespace SoftCotton.Model.Security
         public int idSubModulo { get; set; }
         public string usuarioReg { get; set; }
         public bool activo { get; set; }
+        public bool permiteEntrada { get; set; }
+        public bool permiteSalida { get; set; }
+        public bool permiteDevolucion { get; set; }
 
         public SetAccesoParam()
         {
@@ -18,6 +21,9 @@ namespace SoftCotton.Model.Security
             idSubModulo = 0;
             usuarioReg = "";
             activo = false;
+            permiteEntrada = true;
+            permiteSalida = true;
+            permiteDevolucion = true;
         }
     }
 }

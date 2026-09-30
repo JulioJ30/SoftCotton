@@ -23,8 +23,6 @@ namespace SoftCotton.Views.Security
             InitializeComponent();
 
             _seguridadBL = new SeguridadBL();
-
-            UserApplication.USUARIO = "jmoran";
         }
 
         // ### EVENTOS ###

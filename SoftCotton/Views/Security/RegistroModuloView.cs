@@ -121,7 +121,7 @@ namespace SoftCotton.Views.Security
 
                     _moduloParam.opcion = 3; // INHABILITAR
                     _moduloParam.idModulo = Convert.ToInt32(row.Cells["cIntModulo"].Value);
-                    _moduloParam.usuarioReg = "JMORAN";
+                    _moduloParam.usuarioReg = UserApplication.USUARIO;
                     _moduloParam.estado = valorCheck;
 
                     Procesar(_moduloParam);
@@ -143,14 +143,14 @@ namespace SoftCotton.Views.Security
                     _moduloParam.opcion = 2; // ACTUALIZAR
                     _moduloParam.idModulo = Convert.ToInt32(lblIdModulo.Text);
                     _moduloParam.modulo = txtModulo.Text.Trim();
-                    _moduloParam.usuarioReg = "JMORAN"; // UserApplication.USUARIO;
+                    _moduloParam.usuarioReg = UserApplication.USUARIO;
                 }
                 else
                 {
                     _moduloParam.opcion = 1; // REGISTRAR
                     _moduloParam.idModulo = 0;
                     _moduloParam.modulo = txtModulo.Text.Trim();
-                    _moduloParam.usuarioReg = "JMORAN"; // UserApplication.USUARIO;
+                    _moduloParam.usuarioReg = UserApplication.USUARIO;
                 }
 
                 Procesar(_moduloParam);

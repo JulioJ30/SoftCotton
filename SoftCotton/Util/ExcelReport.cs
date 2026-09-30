@@ -1376,10 +1376,16 @@ namespace SoftCotton.Util
                 decimal totalGeneralN = 0;
                 decimal totalGeneralP = 0;
 
-                decimal saldoFinalQ = 0;
-                decimal saldoFinalS = 0;
+                decimal totalGeneralSaldoCantidad = 0;
+                decimal totalGeneralSaldoTotal = 0;
 
-                decimal accK = 0, accM = 0, accN = 0, accP = 0, saldoFinalQM = 0, saldoFinalSM = 0;
+                decimal accK = 0, accM = 0, accN = 0, accP = 0;
+                // Saldo real (SaldocantidadSolesS / SaldoTotalSolesS) del último movimiento leído del
+                // producto actual, tal como viene del proc — igual que hace el Excel, que arrastra el
+                // saldo real de la fila anterior en vez de recalcularlo. Necesario porque un ajuste de
+                // Cuadre de Kardex modifica el saldo valorizado sin mover entrada/salida, así que
+                // recalcularlo como entrada acumulada - salida acumulada perdería el ajuste.
+                decimal saldoCantidadBloque = 0, saldoTotalBloque = 0;
 
                 foreach (var item in contenidoArray)
                 {
@@ -1388,14 +1394,13 @@ namespace SoftCotton.Util
                     if (!primerItem && particion == 1)
                     {
                         InsertarTotalBloque(
-                            ws, row, bloqueInicio,
+                            ws, row,
+                            saldoCantidadBloque, saldoTotalBloque,
                             ref accK, ref accM, ref accN, ref accP,
                             ref totalGeneralK, ref totalGeneralM,
                             ref totalGeneralN, ref totalGeneralP,
-                            ref saldoFinalQM,
-                            ref saldoFinalSM,
-                            ref saldoFinalQ,
-                            ref saldoFinalS);
+                            ref totalGeneralSaldoCantidad,
+                            ref totalGeneralSaldoTotal);
 
                         row++;
                         bloqueInicio = row;
@@ -1412,8 +1417,8 @@ namespace SoftCotton.Util
                         if (col == 14) accN += ToDecimal(val);
                         if (col == 16) accP += ToDecimal(val);
 
-                        if (col == 17) saldoFinalQM += ToDecimal(val);
-                        if (col == 19) saldoFinalSM += ToDecimal(val);
+                        if (col == 17) saldoCantidadBloque = ToDecimal(val);
+                        if (col == 19) saldoTotalBloque = ToDecimal(val);
 
                         col++;
                     }
@@ -1424,14 +1429,13 @@ namespace SoftCotton.Util
 
                 // cerrar último bloque
                 InsertarTotalBloque(
-                   ws, row, bloqueInicio,
+                   ws, row,
+                   saldoCantidadBloque, saldoTotalBloque,
                    ref accK, ref accM, ref accN, ref accP,
                    ref totalGeneralK, ref totalGeneralM,
                    ref totalGeneralN, ref totalGeneralP,
-                   ref saldoFinalQM,
-                   ref saldoFinalSM,
-                   ref saldoFinalQ,
-                   ref saldoFinalS);
+                   ref totalGeneralSaldoCantidad,
+                   ref totalGeneralSaldoTotal);
 
                 row++;
 
@@ -1446,8 +1450,8 @@ namespace SoftCotton.Util
                 ws.Cell(row, 14).Value = totalGeneralN;
                 ws.Cell(row, 16).Value = totalGeneralP;
 
-                ws.Cell(row, 17).Value = totalGeneralK - totalGeneralN;
-                ws.Cell(row, 19).Value = totalGeneralM - totalGeneralP;
+                ws.Cell(row, 17).Value = totalGeneralSaldoCantidad;
+                ws.Cell(row, 19).Value = totalGeneralSaldoTotal;
 
                 ws.Range($"A{row}:S{row}").Style.Fill.BackgroundColor = XLColor.DarkBlue;
                 ws.Range($"A{row}:S{row}").Style.Font.FontColor = XLColor.White;
@@ -1521,7 +1525,8 @@ namespace SoftCotton.Util
         static void InsertarTotalBloque(
             IXLWorksheet ws,
             int row,
-            int inicio,
+            decimal saldoCantidadReal,
+            decimal saldoTotalReal,
             ref decimal accK,
             ref decimal accM,
             ref decimal accN,
@@ -1530,10 +1535,8 @@ namespace SoftCotton.Util
             ref decimal totalM,
             ref decimal totalN,
             ref decimal totalP,
-            ref decimal saldoQ,
-            ref decimal saldoS,
-            ref decimal saldoFinalQ,
-            ref decimal saldoFinalS)
+            ref decimal totalGeneralSaldoCantidad,
+            ref decimal totalGeneralSaldoTotal)
                 {
                     ws.Cell(row, 2).Value = "TOTAL";
 
@@ -1542,8 +1545,10 @@ namespace SoftCotton.Util
                     ws.Cell(row, 14).Value = accN;
                     ws.Cell(row, 16).Value = accP;
 
-                    ws.Cell(row, 17).Value = accK - accN;//saldoQ;
-                    ws.Cell(row, 19).Value = accM - accP;//saldoS;
+                    // Saldo real de cierre del producto, tal como lo dejó el proc (incluye el efecto de
+                    // cualquier ajuste de Cuadre de Kardex sobre el valorizado)
+                    ws.Cell(row, 17).Value = saldoCantidadReal;
+                    ws.Cell(row, 19).Value = saldoTotalReal;
 
                     ws.Range($"A{row}:S{row}")
                         .Style.Fill.BackgroundColor = XLColor.LightBlue;
@@ -1555,11 +1560,10 @@ namespace SoftCotton.Util
                     totalN += accN;
                     totalP += accP;
 
-                    // saldo final real
-                    saldoFinalQ += saldoQ;
-                    saldoFinalS += saldoS;
+                    totalGeneralSaldoCantidad += saldoCantidadReal;
+                    totalGeneralSaldoTotal += saldoTotalReal;
 
-                    accK = accM = accN = accP = saldoQ = saldoS = 0;
+                    accK = accM = accN = accP = 0;
         }
 
 

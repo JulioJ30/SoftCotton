@@ -91,6 +91,18 @@ namespace SoftCotton.BusinessLogic
             return resultado;
         }
 
+        // ### CUADRE DE KARDEX ###
+
+        public Response SetCuadreKardex(CuadreKardexParam parametro)
+        {
+            return _kardexRepository.SetCuadreKardex(parametro);
+        }
+
+        public List<GetCuadreKardex> GetListCuadreKardex()
+        {
+            return _kardexRepository.GetListCuadreKardex();
+        }
+
         public string RegistrarReq_Cabe(double idRequerimiento, string AlmacenDespacho, string AlmacenRequiere,
             int estado, string observacion, int usuarioRegistro)
         {

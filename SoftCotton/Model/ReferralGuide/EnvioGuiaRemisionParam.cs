@@ -137,6 +137,16 @@ namespace SoftCotton.Model.ReferralGuide
 
         public List<Items> items { get; set; }
         public List<Guias> guias { get; set; }
+        public List<documento_relacionado> documento_relacionado { get; set; }
+
+    }
+
+    public class documento_relacionado
+    {
+        public string tipo { get; set; }
+        public string serie { get; set; }
+
+        public string numero { get; set; }
     }
 
     public class Items

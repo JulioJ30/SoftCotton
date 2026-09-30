@@ -39,9 +39,6 @@ namespace SoftCotton.Views.Maintenance
             cboDepartamento.ValueMember = "iddepartamento";
             cboDepartamento.DisplayMember = "departamento";
 
-
-            UserApplication.USUARIO = "JMORAN";
-
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -338,9 +335,42 @@ namespace SoftCotton.Views.Maintenance
         {
             listaProvClientes = _mantenimientoBL.GetMant12_ProvClientes();
 
+            MostrarGrid(listaProvClientes);
+        }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            string filtro = txtBuscar.Text.Trim();
+
+            if (string.IsNullOrEmpty(filtro))
+            {
+                MostrarGrid(listaProvClientes);
+                return;
+            }
+
+            List<GetMant12_ProvClientes> filtrado = listaProvClientes.Where(p =>
+                (p.codigo ?? "").IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                (p.tipoDocCorta ?? "").IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                (p.razonSocial ?? "").IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                (p.nombre1 ?? "").IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                (p.nombre2 ?? "").IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                (p.apellido1 ?? "").IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                (p.apellido2 ?? "").IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                (p.tipo ?? "").IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                (p.telefono ?? "").IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                (p.direccion ?? "").IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                (p.contacto ?? "").IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                (p.email ?? "").IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0
+            ).ToList();
+
+            MostrarGrid(filtrado);
+        }
+
+        private void MostrarGrid(List<GetMant12_ProvClientes> lista)
+        {
             dgvListado.Rows.Clear();
 
-            foreach (var item in listaProvClientes)
+            foreach (var item in lista)
             {
                 int index = dgvListado.Rows.Add();
 

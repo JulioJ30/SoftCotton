@@ -28,6 +28,10 @@ namespace SoftCotton.Views.ReferralGuide
         GetGR2_CabeceraXCod grCabGenerales;
         List<GetGR3_DetalleXCod> grDetsGenerales;
 
+        // PERMISOS DE MOVIMIENTO DEL USUARIO (Registro de Acceso)
+        SeguridadBL _seguridadBL;
+        SoftCotton.Model.Security.GetAcceso6_PermisosGuia _permisosGuia;
+
 
         SetGRCabParam _grCabParam;
         SetGRDetParam _grDetParam;
@@ -49,11 +53,15 @@ namespace SoftCotton.Views.ReferralGuide
             _referralGuideBL = new GuiaRemisionBL();
             _kardexBL = new KardexBL();
             _referraMantBL = new MantenimientoBL();
+            _seguridadBL = new SeguridadBL();
 
         }
 
         private void RegistroGuiaRemisionView_Load(object sender, EventArgs e)
         {
+            CargarPermisosMovimiento();
+            cbxTipoMovDefault.SelectedIndex = IndiceTipoMovPermitido();
+
             Limpiar();
             ValoresPredeterminados();
 
@@ -86,9 +94,88 @@ namespace SoftCotton.Views.ReferralGuide
             cboLicenciaConducir.DisplayMember = "numeroLicenciaConducir";
             cboLicenciaConducir.ValueMember = "idNumeroLicenciaConducir";
 
-            cbxTipoMovDefault.SelectedIndex = 0;
+            cbxTipoMovDefault.SelectedIndex = IndiceTipoMovPermitido();
 
             CargarOrdenServicioCompraAutomatica();
+        }
+
+        // PERMISOS DE MOVIMIENTO (Registro de Acceso): ENTRADA / SALIDA / DEVOLUCION
+        private void CargarPermisosMovimiento()
+        {
+            string rutaForm = GetType().FullName.Replace("SoftCotton.", "");
+            _permisosGuia = _seguridadBL.GetAcceso6_PermisosGuia(UserApplication.ID_USUARIO, rutaForm);
+        }
+
+        // Primer tipo de movimiento que el usuario puede registrar (0 si no tiene ninguno)
+        private int IndiceTipoMovPermitido()
+        {
+            for (int i = 0; i < cbxTipoMovDefault.Items.Count; i++)
+            {
+                if (_permisosGuia.Permite(cbxTipoMovDefault.Items[i].ToString()))
+                {
+                    return i;
+                }
+            }
+
+            return 0;
+        }
+
+        private string DescripcionTipoMovimiento(string tipoMovimiento)
+        {
+            switch (tipoMovimiento.Trim().ToUpper())
+            {
+                case "E": return "ENTRADA";
+                case "S": return "SALIDA";
+                case "D": return "DEVOLUCION";
+                default: return tipoMovimiento.Trim().ToUpper();
+            }
+        }
+
+        // Valida contra los permisos vigentes del usuario; se vuelven a consultar en cada acción
+        private bool ValidarPermisoMovimiento(List<string> tiposMovimiento)
+        {
+            CargarPermisosMovimiento();
+
+            foreach (string tipoMovimiento in tiposMovimiento)
+            {
+                if (!_permisosGuia.Permite(tipoMovimiento))
+                {
+                    ResponseMessage.Message("No tiene permiso para registrar o modificar guías con movimiento de " + DescripcionTipoMovimiento(tipoMovimiento), "WARNING");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        // Tipo de movimiento actual de la fila y el que tenía grabado (Tag), para que no se
+        // pueda modificar una línea cambiándole primero el tipo de movimiento
+        private void AgregarTiposMovimientoFila(DataGridViewRow row, List<string> tiposMovimiento)
+        {
+            if (row.Cells["dgvTxtTipoMov"].Value != null)
+            {
+                tiposMovimiento.Add(row.Cells["dgvTxtTipoMov"].Value.ToString());
+            }
+
+            if (row.Tag != null)
+            {
+                tiposMovimiento.Add(row.Tag.ToString());
+            }
+        }
+
+        private List<string> TiposMovimientoGrilla()
+        {
+            List<string> tiposMovimiento = new List<string>();
+
+            foreach (DataGridViewRow row in dgvGRDetalle.Rows)
+            {
+                if (!row.IsNewRow)
+                {
+                    AgregarTiposMovimientoFila(row, tiposMovimiento);
+                }
+            }
+
+            return tiposMovimiento;
         }
 
         private void CargarOrdenServicioCompraAutomatica()
@@ -512,6 +599,11 @@ namespace SoftCotton.Views.ReferralGuide
 
         private void GuardarCambios()
         {
+            if (!ValidarPermisoMovimiento(TiposMovimientoGrilla()))
+            {
+                return;
+            }
+
             var fechaEmision = dtpFechaEmision.Value.ToString();
             var responseGeneral = _referralGuideBL.SetValidarPeriodo(fechaEmision);
 
@@ -939,6 +1031,9 @@ namespace SoftCotton.Views.ReferralGuide
                 {
                     dgvGRDetalle.Rows[index].Cells["dgvTxtTipoMov"].Value = "DEVOLUCION";
                 }
+
+                // Tipo de movimiento grabado, para validar permisos al modificar
+                dgvGRDetalle.Rows[index].Tag = item.tipoMovimiento;
 
                 dgvGRDetalle.Rows[index].Cells["dgvTxtNumPartida"].Value = item.numeroPartida;
 
@@ -1453,6 +1548,14 @@ namespace SoftCotton.Views.ReferralGuide
 
                 if (dgvGRDetalle.CurrentRow != null)
                 {
+                    List<string> tiposMovimientoItem = new List<string>();
+                    AgregarTiposMovimientoFila(dgvGRDetalle.CurrentRow, tiposMovimientoItem);
+
+                    if (!ValidarPermisoMovimiento(tiposMovimientoItem))
+                    {
+                        return;
+                    }
+
                     DialogResult resultadoMensaje = ResponseMessage.MessageQuestion("¿Esta seguro en eliminar el item seleccionado?");
 
                     if (resultadoMensaje == DialogResult.OK)
@@ -1574,6 +1677,21 @@ namespace SoftCotton.Views.ReferralGuide
                 !string.IsNullOrEmpty(txtNumero.Text.Trim()) &&
                 cbxTipoOrden.SelectedIndex > 0)
             {
+                // PERMISOS: se valida contra el detalle grabado de la guía, no contra la grilla
+                string tipoOrdenEliminar = cbxTipoOrden.SelectedIndex == 1 ? "C" : "S";
+                List<GetGR3_DetalleXCod> detalleEliminar = _referralGuideBL.Get3_DetalleXCod(Empresa.ID_EMPRESA, txtSerie.Text.Trim(), txtNumero.Text.Trim(), tipoOrdenEliminar, 3, null, lblRUCDest.Text.Trim());
+                List<string> tiposMovimientoEliminar = new List<string>();
+
+                foreach (GetGR3_DetalleXCod item in detalleEliminar)
+                {
+                    tiposMovimientoEliminar.Add(item.tipoMovimiento ?? "");
+                }
+
+                if (!ValidarPermisoMovimiento(tiposMovimientoEliminar))
+                {
+                    return;
+                }
+
                 DialogResult resultadoMensaje = ResponseMessage.MessageQuestion("¿Esta seguro en eliminar la GR " + txtSerie.Text.Trim() + "-" + txtNumero.Text.Trim() + "?");
 
                 if (resultadoMensaje == DialogResult.OK)
@@ -1692,6 +1810,20 @@ namespace SoftCotton.Views.ReferralGuide
         // ENVIAR SUNAT
         private void btnEnviarNubefact_Click(object sender, EventArgs e)
         {
+            if (grDetsGenerales != null)
+            {
+                List<string> tiposMovimientoEnvio = new List<string>();
+
+                foreach (GetGR3_DetalleXCod item in grDetsGenerales)
+                {
+                    tiposMovimientoEnvio.Add(item.tipoMovimiento ?? "");
+                }
+
+                if (!ValidarPermisoMovimiento(tiposMovimientoEnvio))
+                {
+                    return;
+                }
+            }
 
             Invoice invoice = new Invoice();
 
@@ -1850,7 +1982,28 @@ namespace SoftCotton.Views.ReferralGuide
 
         private void cbxTipoMovDefault_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Si el usuario no tiene permiso para el tipo elegido, se regresa al primero permitido
+            if (_permisosGuia == null || cbxTipoMovDefault.SelectedIndex < 0)
+            {
+                return;
+            }
 
+            string tipoMovimiento = cbxTipoMovDefault.SelectedItem.ToString();
+
+            if (!_permisosGuia.Permite(tipoMovimiento))
+            {
+                int indicePermitido = IndiceTipoMovPermitido();
+
+                if (cbxTipoMovDefault.Focused)
+                {
+                    ResponseMessage.Message("No tiene permiso para registrar guías con movimiento de " + tipoMovimiento, "WARNING");
+                }
+
+                if (_permisosGuia.Permite(cbxTipoMovDefault.Items[indicePermitido].ToString()))
+                {
+                    cbxTipoMovDefault.SelectedIndex = indicePermitido;
+                }
+            }
         }
 
         private void txtCodigoOrdenDefault_KeyPress(object sender, KeyPressEventArgs e)

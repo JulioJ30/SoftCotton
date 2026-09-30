@@ -769,6 +769,16 @@ namespace SoftCotton.Repository
                             ocDet.obs4 = reader["obs4"].ToString();
                             ocDet.obs5 = reader["obs5"].ToString();
 
+                            if (reader["IdPedidoColor"].ToString() != null && reader["IdPedidoColor"].ToString() != "")
+                            {
+                                ocDet.IdPedidoColor = Convert.ToInt32(reader["IdPedidoColor"]);
+                            }
+                            else
+                            {
+                                ocDet.IdPedidoColor = null;
+                            }
+                            ocDet.PedidoColor = reader["PedidoColor"].ToString();
+
                             ocDets.Add(ocDet);
                         }
                     }

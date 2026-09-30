@@ -163,6 +163,84 @@ namespace SoftCotton.Repository
 
             return personas;
         }
+        public List<GetAcceso5_Accesos> GetAcceso5_Accesos(int idUsuario)
+        {
+            List<GetAcceso5_Accesos> accesos = new List<GetAcceso5_Accesos>();
+            GetAcceso5_Accesos acceso;
+
+            using (var sqlConnection = ConnectionBD.GetConnection())
+            {
+                using (var sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = @"uspGetAcceso";
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.Add("@opcion", SqlDbType.Int, 11).Value = 5;
+                    sqlCommand.Parameters.Add("@idUsuario", SqlDbType.Int, 11).Value = idUsuario;
+                    sqlCommand.Parameters.Add("@idModulo", SqlDbType.Int, 11).Value = 0;
+
+                    sqlConnection.Open();
+
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            acceso = new GetAcceso5_Accesos();
+
+                            acceso.idModulo = Convert.ToInt32(reader["idModulo"]);
+                            acceso.modulo = reader["modulo"].ToString();
+                            acceso.idSubModulo = Convert.ToInt32(reader["idSubModulo"]);
+                            acceso.submodulo = reader["submodulo"].ToString();
+                            acceso.rutaForm = reader["rutaForm"].ToString();
+                            acceso.activo = Convert.ToBoolean(reader["activo"]);
+                            acceso.permiteEntrada = Convert.ToBoolean(reader["permiteEntrada"]);
+                            acceso.permiteSalida = Convert.ToBoolean(reader["permiteSalida"]);
+                            acceso.permiteDevolucion = Convert.ToBoolean(reader["permiteDevolucion"]);
+
+                            accesos.Add(acceso);
+                        }
+                    }
+                }
+            }
+
+            return accesos;
+        }
+        public GetAcceso6_PermisosGuia GetAcceso6_PermisosGuia(int idUsuario, string rutaForm)
+        {
+            GetAcceso6_PermisosGuia permisos = new GetAcceso6_PermisosGuia();
+
+            using (var sqlConnection = ConnectionBD.GetConnection())
+            {
+                using (var sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = @"uspGetAcceso";
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.Add("@opcion", SqlDbType.Int, 11).Value = 6;
+                    sqlCommand.Parameters.Add("@idUsuario", SqlDbType.Int, 11).Value = idUsuario;
+                    sqlCommand.Parameters.Add("@idModulo", SqlDbType.Int, 11).Value = 0;
+                    sqlCommand.Parameters.Add("@rutaForm", SqlDbType.VarChar, 200).Value = rutaForm;
+
+                    sqlConnection.Open();
+
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        if (reader.Read())
+                        {
+                            permisos.permiteEntrada = Convert.ToBoolean(reader["permiteEntrada"]);
+                            permisos.permiteSalida = Convert.ToBoolean(reader["permiteSalida"]);
+                            permisos.permiteDevolucion = Convert.ToBoolean(reader["permiteDevolucion"]);
+                        }
+                    }
+                }
+            }
+
+            return permisos;
+        }
         public List<GetMant1_Usuarios> GetMant1_Usuarios()
         {
             List<GetMant1_Usuarios> usuarios = new List<GetMant1_Usuarios>();
@@ -546,6 +624,9 @@ namespace SoftCotton.Repository
                     sqlCommand.Parameters.Add("@idSubModulo", SqlDbType.Int, 11).Value = parametros.idSubModulo;
                     sqlCommand.Parameters.Add("@usuarioReg", SqlDbType.VarChar, 30).Value = parametros.usuarioReg;
                     sqlCommand.Parameters.Add("@activo", SqlDbType.Bit).Value = parametros.activo;
+                    sqlCommand.Parameters.Add("@permiteEntrada", SqlDbType.Bit).Value = parametros.permiteEntrada;
+                    sqlCommand.Parameters.Add("@permiteSalida", SqlDbType.Bit).Value = parametros.permiteSalida;
+                    sqlCommand.Parameters.Add("@permiteDevolucion", SqlDbType.Bit).Value = parametros.permiteDevolucion;
 
                     sqlConnection.Open();
 

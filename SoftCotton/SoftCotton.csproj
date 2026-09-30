@@ -210,6 +210,8 @@
     <Compile Include="Model\Invoices\GetFact3_Cabecera.cs" />
     <Compile Include="Model\Invoices\SetFacCabParam.cs" />
     <Compile Include="Model\Invoices\SetFacDetParam.cs" />
+    <Compile Include="Model\Kardex\CuadreKardexParam.cs" />
+    <Compile Include="Model\Kardex\GetCuadreKardex.cs" />
     <Compile Include="Model\Kardex\KardexElectronico.cs" />
     <Compile Include="Model\Kardex\KardexValorizado.cs" />
     <Compile Include="Model\Maintenance\AuditoriasEntidad.cs" />
@@ -346,6 +348,8 @@
     <Compile Include="Model\ReferralGuide\SetGRDetParam.cs" />
     <Compile Include="Model\ReferralGuide\SetGRMotTraslado.cs" />
     <Compile Include="Model\Security\GetAcceso4_Personas.cs" />
+    <Compile Include="Model\Security\GetAcceso5_Accesos.cs" />
+    <Compile Include="Model\Security\GetAcceso6_PermisosGuia.cs" />
     <Compile Include="Model\Security\GetMant2_Modulos.cs" />
     <Compile Include="Model\Security\GetMant1_Usuarios.cs" />
     <Compile Include="Model\Security\GetMant3_SubModulos.cs" />
@@ -496,6 +500,12 @@
     </Compile>
     <Compile Include="Views\Kardex\BuscarKardexView.Designer.cs">
       <DependentUpon>BuscarKardexView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Kardex\CuadreKardexView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Kardex\CuadreKardexView.Designer.cs">
+      <DependentUpon>CuadreKardexView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Kardex\KardexCentral.cs">
       <SubType>Form</SubType>
@@ -1076,6 +1086,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Kardex\BuscarKardexView.resx">
       <DependentUpon>BuscarKardexView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Kardex\CuadreKardexView.resx">
+      <DependentUpon>CuadreKardexView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Kardex\KardexCentral.resx">
       <DependentUpon>KardexCentral.cs</DependentUpon>

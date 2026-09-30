@@ -1,6 +1,7 @@
 ﻿using SoftCotton.BusinessLogic;
 using SoftCotton.Model.Security;
 using SoftCotton.Util;
+using SoftCotton.Views.ReferralGuide;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -41,6 +42,12 @@ namespace SoftCotton.Views.Security
                     _accesoParam.idUsuario = Convert.ToInt32(lblIdUsuario.Text);
                     _accesoParam.idSubModulo = Convert.ToInt32(itemRow.Cells["cIntIdSubModulo"].Value);
                     _accesoParam.activo = Convert.ToBoolean(itemRow.Cells["ccbxActivo"].Value);
+                    _accesoParam.usuarioReg = UserApplication.USUARIO;
+
+                    // PERMISOS DE MOVIMIENTO (solo formularios de guias, el resto se mantiene en true)
+                    _accesoParam.permiteEntrada = ObtenerPermiso(itemRow, "ccbxEntrada");
+                    _accesoParam.permiteSalida = ObtenerPermiso(itemRow, "ccbxSalida");
+                    _accesoParam.permiteDevolucion = ObtenerPermiso(itemRow, "ccbxDevolucion");
 
                     Procesar(_accesoParam);
                 }
@@ -90,8 +97,26 @@ namespace SoftCotton.Views.Security
 
         private void dgvListado_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0)
+            {
+                return;
+            }
+
             DataGridViewRow row = dgvListado.Rows[e.RowIndex];
-            row.Cells["ccbxActivo"].Value = !Convert.ToBoolean(row.Cells["ccbxActivo"].Value);
+            string columna = dgvListado.Columns[e.ColumnIndex].Name;
+
+            if (columna.Equals("ccbxEntrada") || columna.Equals("ccbxSalida") || columna.Equals("ccbxDevolucion"))
+            {
+                // Solo se marca si el permiso aplica al formulario de la fila
+                if (row.Cells[columna] is DataGridViewCheckBoxCell)
+                {
+                    row.Cells[columna].Value = !Convert.ToBoolean(row.Cells[columna].Value);
+                }
+            }
+            else
+            {
+                row.Cells["ccbxActivo"].Value = !Convert.ToBoolean(row.Cells["ccbxActivo"].Value);
+            }
         }
 
 
@@ -128,7 +153,7 @@ namespace SoftCotton.Views.Security
 
         public void Listar(int idUsuario)
         {
-            List<GetMant6_Accesos> listaAccesos = _seguridadBL.GetMant6_Accesos(idUsuario);
+            List<GetAcceso5_Accesos> listaAccesos = _seguridadBL.GetAcceso5_Accesos(idUsuario);
             dgvListado.Rows.Clear();
 
             foreach (var item in listaAccesos)
@@ -151,8 +176,54 @@ namespace SoftCotton.Views.Security
                 }
 
                 dgvListado.Rows[index].Cells["ccbxActivo"].Value = item.activo;
+
+                MostrarPermiso(dgvListado.Rows[index], "ccbxEntrada", item.permiteEntrada, AplicaPermiso(item.rutaForm, "ccbxEntrada"));
+                MostrarPermiso(dgvListado.Rows[index], "ccbxSalida", item.permiteSalida, AplicaPermiso(item.rutaForm, "ccbxSalida"));
+                MostrarPermiso(dgvListado.Rows[index], "ccbxDevolucion", item.permiteDevolucion, AplicaPermiso(item.rutaForm, "ccbxDevolucion"));
             }
             dgvListado.ClearSelection();
+        }
+
+        // Guia normal: Entrada / Salida / Devolucion. Guia de exportacion: siempre es salida.
+        private bool AplicaPermiso(string rutaForm, string columna)
+        {
+            string formulario = "SoftCotton." + rutaForm.Trim();
+
+            if (formulario.Equals(typeof(RegistroGuiaRemisionView).FullName))
+            {
+                return true;
+            }
+
+            if (formulario.Equals(typeof(RegistroGuiaRemisionExportacionView).FullName))
+            {
+                return columna.Equals("ccbxSalida");
+            }
+
+            return false;
+        }
+
+        private void MostrarPermiso(DataGridViewRow row, string columna, bool valor, bool aplica)
+        {
+            if (aplica)
+            {
+                row.Cells[columna].Value = valor;
+            }
+            else
+            {
+                // El permiso no aplica al formulario: se deja la celda en blanco
+                row.Cells[columna] = new DataGridViewTextBoxCell();
+                row.Cells[columna].Value = "";
+            }
+        }
+
+        private bool ObtenerPermiso(DataGridViewRow row, string columna)
+        {
+            if (row.Cells[columna] is DataGridViewCheckBoxCell)
+            {
+                return Convert.ToBoolean(row.Cells[columna].Value);
+            }
+
+            return true;
         }
 
         public bool ValidarDatos()

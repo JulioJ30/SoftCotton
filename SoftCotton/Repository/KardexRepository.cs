@@ -766,6 +766,95 @@ namespace SoftCotton.Repository
         }
 
 
+        // ### CUADRE DE KARDEX ###
+
+        public Response SetCuadreKardex(CuadreKardexParam parametro)
+        {
+            Response response = new Response();
+
+            using (var sqlConnection = ConnectionBD.GetConnection())
+            {
+                using (var sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = @"uspSetCuadreKardex";
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.Add("@opcion", SqlDbType.Int).Value = parametro.opcion;
+                    sqlCommand.Parameters.Add("@codNivel", SqlDbType.Char, 2).Value = string.IsNullOrEmpty(parametro.codNivel) ? (object)DBNull.Value : parametro.codNivel;
+                    sqlCommand.Parameters.Add("@codGrupo", SqlDbType.Char, 5).Value = string.IsNullOrEmpty(parametro.codGrupo) ? (object)DBNull.Value : parametro.codGrupo;
+                    sqlCommand.Parameters.Add("@codTalla", SqlDbType.Char, 3).Value = string.IsNullOrEmpty(parametro.codTalla) ? (object)DBNull.Value : parametro.codTalla;
+                    sqlCommand.Parameters.Add("@codColor", SqlDbType.Char, 6).Value = string.IsNullOrEmpty(parametro.codColor) ? (object)DBNull.Value : parametro.codColor;
+                    sqlCommand.Parameters.Add("@tipoAjuste", SqlDbType.Char, 1).Value = string.IsNullOrEmpty(parametro.tipoAjuste) ? (object)DBNull.Value : parametro.tipoAjuste;
+                    sqlCommand.Parameters.Add("@cantidad", SqlDbType.Decimal).Value = parametro.cantidad;
+                    sqlCommand.Parameters.Add("@fechaMovimiento", SqlDbType.VarChar, 8).Value = string.IsNullOrEmpty(parametro.fechaMovimiento) ? (object)DBNull.Value : parametro.fechaMovimiento;
+                    sqlCommand.Parameters.Add("@idCuadre", SqlDbType.Int).Value = parametro.idCuadre;
+                    sqlCommand.Parameters.Add("@usuarioReg", SqlDbType.VarChar, 30).Value = parametro.usuarioReg;
+
+                    sqlConnection.Open();
+
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        if (reader.Read())
+                        {
+                            response.idResponse = Convert.ToInt32(reader["idResponse"]);
+                            response.messageResponse = reader["messageResponse"].ToString();
+                            response.typeMessage = reader["typeMessage"].ToString();
+                        }
+                    }
+                }
+            }
+            return response;
+        }
+
+        public List<GetCuadreKardex> GetListCuadreKardex()
+        {
+            List<GetCuadreKardex> list = new List<GetCuadreKardex>();
+
+            using (var sqlConnection = ConnectionBD.GetConnection())
+            {
+                using (var sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = @"uspGetCuadreKardex";
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    sqlConnection.Open();
+
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            GetCuadreKardex det = new GetCuadreKardex();
+
+                            det.idCuadre = Convert.ToInt32(reader["idCuadre"]);
+                            det.codNivel = reader["codNivel"].ToString();
+                            det.nivel = reader["nivel"].ToString();
+                            det.codGrupo = reader["codGrupo"].ToString();
+                            det.grupo = reader["grupo"] == DBNull.Value ? "" : reader["grupo"].ToString();
+                            det.codTalla = reader["codTalla"].ToString();
+                            det.codColor = reader["codColor"].ToString();
+                            det.color = reader["color"] == DBNull.Value ? "" : reader["color"].ToString();
+                            det.tipoAjuste = reader["tipoAjuste"].ToString();
+                            det.tipoAjusteDescripcion = reader["tipoAjusteDescripcion"].ToString();
+                            det.cantidad = Convert.ToDecimal(reader["cantidad"]);
+                            det.fechaMovimiento = Convert.ToDateTime(reader["fechaMovimiento"]);
+                            det.serieGR = reader["serieGR"].ToString();
+                            det.numeroGR = reader["numeroGR"].ToString();
+                            det.secuenciaGR = Convert.ToInt32(reader["secuenciaGR"]);
+                            det.usuarioReg = reader["usuarioReg"].ToString();
+                            det.fechaReg = Convert.ToDateTime(reader["fechaReg"]);
+
+                            list.Add(det);
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
         public string update_RequerimientoDeta(int tipo, E_Producto_Reque item, double idRequerimiento, string almacenSalida, string almaceningreso, string usuario)
         {
             string respuesta = "";

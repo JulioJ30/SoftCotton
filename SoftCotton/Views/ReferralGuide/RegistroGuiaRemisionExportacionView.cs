@@ -25,6 +25,7 @@ namespace SoftCotton.Views.ReferralGuide
 
         GuiaRemisionExportacionBL _referralGuideBL;
         MantenimientoBL _referraMantBL;
+        SeguridadBL _seguridadBL;
 
         SetGRCabExportacionParam _grCabParam;
         SetGRDetExportacionParam _grDetParam;
@@ -41,12 +42,33 @@ namespace SoftCotton.Views.ReferralGuide
 
             _referralGuideBL = new GuiaRemisionExportacionBL();
             _referraMantBL = new MantenimientoBL();
+            _seguridadBL = new SeguridadBL();
         }
 
+
+        // PERMISOS DE MOVIMIENTO (Registro de Acceso): la guía de exportación siempre es una SALIDA
+        private bool ValidarPermisoSalida()
+        {
+            string rutaForm = GetType().FullName.Replace("SoftCotton.", "");
+            var permisosGuia = _seguridadBL.GetAcceso6_PermisosGuia(UserApplication.ID_USUARIO, rutaForm);
+
+            if (!permisosGuia.permiteSalida)
+            {
+                ResponseMessage.Message("No tiene permiso para registrar o modificar guías con movimiento de SALIDA", "WARNING");
+                return false;
+            }
+
+            return true;
+        }
 
         // GUARDAMOS CAMBIOS
         private void GuardarCambios()
         {
+            if (!ValidarPermisoSalida())
+            {
+                return;
+            }
+
             if (ValidarDatosCabecera() && ValidarDatosDetalle())
             {
                 _grCabParam = new SetGRCabExportacionParam();
@@ -1139,6 +1161,21 @@ namespace SoftCotton.Views.ReferralGuide
             invoice.formato_de_pdf = "";
             //invoice.observaciones
 
+
+
+            // DOCUMENTOS RELACIONADO SI ES QUE LKO TIENE
+            if (txtFacturaReferencia.Text.Trim() != "")
+            {
+                documento_relacionado docRel = new documento_relacionado();
+                docRel.tipo = "01";
+                string referencia = txtFacturaReferencia.Text.Trim();
+                string[] partes = referencia.Split('-');
+
+                docRel.serie = partes[0];
+                docRel.numero = partes[1];
+                invoice.documento_relacionado.Add(docRel);
+            }
+
             // OBTENEMOS ITEMS
             List<Items> itemsAgregar = new List<Items>();
             foreach (var item in grDetsGenerales)
@@ -1218,6 +1255,11 @@ namespace SoftCotton.Views.ReferralGuide
 
         private void btnEliminar_Click_1(object sender, EventArgs e)
         {
+            if (!ValidarPermisoSalida())
+            {
+                return;
+            }
+
             if (!string.IsNullOrEmpty(txtSerie.Text.Trim()) && !string.IsNullOrEmpty(txtNumero.Text.Trim()) && !string.IsNullOrEmpty(txtRuc.Text.Trim()))
             {
                 DialogResult resultadoMensaje = ResponseMessage.MessageQuestion("¿Esta seguro en eliminar la GR " + txtSerie.Text.Trim() + "-" + txtNumero.Text.Trim() + "?");
@@ -1268,6 +1310,11 @@ namespace SoftCotton.Views.ReferralGuide
 
         private void btnEnviarNubefact_Click_1(object sender, EventArgs e)
         {
+            if (!ValidarPermisoSalida())
+            {
+                return;
+            }
+
             Invoice invoice = new Invoice();
 
 
@@ -1443,7 +1490,7 @@ namespace SoftCotton.Views.ReferralGuide
                         item.descripcion = cellDescripcion.Value.ToString().Trim();
                         item.cantidadIngresada = Convert.ToInt32(cellCantidad.Value.ToString().Trim());
                         item.codUM = cellUnidadMedida.Value.ToString().Trim();
-                        item.OP = cellOp.Value.ToString().Trim();
+                        item.OP = cellOp.Value != null ? cellOp.Value.ToString().Trim() : string.Empty;
 
 
 

@@ -75,7 +75,7 @@ namespace SoftCotton.Views.Maintenance
                         _tipoMonedaParam = new SetTipoMonedaParam();
                         _tipoMonedaParam.opcion = 4; // ELIMINAR 
                         _tipoMonedaParam.idTipoMoneda = Convert.ToInt32(idTipoMoneda);
-                        _tipoMonedaParam.usuarioReg = "JMORAN";
+                        _tipoMonedaParam.usuarioReg = UserApplication.USUARIO;
 
                         Procesar(_tipoMonedaParam);
                     }

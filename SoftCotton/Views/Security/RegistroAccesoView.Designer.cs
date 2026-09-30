@@ -52,6 +52,9 @@
             this.ctxtSubModulo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctxtRutaForm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ccbxActivo = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ccbxEntrada = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ccbxSalida = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ccbxDevolucion = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel6 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -243,7 +246,10 @@
             this.cIntIdSubModulo,
             this.ctxtSubModulo,
             this.ctxtRutaForm,
-            this.ccbxActivo});
+            this.ccbxActivo,
+            this.ccbxEntrada,
+            this.ccbxSalida,
+            this.ccbxDevolucion});
             this.dgvListado.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvListado.Location = new System.Drawing.Point(0, 0);
             this.dgvListado.Name = "dgvListado";
@@ -293,7 +299,29 @@
             this.ccbxActivo.HeaderText = "Activo";
             this.ccbxActivo.Name = "ccbxActivo";
             this.ccbxActivo.ReadOnly = true;
-            // 
+            this.ccbxActivo.Width = 60;
+            //
+            // ccbxEntrada
+            //
+            this.ccbxEntrada.HeaderText = "Entrada";
+            this.ccbxEntrada.Name = "ccbxEntrada";
+            this.ccbxEntrada.ReadOnly = true;
+            this.ccbxEntrada.Width = 70;
+            //
+            // ccbxSalida
+            //
+            this.ccbxSalida.HeaderText = "Salida";
+            this.ccbxSalida.Name = "ccbxSalida";
+            this.ccbxSalida.ReadOnly = true;
+            this.ccbxSalida.Width = 70;
+            //
+            // ccbxDevolucion
+            //
+            this.ccbxDevolucion.HeaderText = "Devolución";
+            this.ccbxDevolucion.Name = "ccbxDevolucion";
+            this.ccbxDevolucion.ReadOnly = true;
+            this.ccbxDevolucion.Width = 70;
+            //
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.panel6);
@@ -330,7 +358,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(910, 443);
+            this.ClientSize = new System.Drawing.Size(1040, 443);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel5);
@@ -385,5 +413,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ctxtSubModulo;
         private System.Windows.Forms.DataGridViewTextBoxColumn ctxtRutaForm;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ccbxActivo;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ccbxEntrada;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ccbxSalida;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ccbxDevolucion;
     }
 }

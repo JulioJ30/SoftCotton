@@ -28,5 +28,8 @@ namespace SoftCotton.Reports.ServiceOrder.OrdenServicio
         public string obs3 { get; set; }
         public string obs4 { get; set; }
         public string obs5 { get; set; }
+
+        public int? IdPedidoColor { get; set; }
+        public string PedidoColor { get; set; }
     }
 }
