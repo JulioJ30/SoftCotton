@@ -24,6 +24,7 @@ namespace SoftCotton.Views.Requerimiento
         List<GetOS6_TipoAnulado> listaTiposAnulaciones;
         GetOS15_FirmanteXNivel _firmanteInicial;
         GuiaRemisionBL _referralGuideBL;
+        DateTime? _fechaEmisionOriginal; // null = orden de salida nueva (aun no guardada)
 
         int ID_PrimerTipoAprobacion;
         string Nombre_PrimerTipoAprobacion;
@@ -130,6 +131,11 @@ namespace SoftCotton.Views.Requerimiento
         {
             if (!string.IsNullOrEmpty(txtCodigo.Text.Trim()))
             {
+                if (!ValidacionPeriodo.PermiteModificar(_fechaEmisionOriginal))
+                {
+                    return;
+                }
+
                 DialogResult resultadoMensaje = ResponseMessage.MessageQuestion("¿Esta seguro en eliminar la orden de producción N° " + txtCodigo.Text.Trim() + " ?");
 
                 if (resultadoMensaje == DialogResult.OK)
@@ -308,7 +314,7 @@ namespace SoftCotton.Views.Requerimiento
             }
             else if (e.Control && e.KeyCode == Keys.D)
             {
-                if (dgvOSDetalle.CurrentRow != null)
+                if (dgvOSDetalle.CurrentRow != null && ValidacionPeriodo.PermiteModificar(_fechaEmisionOriginal))
                 {
                     DialogResult resultadoMensaje = ResponseMessage.MessageQuestion("¿Esta seguro en eliminar el item seleccionado?");
 
@@ -498,12 +504,8 @@ namespace SoftCotton.Views.Requerimiento
             bool procesarRegistro = false;
             int id_tipoAprobacion = 0;
 
-            var fechaEmision = dtpFechaEmision.Value.ToString();
-            var responseGeneral = _referralGuideBL.SetValidarPeriodo(fechaEmision);
-
-            if (responseGeneral.idResponse == 1)
+            if (!ValidacionPeriodo.PermiteGuardar(_fechaEmisionOriginal, dtpFechaEmision.Value))
             {
-                ResponseMessage.Message(responseGeneral.messageResponse, responseGeneral.typeMessage);
                 return;
             }
 
@@ -932,6 +934,9 @@ namespace SoftCotton.Views.Requerimiento
             lblFirmante1.Text = "-";
             lblFirmante2.Text = "-";
             lblFirmante3.Text = "-";
+
+            _fechaEmisionOriginal = null;
+            ValidacionPeriodo.IndicarEnTitulo(this, null);
         }
 
         private void BuscarOrdenSalida(int idEmpresa, int idOrdenSalida)
@@ -940,6 +945,8 @@ namespace SoftCotton.Views.Requerimiento
 
             txtCodigo.Text = idOrdenSalida.ToString();
             dtpFechaEmision.Value = Convert.ToDateTime(ocCab.fechaEmision).Date;
+            _fechaEmisionOriginal = dtpFechaEmision.Value;
+            ValidacionPeriodo.IndicarEnTitulo(this, _fechaEmisionOriginal);
             dtpFechaEntrega.Value = Convert.ToDateTime(ocCab.fechaEntrega).Date;
             txtRUC.Text = ocCab.codigoPC.Trim();
             txtRS.Text = ocCab.razonSocial.Trim();
@@ -1145,7 +1152,7 @@ namespace SoftCotton.Views.Requerimiento
             }
             else if (e.Control && e.KeyCode == Keys.D)
             {
-                if (dgvOSDetalle.CurrentRow != null)
+                if (dgvOSDetalle.CurrentRow != null && ValidacionPeriodo.PermiteModificar(_fechaEmisionOriginal))
                 {
                     DialogResult resultadoMensaje = ResponseMessage.MessageQuestion("¿Esta seguro en eliminar el item seleccionado?");
 

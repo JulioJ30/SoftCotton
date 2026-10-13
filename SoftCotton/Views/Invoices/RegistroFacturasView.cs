@@ -19,6 +19,7 @@ namespace SoftCotton.Views.Invoices
     public partial class RegistroFacturasView : Form
     {
         FacturaBL _facturaBL;
+        DateTime? _fechaEmisionOriginal; // null = comprobante nuevo (no cargado con Buscar)
         //MantenimientoBL _mantenimientoBL;
         CompartidoBL _compartidoBL;
         MantenimientoBL _mantenimientoBL;
@@ -109,6 +110,8 @@ namespace SoftCotton.Views.Invoices
                     factCab.numero == 0)
                 {
                     TipoCambio = 0;
+                    _fechaEmisionOriginal = null;
+                    ValidacionPeriodo.IndicarEnTitulo(this, null);
                     ResponseMessage.Message("La factura no existe", "WARNING");
                 }
                 else
@@ -117,6 +120,8 @@ namespace SoftCotton.Views.Invoices
                     txtSerie.Text = factCab.serie;
                     txtNumero.Text = factCab.numero.ToString();
                     dtpFechaEmision.Value = Convert.ToDateTime(factCab.fechaEmision).Date;
+                    _fechaEmisionOriginal = dtpFechaEmision.Value;
+                    ValidacionPeriodo.IndicarEnTitulo(this, _fechaEmisionOriginal);
                     lblRUC.Text = factCab.codigoPC;
                     lblRS.Text = factCab.razonSocial;
 
@@ -194,6 +199,11 @@ namespace SoftCotton.Views.Invoices
 
         private void GuardarCambios()
         {
+            if (!ValidacionPeriodo.PermiteGuardar(_fechaEmisionOriginal, dtpFechaEmision.Value))
+            {
+                return;
+            }
+
             if (ValidarDatosCabecera() && ValidarDatosDetalle())
             {
                 _facCabParam = new SetFacCabParam();
@@ -627,6 +637,9 @@ namespace SoftCotton.Views.Invoices
             lblRS.Text = "";
 
             dgvListadoDetalle.Rows.Clear();
+
+            _fechaEmisionOriginal = null;
+            ValidacionPeriodo.IndicarEnTitulo(this, null);
         }
 
         private void ValoresPredeterminados()
@@ -801,7 +814,7 @@ namespace SoftCotton.Views.Invoices
             }
             else if (e.Control && e.KeyCode == Keys.D)
             {
-                if (dgvListadoDetalle.CurrentRow != null)
+                if (dgvListadoDetalle.CurrentRow != null && ValidacionPeriodo.PermiteModificar(_fechaEmisionOriginal))
                 {
                     DialogResult resultadoMensaje = ResponseMessage.MessageQuestion("¿Esta seguro en eliminar el item seleccionado?");
 
@@ -966,6 +979,11 @@ namespace SoftCotton.Views.Invoices
                 !string.IsNullOrEmpty(txtNumero.Text.Trim()) && txtNumero.Text.Trim() != "" &&
                 !string.IsNullOrEmpty(tipoComprobante))
             {
+                if (!ValidacionPeriodo.PermiteModificar(_fechaEmisionOriginal))
+                {
+                    return;
+                }
+
                 DialogResult resultadoMensaje = ResponseMessage.MessageQuestion("¿Esta seguro en eliminar la factura " + txtSerie.Text.Trim() + "-" + txtNumero.Text.Trim() + " ?");
 
                 if (resultadoMensaje == DialogResult.OK)

@@ -767,7 +767,15 @@ namespace SoftCotton.Repository
 
             return response;
         }
-        public Response SetValidarPeriodo(string periodo)
+        public Response SetValidarPeriodo(DateTime fecha)
+        {
+            return ConsultarPeriodo(5, fecha); // 5: bloquea si el periodo esta cerrado o no existe
+        }
+        public Response GetPeriodoCerrado(DateTime fecha)
+        {
+            return ConsultarPeriodo(7, fecha); // 7: bloquea solo si el periodo esta cerrado
+        }
+        private Response ConsultarPeriodo(int opcion, DateTime fecha)
         {
             Response response = new Response();
 
@@ -779,10 +787,10 @@ namespace SoftCotton.Repository
                     sqlCommand.CommandType = CommandType.StoredProcedure;
 
                     sqlCommand.Parameters.Add("@idCierrePeriodo", SqlDbType.Int).Value = 0;
-                    sqlCommand.Parameters.Add("@opcion", SqlDbType.Int).Value = 5;
+                    sqlCommand.Parameters.Add("@opcion", SqlDbType.Int).Value = opcion;
                     sqlCommand.Parameters.Add("@periodo", SqlDbType.VarChar, 7).Value = "";
-                    sqlCommand.Parameters.Add("@fechaInicio", SqlDbType.Date).Value = periodo;
-                    sqlCommand.Parameters.Add("@fechaFin", SqlDbType.Date).Value = periodo;
+                    sqlCommand.Parameters.Add("@fechaInicio", SqlDbType.Date).Value = fecha.Date;
+                    sqlCommand.Parameters.Add("@fechaFin", SqlDbType.Date).Value = fecha.Date;
                     sqlCommand.Parameters.Add("@estado", SqlDbType.VarChar, 1).Value = "";
                     sqlCommand.Parameters.Add("@usuarioReg", SqlDbType.VarChar, 50).Value = "";
 

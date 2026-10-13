@@ -70,9 +70,13 @@ namespace SoftCotton.BusinessLogic
         {
             return _guiaRemisionRepository.SetCierrePeriodo(parametros);
         }
-        public Response SetValidarPeriodo(string periodo)
+        public Response SetValidarPeriodo(DateTime fecha)
         {
-            return _guiaRemisionRepository.SetValidarPeriodo(periodo);
+            return _guiaRemisionRepository.SetValidarPeriodo(fecha);
+        }
+        public Response GetPeriodoCerrado(DateTime fecha)
+        {
+            return _guiaRemisionRepository.GetPeriodoCerrado(fecha);
         }
     }
 }

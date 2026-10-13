@@ -32,6 +32,7 @@ namespace SoftCotton.Views.ReferralGuide
 
         List<GetGR3_DetalleXCod> grDetsGenerales;
         GetGR2_CabeceraXCod grCabGenerales;
+        DateTime? _fechaEmisionOriginal; // null = guia nueva (no cargada con BuscarGuias)
 
         bool nuuevoregistro = true;
         DataTable dtReporte;
@@ -65,6 +66,11 @@ namespace SoftCotton.Views.ReferralGuide
         private void GuardarCambios()
         {
             if (!ValidarPermisoSalida())
+            {
+                return;
+            }
+
+            if (!ValidacionPeriodo.PermiteGuardar(_fechaEmisionOriginal, dtpFechaEmision.Value))
             {
                 return;
             }
@@ -581,6 +587,8 @@ namespace SoftCotton.Views.ReferralGuide
                 txtSerie.Text = grCab.serie;
                 txtNumero.Text = grCab.numero;
                 dtpFechaEmision.Value = Convert.ToDateTime(grCab.fechaEmision).Date;
+                _fechaEmisionOriginal = dtpFechaEmision.Value;
+                ValidacionPeriodo.IndicarEnTitulo(this, _fechaEmisionOriginal);
                 txtPuntoPartida.Text = grCab.puntoPartida;
                 txtPuntoLlegada.Text = grCab.puntoLlegada;
                 dtpFechaInicioTraslado.Value = Convert.ToDateTime(grCab.fechaInicioTraslado).Date;
@@ -708,6 +716,9 @@ namespace SoftCotton.Views.ReferralGuide
             txtGrossWeight.Clear();
             txtNetWeight.Clear();
             lblCantidadTotal.Text = "0";
+
+            _fechaEmisionOriginal = null;
+            ValidacionPeriodo.IndicarEnTitulo(this, null);
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -1255,7 +1266,7 @@ namespace SoftCotton.Views.ReferralGuide
 
         private void btnEliminar_Click_1(object sender, EventArgs e)
         {
-            if (!ValidarPermisoSalida())
+            if (!ValidarPermisoSalida() || !ValidacionPeriodo.PermiteModificar(_fechaEmisionOriginal))
             {
                 return;
             }

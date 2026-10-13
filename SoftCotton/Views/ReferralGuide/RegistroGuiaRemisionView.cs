@@ -23,6 +23,7 @@ namespace SoftCotton.Views.ReferralGuide
     public partial class RegistroGuiaRemisionView : Form
     {
         GuiaRemisionBL _referralGuideBL;
+        DateTime? _fechaEmisionOriginal; // null = guia nueva (no cargada con BuscarGuias)
         KardexBL _kardexBL;
         MantenimientoBL _referraMantBL;
         GetGR2_CabeceraXCod grCabGenerales;
@@ -513,6 +514,8 @@ namespace SoftCotton.Views.ReferralGuide
                     txtSerie.Text = grCab.serie;
                     txtNumero.Text = grCab.numero;
                     dtpFechaEmision.Value = Convert.ToDateTime(grCab.fechaEmision).Date;
+                    _fechaEmisionOriginal = dtpFechaEmision.Value;
+                    ValidacionPeriodo.IndicarEnTitulo(this, _fechaEmisionOriginal);
                     txtPuntoPartida.Text = grCab.puntoPartida;
                     txtPuntoLlegada.Text = grCab.puntoLlegada;
 
@@ -604,14 +607,8 @@ namespace SoftCotton.Views.ReferralGuide
                 return;
             }
 
-            var fechaEmision = dtpFechaEmision.Value.ToString();
-            var responseGeneral = _referralGuideBL.SetValidarPeriodo(fechaEmision);
-
-
-
-            if (responseGeneral.idResponse == 1)
+            if (!ValidacionPeriodo.PermiteGuardar(_fechaEmisionOriginal, dtpFechaEmision.Value))
             {
-                ResponseMessage.Message(responseGeneral.messageResponse, responseGeneral.typeMessage);
                 return;
             }
 
@@ -1355,6 +1352,8 @@ namespace SoftCotton.Views.ReferralGuide
             dgvGRDetalle.Rows.Clear();
             lblcuo.Text = $"Número de movimiento:";
 
+            _fechaEmisionOriginal = null;
+            ValidacionPeriodo.IndicarEnTitulo(this, null);
         }
 
         private void ValoresPredeterminados()
@@ -1551,7 +1550,7 @@ namespace SoftCotton.Views.ReferralGuide
                     List<string> tiposMovimientoItem = new List<string>();
                     AgregarTiposMovimientoFila(dgvGRDetalle.CurrentRow, tiposMovimientoItem);
 
-                    if (!ValidarPermisoMovimiento(tiposMovimientoItem))
+                    if (!ValidarPermisoMovimiento(tiposMovimientoItem) || !ValidacionPeriodo.PermiteModificar(_fechaEmisionOriginal))
                     {
                         return;
                     }
@@ -1687,7 +1686,7 @@ namespace SoftCotton.Views.ReferralGuide
                     tiposMovimientoEliminar.Add(item.tipoMovimiento ?? "");
                 }
 
-                if (!ValidarPermisoMovimiento(tiposMovimientoEliminar))
+                if (!ValidarPermisoMovimiento(tiposMovimientoEliminar) || !ValidacionPeriodo.PermiteModificar(_fechaEmisionOriginal))
                 {
                     return;
                 }

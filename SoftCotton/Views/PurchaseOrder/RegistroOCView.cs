@@ -24,6 +24,7 @@ namespace SoftCotton.Views.PurchaseOrder
         List<GetOC6_TipoAnulado> listaTiposAnulaciones;
         GetOC15_FirmanteXNivel _firmanteInicial;
         GuiaRemisionBL _referralGuideBL;
+        DateTime? _fechaEmisionOriginal; // null = OC nueva (aun no guardada)
 
         int ID_PrimerTipoAprobacion;
         string Nombre_PrimerTipoAprobacion;
@@ -447,12 +448,8 @@ namespace SoftCotton.Views.PurchaseOrder
             bool procesarRegistro = false;
             int id_tipoAprobacion = 0;
 
-            var fechaEmision = dtpFechaEmision.Value.ToString();
-            var responseGeneral = _referralGuideBL.SetValidarPeriodo(fechaEmision);
-
-            if (responseGeneral.idResponse == 1)
+            if (!ValidacionPeriodo.PermiteGuardar(_fechaEmisionOriginal, dtpFechaEmision.Value))
             {
-                ResponseMessage.Message(responseGeneral.messageResponse, responseGeneral.typeMessage);
                 return;
             }
 
@@ -902,6 +899,9 @@ namespace SoftCotton.Views.PurchaseOrder
             lblFirmante3.Text = "-";
 
             _adjuntosOC = new List<AdjuntoOCItem>();
+
+            _fechaEmisionOriginal = null;
+            ValidacionPeriodo.IndicarEnTitulo(this, null);
         }
 
         private void BuscarOC(int idEmpresa, int codigoOC)
@@ -910,6 +910,8 @@ namespace SoftCotton.Views.PurchaseOrder
 
             txtCodigo.Text = codigoOC.ToString();
             dtpFechaEmision.Value = Convert.ToDateTime(ocCab.fechaEmision).Date;
+            _fechaEmisionOriginal = dtpFechaEmision.Value;
+            ValidacionPeriodo.IndicarEnTitulo(this, _fechaEmisionOriginal);
             dtpFechaEntrega.Value = Convert.ToDateTime(ocCab.fechaEntrega).Date;
             txtRUC.Text = ocCab.codigoPC.Trim();
             txtRS.Text = ocCab.razonSocial.Trim();
@@ -1172,7 +1174,7 @@ namespace SoftCotton.Views.PurchaseOrder
             }
             else if (e.Control && e.KeyCode == Keys.D)
             {
-                if (dgvOCDetalle.CurrentRow != null)
+                if (dgvOCDetalle.CurrentRow != null && ValidacionPeriodo.PermiteModificar(_fechaEmisionOriginal))
                 {
                     DialogResult resultadoMensaje = ResponseMessage.MessageQuestion("¿Esta seguro en eliminar el item seleccionado?");
 
@@ -1232,6 +1234,11 @@ namespace SoftCotton.Views.PurchaseOrder
         {
             if (!string.IsNullOrEmpty(txtCodigo.Text.Trim()))
             {
+                if (!ValidacionPeriodo.PermiteModificar(_fechaEmisionOriginal))
+                {
+                    return;
+                }
+
                 DialogResult resultadoMensaje = ResponseMessage.MessageQuestion("¿Esta seguro en eliminar la orden de compra N° " + txtCodigo.Text.Trim() + " ?");
 
                 if (resultadoMensaje == DialogResult.OK)

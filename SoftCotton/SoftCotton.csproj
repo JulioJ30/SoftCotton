@@ -452,6 +452,7 @@
     <Compile Include="Util\ResponseGeneral.cs" />
     <Compile Include="Util\ResponseMessage.cs" />
     <Compile Include="Util\UserApplication.cs" />
+    <Compile Include="Util\ValidacionPeriodo.cs" />
     <Compile Include="VariableGeneral.cs" />
     <Compile Include="Views\Configuraciones\ConfiguracionesView.cs">
       <SubType>Form</SubType>

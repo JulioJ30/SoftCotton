@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using SoftCotton.Util;
 
 namespace SoftCotton.Database
 {
@@ -41,11 +43,36 @@ namespace SoftCotton.Database
                     CadenaConexion = ConfigurationManager.ConnectionStrings["cnxsqlproduccion"].ToString();
                 }
 
-                return new SqlConnection(CadenaConexion);
+                var sqlConnection = new SqlConnection(CadenaConexion);
+                sqlConnection.StateChange += RegistrarUsuarioEnSesion;
+
+                return sqlConnection;
             }
             catch (Exception)
             {
                 throw;
+            }
+        }
+
+        // Deja el usuario logueado en SESSION_CONTEXT('usuario') cada vez que se abre la conexion.
+        // Los procedimientos lo leen via dbo.fnPeriodoBloqueado para permitir al ADMIN operar en
+        // periodos cerrados.
+        private static void RegistrarUsuarioEnSesion(object sender, StateChangeEventArgs e)
+        {
+            if (e.CurrentState != ConnectionState.Open)
+            {
+                return;
+            }
+
+            using (var sqlCommand = ((SqlConnection)sender).CreateCommand())
+            {
+                sqlCommand.CommandText = "sp_set_session_context";
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                sqlCommand.Parameters.Add("@key", SqlDbType.NVarChar, 128).Value = "usuario";
+                sqlCommand.Parameters.Add("@value", SqlDbType.NVarChar, 50).Value = (object)UserApplication.USUARIO ?? DBNull.Value;
+
+                sqlCommand.ExecuteNonQuery();
             }
         }
         

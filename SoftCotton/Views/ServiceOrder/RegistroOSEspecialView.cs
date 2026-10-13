@@ -30,6 +30,7 @@ namespace SoftCotton.Views.ServiceOrder
         OrdenServicioBL _ordenServicioBL;
         GetOS15_FirmanteXNivel _firmanteInicial;
         GuiaRemisionBL _referralGuideBL;
+        DateTime? _fechaEmisionOriginal; // null = OS nueva (aun no guardada)
 
 
         int ID_PrimerTipoAprobacion;
@@ -346,6 +347,9 @@ namespace SoftCotton.Views.ServiceOrder
             lblFirmante1.Text = "-";
             lblFirmante2.Text = "-";
             lblFirmante3.Text = "-";
+
+            _fechaEmisionOriginal = null;
+            ValidacionPeriodo.IndicarEnTitulo(this, null);
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -528,12 +532,8 @@ namespace SoftCotton.Views.ServiceOrder
             bool procesarRegistro = false;
             int id_tipoAprobacion = 0;
 
-            var fechaEmision = dtpFechaEmision.Value.ToString();
-            var responseGeneral = _referralGuideBL.SetValidarPeriodo(fechaEmision);
-
-            if (responseGeneral.idResponse == 1)
+            if (!ValidacionPeriodo.PermiteGuardar(_fechaEmisionOriginal, dtpFechaEmision.Value))
             {
-                ResponseMessage.Message(responseGeneral.messageResponse, responseGeneral.typeMessage);
                 return;
             }
 
@@ -611,6 +611,14 @@ namespace SoftCotton.Views.ServiceOrder
         public void Procesar(SetOSParam parametro)
         {
             Response responseGeneral = _ordenServicioBL.SetOSEspecial(parametro);
+
+            // Rechazado (p. ej. periodo cerrado): no seguir con el detalle, que quedaria con idOS = 0.
+            if (responseGeneral.idResponse == 0)
+            {
+                ResponseMessage.Message(responseGeneral.messageResponse, responseGeneral.typeMessage);
+                return;
+            }
+
             txtCodigo.Text = responseGeneral.idResponse.ToString();
             ProcesarDetalle(parametro.idEmpresa, responseGeneral.idResponse, 1, "");
             Limpiar();
@@ -729,6 +737,8 @@ namespace SoftCotton.Views.ServiceOrder
 
             txtCodigo.Text = codigoOC.ToString();
             dtpFechaEmision.Value = Convert.ToDateTime(ocCab.fechaEmision).Date;
+            _fechaEmisionOriginal = dtpFechaEmision.Value;
+            ValidacionPeriodo.IndicarEnTitulo(this, _fechaEmisionOriginal);
             dtpFechaEntrega.Value = Convert.ToDateTime(ocCab.fechaEntrega).Date;
             txtRUC.Text = ocCab.codigoPC.Trim();
             txtRS.Text = ocCab.razonSocial.Trim();
@@ -805,12 +815,24 @@ namespace SoftCotton.Views.ServiceOrder
 
             if (txtCodigo.Text.Trim() != "")
             {
+                if (!ValidacionPeriodo.PermiteModificar(_fechaEmisionOriginal))
+                {
+                    return;
+                }
+
                 // ELIMINAMOS TODA LA OS
                 SetOSParam delete = new SetOSParam();
                 delete.opcion = 7;
                 delete.idEmpresa = Empresa.ID_EMPRESA;
                 delete.idOS = Convert.ToInt32(txtCodigo.Text.Trim());
                 var responsedelete = _ordenServicioBL.SetOSEspecial(delete);
+
+                // La opcion 7 no informa exito (idResponse = 0); solo el bloqueo de periodo devuelve WARNING.
+                if (responsedelete.typeMessage == "WARNING")
+                {
+                    ResponseMessage.Message(responsedelete.messageResponse, responsedelete.typeMessage);
+                    return;
+                }
 
                 Limpiar();
                 ValoresPredeterminados();
