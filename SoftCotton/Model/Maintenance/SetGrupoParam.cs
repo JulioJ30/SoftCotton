@@ -15,6 +15,7 @@ namespace SoftCotton.Model.Maintenance
         public string codUM { get; set; }
         public string usuarioReg { get; set; }
         public string codCuenta { get; set; }
+        public string descripcionPrevia { get; set; }
 
         public SetGrupoParam()
         {
@@ -26,6 +27,7 @@ namespace SoftCotton.Model.Maintenance
             codUM = "";
             usuarioReg = "";
             codCuenta = "";
+            descripcionPrevia = "";
         }
     }
 }

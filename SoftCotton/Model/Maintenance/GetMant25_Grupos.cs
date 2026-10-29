@@ -16,5 +16,6 @@ namespace SoftCotton.Model.Maintenance
         public string codCuenta { get; set; }
         public string cuenta { get; set; }
         public string codGrupoAlt { get; set; }
+        public string descripcionPrevia { get; set; }
     }
 }

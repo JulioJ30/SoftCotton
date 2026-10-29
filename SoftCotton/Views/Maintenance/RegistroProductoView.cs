@@ -23,6 +23,9 @@ namespace SoftCotton.Views.Maintenance
 
         string codigoColor;
 
+        // Niveles en los que la descripción previa es obligatoria
+        readonly string[] nivelesDescripcionPrevia = { "06", "07", "08", "10", "11", "13", "15", "16", "17" };
+
         public RegistroProductoView()
         {
             InitializeComponent();
@@ -107,6 +110,7 @@ namespace SoftCotton.Views.Maintenance
             txtCuenta.Enabled = false;
             cbxUnidadMedida.Enabled = false;
             txtCodProductoAlt.Enabled = false;
+            txtDescripcionPrevia.Enabled = false;
 
             btnGuardarGrupo.Enabled = false;
 
@@ -209,6 +213,7 @@ namespace SoftCotton.Views.Maintenance
                 txtCuenta.Text = dgvListadoGrupos.Rows[e.RowIndex].Cells["cdgvGPTxtCuenta"].Value.ToString();
                 cbxUnidadMedida.SelectedValue = dgvListadoGrupos.Rows[e.RowIndex].Cells["cdgvGPTxtUM"].Value.ToString();
                 txtCodProductoAlt.Text = dgvListadoGrupos.Rows[e.RowIndex].Cells["cdgvGPTxtCodGrupoAlt"].Value.ToString();
+                txtDescripcionPrevia.Text = dgvListadoGrupos.Rows[e.RowIndex].Cells["cdgvGPTxtDescPrevia"].Value.ToString();
 
                 cbxNivel.Enabled = false;
                 btnGuardarGrupo.Enabled = true;
@@ -218,6 +223,7 @@ namespace SoftCotton.Views.Maintenance
                 txtGrupo.Enabled = true;
                 cbxUnidadMedida.Enabled = true;
                 txtCodProductoAlt.Enabled = true;
+                txtDescripcionPrevia.Enabled = true;
                 btnBuscarCuenta.Enabled = true;
 
 
@@ -318,6 +324,7 @@ namespace SoftCotton.Views.Maintenance
                     _grupoParam.codNivel = cbxNivel.SelectedValue.ToString();
                     _grupoParam.codGrupo = txtCodGrupo.Text;
                     _grupoParam.codGrupoAlt = txtCodProductoAlt.Text;
+                    _grupoParam.descripcionPrevia = txtDescripcionPrevia.Text.Trim();
                     _grupoParam.grupo = txtGrupo.Text;
                     _grupoParam.codUM = cbxUnidadMedida.SelectedValue.ToString();
                     _grupoParam.codCuenta = lblCodCuenta.Text;
@@ -329,6 +336,7 @@ namespace SoftCotton.Views.Maintenance
                     _grupoParam.codNivel = cbxNivel.SelectedValue.ToString();
                     _grupoParam.codGrupo = txtCodGrupo.Text;
                     _grupoParam.codGrupoAlt = txtCodProductoAlt.Text;
+                    _grupoParam.descripcionPrevia = txtDescripcionPrevia.Text.Trim();
                     _grupoParam.grupo = txtGrupo.Text;
                     _grupoParam.codUM = cbxUnidadMedida.SelectedValue.ToString();
                     _grupoParam.codCuenta = lblCodCuenta.Text;
@@ -399,6 +407,7 @@ namespace SoftCotton.Views.Maintenance
                 dgvListadoGrupos.Rows[index].Cells["cdgvGPTxtCodCuenta"].Value = item.codCuenta;
                 dgvListadoGrupos.Rows[index].Cells["cdgvGPTxtCuenta"].Value = item.codCuenta.Trim() + " - " + item.cuenta.Trim();
                 dgvListadoGrupos.Rows[index].Cells["cdgvGPTxtCodGrupoAlt"].Value = item.codGrupoAlt;
+                dgvListadoGrupos.Rows[index].Cells["cdgvGPTxtDescPrevia"].Value = item.descripcionPrevia;
 
                 dgvListadoGrupos.Rows[index].Cells["cdgvBtnEditar"].Style.BackColor = Color.MediumSeaGreen;
                 dgvListadoGrupos.Rows[index].Cells["cdgvBtnEditar"].Style.SelectionBackColor = Color.MediumSeaGreen;
@@ -523,6 +532,13 @@ namespace SoftCotton.Views.Maintenance
 
                 ResponseMessage.Message("Seleccione la cuenta contable por favor", "INFORMATION");
             }
+            else if (RequiereDescripcionPrevia() && string.IsNullOrEmpty(txtDescripcionPrevia.Text.Trim()))
+            {
+                validacion = false;
+
+                ResponseMessage.Message("Ingrese la descripción previa", "INFORMATION");
+                txtDescripcionPrevia.Focus();
+            }
             else
             {
                 validacion = true;
@@ -537,10 +553,21 @@ namespace SoftCotton.Views.Maintenance
             txtCodGrupo.Text = "";
             txtGrupo.Text = "";
             txtCodProductoAlt.Text = "";
+            txtDescripcionPrevia.Text = "";
             txtCuenta.Text = "";
             lblCodCuenta.Text = "";
 
             dgvListadoGrupos.Rows.Clear();
+        }
+
+        private bool RequiereDescripcionPrevia()
+        {
+            return cbxNivel.SelectedValue != null && nivelesDescripcionPrevia.Contains(cbxNivel.SelectedValue.ToString());
+        }
+
+        private void cbxNivel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblDescripcionPrevia.Text = RequiereDescripcionPrevia() ? "Descripción Previa: *" : "Descripción Previa:";
         }
 
         private void ValoresPredeterminadoGrupo()

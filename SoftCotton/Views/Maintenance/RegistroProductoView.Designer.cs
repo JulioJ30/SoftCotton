@@ -80,6 +80,8 @@
             this.btnNuevoGrupo = new System.Windows.Forms.Button();
             this.txtCodProductoAlt = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.txtDescripcionPrevia = new System.Windows.Forms.TextBox();
+            this.lblDescripcionPrevia = new System.Windows.Forms.Label();
             this.btnGuardarGrupo = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgvListadoGrupos = new System.Windows.Forms.DataGridView();
@@ -93,6 +95,7 @@
             this.cdgvGPTxtCodCuenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cdgvGPTxtCuenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cdgvGPTxtCodGrupoAlt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cdgvGPTxtDescPrevia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cdgvBtnEditar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.cdgvBtnEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.cdgvBtnAgregarDet = new System.Windows.Forms.DataGridViewButtonColumn();
@@ -458,6 +461,8 @@
             this.groupBox1.Controls.Add(this.cbxNivel);
             this.groupBox1.Controls.Add(this.cbxUnidadMedida);
             this.groupBox1.Controls.Add(this.btnNuevoGrupo);
+            this.groupBox1.Controls.Add(this.txtDescripcionPrevia);
+            this.groupBox1.Controls.Add(this.lblDescripcionPrevia);
             this.groupBox1.Controls.Add(this.txtCodProductoAlt);
             this.groupBox1.Controls.Add(this.labelUM);
             this.groupBox1.Controls.Add(this.label6);
@@ -469,7 +474,7 @@
             this.groupBox1.Location = new System.Drawing.Point(4, 4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(5);
-            this.groupBox1.Size = new System.Drawing.Size(976, 135);
+            this.groupBox1.Size = new System.Drawing.Size(976, 160);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Registro ";
@@ -564,6 +569,7 @@
             this.cbxNivel.Name = "cbxNivel";
             this.cbxNivel.Size = new System.Drawing.Size(163, 21);
             this.cbxNivel.TabIndex = 4;
+            this.cbxNivel.SelectedIndexChanged += new System.EventHandler(this.cbxNivel_SelectedIndexChanged);
             // 
             // btnNuevoGrupo
             // 
@@ -581,21 +587,39 @@
             // txtCodProductoAlt
             // 
             this.txtCodProductoAlt.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtCodProductoAlt.Location = new System.Drawing.Point(429, 87);
+            this.txtCodProductoAlt.Location = new System.Drawing.Point(429, 129);
             this.txtCodProductoAlt.MaxLength = 200;
             this.txtCodProductoAlt.Name = "txtCodProductoAlt";
             this.txtCodProductoAlt.Size = new System.Drawing.Size(539, 22);
             this.txtCodProductoAlt.TabIndex = 15;
-            // 
+            //
             // label6
-            // 
+            //
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(426, 71);
+            this.label6.Location = new System.Drawing.Point(426, 113);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(143, 13);
             this.label6.TabIndex = 45;
             this.label6.Text = "Código Grupo Alternativo:";
-            // 
+            //
+            // txtDescripcionPrevia
+            //
+            this.txtDescripcionPrevia.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtDescripcionPrevia.Location = new System.Drawing.Point(429, 87);
+            this.txtDescripcionPrevia.MaxLength = 150;
+            this.txtDescripcionPrevia.Name = "txtDescripcionPrevia";
+            this.txtDescripcionPrevia.Size = new System.Drawing.Size(539, 22);
+            this.txtDescripcionPrevia.TabIndex = 14;
+            //
+            // lblDescripcionPrevia
+            //
+            this.lblDescripcionPrevia.AutoSize = true;
+            this.lblDescripcionPrevia.Location = new System.Drawing.Point(426, 71);
+            this.lblDescripcionPrevia.Name = "lblDescripcionPrevia";
+            this.lblDescripcionPrevia.Size = new System.Drawing.Size(108, 13);
+            this.lblDescripcionPrevia.TabIndex = 53;
+            this.lblDescripcionPrevia.Text = "Descripción Previa:";
+            //
             // btnGuardarGrupo
             // 
             this.btnGuardarGrupo.Image = global::SoftCotton.Properties.Resources.icon_guardar;
@@ -617,7 +641,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(4);
-            this.panel1.Size = new System.Drawing.Size(984, 206);
+            this.panel1.Size = new System.Drawing.Size(984, 231);
             this.panel1.TabIndex = 1;
             // 
             // dgvListadoGrupos
@@ -636,11 +660,12 @@
             this.cdgvGPTxtCodCuenta,
             this.cdgvGPTxtCuenta,
             this.cdgvGPTxtCodGrupoAlt,
+            this.cdgvGPTxtDescPrevia,
             this.cdgvBtnEditar,
             this.cdgvBtnEliminar,
             this.cdgvBtnAgregarDet});
             this.dgvListadoGrupos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvListadoGrupos.Location = new System.Drawing.Point(4, 139);
+            this.dgvListadoGrupos.Location = new System.Drawing.Point(4, 164);
             this.dgvListadoGrupos.Name = "dgvListadoGrupos";
             this.dgvListadoGrupos.ReadOnly = true;
             this.dgvListadoGrupos.RowHeadersVisible = false;
@@ -719,7 +744,14 @@
             this.cdgvGPTxtCodGrupoAlt.Name = "cdgvGPTxtCodGrupoAlt";
             this.cdgvGPTxtCodGrupoAlt.ReadOnly = true;
             this.cdgvGPTxtCodGrupoAlt.Width = 120;
-            // 
+            //
+            // cdgvGPTxtDescPrevia
+            //
+            this.cdgvGPTxtDescPrevia.HeaderText = "Desc. Previa";
+            this.cdgvGPTxtDescPrevia.Name = "cdgvGPTxtDescPrevia";
+            this.cdgvGPTxtDescPrevia.ReadOnly = true;
+            this.cdgvGPTxtDescPrevia.Visible = false;
+            //
             // cdgvBtnEditar
             // 
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -778,7 +810,7 @@
             // 
             this.panel2.Controls.Add(this.groupBox2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 206);
+            this.panel2.Location = new System.Drawing.Point(0, 231);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(4);
             this.panel2.Size = new System.Drawing.Size(984, 278);
@@ -789,7 +821,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(984, 484);
+            this.ClientSize = new System.Drawing.Size(984, 509);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -835,6 +867,8 @@
         private System.Windows.Forms.Button btnNuevoGrupo;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtCodProductoAlt;
+        private System.Windows.Forms.TextBox txtDescripcionPrevia;
+        private System.Windows.Forms.Label lblDescripcionPrevia;
         private System.Windows.Forms.DataGridView dgvListadoGrupos;
         private System.Windows.Forms.Button btnGuardarDetalle;
         private System.Windows.Forms.TextBox txtCodGrupo;
@@ -874,6 +908,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cdgvGPTxtCodCuenta;
         private System.Windows.Forms.DataGridViewTextBoxColumn cdgvGPTxtCuenta;
         private System.Windows.Forms.DataGridViewTextBoxColumn cdgvGPTxtCodGrupoAlt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cdgvGPTxtDescPrevia;
         private System.Windows.Forms.DataGridViewButtonColumn cdgvBtnEditar;
         private System.Windows.Forms.DataGridViewButtonColumn cdgvBtnEliminar;
         private System.Windows.Forms.DataGridViewButtonColumn cdgvBtnAgregarDet;

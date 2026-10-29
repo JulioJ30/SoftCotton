@@ -1061,6 +1061,7 @@ namespace SoftCotton.Repository
                             grupo.codCuenta = reader["codCuenta"].ToString();
                             grupo.cuenta = reader["cuenta"].ToString();
                             grupo.codGrupoAlt = reader["codGrupoAlt"].ToString();
+                            grupo.descripcionPrevia = reader["descripcionPrevia"].ToString();
 
                             grupos.Add(grupo);
                         }
@@ -1910,6 +1911,7 @@ namespace SoftCotton.Repository
                     sqlCommand.Parameters.Add("@codUM", SqlDbType.VarChar, 3).Value = parametros.codUM;
                     sqlCommand.Parameters.Add("@usuarioReg", SqlDbType.VarChar, 50).Value = parametros.usuarioReg;
                     sqlCommand.Parameters.Add("@codCuenta", SqlDbType.VarChar, 10).Value = parametros.codCuenta;
+                    sqlCommand.Parameters.Add("@descripcionPrevia", SqlDbType.VarChar, 150).Value = parametros.descripcionPrevia;
 
                     sqlConnection.Open();
 

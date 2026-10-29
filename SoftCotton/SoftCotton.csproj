@@ -1423,6 +1423,36 @@
     <None Include="Resources\agregar_btn.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Database\Scripts\20260818_OrdenCompraAdjuntos.sql" />
+    <Content Include="Database\Scripts\20260818_OrdenServicioAdjuntos.sql" />
+    <Content Include="Database\Scripts\20260821_uspGetOC_Opcion10_PedidoColor.sql" />
+    <Content Include="Database\Scripts\20260821_uspGetOS_Opcion10_PedidoColor.sql" />
+    <Content Include="Database\Scripts\20260831_CuadreKardex_01_SeedPlaceholders.sql" />
+    <Content Include="Database\Scripts\20260831_CuadreKardex_02_TablaCuadreKardex.sql" />
+    <Content Include="Database\Scripts\20260831_CuadreKardex_03_uspGetCuadreKardex.sql" />
+    <Content Include="Database\Scripts\20260831_CuadreKardex_04_uspSetCuadreKardex.sql" />
+    <Content Include="Database\Scripts\20260831_CuadreKardex_05_MenuYAccesos.sql" />
+    <Content Include="Database\Scripts\20260831_CuadreKardex_06_uspGetkardexPrincipal_AjusteCuadre.sql" />
+    <Content Include="Database\Scripts\20260909_CierrePeriodo_01_fnPeriodoCerrado.sql" />
+    <Content Include="Database\Scripts\20260930_CierrePeriodo_02_fnPeriodoBloqueado.sql" />
+    <Content Include="Database\Scripts\20260930_CierrePeriodo_03_uspSetCierrePeriodo_Opcion7.sql" />
+    <Content Include="Database\Scripts\20260930_CierrePeriodo_04_OrdenCompra.sql" />
+    <Content Include="Database\Scripts\20260930_CierrePeriodo_05_OrdenServicio.sql" />
+    <Content Include="Database\Scripts\20260930_CierrePeriodo_06_OrdenServicioEspecial.sql" />
+    <Content Include="Database\Scripts\20260930_CierrePeriodo_07_OrdenSalida.sql" />
+    <Content Include="Database\Scripts\20260930_CierrePeriodo_08_GuiaRemision.sql" />
+    <Content Include="Database\Scripts\20260930_CierrePeriodo_09_GuiaRemisionExportacion.sql" />
+    <Content Include="Database\Scripts\20260930_CierrePeriodo_10_Facturas.sql" />
+    <Content Include="Database\Scripts\20260930_PermisosGuia_01_ColumnasAccesos.sql" />
+    <Content Include="Database\Scripts\20260930_PermisosGuia_02_uspSetAcceso.sql" />
+    <Content Include="Database\Scripts\20260930_PermisosGuia_03_uspGetAcceso.sql" />
+    <Content Include="Database\Scripts\20261013_ProgramasPedidoColor_01_ufnProgramasPedidoColor.sql" />
+    <Content Include="Database\Scripts\20261013_ProgramasPedidoColor_02_uspGetOC_Opcion9.sql" />
+    <Content Include="Database\Scripts\20261013_ProgramasPedidoColor_03_uspGetOS_Opcion9y22.sql" />
+    <Content Include="Database\Scripts\20261029_DescripcionPrevia_01_ColumnaGrupos.sql" />
+    <Content Include="Database\Scripts\20261029_DescripcionPrevia_02_uspSetGrupo.sql" />
+    <Content Include="Database\Scripts\20261029_DescripcionPrevia_03_uspGetMantenimiento_Opcion25.sql" />
+    <Content Include="Database\Scripts\20261029_DescripcionPrevia_04_uspGetOS_Opcion10.sql" />
     <Content Include="Resources\icono-oc-default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
