@@ -1,23 +1,14 @@
 -- =====================================================================================
--- Transferencia entre Almacenes - Script 7 de 9: uspGetkardexPrincipal
+-- Movimientos de Almacen - Script 1 de 8: restaurar uspGetkardexPrincipal
 -- =====================================================================================
--- Agrega al Kardex las transferencias entre almacenes, con la MISMA estructura de filas
--- que las guias, para los niveles por Orden de Compra (los niveles por OS se resuelven en
--- uspGetkardexPrincipalOs, script 8).
+-- Deja el Kardex como estaba ANTES de las transferencias entre almacenes (script
+-- 20261112_TransferenciaAlmacen_07): sin filas de transferencias ni Tipo_Operacion '11'.
+-- El cuerpo es el del script 20260831_CuadreKardex_06 (ultima version vigente previa).
 --
--- Cambios (todos marcados con "AGREGADO: Transferencia entre almacenes"):
---   1. Columna interna esTransferencia (0 en las filas de guias).
---   2. INSERT de 2 filas por linea de transferencia activa (salida origen / ingreso destino)
---      y renumeracion del orden por producto.
---   3. En el bucle, las filas de transferencia son informativas: se muestran al costo
---      promedio vigente y NO cambian saldo de cantidad, valor ni costo promedio. Por eso el
---      Kardex de cualquier producto da exactamente el mismo saldo que antes.
---   4. Tipo_Operacion '11' (transferencia entre almacenes) para esas filas.
+-- Los ingresos/salidas de almacen NO se muestran en el Kardex.
 --
--- Cuerpo base: definicion vigente en la base (incluye el ajuste de Cuadre de Kardex del
--- 31/08/2026). Si en produccion el procedimiento cambio despues, compare antes de ejecutar.
---
--- Requiere el script 2.
+-- Si en esta base nunca se ejecuto el script 07 de transferencias, ejecutarlo igual no
+-- cambia nada (deja la misma definicion).
 -- =====================================================================================
 
 SET NOCOUNT ON;
@@ -108,8 +99,7 @@ DECLARE @puold decimal(18,10) = 0,
 			pe.pedido OpPedido ,
 			col.descripcion OpColor,
 			est.estilo OpEstilo,
-			pro.programa OpPrograma,
-				cast(0 as bit) esTransferencia -- AGREGADO: Transferencia entre almacenes
+			pro.programa OpPrograma
 
 			into #TmpKardex
 			from grCab grc
@@ -186,84 +176,6 @@ DECLARE @puold decimal(18,10) = 0,
 
 				--AND vv.anio+ ''+LEFT(vv.mes, CHARINDEX('.', vv.mes) - 1) BETWEEN @inicioYYYYMM AND @finYYYYMM;
 
-				-- =====================================================================
-				-- AGREGADO: Transferencia entre almacenes (TransferenciaAlmacenCab/Det)
-				-- Cada linea de una transferencia activa genera 2 filas: salida ('S') del
-				-- almacen origen e ingreso ('E') al almacen destino, por la misma cantidad.
-				-- Son movimientos internos: NO cambian el saldo de cantidad, el valor ni el
-				-- costo promedio del producto (ver bloque esTransferencia en el bucle). Se
-				-- ubican al final del dia, despues de los movimientos reales.
-				-- serie TRA/DEV + numero = N de transferencia; codigo_Proveedor = 'ALM ' +
-				-- almacen que sale (S) o que recibe (E). Tipo de operacion SUNAT '11'.
-				-- =====================================================================
-				insert into #TmpKardex (
-					orden, tipo, cod, Nombre_Articulo, color, Fecha_Guia, serie, numero,
-					codigo_Proveedor, razonSocial, serie_fact, Num_fact, Tipo_Moneda, idTipoMoneda,
-					codigo, UM, PU, fact_tipo, mes, cantidadOC, idEmpresa, tipoMovimiento, cantidad,
-					PUCalcDolar, TotalDolar, PUCalcSoles, TotalSoles, tipoCambio, saldoCantidad,
-					SaldoValorDolares, SaldoPuSoles, SaldoValorSoles, SaldoValorSolesant,
-					fechaOc, fechaFactura,
-					OpPedido, OpColor, OpEstilo, OpPrograma, esTransferencia)
-				select
-					0,
-					CONCAT(n.codNivel, '.', n.NIVEL),
-					(td.codNivel + '.' + td.codGrupo + '.' + td.codTalla + '.' + td.codColor),
-					(rtrim(ltrim(g.grupo))),
-					c.descripcion,
-					tc.FechaTransferencia,
-					iif(tc.TipoTransferencia = 'D', 'DEV', 'TRA'),
-					right('0000000000' + cast(tc.IdTransferencia as varchar(10)), 10),
-					'ALM ' + iif(m.tipoMovimiento = 'S', tc.CodAlmacenOrigen, tc.CodAlmacenDestino),
-					left(concat(iif(tc.TipoTransferencia = 'D', 'DEVOLUCION ', 'TRANSFERENCIA '),
-								coalesce(nullif(rtrim(ao.tResumido), ''), ao.Descripcion), ' > ',
-								coalesce(nullif(rtrim(ad.tResumido), ''), ad.Descripcion)), 60),
-					'', '', '', null,
-					tc.IdTransferencia,
-					g.codUM,
-					0, 0, month(tc.FechaTransferencia), 0, 1,
-					m.tipoMovimiento,
-					td.Cantidad,
-					0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0,
-					tc.FechaTransferencia, null,
-					'', '', '', '', cast(1 as bit)
-				from TransferenciaAlmacenCab tc
-				inner join TransferenciaAlmacenDet td on td.IdTransferencia = tc.IdTransferencia
-				inner join AreasAlmacen ao on ao.Codigo = tc.CodAlmacenOrigen
-				inner join AreasAlmacen ad on ad.Codigo = tc.CodAlmacenDestino
-				inner join productoServicios p on p.codNivel = td.codNivel
-												and p.codGrupo = td.codGrupo
-												and p.codTalla = td.codTalla
-												and p.codColor = td.codColor
-				inner join grupos g on g.codNivel = p.codNivel and g.codGrupo = p.codGrupo
-				inner join niveles n on n.codNivel = g.codNivel
-				inner join tallas t on t.codTalla = p.codTalla
-				inner join colores c on c.codColor = p.codColor
-				cross apply (values ('S'), ('E')) m(tipoMovimiento)
-				where tc.Estado = 'A'
-				and n.codNivel = @codNivel
-				and (td.codCuenta = @codCuenta or @codCuenta = '0')
-				and (@codGrupo = '' or td.codGrupo = @codGrupo)
-				and (@codTalla = '' or td.codTalla = @codTalla)
-				and (@codColor = '' or td.codColor = @codColor)
-				and tc.FechaTransferencia between cast(@fechaIni as date) and cast(@fechaFin as date)
-				and td.codCuenta in (
-					select codCuenta from cuentas where estado = 1 and FlgMostrarKardex = 1
-				);
-
-				-- AGREGADO: Transferencia entre almacenes - renumera el orden por producto.
-				-- Los movimientos reales conservan su orden relativo (se ordena por el orden
-				-- original); las transferencias van al final de su dia (salida y luego ingreso).
-				if @@ROWCOUNT > 0
-				begin
-					;with x as (
-						select orden, row_number() over (partition by cod
-							order by Fecha_Guia asc, esTransferencia asc, orden asc, codigo asc, tipoMovimiento desc) as rn
-						from #TmpKardex
-					)
-					update x set orden = rn;
-				end;
-
 				delete from #TmpKardex where serie = '0003' and numero = 2150;
 
 
@@ -300,8 +212,6 @@ DECLARE @puold decimal(18,10) = 0,
 							@ruc varchar(20),
 							@serie_fact varchar(50),
 							@num_fact varchar(50),
-							-- AGREGADO: Transferencia entre almacenes
-							@esTransferencia bit,
 							-- AGREGADO: identifica filas de Cuadre de Kardex (proveedor placeholder 'AJUSTE')
 							@esCuadre bit
 							;
@@ -318,8 +228,7 @@ DECLARE @puold decimal(18,10) = 0,
 									@fechaFactura   = fechaFactura,
 									@ruc = codigo_Proveedor,
 									@serie_fact = serie_fact,
-									@num_fact = Num_fact,
-									@esTransferencia = esTransferencia -- AGREGADO
+									@num_fact = Num_fact
 					 from #TmpRecorrido
 					 order by cod asc,orden asc
 					 ;
@@ -372,18 +281,6 @@ DECLARE @puold decimal(18,10) = 0,
 						set @SaldoAjusteCuadre = 0;
 
 					end;
-
-					-- AGREGADO: Transferencia entre almacenes - fila informativa: no mueve saldo de
-					-- cantidad, valor ni costo promedio. Se muestra al costo promedio vigente
-					-- (en la primera fila del rango no hay costo previo: se muestra en 0).
-					if @esTransferencia = 1
-					begin
-						set @PUCalcSoles = iif(@orden = 1, 0, @SaldoPuSolesIni);
-						set @TotalSoles = @PUCalcSoles * @cantidad;
-						set @SaldoPuSoles = @PUCalcSoles;
-					end
-					else
-					begin -- AGREGADO: inicio movimientos reales (logica original sin cambios)
 
 					-- AGREGADO: Cuadre de Kardex - no mueve cantidad, precio ni costo promedio;
 					-- solo suma/resta la cantidad ingresada directamente sobre el total valorizado.
@@ -492,8 +389,6 @@ DECLARE @puold decimal(18,10) = 0,
 						end;
 					end;
 
-					end; -- AGREGADO: fin movimientos reales
-
 					if(@SaldoCantidad = 0 )
 						begin
 							set @SaldoPuSolesIni	=  0;
@@ -552,7 +447,7 @@ DECLARE @puold decimal(18,10) = 0,
 						OpPrograma,
 
 						'09' Tipo_Documento,
-						(CASE WHEN esTransferencia = 1 THEN '11' WHEN tipoMovimiento = 'E' THEN '02' ELSE '10' END) Tipo_Operacion -- AGREGADO: '11' transferencia entre almacenes
+						(CASE tipoMovimiento WHEN 'E' THEN '02' ELSE '10' END) Tipo_Operacion
 
 						--PUCalcDolar,	TotalDolar,
 						--PUCalcSoles,

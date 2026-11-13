@@ -1,9 +1,9 @@
 -- =====================================================================================
--- Transferencia entre Almacenes - Script 1 de 9: clave primaria de AreasAlmacen
+-- Movimientos de Almacen - Script 4 de 8: clave primaria de AreasAlmacen
 -- =====================================================================================
--- AreasAlmacen no tiene clave primaria y su columna Codigo admite NULL. Las tablas nuevas
--- de transferencias referencian al almacen con FOREIGN KEY, asi que primero se asegura la
--- PK sobre Codigo.
+-- AreasAlmacen no tiene clave primaria y su columna Codigo admite NULL. La tabla de
+-- movimientos de almacen (script 5) referencia al almacen con FOREIGN KEY, asi que primero
+-- se asegura la PK sobre Codigo.
 --
 -- uspSetAreasAlmacen ya genera siempre un Codigo (correlativo de 3 digitos) y nunca lo
 -- actualiza ni elimina, por lo que la PK no cambia su comportamiento.

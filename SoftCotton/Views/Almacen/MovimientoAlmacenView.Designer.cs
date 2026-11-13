@@ -1,6 +1,6 @@
-namespace SoftCotton.Views.Almacen
+﻿namespace SoftCotton.Views.Almacen
 {
-    partial class TransferenciaAlmacenView
+    partial class MovimientoAlmacenView
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -26,17 +26,19 @@ namespace SoftCotton.Views.Almacen
             this.lblDesde = new System.Windows.Forms.Label();
             this.lblHasta = new System.Windows.Forms.Label();
             this.lblAlmacen = new System.Windows.Forms.Label();
+            this.lblTipoFiltro = new System.Windows.Forms.Label();
             this.lblEstado = new System.Windows.Forms.Label();
             this.lblBuscar = new System.Windows.Forms.Label();
             this.dtpDesde = new System.Windows.Forms.DateTimePicker();
             this.dtpHasta = new System.Windows.Forms.DateTimePicker();
             this.cbxAlmacen = new System.Windows.Forms.ComboBox();
+            this.cbxTipo = new System.Windows.Forms.ComboBox();
             this.cbxEstado = new System.Windows.Forms.ComboBox();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.flpAcciones = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnNuevaTransferencia = new System.Windows.Forms.Button();
-            this.btnNuevaDevolucion = new System.Windows.Forms.Button();
+            this.btnNuevoIngreso = new System.Windows.Forms.Button();
+            this.btnNuevaSalida = new System.Windows.Forms.Button();
             this.btnAnular = new System.Windows.Forms.Button();
             this.btnExportar = new System.Windows.Forms.Button();
             this.splitContenido = new System.Windows.Forms.SplitContainer();
@@ -44,8 +46,8 @@ namespace SoftCotton.Views.Almacen
             this.colNumero = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOrigen = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDestino = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAlmacenMov = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGuias = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colItems = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCantidadTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -60,7 +62,8 @@ namespace SoftCotton.Views.Almacen
             this.colDetColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDetUM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDetCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDetCuenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDetGuia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDetDestinatario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDetComentario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblDetalleTitulo = new System.Windows.Forms.Label();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
@@ -99,7 +102,7 @@ namespace SoftCotton.Views.Almacen
             this.lblSubtitulo.Name = "lblSubtitulo";
             this.lblSubtitulo.Size = new System.Drawing.Size(520, 15);
             this.lblSubtitulo.TabIndex = 1;
-            this.lblSubtitulo.Text = "Mueva sobrantes de stock entre almacenes sin generar OC ni OS. Los movimientos se reflejan en el Kardex.";
+            this.lblSubtitulo.Text = "Ingrese a un almacén lo despachado con guía de remisión y despache solo ese stock. No se refleja en el Kardex.";
             //
             // lblTitulo
             //
@@ -110,7 +113,7 @@ namespace SoftCotton.Views.Almacen
             this.lblTitulo.Name = "lblTitulo";
             this.lblTitulo.Size = new System.Drawing.Size(330, 28);
             this.lblTitulo.TabIndex = 0;
-            this.lblTitulo.Text = "Transferencias entre almacenes";
+            this.lblTitulo.Text = "Ingresos y salidas de almacén";
             //
             // pnlFiltros
             //
@@ -125,25 +128,28 @@ namespace SoftCotton.Views.Almacen
             //
             // tlpFiltros
             //
-            this.tlpFiltros.ColumnCount = 7;
+            this.tlpFiltros.ColumnCount = 8;
             this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
             this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
             this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
-            this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
+            this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
+            this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
             this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 280F));
             this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110F));
             this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpFiltros.Controls.Add(this.lblDesde, 0, 0);
             this.tlpFiltros.Controls.Add(this.lblHasta, 1, 0);
             this.tlpFiltros.Controls.Add(this.lblAlmacen, 2, 0);
-            this.tlpFiltros.Controls.Add(this.lblEstado, 3, 0);
-            this.tlpFiltros.Controls.Add(this.lblBuscar, 4, 0);
+            this.tlpFiltros.Controls.Add(this.lblTipoFiltro, 3, 0);
+            this.tlpFiltros.Controls.Add(this.lblEstado, 4, 0);
+            this.tlpFiltros.Controls.Add(this.lblBuscar, 5, 0);
             this.tlpFiltros.Controls.Add(this.dtpDesde, 0, 1);
             this.tlpFiltros.Controls.Add(this.dtpHasta, 1, 1);
             this.tlpFiltros.Controls.Add(this.cbxAlmacen, 2, 1);
-            this.tlpFiltros.Controls.Add(this.cbxEstado, 3, 1);
-            this.tlpFiltros.Controls.Add(this.txtBuscar, 4, 1);
-            this.tlpFiltros.Controls.Add(this.btnBuscar, 5, 1);
+            this.tlpFiltros.Controls.Add(this.cbxTipo, 3, 1);
+            this.tlpFiltros.Controls.Add(this.cbxEstado, 4, 1);
+            this.tlpFiltros.Controls.Add(this.txtBuscar, 5, 1);
+            this.tlpFiltros.Controls.Add(this.btnBuscar, 6, 1);
             this.tlpFiltros.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpFiltros.Location = new System.Drawing.Point(14, 8);
             this.tlpFiltros.Name = "tlpFiltros";
@@ -175,13 +181,19 @@ namespace SoftCotton.Views.Almacen
             this.lblAlmacen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
             this.lblAlmacen.Location = new System.Drawing.Point(263, 0);
             this.lblAlmacen.Name = "lblAlmacen";
-            this.lblAlmacen.Text = "Almacén (origen o destino)";
+            this.lblAlmacen.Text = "Almacén";
+            //
+            // lblTipoFiltro
+            //
+            this.lblTipoFiltro.AutoSize = true;
+            this.lblTipoFiltro.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
+            this.lblTipoFiltro.Name = "lblTipoFiltro";
+            this.lblTipoFiltro.Text = "Tipo";
             //
             // lblEstado
             //
             this.lblEstado.AutoSize = true;
             this.lblEstado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
-            this.lblEstado.Location = new System.Drawing.Point(513, 0);
             this.lblEstado.Name = "lblEstado";
             this.lblEstado.Text = "Estado";
             //
@@ -189,9 +201,8 @@ namespace SoftCotton.Views.Almacen
             //
             this.lblBuscar.AutoSize = true;
             this.lblBuscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
-            this.lblBuscar.Location = new System.Drawing.Point(653, 0);
             this.lblBuscar.Name = "lblBuscar";
-            this.lblBuscar.Text = "N°, producto u observación";
+            this.lblBuscar.Text = "N°, guía, producto u observación";
             //
             // dtpDesde
             //
@@ -217,20 +228,28 @@ namespace SoftCotton.Views.Almacen
             this.cbxAlmacen.Name = "cbxAlmacen";
             this.cbxAlmacen.TabIndex = 2;
             //
+            // cbxTipo
+            //
+            this.cbxTipo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbxTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTipo.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
+            this.cbxTipo.Name = "cbxTipo";
+            this.cbxTipo.TabIndex = 3;
+            //
             // cbxEstado
             //
             this.cbxEstado.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbxEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxEstado.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.cbxEstado.Name = "cbxEstado";
-            this.cbxEstado.TabIndex = 3;
+            this.cbxEstado.TabIndex = 4;
             //
             // txtBuscar
             //
             this.txtBuscar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtBuscar.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.TabIndex = 4;
+            this.txtBuscar.TabIndex = 5;
             this.txtBuscar.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBuscar_KeyDown);
             //
             // btnBuscar
@@ -238,14 +257,14 @@ namespace SoftCotton.Views.Almacen
             this.btnBuscar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnBuscar.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.TabIndex = 5;
+            this.btnBuscar.TabIndex = 6;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             //
             // flpAcciones
             //
-            this.flpAcciones.Controls.Add(this.btnNuevaTransferencia);
-            this.flpAcciones.Controls.Add(this.btnNuevaDevolucion);
+            this.flpAcciones.Controls.Add(this.btnNuevoIngreso);
+            this.flpAcciones.Controls.Add(this.btnNuevaSalida);
             this.flpAcciones.Controls.Add(this.btnAnular);
             this.flpAcciones.Controls.Add(this.btnExportar);
             this.flpAcciones.Dock = System.Windows.Forms.DockStyle.Top;
@@ -255,23 +274,23 @@ namespace SoftCotton.Views.Almacen
             this.flpAcciones.Size = new System.Drawing.Size(1184, 56);
             this.flpAcciones.TabIndex = 2;
             //
-            // btnNuevaTransferencia
+            // btnNuevoIngreso
             //
-            this.btnNuevaTransferencia.Name = "btnNuevaTransferencia";
-            this.btnNuevaTransferencia.Size = new System.Drawing.Size(190, 34);
-            this.btnNuevaTransferencia.TabIndex = 0;
-            this.btnNuevaTransferencia.Text = "＋  Nueva transferencia";
-            this.toolTip.SetToolTip(this.btnNuevaTransferencia, "Mover stock del almacén central (u otro) a un almacén (Ctrl+N)");
-            this.btnNuevaTransferencia.Click += new System.EventHandler(this.btnNuevaTransferencia_Click);
+            this.btnNuevoIngreso.Name = "btnNuevoIngreso";
+            this.btnNuevoIngreso.Size = new System.Drawing.Size(170, 34);
+            this.btnNuevoIngreso.TabIndex = 0;
+            this.btnNuevoIngreso.Text = "＋  Nuevo ingreso";
+            this.toolTip.SetToolTip(this.btnNuevoIngreso, "Ingresar a un almacén stock despachado con guía de remisión (Ctrl+I)");
+            this.btnNuevoIngreso.Click += new System.EventHandler(this.btnNuevoIngreso_Click);
             //
-            // btnNuevaDevolucion
+            // btnNuevaSalida
             //
-            this.btnNuevaDevolucion.Name = "btnNuevaDevolucion";
-            this.btnNuevaDevolucion.Size = new System.Drawing.Size(180, 34);
-            this.btnNuevaDevolucion.TabIndex = 1;
-            this.btnNuevaDevolucion.Text = "↩  Nueva devolución";
-            this.toolTip.SetToolTip(this.btnNuevaDevolucion, "Regresar stock de un almacén al almacén central (por ejemplo, antes de despacharlo con guía)");
-            this.btnNuevaDevolucion.Click += new System.EventHandler(this.btnNuevaDevolucion_Click);
+            this.btnNuevaSalida.Name = "btnNuevaSalida";
+            this.btnNuevaSalida.Size = new System.Drawing.Size(170, 34);
+            this.btnNuevaSalida.TabIndex = 1;
+            this.btnNuevaSalida.Text = "－  Nueva salida";
+            this.toolTip.SetToolTip(this.btnNuevaSalida, "Despachar stock de un almacén: solo lo ingresado a ese almacén (Ctrl+S)");
+            this.btnNuevaSalida.Click += new System.EventHandler(this.btnNuevaSalida_Click);
             //
             // btnAnular
             //
@@ -280,7 +299,7 @@ namespace SoftCotton.Views.Almacen
             this.btnAnular.Size = new System.Drawing.Size(110, 34);
             this.btnAnular.TabIndex = 2;
             this.btnAnular.Text = "Anular";
-            this.toolTip.SetToolTip(this.btnAnular, "Anular la transferencia seleccionada");
+            this.toolTip.SetToolTip(this.btnAnular, "Anular el movimiento seleccionado");
             this.btnAnular.Click += new System.EventHandler(this.btnAnular_Click);
             //
             // btnExportar
@@ -320,8 +339,8 @@ namespace SoftCotton.Views.Almacen
             this.colNumero,
             this.colTipo,
             this.colFecha,
-            this.colOrigen,
-            this.colDestino,
+            this.colAlmacenMov,
+            this.colGuias,
             this.colItems,
             this.colCantidadTotal,
             this.colEstado,
@@ -347,29 +366,29 @@ namespace SoftCotton.Views.Almacen
             this.colTipo.DataPropertyName = "TipoDescripcion";
             this.colTipo.HeaderText = "Tipo";
             this.colTipo.Name = "colTipo";
-            this.colTipo.Width = 115;
+            this.colTipo.Width = 80;
             //
             // colFecha
             //
-            this.colFecha.DataPropertyName = "FechaTransferencia";
+            this.colFecha.DataPropertyName = "FechaMovimiento";
             this.colFecha.DefaultCellStyle.Format = "dd/MM/yyyy";
             this.colFecha.HeaderText = "Fecha";
             this.colFecha.Name = "colFecha";
             this.colFecha.Width = 85;
             //
-            // colOrigen
+            // colAlmacenMov
             //
-            this.colOrigen.DataPropertyName = "AlmacenOrigen";
-            this.colOrigen.HeaderText = "Origen";
-            this.colOrigen.Name = "colOrigen";
-            this.colOrigen.Width = 170;
+            this.colAlmacenMov.DataPropertyName = "Almacen";
+            this.colAlmacenMov.HeaderText = "Almacén";
+            this.colAlmacenMov.Name = "colAlmacenMov";
+            this.colAlmacenMov.Width = 190;
             //
-            // colDestino
+            // colGuias
             //
-            this.colDestino.DataPropertyName = "AlmacenDestino";
-            this.colDestino.HeaderText = "Destino";
-            this.colDestino.Name = "colDestino";
-            this.colDestino.Width = 170;
+            this.colGuias.DataPropertyName = "Guias";
+            this.colGuias.HeaderText = "Guías de origen";
+            this.colGuias.Name = "colGuias";
+            this.colGuias.Width = 160;
             //
             // colItems
             //
@@ -422,7 +441,7 @@ namespace SoftCotton.Views.Almacen
             this.lblCabeceraTitulo.Name = "lblCabeceraTitulo";
             this.lblCabeceraTitulo.Size = new System.Drawing.Size(1156, 26);
             this.lblCabeceraTitulo.TabIndex = 0;
-            this.lblCabeceraTitulo.Text = "Transferencias registradas";
+            this.lblCabeceraTitulo.Text = "Movimientos registrados";
             this.lblCabeceraTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // dgvDetalle
@@ -434,7 +453,8 @@ namespace SoftCotton.Views.Almacen
             this.colDetColor,
             this.colDetUM,
             this.colDetCantidad,
-            this.colDetCuenta,
+            this.colDetGuia,
+            this.colDetDestinatario,
             this.colDetComentario});
             this.dgvDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvDetalle.Name = "dgvDetalle";
@@ -483,19 +503,26 @@ namespace SoftCotton.Views.Almacen
             this.colDetCantidad.Name = "colDetCantidad";
             this.colDetCantidad.Width = 100;
             //
-            // colDetCuenta
+            // colDetGuia
             //
-            this.colDetCuenta.DataPropertyName = "codCuenta";
-            this.colDetCuenta.HeaderText = "Cuenta";
-            this.colDetCuenta.Name = "colDetCuenta";
-            this.colDetCuenta.Width = 95;
+            this.colDetGuia.DataPropertyName = "Guia";
+            this.colDetGuia.HeaderText = "Guía de origen";
+            this.colDetGuia.Name = "colDetGuia";
+            this.colDetGuia.Width = 115;
+            //
+            // colDetDestinatario
+            //
+            this.colDetDestinatario.DataPropertyName = "Destinatario";
+            this.colDetDestinatario.HeaderText = "Destinatario de la guía";
+            this.colDetDestinatario.Name = "colDetDestinatario";
+            this.colDetDestinatario.Width = 200;
             //
             // colDetComentario
             //
             this.colDetComentario.DataPropertyName = "Comentario";
             this.colDetComentario.HeaderText = "Comentario";
             this.colDetComentario.Name = "colDetComentario";
-            this.colDetComentario.Width = 220;
+            this.colDetComentario.Width = 200;
             //
             // lblDetalleTitulo
             //
@@ -520,17 +547,17 @@ namespace SoftCotton.Views.Almacen
             //
             this.tsslTotal.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             this.tsslTotal.Name = "tsslTotal";
-            this.tsslTotal.Text = "0 transferencias";
+            this.tsslTotal.Text = "0 movimientos";
             //
             // tsslAyuda
             //
             this.tsslAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
             this.tsslAyuda.Name = "tsslAyuda";
             this.tsslAyuda.Spring = true;
-            this.tsslAyuda.Text = "F5 actualizar · Ctrl+N nueva transferencia · Ctrl+D nueva devolución";
+            this.tsslAyuda.Text = "F5 actualizar · Ctrl+I nuevo ingreso · Ctrl+S nueva salida";
             this.tsslAyuda.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             //
-            // TransferenciaAlmacenView
+            // MovimientoAlmacenView
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -542,10 +569,10 @@ namespace SoftCotton.Views.Almacen
             this.Controls.Add(this.statusStrip);
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(980, 560);
-            this.Name = "TransferenciaAlmacenView";
-            this.Text = "Transferencias entre almacenes";
-            this.Load += new System.EventHandler(this.TransferenciaAlmacenView_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TransferenciaAlmacenView_KeyDown);
+            this.Name = "MovimientoAlmacenView";
+            this.Text = "Ingresos y salidas de almacén";
+            this.Load += new System.EventHandler(this.MovimientoAlmacenView_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MovimientoAlmacenView_KeyDown);
             this.pnlEncabezado.ResumeLayout(false);
             this.pnlEncabezado.PerformLayout();
             this.pnlFiltros.ResumeLayout(false);
@@ -574,17 +601,19 @@ namespace SoftCotton.Views.Almacen
         private System.Windows.Forms.Label lblDesde;
         private System.Windows.Forms.Label lblHasta;
         private System.Windows.Forms.Label lblAlmacen;
+        private System.Windows.Forms.Label lblTipoFiltro;
         private System.Windows.Forms.Label lblEstado;
         private System.Windows.Forms.Label lblBuscar;
         private System.Windows.Forms.DateTimePicker dtpDesde;
         private System.Windows.Forms.DateTimePicker dtpHasta;
         private System.Windows.Forms.ComboBox cbxAlmacen;
+        private System.Windows.Forms.ComboBox cbxTipo;
         private System.Windows.Forms.ComboBox cbxEstado;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.FlowLayoutPanel flpAcciones;
-        private System.Windows.Forms.Button btnNuevaTransferencia;
-        private System.Windows.Forms.Button btnNuevaDevolucion;
+        private System.Windows.Forms.Button btnNuevoIngreso;
+        private System.Windows.Forms.Button btnNuevaSalida;
         private System.Windows.Forms.Button btnAnular;
         private System.Windows.Forms.Button btnExportar;
         private System.Windows.Forms.SplitContainer splitContenido;
@@ -592,8 +621,8 @@ namespace SoftCotton.Views.Almacen
         private System.Windows.Forms.DataGridViewTextBoxColumn colNumero;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTipo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFecha;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOrigen;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDestino;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAlmacenMov;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colGuias;
         private System.Windows.Forms.DataGridViewTextBoxColumn colItems;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCantidadTotal;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
@@ -608,7 +637,8 @@ namespace SoftCotton.Views.Almacen
         private System.Windows.Forms.DataGridViewTextBoxColumn colDetColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDetUM;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDetCantidad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDetCuenta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDetGuia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDetDestinatario;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDetComentario;
         private System.Windows.Forms.Label lblDetalleTitulo;
         private System.Windows.Forms.StatusStrip statusStrip;

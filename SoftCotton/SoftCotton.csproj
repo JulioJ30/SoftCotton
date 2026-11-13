@@ -177,11 +177,12 @@
     <Compile Include="BusinessLogic\AlmacenBL.cs" />
     <Compile Include="Repository\AlmacenRepository.cs" />
     <Compile Include="Model\Almacen\AlmacenItem.cs" />
+    <Compile Include="Model\Almacen\GuiaDespachoPendiente.cs" />
+    <Compile Include="Model\Almacen\MovimientoAlmacenCab.cs" />
+    <Compile Include="Model\Almacen\MovimientoAlmacenDet.cs" />
+    <Compile Include="Model\Almacen\MovimientoAlmacenRegistro.cs" />
     <Compile Include="Model\Almacen\ProductoStockAlmacen.cs" />
-    <Compile Include="Model\Almacen\StockAlmacenReporte.cs" />
-    <Compile Include="Model\Almacen\TransferenciaAlmacenCab.cs" />
-    <Compile Include="Model\Almacen\TransferenciaAlmacenDet.cs" />
-    <Compile Include="Model\Almacen\TransferenciaAlmacenRegistro.cs" />
+    <Compile Include="Model\Almacen\StockAlmacenKardex.cs" />
     <Compile Include="Util\EstiloVisual.cs" />
     <Compile Include="Util\OpcionCombo.cs" />
     <Compile Include="Views\Almacen\ExportacionExcel.cs" />
@@ -191,17 +192,17 @@
     <Compile Include="Views\Almacen\MotivoAnulacionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Almacen\TransferenciaAlmacenView.cs">
+    <Compile Include="Views\Almacen\MovimientoAlmacenView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Almacen\TransferenciaAlmacenView.Designer.cs">
-      <DependentUpon>TransferenciaAlmacenView.cs</DependentUpon>
+    <Compile Include="Views\Almacen\MovimientoAlmacenView.Designer.cs">
+      <DependentUpon>MovimientoAlmacenView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Almacen\RegistroTransferenciaAlmacenView.cs">
+    <Compile Include="Views\Almacen\RegistroMovimientoAlmacenView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Almacen\RegistroTransferenciaAlmacenView.Designer.cs">
-      <DependentUpon>RegistroTransferenciaAlmacenView.cs</DependentUpon>
+    <Compile Include="Views\Almacen\RegistroMovimientoAlmacenView.Designer.cs">
+      <DependentUpon>RegistroMovimientoAlmacenView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Almacen\StockAlmacenView.cs">
       <SubType>Form</SubType>
@@ -1488,15 +1489,14 @@
     <Content Include="Database\Scripts\20261029_DescripcionPrevia_02_uspSetGrupo.sql" />
     <Content Include="Database\Scripts\20261029_DescripcionPrevia_03_uspGetMantenimiento_Opcion25.sql" />
     <Content Include="Database\Scripts\20261029_DescripcionPrevia_04_uspGetOS_Opcion10.sql" />
-    <Content Include="Database\Scripts\20261112_TransferenciaAlmacen_01_PK_AreasAlmacen.sql" />
-    <Content Include="Database\Scripts\20261112_TransferenciaAlmacen_02_Tablas.sql" />
-    <Content Include="Database\Scripts\20261112_TransferenciaAlmacen_03_ufnStockKardexGlobal.sql" />
-    <Content Include="Database\Scripts\20261112_TransferenciaAlmacen_04_ufnStockAlmacen.sql" />
-    <Content Include="Database\Scripts\20261112_TransferenciaAlmacen_05_uspGetTransferenciaAlmacen.sql" />
-    <Content Include="Database\Scripts\20261112_TransferenciaAlmacen_06_uspSetTransferenciaAlmacen.sql" />
-    <Content Include="Database\Scripts\20261112_TransferenciaAlmacen_07_uspGetkardexPrincipal.sql" />
-    <Content Include="Database\Scripts\20261112_TransferenciaAlmacen_08_uspGetkardexPrincipalOs.sql" />
-    <Content Include="Database\Scripts\20261112_TransferenciaAlmacen_09_MenuYAccesos.sql" />
+    <Content Include="Database\Scripts\20261113_MovimientoAlmacen_01_Kardex_uspGetkardexPrincipal.sql" />
+    <Content Include="Database\Scripts\20261113_MovimientoAlmacen_02_Kardex_uspGetkardexPrincipalOs.sql" />
+    <Content Include="Database\Scripts\20261113_MovimientoAlmacen_03_EliminarTransferencias.sql" />
+    <Content Include="Database\Scripts\20261113_MovimientoAlmacen_04_PK_AreasAlmacen.sql" />
+    <Content Include="Database\Scripts\20261113_MovimientoAlmacen_05_Tablas.sql" />
+    <Content Include="Database\Scripts\20261113_MovimientoAlmacen_06_uspGetMovimientoAlmacen.sql" />
+    <Content Include="Database\Scripts\20261113_MovimientoAlmacen_07_uspSetMovimientoAlmacen.sql" />
+    <Content Include="Database\Scripts\20261113_MovimientoAlmacen_08_MenuYAccesos.sql" />
     <Content Include="Resources\icono-oc-default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

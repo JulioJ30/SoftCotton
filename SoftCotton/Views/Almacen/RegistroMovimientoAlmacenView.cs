@@ -3,6 +3,7 @@ using SoftCotton.Model.Almacen;
 using SoftCotton.Model.Maintenance;
 using SoftCotton.Util;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -15,108 +16,88 @@ using System.Windows.Forms;
 namespace SoftCotton.Views.Almacen
 {
     /// <summary>
-    /// Registro de una transferencia o devolución entre almacenes.
+    /// Registro de un ingreso o una salida de almacén.
     ///
-    /// Flujo: 1) tipo, fecha y almacenes; 2) buscar productos con stock en el origen
-    /// (búsqueda en segundo plano mientras se escribe, cancelando la anterior);
-    /// 3) agregar al detalle (se propone todo el disponible) y ajustar cantidades;
-    /// 4) grabar: cabecera + detalle viajan en una sola llamada y una sola transacción.
+    /// INGRESO: devuelve a un almacén stock DESPACHADO con guía de remisión. Se buscan las
+    /// líneas de guía (salidas) con cantidad pendiente de ingresar; cada línea del detalle
+    /// queda ligada a su línea de guía y no puede superar lo pendiente.
     ///
-    /// Mientras haya productos en el detalle, el tipo, la fecha y el origen quedan fijos
-    /// (el disponible depende de ellos); "Cambiar origen / fecha" limpia el detalle.
+    /// SALIDA: despacha stock de un almacén. Solo se listan los productos con stock en ese
+    /// almacén a la fecha (lo ingresado menos lo que ya salió).
+    ///
+    /// Búsqueda en segundo plano mientras se escribe (cancelando la anterior); al grabar,
+    /// cabecera + detalle viajan en una sola llamada y una sola transacción.
     /// </summary>
-    public partial class RegistroTransferenciaAlmacenView : FormularioAsync
+    public partial class RegistroMovimientoAlmacenView : FormularioAsync
     {
         public enum Modo
         {
-            Transferencia,
-            Devolucion
+            Ingreso,
+            Salida
         }
 
         private const int MaximoResultados = 500;
 
+        private readonly Modo _modo;
         private readonly AlmacenBL _almacenBL = new AlmacenBL();
         private readonly MantenimientoBL _mantenimientoBL = new MantenimientoBL();
         private readonly List<AlmacenItem> _almacenes;
-        private readonly BindingList<TransferenciaAlmacenLinea> _detalle = new BindingList<TransferenciaAlmacenLinea>();
+        private readonly string _almacenInicial;
+        private readonly BindingList<MovimientoAlmacenLinea> _detalle = new BindingList<MovimientoAlmacenLinea>();
         private readonly HashSet<string> _clavesEnDetalle = new HashSet<string>();
-        private readonly string _origenInicial;
-        private readonly List<TransferenciaAlmacenLinea> _lineasIniciales;
 
         private CancellationTokenSource _ctsBusqueda;
         private bool _inicializando = true;
         private bool _cierreConfirmado;
 
-        /// <summary>Id de la transferencia grabada (cuando DialogResult = OK).</summary>
-        public int IdTransferenciaRegistrada { get; private set; }
+        /// <summary>Id del movimiento grabado (cuando DialogResult = OK).</summary>
+        public int IdMovimientoRegistrado { get; private set; }
 
         // Constructor sin parámetros requerido por el diseñador de Visual Studio
-        public RegistroTransferenciaAlmacenView()
-            : this(Modo.Transferencia, new List<AlmacenItem>(), null, null)
+        public RegistroMovimientoAlmacenView()
+            : this(Modo.Ingreso, new List<AlmacenItem>(), null)
         {
         }
 
-        public RegistroTransferenciaAlmacenView(Modo modo, List<AlmacenItem> almacenes)
-            : this(modo, almacenes, null, null)
-        {
-        }
-
-        /// <summary>
-        /// Abre el registro precargado (por ejemplo, "Devolver al central" desde el reporte de stock).
-        /// </summary>
-        public RegistroTransferenciaAlmacenView(Modo modo, List<AlmacenItem> almacenes, string codOrigen, IEnumerable<TransferenciaAlmacenLinea> lineas)
+        public RegistroMovimientoAlmacenView(Modo modo, List<AlmacenItem> almacenes, string codAlmacenInicial)
         {
             InitializeComponent();
 
+            _modo = modo;
             _almacenes = almacenes ?? new List<AlmacenItem>();
-            _origenInicial = codOrigen;
-            _lineasIniciales = lineas == null ? null : lineas.ToList();
+            _almacenInicial = codAlmacenInicial;
 
             AplicarEstilos();
-
-            rbDevolucion.Checked = modo == Modo.Devolucion;
-            rbTransferencia.Checked = modo == Modo.Transferencia;
 
             dgvDetalle.DataSource = _detalle;
             _detalle.ListChanged += (s, e) => ActualizarResumen();
             splitContenido.Panel2.Resize += (s, e) => CentrarMensajeDetalleVacio();
         }
 
-        private Modo ModoActual
+        private bool EsIngreso
         {
-            get { return rbDevolucion.Checked ? Modo.Devolucion : Modo.Transferencia; }
+            get { return _modo == Modo.Ingreso; }
         }
 
-        private string CodOrigen
+        private AlmacenItem AlmacenSeleccionado
         {
-            get { return cbxOrigen.SelectedValue as string; }
-        }
-
-        private string CodDestino
-        {
-            get { return cbxDestino.SelectedValue as string; }
-        }
-
-        private AlmacenItem AlmacenOrigen
-        {
-            get { return cbxOrigen.SelectedItem as AlmacenItem; }
-        }
-
-        private AlmacenItem AlmacenDestino
-        {
-            get { return cbxDestino.SelectedItem as AlmacenItem; }
+            get { return cbxAlmacen.SelectedItem as AlmacenItem; }
         }
 
         // ================================================================== inicio
 
         private void AplicarEstilos()
         {
-            EstiloVisual.AplicarGrilla(dgvProductos);
+            EstiloVisual.AplicarGrilla(dgvBusqueda);
             EstiloVisual.AplicarGrilla(dgvDetalle, soloLectura: false);
-            dgvProductos.MultiSelect = true;
-            EstiloVisual.ColumnaNumero(colPStock);
+            dgvBusqueda.MultiSelect = true;
+            EstiloVisual.ColumnaNumero(colBDespachado);
+            EstiloVisual.ColumnaNumero(colBIngresado);
+            EstiloVisual.ColumnaNumero(colBDisponible);
+            EstiloVisual.ColumnaCentrada(colBFechaGuia);
             EstiloVisual.ColumnaNumero(colDDisponible);
             EstiloVisual.ColumnaNumero(colDCantidad);
+            colBDisponible.DefaultCellStyle.Font = EstiloVisual.FuenteNegrita;
 
             // columnas editables resaltadas
             var editable = Color.FromArgb(255, 251, 230);
@@ -129,16 +110,6 @@ namespace SoftCotton.Views.Almacen
             colDQuitar.DefaultCellStyle.ForeColor = EstiloVisual.Peligro;
             colDQuitar.DefaultCellStyle.SelectionForeColor = EstiloVisual.Peligro;
 
-            foreach (var rb in new[] { rbTransferencia, rbDevolucion })
-            {
-                rb.FlatStyle = FlatStyle.Flat;
-                rb.Font = EstiloVisual.FuenteNegrita;
-                rb.Cursor = Cursors.Hand;
-                rb.FlatAppearance.BorderColor = EstiloVisual.Primario;
-                rb.FlatAppearance.CheckedBackColor = EstiloVisual.Primario;
-                rb.FlatAppearance.MouseOverBackColor = Color.FromArgb(236, 242, 249);
-            }
-
             EstiloVisual.BotonPrimario(btnGrabar);
             EstiloVisual.BotonSecundario(btnCancelar);
             EstiloVisual.BotonPrimario(btnAgregar);
@@ -147,21 +118,58 @@ namespace SoftCotton.Views.Almacen
             lblDetalleVacio.BackColor = EstiloVisual.Superficie;
         }
 
-        private async void RegistroTransferenciaAlmacenView_Load(object sender, EventArgs e)
+        /// <summary>Textos y columnas según sea ingreso o salida.</summary>
+        private void ConfigurarModo()
+        {
+            if (EsIngreso)
+            {
+                Text = "Registro de ingreso a almacén";
+                lblTitulo.Text = "Nuevo ingreso a almacén";
+                lblSubtitulo.Text = "Devuelve a un almacén stock despachado con guía de remisión. Solo puede ingresar lo pendiente de cada línea de guía.";
+                lblAlmacen.Text = "Entra a (almacén)";
+                lblPaso1.Text = "1. Busque las guías despachadas";
+                lblPaso2.Text = "2. Líneas a ingresar";
+                colBDisponible.HeaderText = "Pendiente";
+                colDDisponible.HeaderText = "Pendiente";
+                toolTip.SetToolTip(txtBuscar, "Busca por N° de guía, destinatario, código, artículo o color mientras escribe (F3)");
+            }
+            else
+            {
+                Text = "Registro de salida de almacén";
+                lblTitulo.Text = "Nueva salida de almacén";
+                lblSubtitulo.Text = "Despacha stock de un almacén. Solo puede salir lo que ingresó a ese almacén.";
+                lblAlmacen.Text = "Sale de (almacén)";
+                lblPaso2.Text = "2. Productos a despachar";
+                colBDisponible.HeaderText = "Stock";
+                colDDisponible.HeaderText = "Stock";
+                toolTip.SetToolTip(txtBuscar, "Busca por código, artículo o color mientras escribe (F3)");
+
+                // sin guías: se ocultan los filtros y columnas de guía
+                foreach (var columna in new DataGridViewColumn[] { colBGuia, colBFechaGuia, colBDestinatario, colBDespachado, colBIngresado, colDGuia })
+                {
+                    columna.Visible = false;
+                }
+                dtpGuiaDesde.Visible = false;
+                dtpGuiaHasta.Visible = false;
+                tlpBusqueda.ColumnStyles[0].Width = 0;
+                tlpBusqueda.ColumnStyles[1].Width = 0;
+            }
+        }
+
+        private async void RegistroMovimientoAlmacenView_Load(object sender, EventArgs e)
         {
             dtpFecha.MaxDate = DateTime.Today;
             dtpFecha.Value = DateTime.Today;
+            dtpGuiaHasta.Value = DateTime.Today;
+            dtpGuiaDesde.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-2);
 
             ConfigurarModo();
-            PintarTipo();
 
-            if (_lineasIniciales != null)
-            {
-                foreach (var linea in _lineasIniciales)
-                {
-                    AgregarLinea(linea);
-                }
-            }
+            cbxAlmacen.DisplayMember = "Texto";
+            cbxAlmacen.ValueMember = "Codigo";
+            cbxAlmacen.DataSource = _almacenes;
+            int indice = _almacenes.FindIndex(a => a.Codigo == _almacenInicial);
+            cbxAlmacen.SelectedIndex = indice >= 0 ? indice : (_almacenes.Count > 0 ? 0 : -1);
 
             await EjecutarAsync(async ct =>
             {
@@ -175,98 +183,44 @@ namespace SoftCotton.Views.Almacen
             }, "Preparando...");
 
             _inicializando = false;
+            ActualizarPaso1();
             ActualizarResumen();
             CentrarMensajeDetalleVacio();
-            BuscarProductos();
-            txtBuscarProducto.Focus();
+            Buscar();
+            txtBuscar.Focus();
         }
 
         // ================================================================== cabecera
 
-        /// <summary>Llena origen/destino según el tipo de movimiento.</summary>
-        private void ConfigurarModo()
+        private void ActualizarPaso1()
         {
-            bool devolucion = ModoActual == Modo.Devolucion;
-
-            lblTitulo.Text = devolucion ? "Nueva devolución al almacén central" : "Nueva transferencia";
-            lblSubtitulo.Text = devolucion
-                ? "Regresa stock de un almacén al central (por ejemplo, antes de despacharlo con guía de remisión)."
-                : "Mueve stock de un almacén a otro. El Kardex muestra la salida y el ingreso; el saldo total no cambia.";
-
-            var origenes = devolucion
-                ? _almacenes.Where(a => !a.EsCentral).ToList()
-                : _almacenes.ToList();
-
-            string origenPreferido = _origenInicial ?? CodOrigen ?? (devolucion ? null : AlmacenItem.CodigoCentral);
-
-            cbxOrigen.DisplayMember = "Texto";
-            cbxOrigen.ValueMember = "Codigo";
-            cbxOrigen.DataSource = origenes;
-            SeleccionarOFirst(cbxOrigen, origenes, origenPreferido);
-
-            ActualizarDestinos();
+            if (!EsIngreso)
+            {
+                lblPaso1.Text = "1. Busque productos con stock en " + (AlmacenSeleccionado != null ? AlmacenSeleccionado.Descripcion : "el almacén");
+            }
         }
 
-        private void ActualizarDestinos()
+        private void cbxAlmacen_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            bool devolucion = ModoActual == Modo.Devolucion;
-            string origen = CodOrigen;
-            string destinoActual = CodDestino;
-
-            // devolución: siempre al central. transferencia: a cualquier otro almacén que no
-            // sea el central (eso sería una devolución) ni el mismo origen.
-            var destinos = devolucion
-                ? _almacenes.Where(a => a.EsCentral).ToList()
-                : _almacenes.Where(a => !a.EsCentral && a.Codigo != origen).ToList();
-
-            cbxDestino.DisplayMember = "Texto";
-            cbxDestino.ValueMember = "Codigo";
-            cbxDestino.DataSource = destinos;
-            SeleccionarOFirst(cbxDestino, destinos, destinoActual);
-            cbxDestino.Enabled = !devolucion && destinos.Count > 0;
-
-            lblPaso1.Text = "1. Busque productos con stock en " + (AlmacenOrigen != null ? AlmacenOrigen.Descripcion : "el origen");
+            ActualizarPaso1();
             ActualizarResumen();
-        }
-
-        private static void SeleccionarOFirst(ComboBox combo, List<AlmacenItem> lista, string codigo)
-        {
-            int indice = lista.FindIndex(a => a.Codigo == codigo);
-            combo.SelectedIndex = indice >= 0 ? indice : (lista.Count > 0 ? 0 : -1);
-        }
-
-        private void rbTipo_CheckedChanged(object sender, EventArgs e)
-        {
-            PintarTipo();
-
-            var rb = (RadioButton)sender;
-            if (!rb.Checked || _inicializando)
+            if (!EsIngreso)
             {
-                return;
+                Buscar();
             }
-
-            ConfigurarModo();
-            BuscarProductos();
-        }
-
-        private void PintarTipo()
-        {
-            foreach (var rb in new[] { rbTransferencia, rbDevolucion })
-            {
-                rb.BackColor = rb.Checked ? EstiloVisual.Primario : EstiloVisual.Superficie;
-                rb.ForeColor = rb.Checked ? Color.White : EstiloVisual.Primario;
-            }
-        }
-
-        private void cbxOrigen_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            ActualizarDestinos();
-            BuscarProductos();
         }
 
         private void dtpFecha_ValueChanged(object sender, EventArgs e)
         {
-            if (!_inicializando)
+            if (!_inicializando && !EsIngreso)
+            {
+                ProgramarBusqueda();
+            }
+        }
+
+        private void filtroGuia_ValueChanged(object sender, EventArgs e)
+        {
+            if (!_inicializando && EsIngreso)
             {
                 ProgramarBusqueda();
             }
@@ -280,53 +234,53 @@ namespace SoftCotton.Views.Almacen
             }
 
             var respuesta = MessageBox.Show(
-                "El stock disponible depende del almacén de origen y de la fecha.\n\n" +
-                "Para cambiarlos se quitarán los " + _detalle.Count + " productos del detalle. ¿Continuar?",
+                "El stock disponible depende del almacén y de la fecha.\n\n" +
+                "Para cambiarlos se quitarán las " + _detalle.Count + " líneas del detalle. ¿Continuar?",
                 "SoftCotton", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (respuesta == DialogResult.Yes)
             {
                 _detalle.Clear();
-                cbxOrigen.Focus();
+                cbxAlmacen.Focus();
             }
         }
 
         /// <summary>
-        /// Con productos en el detalle, el tipo / fecha / origen quedan fijos.
+        /// En una salida, con productos en el detalle el almacén y la fecha quedan fijos (el
+        /// stock disponible depende de ellos). En un ingreso lo pendiente es de la guía, así
+        /// que se pueden cambiar libremente.
         /// </summary>
         private void BloquearCabecera()
         {
-            bool hayDetalle = _detalle.Count > 0;
-            rbTransferencia.Enabled = !hayDetalle;
-            rbDevolucion.Enabled = !hayDetalle;
-            dtpFecha.Enabled = !hayDetalle;
-            cbxOrigen.Enabled = !hayDetalle;
-            lnkCambiar.Visible = hayDetalle;
+            bool bloquear = !EsIngreso && _detalle.Count > 0;
+            dtpFecha.Enabled = !bloquear;
+            cbxAlmacen.Enabled = !bloquear;
+            lnkCambiar.Visible = bloquear;
         }
 
         // ================================================================== búsqueda
 
         private void cbxNivel_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            BuscarProductos();
+            Buscar();
         }
 
-        private void txtBuscarProducto_TextChanged(object sender, EventArgs e)
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
         {
             ProgramarBusqueda();
         }
 
-        private void txtBuscarProducto_KeyDown(object sender, KeyEventArgs e)
+        private void txtBuscar_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 e.SuppressKeyPress = true;
-                BuscarProductos();
+                Buscar();
             }
-            else if (e.KeyCode == Keys.Down && dgvProductos.Rows.Count > 0)
+            else if (e.KeyCode == Keys.Down && dgvBusqueda.Rows.Count > 0)
             {
                 e.SuppressKeyPress = true;
-                dgvProductos.Focus();
+                dgvBusqueda.Focus();
             }
         }
 
@@ -340,10 +294,10 @@ namespace SoftCotton.Views.Almacen
         private void tmrBusqueda_Tick(object sender, EventArgs e)
         {
             tmrBusqueda.Stop();
-            BuscarProductos();
+            Buscar();
         }
 
-        private async void BuscarProductos()
+        private async void Buscar()
         {
             tmrBusqueda.Stop();
             if (_inicializando)
@@ -357,42 +311,64 @@ namespace SoftCotton.Views.Almacen
 
             try
             {
-                var origen = AlmacenOrigen;
                 string nivel = cbxNivel.SelectedValue as string;
-                DateTime fecha = dtpFecha.Value.Date;
-                string texto = txtBuscarProducto.Text;
+                string texto = txtBuscar.Text;
 
-                if (origen == null)
+                if (EsIngreso)
                 {
-                    MostrarResultados(null, "Seleccione el almacén de origen.");
-                    return;
+                    DateTime desde = dtpGuiaDesde.Value.Date;
+                    DateTime hasta = dtpGuiaHasta.Value.Date;
+                    if (desde > hasta)
+                    {
+                        MostrarResultados(null, "La fecha 'desde' de las guías no puede ser mayor que la fecha 'hasta'.");
+                        return;
+                    }
+
+                    lblEstadoBusqueda.Text = "Buscando guías despachadas...";
+                    await EjecutarAsync(async ct =>
+                    {
+                        var lista = await _almacenBL.BuscarGuiasPendientesAsync(desde, hasta, nivel, texto, ct);
+                        ct.ThrowIfCancellationRequested();
+
+                        string estado;
+                        if (lista.Count == 0)
+                            estado = "No hay líneas de guía con saldo pendiente de ingresar para esta búsqueda.";
+                        else if (lista.Count >= MaximoResultados)
+                            estado = "Se muestran las primeras " + MaximoResultados + " líneas. Escriba para afinar la búsqueda.";
+                        else
+                            estado = lista.Count + (lista.Count == 1 ? " línea de guía pendiente" : " líneas de guía pendientes")
+                                + " entre el " + desde.ToString("dd/MM/yyyy") + " y el " + hasta.ToString("dd/MM/yyyy");
+
+                        MostrarResultados(lista, estado);
+                    }, null, false, cts.Token);
                 }
-
-                // el central es todo el Kardex: se pide el nivel para que la consulta sea ágil
-                if (origen.EsCentral && string.IsNullOrEmpty(nivel))
+                else
                 {
-                    MostrarResultados(null, "Seleccione un nivel para ver el stock del almacén central.");
-                    return;
+                    var almacen = AlmacenSeleccionado;
+                    DateTime fecha = dtpFecha.Value.Date;
+                    if (almacen == null)
+                    {
+                        MostrarResultados(null, "Seleccione el almacén.");
+                        return;
+                    }
+
+                    lblEstadoBusqueda.Text = "Buscando en " + almacen.Descripcion + "...";
+                    await EjecutarAsync(async ct =>
+                    {
+                        var lista = await _almacenBL.BuscarProductosConStockAsync(almacen.Codigo, fecha, nivel, texto, ct);
+                        ct.ThrowIfCancellationRequested();
+
+                        string estado;
+                        if (lista.Count == 0)
+                            estado = "No hay productos con stock en " + almacen.Descripcion + " para esta búsqueda. Solo puede salir lo ingresado a este almacén.";
+                        else if (lista.Count >= MaximoResultados)
+                            estado = "Se muestran los primeros " + MaximoResultados + " productos. Escriba para afinar la búsqueda.";
+                        else
+                            estado = lista.Count + (lista.Count == 1 ? " producto con stock" : " productos con stock") + " al " + fecha.ToString("dd/MM/yyyy");
+
+                        MostrarResultados(lista, estado);
+                    }, null, false, cts.Token);
                 }
-
-                lblEstadoBusqueda.ForeColor = EstiloVisual.TextoSecundario;
-                lblEstadoBusqueda.Text = "Buscando en " + origen.Descripcion + "...";
-
-                await EjecutarAsync(async ct =>
-                {
-                    var lista = await _almacenBL.BuscarProductosConStockAsync(origen.Codigo, fecha, nivel, texto, ct);
-                    ct.ThrowIfCancellationRequested();
-
-                    string estado;
-                    if (lista.Count == 0)
-                        estado = "No hay productos con stock en " + origen.Descripcion + " para esta búsqueda.";
-                    else if (lista.Count >= MaximoResultados)
-                        estado = "Se muestran los primeros " + MaximoResultados + " productos. Escriba para afinar la búsqueda.";
-                    else
-                        estado = lista.Count + (lista.Count == 1 ? " producto con stock" : " productos con stock") + " al " + fecha.ToString("dd/MM/yyyy");
-
-                    MostrarResultados(lista, estado);
-                }, null, false, cts.Token);
             }
             finally
             {
@@ -401,16 +377,16 @@ namespace SoftCotton.Views.Almacen
             }
         }
 
-        private void MostrarResultados(List<ProductoStockAlmacen> lista, string estado)
+        private void MostrarResultados(IList lista, string estado)
         {
-            dgvProductos.DataSource = lista;
+            dgvBusqueda.DataSource = lista;
             lblEstadoBusqueda.ForeColor = EstiloVisual.TextoSecundario;
             lblEstadoBusqueda.Text = estado;
         }
 
         // ================================================================== agregar
 
-        private void dgvProductos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvBusqueda_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
@@ -418,7 +394,7 @@ namespace SoftCotton.Views.Almacen
             }
         }
 
-        private void dgvProductos_KeyDown(object sender, KeyEventArgs e)
+        private void dgvBusqueda_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -432,52 +408,63 @@ namespace SoftCotton.Views.Almacen
             AgregarSeleccionados();
         }
 
+        private static MovimientoAlmacenLinea ALinea(object item)
+        {
+            var guia = item as GuiaDespachoPendiente;
+            if (guia != null)
+            {
+                return MovimientoAlmacenLinea.DesdeGuia(guia);
+            }
+
+            var producto = item as ProductoStockAlmacen;
+            return producto != null ? MovimientoAlmacenLinea.DesdeProducto(producto) : null;
+        }
+
         private void AgregarSeleccionados()
         {
-            var productos = dgvProductos.SelectedRows
+            var lineas = dgvBusqueda.SelectedRows
                 .Cast<DataGridViewRow>()
                 .OrderBy(r => r.Index)
-                .Select(r => r.DataBoundItem as ProductoStockAlmacen)
-                .Where(p => p != null)
+                .Select(r => ALinea(r.DataBoundItem))
+                .Where(l => l != null)
                 .ToList();
 
-            if (productos.Count == 0 && dgvProductos.CurrentRow != null)
+            if (lineas.Count == 0 && dgvBusqueda.CurrentRow != null)
             {
-                var actual = dgvProductos.CurrentRow.DataBoundItem as ProductoStockAlmacen;
+                var actual = ALinea(dgvBusqueda.CurrentRow.DataBoundItem);
                 if (actual != null)
                 {
-                    productos.Add(actual);
+                    lineas.Add(actual);
                 }
             }
 
-            if (productos.Count == 0)
+            if (lineas.Count == 0)
             {
-                ResponseMessage.Message("Seleccione uno o más productos de la lista.", "INFORMATION");
+                ResponseMessage.Message("Seleccione una o más filas de la lista.", "INFORMATION");
                 return;
             }
 
             int agregados = 0, repetidos = 0;
-            foreach (var producto in productos)
+            foreach (var linea in lineas)
             {
-                if (AgregarLinea(TransferenciaAlmacenLinea.DesdeProducto(producto)))
+                if (AgregarLinea(linea))
                     agregados++;
                 else
                     repetidos++;
             }
 
             lblEstadoBusqueda.ForeColor = EstiloVisual.Exito;
-            lblEstadoBusqueda.Text = "✓ " + agregados + (agregados == 1 ? " producto agregado" : " productos agregados")
+            lblEstadoBusqueda.Text = "✓ " + agregados + (agregados == 1 ? " línea agregada" : " líneas agregadas")
                 + (repetidos > 0 ? "  (" + repetidos + " ya estaba" + (repetidos == 1 ? "" : "n") + " en el detalle)" : "");
 
             if (_detalle.Count > 0)
             {
-                var ultima = dgvDetalle.Rows[_detalle.Count - 1];
-                dgvDetalle.FirstDisplayedScrollingRowIndex = ultima.Index;
+                dgvDetalle.FirstDisplayedScrollingRowIndex = _detalle.Count - 1;
             }
         }
 
-        /// <returns>false si el producto ya estaba en el detalle.</returns>
-        private bool AgregarLinea(TransferenciaAlmacenLinea linea)
+        /// <returns>false si la línea ya estaba en el detalle.</returns>
+        private bool AgregarLinea(MovimientoAlmacenLinea linea)
         {
             if (_clavesEnDetalle.Contains(linea.Clave))
             {
@@ -488,19 +475,19 @@ namespace SoftCotton.Views.Almacen
             return true;
         }
 
-        private void dgvProductos_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void dgvBusqueda_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0)
             {
                 return;
             }
 
-            var producto = dgvProductos.Rows[e.RowIndex].DataBoundItem as ProductoStockAlmacen;
-            if (producto != null && _clavesEnDetalle.Contains(TransferenciaAlmacenLinea.ClaveProducto(producto.codNivel, producto.codGrupo, producto.codTalla, producto.codColor)))
+            var linea = ALinea(dgvBusqueda.Rows[e.RowIndex].DataBoundItem);
+            if (linea != null && _clavesEnDetalle.Contains(linea.Clave))
             {
                 e.CellStyle.ForeColor = EstiloVisual.Anulado;
                 e.CellStyle.SelectionForeColor = EstiloVisual.Anulado;
-                dgvProductos.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = "Ya está en el detalle";
+                dgvBusqueda.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = "Ya está en el detalle";
             }
         }
 
@@ -514,7 +501,7 @@ namespace SoftCotton.Views.Almacen
             }
 
             var fila = dgvDetalle.Rows[e.RowIndex];
-            var linea = fila.DataBoundItem as TransferenciaAlmacenLinea;
+            var linea = fila.DataBoundItem as MovimientoAlmacenLinea;
             if (linea == null)
             {
                 return;
@@ -533,9 +520,10 @@ namespace SoftCotton.Views.Almacen
                 fila.ErrorText = "La cantidad debe ser mayor a cero.";
                 e.Cancel = true;
             }
-            else if (cantidad > linea.StockDisponible)
+            else if (cantidad > linea.Disponible)
             {
-                fila.ErrorText = "No puede superar el disponible (" + linea.StockDisponible.ToString("N3") + ").";
+                fila.ErrorText = "No puede superar " + (EsIngreso ? "lo pendiente de la guía" : "el stock del almacén")
+                    + " (" + linea.Disponible.ToString("N3") + ").";
                 e.Cancel = true;
             }
             else if (decimal.Round(cantidad, 3) != cantidad)
@@ -599,30 +587,36 @@ namespace SoftCotton.Views.Almacen
                 _clavesEnDetalle.Add(linea.Clave);
             }
 
-            int productos = _detalle.Count;
+            int lineas = _detalle.Count;
             decimal unidades = _detalle.Sum(d => d.Cantidad);
+            var almacen = AlmacenSeleccionado;
 
-            if (productos == 0)
+            if (lineas == 0)
             {
-                lblResumen.Text = "Sin productos";
+                lblResumen.Text = EsIngreso ? "Sin líneas de guía" : "Sin productos";
                 lblResumen.ForeColor = EstiloVisual.TextoSecundario;
             }
             else
             {
-                lblResumen.Text = string.Format("{0} {1}  ·  {2:N3} unidades  ·  {3} → {4}",
-                    productos,
-                    productos == 1 ? "producto" : "productos",
+                string guias = EsIngreso
+                    ? "  ·  " + _detalle.Select(d => d.Guia).Distinct().Count() + " guía(s)"
+                    : "";
+                lblResumen.Text = string.Format("{0} {1}{2}  ·  {3:N3} unidades  ·  {4} {5}",
+                    lineas,
+                    lineas == 1 ? "línea" : "líneas",
+                    guias,
                     unidades,
-                    AlmacenOrigen != null ? AlmacenOrigen.tResumido ?? AlmacenOrigen.Descripcion : "?",
-                    AlmacenDestino != null ? AlmacenDestino.tResumido ?? AlmacenDestino.Descripcion : "?");
+                    EsIngreso ? "entra a" : "sale de",
+                    almacen != null ? almacen.NombreCorto : "?");
                 lblResumen.ForeColor = EstiloVisual.Texto;
             }
 
-            lblPaso2.Text = productos == 0 ? "2. Productos a mover" : "2. Productos a mover (" + productos + ")";
-            btnGrabar.Enabled = productos > 0 && CodDestino != null;
-            lblDetalleVacio.Visible = productos == 0;
+            string titulo = EsIngreso ? "2. Líneas a ingresar" : "2. Productos a despachar";
+            lblPaso2.Text = lineas == 0 ? titulo : titulo + " (" + lineas + ")";
+            btnGrabar.Enabled = lineas > 0 && almacen != null;
+            lblDetalleVacio.Visible = lineas == 0;
             BloquearCabecera();
-            dgvProductos.Invalidate();
+            dgvBusqueda.Invalidate();
         }
 
         private void CentrarMensajeDetalleVacio()
@@ -655,28 +649,28 @@ namespace SoftCotton.Views.Almacen
                 return;
             }
 
-            var origen = AlmacenOrigen;
-            var destino = AlmacenDestino;
-            if (origen == null || destino == null)
+            var almacen = AlmacenSeleccionado;
+            if (almacen == null)
             {
-                ResponseMessage.Message("Seleccione el almacén de origen y el de destino.", "INFORMATION");
+                ResponseMessage.Message("Seleccione el almacén.", "INFORMATION");
                 return;
             }
 
-            var registro = new TransferenciaAlmacenRegistro
+            var registro = new MovimientoAlmacenRegistro
             {
-                FechaTransferencia = dtpFecha.Value.Date,
-                CodAlmacenOrigen = origen.Codigo,
-                CodAlmacenDestino = destino.Codigo,
+                TipoMovimiento = EsIngreso ? MovimientoAlmacenCab.TipoIngreso : MovimientoAlmacenCab.TipoSalida,
+                FechaMovimiento = dtpFecha.Value.Date,
+                CodAlmacen = almacen.Codigo,
                 Observacion = txtObservacion.Text,
                 IdUsuario = UserApplication.ID_USUARIO,
                 Detalle = _detalle.ToList()
             };
 
-            string tipo = ModoActual == Modo.Devolucion ? "la devolución" : "la transferencia";
             var confirmacion = MessageBox.Show(
-                string.Format("¿Registrar {0}?\n\n{1} → {2}\nFecha: {3:dd/MM/yyyy}\n{4} productos · {5:N3} unidades",
-                    tipo, origen.Descripcion, destino.Descripcion, registro.FechaTransferencia,
+                string.Format("¿Registrar {0}?\n\n{1} {2}\nFecha: {3:dd/MM/yyyy}\n{4} líneas · {5:N3} unidades",
+                    EsIngreso ? "el ingreso" : "la salida",
+                    EsIngreso ? "Entra a:" : "Sale de:",
+                    almacen.Descripcion, registro.FechaMovimiento,
                     registro.Detalle.Count, registro.Detalle.Sum(d => d.Cantidad)),
                 "SoftCotton", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -700,7 +694,7 @@ namespace SoftCotton.Views.Almacen
 
             if (respuesta.idResponse > 0)
             {
-                IdTransferenciaRegistrada = respuesta.idResponse;
+                IdMovimientoRegistrado = respuesta.idResponse;
                 _cierreConfirmado = true;
                 DialogResult = DialogResult.OK;
                 Close();
@@ -717,7 +711,7 @@ namespace SoftCotton.Views.Almacen
             if (!_cierreConfirmado && !Ocupado && e.CloseReason == CloseReason.UserClosing && _detalle.Count > 0)
             {
                 var respuesta = MessageBox.Show(
-                    "Hay " + _detalle.Count + " productos en el detalle que no se han grabado.\n¿Desea salir sin grabar?",
+                    "Hay " + _detalle.Count + " líneas en el detalle que no se han grabado.\n¿Desea salir sin grabar?",
                     "SoftCotton", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 
                 if (respuesta != DialogResult.Yes)
@@ -736,7 +730,7 @@ namespace SoftCotton.Views.Almacen
             base.OnFormClosing(e);
         }
 
-        private async void RegistroTransferenciaAlmacenView_KeyDown(object sender, KeyEventArgs e)
+        private async void RegistroMovimientoAlmacenView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.G)
             {
@@ -746,8 +740,8 @@ namespace SoftCotton.Views.Almacen
             else if (e.KeyCode == Keys.F3)
             {
                 e.SuppressKeyPress = true;
-                txtBuscarProducto.Focus();
-                txtBuscarProducto.SelectAll();
+                txtBuscar.Focus();
+                txtBuscar.SelectAll();
             }
             else if (e.KeyCode == Keys.Escape && !dgvDetalle.IsCurrentCellInEditMode)
             {

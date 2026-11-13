@@ -25,11 +25,13 @@ namespace SoftCotton.Views.Almacen
             this.tlpFiltros = new System.Windows.Forms.TableLayoutPanel();
             this.lblAlmacen = new System.Windows.Forms.Label();
             this.lblNivel = new System.Windows.Forms.Label();
-            this.lblFechaCorte = new System.Windows.Forms.Label();
+            this.lblDesde = new System.Windows.Forms.Label();
+            this.lblHasta = new System.Windows.Forms.Label();
             this.lblBuscar = new System.Windows.Forms.Label();
             this.cbxAlmacen = new System.Windows.Forms.ComboBox();
             this.cbxNivel = new System.Windows.Forms.ComboBox();
-            this.dtpFechaCorte = new System.Windows.Forms.DateTimePicker();
+            this.dtpDesde = new System.Windows.Forms.DateTimePicker();
+            this.dtpHasta = new System.Windows.Forms.DateTimePicker();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.btnConsultar = new System.Windows.Forms.Button();
             this.flpTarjetas = new System.Windows.Forms.FlowLayoutPanel();
@@ -39,12 +41,10 @@ namespace SoftCotton.Views.Almacen
             this.pnlTarjetaUnidades = new System.Windows.Forms.Panel();
             this.lblUnidadesValor = new System.Windows.Forms.Label();
             this.lblUnidadesTitulo = new System.Windows.Forms.Label();
-            this.pnlTarjetaAlertas = new System.Windows.Forms.Panel();
-            this.lblAlertasValor = new System.Windows.Forms.Label();
-            this.lblAlertasTitulo = new System.Windows.Forms.Label();
+            this.pnlTarjetaMovimientos = new System.Windows.Forms.Panel();
+            this.lblMovimientosValor = new System.Windows.Forms.Label();
+            this.lblMovimientosTitulo = new System.Windows.Forms.Label();
             this.flpAcciones = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnDevolver = new System.Windows.Forms.Button();
-            this.btnMover = new System.Windows.Forms.Button();
             this.btnExportar = new System.Windows.Forms.Button();
             this.lblAyudaAcciones = new System.Windows.Forms.Label();
             this.pnlGrilla = new System.Windows.Forms.Panel();
@@ -55,9 +55,15 @@ namespace SoftCotton.Views.Almacen
             this.colTalla = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colUM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStockCentral = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colUltimoMovimiento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMovimiento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNumero = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGuia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDestinatario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colObservacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colIngreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSalida = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSaldo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblSinDatos = new System.Windows.Forms.Label();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tsslTotal = new System.Windows.Forms.ToolStripStatusLabel();
@@ -69,7 +75,7 @@ namespace SoftCotton.Views.Almacen
             this.flpTarjetas.SuspendLayout();
             this.pnlTarjetaProductos.SuspendLayout();
             this.pnlTarjetaUnidades.SuspendLayout();
-            this.pnlTarjetaAlertas.SuspendLayout();
+            this.pnlTarjetaMovimientos.SuspendLayout();
             this.flpAcciones.SuspendLayout();
             this.pnlGrilla.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStock)).BeginInit();
@@ -83,7 +89,7 @@ namespace SoftCotton.Views.Almacen
             this.pnlEncabezado.Controls.Add(this.lblTitulo);
             this.pnlEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlEncabezado.Name = "pnlEncabezado";
-            this.pnlEncabezado.Size = new System.Drawing.Size(1184, 64);
+            this.pnlEncabezado.Size = new System.Drawing.Size(1280, 64);
             this.pnlEncabezado.TabIndex = 0;
             //
             // lblSubtitulo
@@ -92,7 +98,7 @@ namespace SoftCotton.Views.Almacen
             this.lblSubtitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(228)))), ((int)(((byte)(243)))));
             this.lblSubtitulo.Location = new System.Drawing.Point(20, 38);
             this.lblSubtitulo.Name = "lblSubtitulo";
-            this.lblSubtitulo.Text = "Stock ubicado en cada almacén según las transferencias y devoluciones registradas.";
+            this.lblSubtitulo.Text = "Kardex de cantidades por almacén: cada ingreso y salida con su saldo. La última fila de cada producto es su stock final.";
             //
             // lblTitulo
             //
@@ -110,27 +116,30 @@ namespace SoftCotton.Views.Almacen
             this.pnlFiltros.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlFiltros.Name = "pnlFiltros";
             this.pnlFiltros.Padding = new System.Windows.Forms.Padding(14, 8, 14, 8);
-            this.pnlFiltros.Size = new System.Drawing.Size(1184, 68);
+            this.pnlFiltros.Size = new System.Drawing.Size(1280, 68);
             this.pnlFiltros.TabIndex = 1;
             //
             // tlpFiltros
             //
-            this.tlpFiltros.ColumnCount = 6;
-            this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 280F));
-            this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 220F));
-            this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
-            this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 260F));
+            this.tlpFiltros.ColumnCount = 7;
+            this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 270F));
+            this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 210F));
+            this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 125F));
+            this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 125F));
+            this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
             this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpFiltros.Controls.Add(this.lblAlmacen, 0, 0);
             this.tlpFiltros.Controls.Add(this.lblNivel, 1, 0);
-            this.tlpFiltros.Controls.Add(this.lblFechaCorte, 2, 0);
-            this.tlpFiltros.Controls.Add(this.lblBuscar, 3, 0);
+            this.tlpFiltros.Controls.Add(this.lblDesde, 2, 0);
+            this.tlpFiltros.Controls.Add(this.lblHasta, 3, 0);
+            this.tlpFiltros.Controls.Add(this.lblBuscar, 4, 0);
             this.tlpFiltros.Controls.Add(this.cbxAlmacen, 0, 1);
             this.tlpFiltros.Controls.Add(this.cbxNivel, 1, 1);
-            this.tlpFiltros.Controls.Add(this.dtpFechaCorte, 2, 1);
-            this.tlpFiltros.Controls.Add(this.txtBuscar, 3, 1);
-            this.tlpFiltros.Controls.Add(this.btnConsultar, 4, 1);
+            this.tlpFiltros.Controls.Add(this.dtpDesde, 2, 1);
+            this.tlpFiltros.Controls.Add(this.dtpHasta, 3, 1);
+            this.tlpFiltros.Controls.Add(this.txtBuscar, 4, 1);
+            this.tlpFiltros.Controls.Add(this.btnConsultar, 5, 1);
             this.tlpFiltros.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpFiltros.Name = "tlpFiltros";
             this.tlpFiltros.RowCount = 2;
@@ -152,12 +161,19 @@ namespace SoftCotton.Views.Almacen
             this.lblNivel.Name = "lblNivel";
             this.lblNivel.Text = "Nivel";
             //
-            // lblFechaCorte
+            // lblDesde
             //
-            this.lblFechaCorte.AutoSize = true;
-            this.lblFechaCorte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
-            this.lblFechaCorte.Name = "lblFechaCorte";
-            this.lblFechaCorte.Text = "Stock al";
+            this.lblDesde.AutoSize = true;
+            this.lblDesde.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
+            this.lblDesde.Name = "lblDesde";
+            this.lblDesde.Text = "Desde";
+            //
+            // lblHasta
+            //
+            this.lblHasta.AutoSize = true;
+            this.lblHasta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
+            this.lblHasta.Name = "lblHasta";
+            this.lblHasta.Text = "Hasta";
             //
             // lblBuscar
             //
@@ -182,20 +198,29 @@ namespace SoftCotton.Views.Almacen
             this.cbxNivel.Name = "cbxNivel";
             this.cbxNivel.TabIndex = 1;
             //
-            // dtpFechaCorte
+            // dtpDesde
             //
-            this.dtpFechaCorte.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dtpFechaCorte.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaCorte.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
-            this.dtpFechaCorte.Name = "dtpFechaCorte";
-            this.dtpFechaCorte.TabIndex = 2;
+            this.dtpDesde.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtpDesde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpDesde.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
+            this.dtpDesde.Name = "dtpDesde";
+            this.dtpDesde.TabIndex = 2;
+            this.toolTip.SetToolTip(this.dtpDesde, "Lo anterior a esta fecha se resume en la fila SALDO INICIAL");
+            //
+            // dtpHasta
+            //
+            this.dtpHasta.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtpHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpHasta.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
+            this.dtpHasta.Name = "dtpHasta";
+            this.dtpHasta.TabIndex = 3;
             //
             // txtBuscar
             //
             this.txtBuscar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtBuscar.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.TabIndex = 3;
+            this.txtBuscar.TabIndex = 4;
             this.txtBuscar.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBuscar_KeyDown);
             //
             // btnConsultar
@@ -203,7 +228,7 @@ namespace SoftCotton.Views.Almacen
             this.btnConsultar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnConsultar.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.btnConsultar.Name = "btnConsultar";
-            this.btnConsultar.TabIndex = 4;
+            this.btnConsultar.TabIndex = 5;
             this.btnConsultar.Text = "Consultar";
             this.btnConsultar.Click += new System.EventHandler(this.btnConsultar_Click);
             //
@@ -211,11 +236,11 @@ namespace SoftCotton.Views.Almacen
             //
             this.flpTarjetas.Controls.Add(this.pnlTarjetaProductos);
             this.flpTarjetas.Controls.Add(this.pnlTarjetaUnidades);
-            this.flpTarjetas.Controls.Add(this.pnlTarjetaAlertas);
+            this.flpTarjetas.Controls.Add(this.pnlTarjetaMovimientos);
             this.flpTarjetas.Dock = System.Windows.Forms.DockStyle.Top;
             this.flpTarjetas.Name = "flpTarjetas";
             this.flpTarjetas.Padding = new System.Windows.Forms.Padding(11, 10, 11, 0);
-            this.flpTarjetas.Size = new System.Drawing.Size(1184, 86);
+            this.flpTarjetas.Size = new System.Drawing.Size(1280, 86);
             this.flpTarjetas.TabIndex = 2;
             //
             // pnlTarjetaProductos
@@ -241,7 +266,7 @@ namespace SoftCotton.Views.Almacen
             this.lblProductosTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
             this.lblProductosTitulo.Name = "lblProductosTitulo";
             this.lblProductosTitulo.Size = new System.Drawing.Size(192, 18);
-            this.lblProductosTitulo.Text = "Productos con stock";
+            this.lblProductosTitulo.Text = "Productos con stock final";
             //
             // pnlTarjetaUnidades
             //
@@ -266,69 +291,48 @@ namespace SoftCotton.Views.Almacen
             this.lblUnidadesTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
             this.lblUnidadesTitulo.Name = "lblUnidadesTitulo";
             this.lblUnidadesTitulo.Size = new System.Drawing.Size(192, 18);
-            this.lblUnidadesTitulo.Text = "Unidades en total";
+            this.lblUnidadesTitulo.Text = "Unidades en stock";
             //
-            // pnlTarjetaAlertas
+            // pnlTarjetaMovimientos
             //
-            this.pnlTarjetaAlertas.BackColor = System.Drawing.Color.White;
-            this.pnlTarjetaAlertas.Controls.Add(this.lblAlertasValor);
-            this.pnlTarjetaAlertas.Controls.Add(this.lblAlertasTitulo);
-            this.pnlTarjetaAlertas.Name = "pnlTarjetaAlertas";
-            this.pnlTarjetaAlertas.Padding = new System.Windows.Forms.Padding(14, 8, 14, 8);
-            this.pnlTarjetaAlertas.Size = new System.Drawing.Size(320, 70);
+            this.pnlTarjetaMovimientos.BackColor = System.Drawing.Color.White;
+            this.pnlTarjetaMovimientos.Controls.Add(this.lblMovimientosValor);
+            this.pnlTarjetaMovimientos.Controls.Add(this.lblMovimientosTitulo);
+            this.pnlTarjetaMovimientos.Name = "pnlTarjetaMovimientos";
+            this.pnlTarjetaMovimientos.Padding = new System.Windows.Forms.Padding(14, 8, 14, 8);
+            this.pnlTarjetaMovimientos.Size = new System.Drawing.Size(300, 70);
             //
-            // lblAlertasValor
+            // lblMovimientosValor
             //
-            this.lblAlertasValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblAlertasValor.Font = new System.Drawing.Font("Segoe UI Semibold", 16F);
-            this.lblAlertasValor.Name = "lblAlertasValor";
-            this.lblAlertasValor.Text = "—";
-            this.lblAlertasValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblMovimientosValor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMovimientosValor.Font = new System.Drawing.Font("Segoe UI Semibold", 16F);
+            this.lblMovimientosValor.Name = "lblMovimientosValor";
+            this.lblMovimientosValor.Text = "—";
+            this.lblMovimientosValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
-            // lblAlertasTitulo
+            // lblMovimientosTitulo
             //
-            this.lblAlertasTitulo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblAlertasTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
-            this.lblAlertasTitulo.Name = "lblAlertasTitulo";
-            this.lblAlertasTitulo.Size = new System.Drawing.Size(292, 18);
-            this.lblAlertasTitulo.Text = "Despachados sin devolución previa";
-            this.toolTip.SetToolTip(this.lblAlertasTitulo, "Productos cuyo stock en el almacén central quedó negativo: probablemente se despacharon con guía desde este almacén sin registrar antes la devolución.");
+            this.lblMovimientosTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblMovimientosTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
+            this.lblMovimientosTitulo.Name = "lblMovimientosTitulo";
+            this.lblMovimientosTitulo.Size = new System.Drawing.Size(272, 18);
+            this.lblMovimientosTitulo.Text = "Ingresos / salidas en el rango";
             //
             // flpAcciones
             //
-            this.flpAcciones.Controls.Add(this.btnDevolver);
-            this.flpAcciones.Controls.Add(this.btnMover);
             this.flpAcciones.Controls.Add(this.btnExportar);
             this.flpAcciones.Controls.Add(this.lblAyudaAcciones);
             this.flpAcciones.Dock = System.Windows.Forms.DockStyle.Top;
             this.flpAcciones.Name = "flpAcciones";
             this.flpAcciones.Padding = new System.Windows.Forms.Padding(12, 8, 12, 4);
-            this.flpAcciones.Size = new System.Drawing.Size(1184, 52);
+            this.flpAcciones.Size = new System.Drawing.Size(1280, 52);
             this.flpAcciones.TabIndex = 3;
-            //
-            // btnDevolver
-            //
-            this.btnDevolver.Name = "btnDevolver";
-            this.btnDevolver.Size = new System.Drawing.Size(180, 34);
-            this.btnDevolver.TabIndex = 0;
-            this.btnDevolver.Text = "↩  Devolver al central";
-            this.toolTip.SetToolTip(this.btnDevolver, "Registrar la devolución al almacén central de las filas seleccionadas (por ejemplo, antes de despacharlas con guía)");
-            this.btnDevolver.Click += new System.EventHandler(this.btnDevolver_Click);
-            //
-            // btnMover
-            //
-            this.btnMover.Name = "btnMover";
-            this.btnMover.Size = new System.Drawing.Size(180, 34);
-            this.btnMover.TabIndex = 1;
-            this.btnMover.Text = "⇄  Mover a otro almacén";
-            this.toolTip.SetToolTip(this.btnMover, "Transferir las filas seleccionadas a otro almacén");
-            this.btnMover.Click += new System.EventHandler(this.btnMover_Click);
             //
             // btnExportar
             //
             this.btnExportar.Name = "btnExportar";
             this.btnExportar.Size = new System.Drawing.Size(130, 34);
-            this.btnExportar.TabIndex = 2;
+            this.btnExportar.TabIndex = 0;
             this.btnExportar.Text = "Exportar Excel";
             this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
             //
@@ -338,7 +342,7 @@ namespace SoftCotton.Views.Almacen
             this.lblAyudaAcciones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
             this.lblAyudaAcciones.Margin = new System.Windows.Forms.Padding(14, 11, 3, 0);
             this.lblAyudaAcciones.Name = "lblAyudaAcciones";
-            this.lblAyudaAcciones.Text = "Seleccione una o varias filas de un mismo almacén (Ctrl/Shift + clic).";
+            this.lblAyudaAcciones.Text = "Saldo = stock después de cada movimiento. En negrita, el stock final de cada producto.";
             //
             // pnlGrilla
             //
@@ -358,28 +362,33 @@ namespace SoftCotton.Views.Almacen
             this.colTalla,
             this.colColor,
             this.colUM,
-            this.colStock,
-            this.colStockCentral,
-            this.colUltimoMovimiento});
+            this.colFecha,
+            this.colMovimiento,
+            this.colNumero,
+            this.colGuia,
+            this.colDestinatario,
+            this.colObservacion,
+            this.colIngreso,
+            this.colSalida,
+            this.colSaldo});
             this.dgvStock.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvStock.Name = "dgvStock";
             this.dgvStock.TabIndex = 0;
             this.dgvStock.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvStock_CellFormatting);
-            this.dgvStock.SelectionChanged += new System.EventHandler(this.dgvStock_SelectionChanged);
             //
             // colAlmacen
             //
             this.colAlmacen.DataPropertyName = "Almacen";
             this.colAlmacen.HeaderText = "Almacén";
             this.colAlmacen.Name = "colAlmacen";
-            this.colAlmacen.Width = 190;
+            this.colAlmacen.Width = 150;
             //
             // colCodigo
             //
             this.colCodigo.DataPropertyName = "Codigo";
             this.colCodigo.HeaderText = "Código";
             this.colCodigo.Name = "colCodigo";
-            this.colCodigo.Width = 145;
+            this.colCodigo.Width = 135;
             //
             // colArticulo
             //
@@ -394,54 +403,95 @@ namespace SoftCotton.Views.Almacen
             this.colTalla.DataPropertyName = "Talla";
             this.colTalla.HeaderText = "Talla";
             this.colTalla.Name = "colTalla";
-            this.colTalla.Width = 70;
+            this.colTalla.Width = 55;
             //
             // colColor
             //
             this.colColor.DataPropertyName = "Color";
             this.colColor.HeaderText = "Color";
             this.colColor.Name = "colColor";
-            this.colColor.Width = 140;
+            this.colColor.Width = 115;
             //
             // colUM
             //
             this.colUM.DataPropertyName = "UM";
             this.colUM.HeaderText = "UM";
             this.colUM.Name = "colUM";
-            this.colUM.Width = 50;
+            this.colUM.Width = 45;
             //
-            // colStock
+            // colFecha
             //
-            this.colStock.DataPropertyName = "Stock";
-            this.colStock.HeaderText = "Stock";
-            this.colStock.Name = "colStock";
-            this.colStock.Width = 100;
+            this.colFecha.DataPropertyName = "Fecha";
+            this.colFecha.DefaultCellStyle.Format = "dd/MM/yyyy";
+            this.colFecha.HeaderText = "Fecha";
+            this.colFecha.Name = "colFecha";
+            this.colFecha.Width = 85;
             //
-            // colStockCentral
+            // colMovimiento
             //
-            this.colStockCentral.DataPropertyName = "StockCentral";
-            this.colStockCentral.HeaderText = "Stock en central";
-            this.colStockCentral.Name = "colStockCentral";
-            this.colStockCentral.ToolTipText = "Stock del mismo producto en el almacén central (todo el Kardex que no fue movido)";
-            this.colStockCentral.Width = 120;
+            this.colMovimiento.DataPropertyName = "Movimiento";
+            this.colMovimiento.HeaderText = "Movimiento";
+            this.colMovimiento.Name = "colMovimiento";
+            this.colMovimiento.Width = 105;
             //
-            // colUltimoMovimiento
+            // colNumero
             //
-            this.colUltimoMovimiento.DataPropertyName = "FechaUltimoMovimiento";
-            this.colUltimoMovimiento.DefaultCellStyle.Format = "dd/MM/yyyy";
-            this.colUltimoMovimiento.HeaderText = "Último mov.";
-            this.colUltimoMovimiento.Name = "colUltimoMovimiento";
-            this.colUltimoMovimiento.Width = 95;
+            this.colNumero.DataPropertyName = "Numero";
+            this.colNumero.HeaderText = "N°";
+            this.colNumero.Name = "colNumero";
+            this.colNumero.Width = 65;
+            //
+            // colGuia
+            //
+            this.colGuia.DataPropertyName = "Guia";
+            this.colGuia.HeaderText = "Guía de origen";
+            this.colGuia.Name = "colGuia";
+            this.colGuia.Width = 105;
+            //
+            // colDestinatario
+            //
+            this.colDestinatario.DataPropertyName = "Destinatario";
+            this.colDestinatario.HeaderText = "Destinatario de la guía";
+            this.colDestinatario.Name = "colDestinatario";
+            this.colDestinatario.Width = 160;
+            //
+            // colObservacion
+            //
+            this.colObservacion.DataPropertyName = "Observacion";
+            this.colObservacion.HeaderText = "Observación";
+            this.colObservacion.Name = "colObservacion";
+            this.colObservacion.Width = 150;
+            //
+            // colIngreso
+            //
+            this.colIngreso.DataPropertyName = "Ingreso";
+            this.colIngreso.HeaderText = "Ingreso";
+            this.colIngreso.Name = "colIngreso";
+            this.colIngreso.Width = 85;
+            //
+            // colSalida
+            //
+            this.colSalida.DataPropertyName = "Salida";
+            this.colSalida.HeaderText = "Salida";
+            this.colSalida.Name = "colSalida";
+            this.colSalida.Width = 85;
+            //
+            // colSaldo
+            //
+            this.colSaldo.DataPropertyName = "Saldo";
+            this.colSaldo.HeaderText = "Saldo";
+            this.colSaldo.Name = "colSaldo";
+            this.colSaldo.Width = 95;
             //
             // lblSinDatos
             //
             this.lblSinDatos.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblSinDatos.BackColor = System.Drawing.Color.White;
             this.lblSinDatos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
-            this.lblSinDatos.Location = new System.Drawing.Point(392, 120);
+            this.lblSinDatos.Location = new System.Drawing.Point(440, 120);
             this.lblSinDatos.Name = "lblSinDatos";
             this.lblSinDatos.Size = new System.Drawing.Size(400, 50);
-            this.lblSinDatos.Text = "No hay stock en otros almacenes para los filtros seleccionados.";
+            this.lblSinDatos.Text = "No hay ingresos ni salidas de almacén para los filtros seleccionados.";
             this.lblSinDatos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblSinDatos.Visible = false;
             //
@@ -462,17 +512,17 @@ namespace SoftCotton.Views.Almacen
             //
             // tsslLeyenda
             //
-            this.tsslLeyenda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(133)))), ((int)(((byte)(100)))), ((int)(((byte)(4)))));
+            this.tsslLeyenda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
             this.tsslLeyenda.Name = "tsslLeyenda";
             this.tsslLeyenda.Spring = true;
-            this.tsslLeyenda.Text = "Filas en amarillo: el central quedó negativo — registre la devolución antes de despachar con guía.";
+            this.tsslLeyenda.Text = "F5 consultar · Solo cantidades (sin precios) · No incluye el Kardex";
             this.tsslLeyenda.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             //
             // StockAlmacenView
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 661);
+            this.ClientSize = new System.Drawing.Size(1280, 661);
             this.Controls.Add(this.pnlGrilla);
             this.Controls.Add(this.flpAcciones);
             this.Controls.Add(this.flpTarjetas);
@@ -480,7 +530,7 @@ namespace SoftCotton.Views.Almacen
             this.Controls.Add(this.pnlEncabezado);
             this.Controls.Add(this.statusStrip);
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(980, 560);
+            this.MinimumSize = new System.Drawing.Size(1000, 560);
             this.Name = "StockAlmacenView";
             this.Text = "Stock por almacén";
             this.Load += new System.EventHandler(this.StockAlmacenView_Load);
@@ -493,7 +543,7 @@ namespace SoftCotton.Views.Almacen
             this.flpTarjetas.ResumeLayout(false);
             this.pnlTarjetaProductos.ResumeLayout(false);
             this.pnlTarjetaUnidades.ResumeLayout(false);
-            this.pnlTarjetaAlertas.ResumeLayout(false);
+            this.pnlTarjetaMovimientos.ResumeLayout(false);
             this.flpAcciones.ResumeLayout(false);
             this.flpAcciones.PerformLayout();
             this.pnlGrilla.ResumeLayout(false);
@@ -513,11 +563,13 @@ namespace SoftCotton.Views.Almacen
         private System.Windows.Forms.TableLayoutPanel tlpFiltros;
         private System.Windows.Forms.Label lblAlmacen;
         private System.Windows.Forms.Label lblNivel;
-        private System.Windows.Forms.Label lblFechaCorte;
+        private System.Windows.Forms.Label lblDesde;
+        private System.Windows.Forms.Label lblHasta;
         private System.Windows.Forms.Label lblBuscar;
         private System.Windows.Forms.ComboBox cbxAlmacen;
         private System.Windows.Forms.ComboBox cbxNivel;
-        private System.Windows.Forms.DateTimePicker dtpFechaCorte;
+        private System.Windows.Forms.DateTimePicker dtpDesde;
+        private System.Windows.Forms.DateTimePicker dtpHasta;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.Button btnConsultar;
         private System.Windows.Forms.FlowLayoutPanel flpTarjetas;
@@ -527,12 +579,10 @@ namespace SoftCotton.Views.Almacen
         private System.Windows.Forms.Panel pnlTarjetaUnidades;
         private System.Windows.Forms.Label lblUnidadesValor;
         private System.Windows.Forms.Label lblUnidadesTitulo;
-        private System.Windows.Forms.Panel pnlTarjetaAlertas;
-        private System.Windows.Forms.Label lblAlertasValor;
-        private System.Windows.Forms.Label lblAlertasTitulo;
+        private System.Windows.Forms.Panel pnlTarjetaMovimientos;
+        private System.Windows.Forms.Label lblMovimientosValor;
+        private System.Windows.Forms.Label lblMovimientosTitulo;
         private System.Windows.Forms.FlowLayoutPanel flpAcciones;
-        private System.Windows.Forms.Button btnDevolver;
-        private System.Windows.Forms.Button btnMover;
         private System.Windows.Forms.Button btnExportar;
         private System.Windows.Forms.Label lblAyudaAcciones;
         private System.Windows.Forms.Panel pnlGrilla;
@@ -543,9 +593,15 @@ namespace SoftCotton.Views.Almacen
         private System.Windows.Forms.DataGridViewTextBoxColumn colTalla;
         private System.Windows.Forms.DataGridViewTextBoxColumn colColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn colUM;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colStock;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colStockCentral;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colUltimoMovimiento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFecha;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMovimiento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNumero;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colGuia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDestinatario;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colObservacion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colIngreso;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSalida;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSaldo;
         private System.Windows.Forms.Label lblSinDatos;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel tsslTotal;

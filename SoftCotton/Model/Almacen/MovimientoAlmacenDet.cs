@@ -1,12 +1,15 @@
+using System;
+
 namespace SoftCotton.Model.Almacen
 {
     /// <summary>
-    /// Línea de una transferencia ya registrada. uspGetTransferenciaAlmacen @opcion = 3.
+    /// Línea de un ingreso o salida ya registrado. uspGetMovimientoAlmacen @opcion = 3.
+    /// Guia / FechaGuia / Destinatario solo vienen en los ingresos.
     /// </summary>
-    public class TransferenciaAlmacenDet
+    public class MovimientoAlmacenDet
     {
-        public int IdTransferenciaDet { get; set; }
-        public int IdTransferencia { get; set; }
+        public int IdMovimientoDet { get; set; }
+        public int IdMovimiento { get; set; }
         public string codNivel { get; set; }
         public string codGrupo { get; set; }
         public string codTalla { get; set; }
@@ -17,8 +20,10 @@ namespace SoftCotton.Model.Almacen
         public string Talla { get; set; }
         public string Color { get; set; }
         public string UM { get; set; }
-        public string codCuenta { get; set; }
         public decimal Cantidad { get; set; }
+        public string Guia { get; set; }
+        public DateTime? FechaGuia { get; set; }
+        public string Destinatario { get; set; }
         public string Comentario { get; set; }
     }
 }

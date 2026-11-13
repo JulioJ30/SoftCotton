@@ -3,24 +3,24 @@ using System;
 namespace SoftCotton.Model.Almacen
 {
     /// <summary>
-    /// Cabecera de transferencia para el listado. uspGetTransferenciaAlmacen @opcion = 2.
+    /// Cabecera de un ingreso o salida de almacén para el listado.
+    /// uspGetMovimientoAlmacen @opcion = 2.
     /// </summary>
-    public class TransferenciaAlmacenCab
+    public class MovimientoAlmacenCab
     {
         public const string EstadoActivo = "A";
         public const string EstadoAnulado = "N";
-        public const string TipoNormal = "T";
-        public const string TipoDevolucion = "D";
+        public const string TipoIngreso = "I";
+        public const string TipoSalida = "S";
 
-        public int IdTransferencia { get; set; }
+        public int IdMovimiento { get; set; }
         public string Numero { get; set; }
-        public string TipoTransferencia { get; set; }
+        public string TipoMovimiento { get; set; }
         public string TipoDescripcion { get; set; }
-        public DateTime FechaTransferencia { get; set; }
-        public string CodAlmacenOrigen { get; set; }
-        public string AlmacenOrigen { get; set; }
-        public string CodAlmacenDestino { get; set; }
-        public string AlmacenDestino { get; set; }
+        public DateTime FechaMovimiento { get; set; }
+        public string CodAlmacen { get; set; }
+        public string Almacen { get; set; }
+        public string Guias { get; set; }
         public string Observacion { get; set; }
         public string Estado { get; set; }
         public string EstadoDescripcion { get; set; }
@@ -32,9 +32,14 @@ namespace SoftCotton.Model.Almacen
         public DateTime? FechaAnulacion { get; set; }
         public string MotivoAnulacion { get; set; }
 
-        public bool EstaAnulada
+        public bool EstaAnulado
         {
             get { return Estado == EstadoAnulado; }
+        }
+
+        public bool EsIngreso
+        {
+            get { return TipoMovimiento == TipoIngreso; }
         }
     }
 }

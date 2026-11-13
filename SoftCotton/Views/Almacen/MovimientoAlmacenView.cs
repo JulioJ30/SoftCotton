@@ -3,7 +3,6 @@ using SoftCotton.Model.Almacen;
 using SoftCotton.Util;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,18 +11,19 @@ using System.Windows.Forms;
 namespace SoftCotton.Views.Almacen
 {
     /// <summary>
-    /// Listado de transferencias entre almacenes: consulta, alta (transferencia/devolución),
-    /// anulación y exportación. El detalle de la transferencia seleccionada se carga en
-    /// segundo plano; si el usuario cambia de fila antes de que termine, la consulta
-    /// anterior se cancela.
+    /// Listado de ingresos y salidas de almacén: consulta, alta, anulación y exportación.
+    ///   Ingreso: devolución a un almacén de lo despachado con guía de remisión.
+    ///   Salida : despacho de lo que ingresó a ese almacén.
+    /// El detalle del movimiento seleccionado se carga en segundo plano; si el usuario cambia
+    /// de fila antes de que termine, la consulta anterior se cancela.
     /// </summary>
-    public partial class TransferenciaAlmacenView : FormularioAsync
+    public partial class MovimientoAlmacenView : FormularioAsync
     {
         private readonly AlmacenBL _almacenBL = new AlmacenBL();
         private List<AlmacenItem> _almacenes = new List<AlmacenItem>();
         private CancellationTokenSource _ctsDetalle;
 
-        public TransferenciaAlmacenView()
+        public MovimientoAlmacenView()
         {
             InitializeComponent();
             AplicarEstilos();
@@ -39,8 +39,8 @@ namespace SoftCotton.Views.Almacen
             EstiloVisual.ColumnaNumero(colCantidadTotal);
             EstiloVisual.ColumnaNumero(colDetCantidad);
 
-            EstiloVisual.BotonPrimario(btnNuevaTransferencia);
-            EstiloVisual.BotonSecundario(btnNuevaDevolucion);
+            EstiloVisual.BotonPrimario(btnNuevoIngreso);
+            EstiloVisual.BotonSecundario(btnNuevaSalida);
             EstiloVisual.BotonPeligro(btnAnular);
             EstiloVisual.BotonSecundario(btnExportar);
             EstiloVisual.BotonPrimario(btnBuscar);
@@ -50,18 +50,27 @@ namespace SoftCotton.Views.Almacen
             dgvCabecera.CellToolTipTextNeeded += dgvCabecera_CellToolTipTextNeeded;
         }
 
-        private async void TransferenciaAlmacenView_Load(object sender, EventArgs e)
+        private async void MovimientoAlmacenView_Load(object sender, EventArgs e)
         {
             dtpDesde.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-2);
             dtpHasta.Value = DateTime.Today;
+
+            cbxTipo.DisplayMember = "Texto";
+            cbxTipo.ValueMember = "Valor";
+            cbxTipo.DataSource = new List<OpcionCombo>
+            {
+                new OpcionCombo("", "Todos"),
+                new OpcionCombo(MovimientoAlmacenCab.TipoIngreso, "Ingresos"),
+                new OpcionCombo(MovimientoAlmacenCab.TipoSalida, "Salidas")
+            };
 
             cbxEstado.DisplayMember = "Texto";
             cbxEstado.ValueMember = "Valor";
             cbxEstado.DataSource = new List<OpcionCombo>
             {
                 new OpcionCombo("", "Todos"),
-                new OpcionCombo(TransferenciaAlmacenCab.EstadoActivo, "Activos"),
-                new OpcionCombo(TransferenciaAlmacenCab.EstadoAnulado, "Anulados")
+                new OpcionCombo(MovimientoAlmacenCab.EstadoActivo, "Activos"),
+                new OpcionCombo(MovimientoAlmacenCab.EstadoAnulado, "Anulados")
             };
 
             MostrarDetalleVacio();
@@ -76,35 +85,36 @@ namespace SoftCotton.Views.Almacen
                 cbxAlmacen.ValueMember = "Valor";
                 cbxAlmacen.DataSource = opciones;
 
-                await CargarTransferenciasAsync(ct, null);
-            }, "Cargando transferencias...");
+                await CargarMovimientosAsync(ct, null);
+            }, "Cargando movimientos...");
         }
 
         // ------------------------------------------------------------------ consulta
 
-        private async Task CargarTransferenciasAsync(CancellationToken ct, int? seleccionarId)
+        private async Task CargarMovimientosAsync(CancellationToken ct, int? seleccionarId)
         {
-            int? idActual = seleccionarId ?? Seleccionada?.IdTransferencia;
+            int? idActual = seleccionarId ?? Seleccionado?.IdMovimiento;
 
-            var lista = await _almacenBL.ListarTransferenciasAsync(
+            var lista = await _almacenBL.ListarMovimientosAsync(
                 dtpDesde.Value.Date,
                 dtpHasta.Value.Date,
                 cbxAlmacen.SelectedValue as string,
+                cbxTipo.SelectedValue as string,
                 cbxEstado.SelectedValue as string,
                 txtBuscar.Text,
                 ct);
 
             dgvCabecera.DataSource = lista;
-            tsslTotal.Text = lista.Count == 1 ? "1 transferencia" : lista.Count + " transferencias";
+            tsslTotal.Text = lista.Count == 1 ? "1 movimiento" : lista.Count + " movimientos";
             lblCabeceraTitulo.Text = lista.Count == 0
-                ? "No hay transferencias con los filtros seleccionados"
-                : "Transferencias registradas";
+                ? "No hay movimientos con los filtros seleccionados"
+                : "Movimientos registrados";
 
             if (idActual.HasValue)
             {
                 foreach (DataGridViewRow fila in dgvCabecera.Rows)
                 {
-                    if (((TransferenciaAlmacenCab)fila.DataBoundItem).IdTransferencia == idActual.Value)
+                    if (((MovimientoAlmacenCab)fila.DataBoundItem).IdMovimiento == idActual.Value)
                     {
                         dgvCabecera.CurrentCell = fila.Cells[0];
                         break;
@@ -129,7 +139,7 @@ namespace SoftCotton.Views.Almacen
                 return;
             }
 
-            await EjecutarAsync(ct => CargarTransferenciasAsync(ct, null), "Buscando...");
+            await EjecutarAsync(ct => CargarMovimientosAsync(ct, null), "Buscando...");
         }
 
         private async void btnBuscar_Click(object sender, EventArgs e)
@@ -148,16 +158,16 @@ namespace SoftCotton.Views.Almacen
 
         // ------------------------------------------------------------------ detalle
 
-        private TransferenciaAlmacenCab Seleccionada
+        private MovimientoAlmacenCab Seleccionado
         {
-            get { return dgvCabecera.CurrentRow?.DataBoundItem as TransferenciaAlmacenCab; }
+            get { return dgvCabecera.CurrentRow?.DataBoundItem as MovimientoAlmacenCab; }
         }
 
         private async void dgvCabecera_SelectionChanged(object sender, EventArgs e)
         {
             ActualizarAcciones();
 
-            var seleccion = Seleccionada;
+            var seleccion = Seleccionado;
 
             // cancela la carga anterior (si el usuario se mueve rápido entre filas)
             var cts = new CancellationTokenSource();
@@ -170,7 +180,7 @@ namespace SoftCotton.Views.Almacen
                 return;
             }
 
-            lblDetalleTitulo.Text = "Detalle de la " + seleccion.TipoDescripcion.ToLower() + " N° " + seleccion.Numero + "  ·  cargando...";
+            lblDetalleTitulo.Text = "Detalle del " + Nombre(seleccion) + "  ·  cargando...";
 
             try
             {
@@ -188,68 +198,76 @@ namespace SoftCotton.Views.Almacen
             cts.Dispose();
         }
 
-        private Task<bool> CargarDetalleAsync(TransferenciaAlmacenCab seleccion, CancellationToken token)
+        private Task<bool> CargarDetalleAsync(MovimientoAlmacenCab seleccion, CancellationToken token)
         {
             return EjecutarAsync(async ct =>
             {
-                var detalle = await _almacenBL.ListarDetalleAsync(seleccion.IdTransferencia, ct);
+                var detalle = await _almacenBL.ListarDetalleAsync(seleccion.IdMovimiento, ct);
 
                 // si mientras tanto el usuario seleccionó otra fila, se descarta
-                if (!ReferenceEquals(Seleccionada, seleccion))
+                if (!ReferenceEquals(Seleccionado, seleccion))
                 {
                     return;
                 }
 
+                colDetGuia.Visible = seleccion.EsIngreso;
+                colDetDestinatario.Visible = seleccion.EsIngreso;
                 dgvDetalle.DataSource = detalle;
-                lblDetalleTitulo.Text = string.Format("Detalle de la {0} N° {1}  ·  {2} → {3}{4}",
-                    seleccion.TipoDescripcion.ToLower(),
-                    seleccion.Numero,
-                    seleccion.AlmacenOrigen,
-                    seleccion.AlmacenDestino,
-                    seleccion.EstaAnulada ? "  ·  ANULADA: " + seleccion.MotivoAnulacion : "");
+                lblDetalleTitulo.Text = string.Format("Detalle del {0}  ·  {1} {2}{3}",
+                    Nombre(seleccion),
+                    seleccion.EsIngreso ? "entra a" : "sale de",
+                    seleccion.Almacen,
+                    seleccion.EstaAnulado ? "  ·  ANULADO: " + seleccion.MotivoAnulacion : "");
             }, null, false, token);
+        }
+
+        private static string Nombre(MovimientoAlmacenCab movimiento)
+        {
+            return (movimiento.EsIngreso ? "ingreso" : "salida") + " N° " + movimiento.Numero;
         }
 
         private void MostrarDetalleVacio()
         {
             dgvDetalle.DataSource = null;
-            lblDetalleTitulo.Text = "Seleccione una transferencia para ver su detalle";
+            lblDetalleTitulo.Text = "Seleccione un movimiento para ver su detalle";
         }
 
         private void ActualizarAcciones()
         {
-            var seleccion = Seleccionada;
-            btnAnular.Enabled = seleccion != null && !seleccion.EstaAnulada;
+            var seleccion = Seleccionado;
+            btnAnular.Enabled = seleccion != null && !seleccion.EstaAnulado;
             btnExportar.Enabled = dgvCabecera.Rows.Count > 0;
         }
 
         // ------------------------------------------------------------------ registro
 
-        private void btnNuevaTransferencia_Click(object sender, EventArgs e)
+        private void btnNuevoIngreso_Click(object sender, EventArgs e)
         {
-            AbrirRegistro(RegistroTransferenciaAlmacenView.Modo.Transferencia);
+            AbrirRegistro(RegistroMovimientoAlmacenView.Modo.Ingreso);
         }
 
-        private void btnNuevaDevolucion_Click(object sender, EventArgs e)
+        private void btnNuevaSalida_Click(object sender, EventArgs e)
         {
-            AbrirRegistro(RegistroTransferenciaAlmacenView.Modo.Devolucion);
+            AbrirRegistro(RegistroMovimientoAlmacenView.Modo.Salida);
         }
 
-        private async void AbrirRegistro(RegistroTransferenciaAlmacenView.Modo modo)
+        private async void AbrirRegistro(RegistroMovimientoAlmacenView.Modo modo)
         {
             if (Ocupado || _almacenes.Count == 0)
             {
                 return;
             }
 
+            string almacenFiltro = cbxAlmacen.SelectedValue as string;
+
             int idNuevo;
-            using (var registro = new RegistroTransferenciaAlmacenView(modo, _almacenes))
+            using (var registro = new RegistroMovimientoAlmacenView(modo, _almacenes, almacenFiltro))
             {
                 if (registro.ShowDialog(this) != DialogResult.OK)
                 {
                     return;
                 }
-                idNuevo = registro.IdTransferenciaRegistrada;
+                idNuevo = registro.IdMovimientoRegistrado;
             }
 
             // se asegura que el rango de fechas incluya lo recién registrado
@@ -258,23 +276,27 @@ namespace SoftCotton.Views.Almacen
                 dtpHasta.Value = DateTime.Today;
             }
 
-            await EjecutarAsync(ct => CargarTransferenciasAsync(ct, idNuevo), "Actualizando...");
+            await EjecutarAsync(ct => CargarMovimientosAsync(ct, idNuevo), "Actualizando...");
         }
 
         // ------------------------------------------------------------------ anulación
 
         private async void btnAnular_Click(object sender, EventArgs e)
         {
-            var seleccion = Seleccionada;
-            if (seleccion == null || seleccion.EstaAnulada)
+            var seleccion = Seleccionado;
+            if (seleccion == null || seleccion.EstaAnulado)
             {
                 return;
             }
 
+            string efecto = seleccion.EsIngreso
+                ? "Ese stock dejará de estar en el almacén y la guía volverá a quedar pendiente de ingresar."
+                : "Ese stock volverá a estar disponible en el almacén.";
+
             string motivo = MotivoAnulacionDialog.Pedir(this,
-                string.Format("Anular la {0} N° {1}", seleccion.TipoDescripcion.ToLower(), seleccion.Numero),
-                string.Format("{0} → {1}  ·  {2} ítems  ·  {3:N3} unidades.\nEl movimiento dejará de mostrarse en el Kardex y en el stock por almacén.",
-                    seleccion.AlmacenOrigen, seleccion.AlmacenDestino, seleccion.Items, seleccion.CantidadTotal));
+                "Anular el " + Nombre(seleccion),
+                string.Format("{0}  ·  {1} ítems  ·  {2:N3} unidades.\n{3}",
+                    seleccion.Almacen, seleccion.Items, seleccion.CantidadTotal, efecto));
 
             if (motivo == null)
             {
@@ -284,7 +306,7 @@ namespace SoftCotton.Views.Almacen
             Response respuesta = null;
             bool ok = await EjecutarGrabacionAsync(async ct =>
             {
-                respuesta = await _almacenBL.AnularAsync(seleccion.IdTransferencia, motivo, UserApplication.ID_USUARIO, ct);
+                respuesta = await _almacenBL.AnularAsync(seleccion.IdMovimiento, motivo, UserApplication.ID_USUARIO, ct);
             }, "Anulando...");
 
             if (!ok || respuesta == null)
@@ -296,7 +318,7 @@ namespace SoftCotton.Views.Almacen
 
             if (respuesta.idResponse > 0)
             {
-                await EjecutarAsync(ct => CargarTransferenciasAsync(ct, seleccion.IdTransferencia), "Actualizando...");
+                await EjecutarAsync(ct => CargarMovimientosAsync(ct, seleccion.IdMovimiento), "Actualizando...");
             }
         }
 
@@ -304,13 +326,13 @@ namespace SoftCotton.Views.Almacen
 
         private async void btnExportar_Click(object sender, EventArgs e)
         {
-            var lista = dgvCabecera.DataSource as List<TransferenciaAlmacenCab>;
+            var lista = dgvCabecera.DataSource as List<MovimientoAlmacenCab>;
             if (lista == null || lista.Count == 0)
             {
                 return;
             }
 
-            string ruta = ExportacionExcel.PedirRuta(this, "TransferenciasAlmacen");
+            string ruta = ExportacionExcel.PedirRuta(this, "IngresosSalidasAlmacen");
             if (ruta == null)
             {
                 return;
@@ -320,9 +342,9 @@ namespace SoftCotton.Views.Almacen
             {
                 Numero = t.Numero,
                 Tipo = t.TipoDescripcion,
-                Fecha = t.FechaTransferencia.ToString("dd/MM/yyyy"),
-                Origen = t.AlmacenOrigen,
-                Destino = t.AlmacenDestino,
+                Fecha = t.FechaMovimiento.ToString("dd/MM/yyyy"),
+                Almacen = t.Almacen,
+                Guias = t.Guias,
                 Items = t.Items,
                 Cantidad = t.CantidadTotal,
                 Estado = t.EstadoDescripcion,
@@ -332,7 +354,7 @@ namespace SoftCotton.Views.Almacen
                 MotivoAnulacion = t.MotivoAnulacion
             }).ToList();
 
-            var titulos = new[] { "N°", "Tipo", "Fecha", "Origen", "Destino", "Ítems", "Cantidad", "Estado", "Registrado por", "Registrado el", "Observación", "Motivo anulación" };
+            var titulos = new[] { "N°", "Tipo", "Fecha", "Almacén", "Guías de origen", "Ítems", "Cantidad", "Estado", "Registrado por", "Registrado el", "Observación", "Motivo anulación" };
 
             bool ok = await EjecutarAsync(ct => ExportacionExcel.GenerarAsync(ruta, titulos, filas, ct), "Generando Excel...");
             if (ok)
@@ -350,7 +372,7 @@ namespace SoftCotton.Views.Almacen
                 return;
             }
 
-            var item = dgvCabecera.Rows[e.RowIndex].DataBoundItem as TransferenciaAlmacenCab;
+            var item = dgvCabecera.Rows[e.RowIndex].DataBoundItem as MovimientoAlmacenCab;
             if (item == null)
             {
                 return;
@@ -358,7 +380,7 @@ namespace SoftCotton.Views.Almacen
 
             string columna = dgvCabecera.Columns[e.ColumnIndex].Name;
 
-            if (item.EstaAnulada)
+            if (item.EstaAnulado)
             {
                 e.CellStyle.ForeColor = EstiloVisual.Anulado;
                 e.CellStyle.SelectionForeColor = EstiloVisual.Anulado;
@@ -371,14 +393,13 @@ namespace SoftCotton.Views.Almacen
             if (columna == colEstado.Name)
             {
                 e.CellStyle.Font = EstiloVisual.FuenteNegrita;
-                e.CellStyle.ForeColor = item.EstaAnulada ? EstiloVisual.Peligro : EstiloVisual.Exito;
+                e.CellStyle.ForeColor = item.EstaAnulado ? EstiloVisual.Peligro : EstiloVisual.Exito;
                 e.CellStyle.SelectionForeColor = e.CellStyle.ForeColor;
             }
-            else if (columna == colTipo.Name && !item.EstaAnulada)
+            else if (columna == colTipo.Name && !item.EstaAnulado)
             {
-                e.CellStyle.ForeColor = item.TipoTransferencia == TransferenciaAlmacenCab.TipoDevolucion
-                    ? EstiloVisual.AlertaTexto
-                    : EstiloVisual.Primario;
+                e.CellStyle.Font = EstiloVisual.FuenteNegrita;
+                e.CellStyle.ForeColor = item.EsIngreso ? EstiloVisual.Exito : EstiloVisual.AlertaTexto;
                 e.CellStyle.SelectionForeColor = e.CellStyle.ForeColor;
             }
         }
@@ -390,32 +411,31 @@ namespace SoftCotton.Views.Almacen
                 return;
             }
 
-            var item = dgvCabecera.Rows[e.RowIndex].DataBoundItem as TransferenciaAlmacenCab;
-            if (item != null && item.EstaAnulada)
+            var item = dgvCabecera.Rows[e.RowIndex].DataBoundItem as MovimientoAlmacenCab;
+            if (item != null && item.EstaAnulado)
             {
-                e.ToolTipText = string.Format("Anulada por {0} el {1:dd/MM/yyyy HH:mm}\nMotivo: {2}",
+                e.ToolTipText = string.Format("Anulado por {0} el {1:dd/MM/yyyy HH:mm}\nMotivo: {2}",
                     item.UsuarioAnulacion, item.FechaAnulacion, item.MotivoAnulacion);
             }
         }
 
-        private async void TransferenciaAlmacenView_KeyDown(object sender, KeyEventArgs e)
+        private async void MovimientoAlmacenView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F5)
             {
                 e.SuppressKeyPress = true;
                 await BuscarAsync();
             }
-            else if (e.Control && e.KeyCode == Keys.N)
+            else if (e.Control && e.KeyCode == Keys.I)
             {
                 e.SuppressKeyPress = true;
-                AbrirRegistro(RegistroTransferenciaAlmacenView.Modo.Transferencia);
+                AbrirRegistro(RegistroMovimientoAlmacenView.Modo.Ingreso);
             }
-            else if (e.Control && e.KeyCode == Keys.D)
+            else if (e.Control && e.KeyCode == Keys.S)
             {
                 e.SuppressKeyPress = true;
-                AbrirRegistro(RegistroTransferenciaAlmacenView.Modo.Devolucion);
+                AbrirRegistro(RegistroMovimientoAlmacenView.Modo.Salida);
             }
         }
-
     }
 }

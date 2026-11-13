@@ -1,30 +1,31 @@
 using SoftCotton.BusinessLogic;
 using SoftCotton.Model.Almacen;
-using SoftCotton.Model.Maintenance;
 using SoftCotton.Util;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SoftCotton.Views.Almacen
 {
     /// <summary>
-    /// Reporte de stock por almacén (sobrantes ubicados fuera del almacén central).
-    /// Desde aquí se puede devolver al central o mover a otro almacén las filas
-    /// seleccionadas, abriendo el registro ya precargado.
+    /// Reporte de stock por almacén con formato de Kardex (solo cantidades, sin precio):
+    /// por almacén y producto, el saldo inicial y cada ingreso / salida del rango con el
+    /// saldo acumulado al final de cada línea. La última línea de cada producto es su stock
+    /// final. Estos movimientos no forman parte del Kardex contable.
     /// </summary>
     public partial class StockAlmacenView : FormularioAsync
     {
-        private const string TodosSecundarios = "";
+        private static readonly Color FondoGrupoAlterno = Color.FromArgb(246, 248, 251);
+        private static readonly Color FondoSaldoInicial = Color.FromArgb(238, 242, 247);
 
         private readonly AlmacenBL _almacenBL = new AlmacenBL();
         private readonly MantenimientoBL _mantenimientoBL = new MantenimientoBL();
-        private List<AlmacenItem> _almacenes = new List<AlmacenItem>();
-        private List<StockAlmacenReporte> _filas = new List<StockAlmacenReporte>();
+        private List<StockAlmacenKardex> _filas = new List<StockAlmacenKardex>();
+        private DateTime _desdeConsultado;
+        private DateTime _hastaConsultado;
 
         public StockAlmacenView()
         {
@@ -35,27 +36,34 @@ namespace SoftCotton.Views.Almacen
         private void AplicarEstilos()
         {
             EstiloVisual.AplicarGrilla(dgvStock);
-            dgvStock.MultiSelect = true;
-            EstiloVisual.ColumnaNumero(colStock);
-            EstiloVisual.ColumnaNumero(colStockCentral);
-            EstiloVisual.ColumnaCentrada(colUltimoMovimiento);
-            colStock.DefaultCellStyle.Font = EstiloVisual.FuenteNegrita;
+            // el color de fondo lo da el grupo (producto), no la fila alterna
+            dgvStock.AlternatingRowsDefaultCellStyle.BackColor = EstiloVisual.Superficie;
+            dgvStock.RowTemplate.Height = 26;
+
+            EstiloVisual.ColumnaNumero(colIngreso);
+            EstiloVisual.ColumnaNumero(colSalida);
+            EstiloVisual.ColumnaNumero(colSaldo);
+            EstiloVisual.ColumnaCentrada(colFecha);
+            EstiloVisual.ColumnaCentrada(colNumero);
+            colIngreso.DefaultCellStyle.ForeColor = EstiloVisual.Exito;
+            colSalida.DefaultCellStyle.ForeColor = EstiloVisual.AlertaTexto;
+            colSaldo.DefaultCellStyle.ForeColor = EstiloVisual.Primario;
 
             EstiloVisual.BotonPrimario(btnConsultar);
-            EstiloVisual.BotonPrimario(btnDevolver);
-            EstiloVisual.BotonSecundario(btnMover);
             EstiloVisual.BotonSecundario(btnExportar);
 
             lblProductosValor.ForeColor = EstiloVisual.Primario;
             lblUnidadesValor.ForeColor = EstiloVisual.Primario;
+            lblMovimientosValor.ForeColor = EstiloVisual.Primario;
             pnlGrilla.Resize += (s, e) => CentrarSinDatos();
         }
 
         private async void StockAlmacenView_Load(object sender, EventArgs e)
         {
-            dtpFechaCorte.MaxDate = DateTime.Today;
-            dtpFechaCorte.Value = DateTime.Today;
-            ActualizarAcciones();
+            dtpHasta.MaxDate = DateTime.Today;
+            dtpHasta.Value = DateTime.Today;
+            dtpDesde.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            btnExportar.Enabled = false;
 
             bool ok = await EjecutarAsync(async ct =>
             {
@@ -64,10 +72,8 @@ namespace SoftCotton.Views.Almacen
                 var tareaNiveles = Task.Run(() => _mantenimientoBL.Get16_NivelCBX(), ct);
                 await Task.WhenAll(tareaAlmacenes, tareaNiveles);
 
-                _almacenes = tareaAlmacenes.Result;
-
-                var almacenes = new List<OpcionCombo> { new OpcionCombo(TodosSecundarios, "Todos (sin el almacén central)") };
-                almacenes.AddRange(_almacenes.Select(a => new OpcionCombo(a.Codigo, a.Texto)));
+                var almacenes = new List<OpcionCombo> { new OpcionCombo("", "Todos los almacenes") };
+                almacenes.AddRange(tareaAlmacenes.Result.Select(a => new OpcionCombo(a.Codigo, a.Texto)));
                 cbxAlmacen.DisplayMember = "Texto";
                 cbxAlmacen.ValueMember = "Valor";
                 cbxAlmacen.DataSource = almacenes;
@@ -89,42 +95,45 @@ namespace SoftCotton.Views.Almacen
 
         private async Task ConsultarAsync()
         {
-            string almacen = cbxAlmacen.SelectedValue as string;
-            string nivel = cbxNivel.SelectedValue as string;
-
-            if (almacen == AlmacenItem.CodigoCentral && string.IsNullOrEmpty(nivel))
+            DateTime desde = dtpDesde.Value.Date;
+            DateTime hasta = dtpHasta.Value.Date;
+            if (desde > hasta)
             {
-                ResponseMessage.Message("El almacén central incluye todo el Kardex. Seleccione un nivel para consultarlo.", "INFORMATION");
-                cbxNivel.Focus();
+                ResponseMessage.Message("La fecha 'Desde' no puede ser mayor que la fecha 'Hasta'.", "INFORMATION");
+                dtpDesde.Focus();
                 return;
             }
 
-            DateTime fecha = dtpFechaCorte.Value.Date;
+            string almacen = cbxAlmacen.SelectedValue as string;
+            string nivel = cbxNivel.SelectedValue as string;
             string texto = txtBuscar.Text;
 
             await EjecutarAsync(async ct =>
             {
-                _filas = await _almacenBL.ReporteStockAsync(almacen, fecha, nivel, texto, ct);
+                _filas = await _almacenBL.ReporteStockAsync(almacen, desde, hasta, nivel, texto, ct);
+                _desdeConsultado = desde;
+                _hastaConsultado = hasta;
                 dgvStock.DataSource = _filas;
-                MostrarTotales(fecha);
+                MostrarTotales();
             }, "Calculando stock...");
         }
 
-        private void MostrarTotales(DateTime fecha)
+        private void MostrarTotales()
         {
-            int alertas = _filas.Count(f => f.TieneAlerta);
+            var finales = _filas.Where(f => f.EsUltima).ToList();
+            int productosConStock = finales.Count(f => f.Saldo != 0);
+            decimal unidades = finales.Sum(f => f.Saldo);
+            int movimientos = _filas.Count(f => !f.EsSaldoInicial);
 
-            lblProductosValor.Text = _filas.Count.ToString("N0");
-            lblUnidadesValor.Text = _filas.Sum(f => f.Stock).ToString("N3");
-            lblAlertasValor.Text = alertas.ToString("N0");
-            lblAlertasValor.ForeColor = alertas > 0 ? EstiloVisual.AlertaTexto : EstiloVisual.Exito;
-            pnlTarjetaAlertas.BackColor = alertas > 0 ? EstiloVisual.Alerta : EstiloVisual.Superficie;
-            tsslLeyenda.Visible = alertas > 0;
+            lblProductosValor.Text = productosConStock.ToString("N0");
+            lblUnidadesValor.Text = unidades.ToString("N3");
+            lblMovimientosValor.Text = movimientos.ToString("N0");
 
-            tsslTotal.Text = (_filas.Count == 1 ? "1 fila" : _filas.Count + " filas") + "  ·  stock al " + fecha.ToString("dd/MM/yyyy");
+            tsslTotal.Text = string.Format("{0} productos  ·  {1} filas  ·  del {2:dd/MM/yyyy} al {3:dd/MM/yyyy}",
+                finales.Count, _filas.Count, _desdeConsultado, _hastaConsultado);
             lblSinDatos.Visible = _filas.Count == 0;
+            btnExportar.Enabled = _filas.Count > 0;
             CentrarSinDatos();
-            ActualizarAcciones();
         }
 
         private async void btnConsultar_Click(object sender, EventArgs e)
@@ -141,78 +150,7 @@ namespace SoftCotton.Views.Almacen
             }
         }
 
-        // ------------------------------------------------------------------ acciones
-
-        private List<StockAlmacenReporte> FilasSeleccionadas()
-        {
-            var filas = dgvStock.SelectedRows
-                .Cast<DataGridViewRow>()
-                .OrderBy(r => r.Index)
-                .Select(r => r.DataBoundItem as StockAlmacenReporte)
-                .Where(f => f != null)
-                .ToList();
-
-            if (filas.Count == 0 && dgvStock.CurrentRow != null && dgvStock.CurrentRow.DataBoundItem is StockAlmacenReporte)
-            {
-                filas.Add((StockAlmacenReporte)dgvStock.CurrentRow.DataBoundItem);
-            }
-
-            return filas;
-        }
-
-        private void dgvStock_SelectionChanged(object sender, EventArgs e)
-        {
-            ActualizarAcciones();
-        }
-
-        private void ActualizarAcciones()
-        {
-            var filas = FilasSeleccionadas();
-            bool mismoAlmacen = filas.Count > 0 && filas.Select(f => f.CodAlmacen).Distinct().Count() == 1;
-            bool desdeSecundario = mismoAlmacen && filas[0].CodAlmacen != AlmacenItem.CodigoCentral;
-            bool conStock = filas.All(f => f.Stock > 0);
-
-            btnDevolver.Enabled = desdeSecundario && conStock;
-            btnMover.Enabled = mismoAlmacen && conStock;
-            btnExportar.Enabled = _filas.Count > 0;
-
-            lblAyudaAcciones.Text = filas.Count > 1 && !mismoAlmacen
-                ? "Las filas seleccionadas son de distintos almacenes: seleccione filas de un solo almacén."
-                : "Seleccione una o varias filas de un mismo almacén (Ctrl/Shift + clic).";
-            lblAyudaAcciones.ForeColor = filas.Count > 1 && !mismoAlmacen ? EstiloVisual.AlertaTexto : EstiloVisual.TextoSecundario;
-        }
-
-        private void btnDevolver_Click(object sender, EventArgs e)
-        {
-            AbrirRegistro(RegistroTransferenciaAlmacenView.Modo.Devolucion);
-        }
-
-        private void btnMover_Click(object sender, EventArgs e)
-        {
-            AbrirRegistro(RegistroTransferenciaAlmacenView.Modo.Transferencia);
-        }
-
-        private async void AbrirRegistro(RegistroTransferenciaAlmacenView.Modo modo)
-        {
-            var filas = FilasSeleccionadas();
-            if (filas.Count == 0 || Ocupado)
-            {
-                return;
-            }
-
-            string origen = filas[0].CodAlmacen;
-            var lineas = filas.Select(TransferenciaAlmacenLinea.DesdeStock).ToList();
-
-            using (var registro = new RegistroTransferenciaAlmacenView(modo, _almacenes, origen, lineas))
-            {
-                if (registro.ShowDialog(this) != DialogResult.OK)
-                {
-                    return;
-                }
-            }
-
-            await ConsultarAsync();
-        }
+        // ------------------------------------------------------------------ exportación
 
         private async void btnExportar_Click(object sender, EventArgs e)
         {
@@ -227,24 +165,10 @@ namespace SoftCotton.Views.Almacen
                 return;
             }
 
-            var filas = _filas.Select(f => new
-            {
-                Almacen = f.Almacen,
-                Codigo = f.Codigo,
-                Nivel = f.Nivel,
-                Articulo = f.Articulo,
-                Talla = f.Talla,
-                Color = f.Color,
-                UM = f.UM,
-                Stock = f.Stock,
-                StockCentral = f.StockCentral,
-                UltimoMovimiento = f.FechaUltimoMovimiento.HasValue ? f.FechaUltimoMovimiento.Value.ToString("dd/MM/yyyy") : "",
-                Observacion = f.TieneAlerta ? "Central negativo: registrar devolución" : ""
-            }).ToList();
+            var filas = _filas.ToList();
+            DateTime hasta = _hastaConsultado;
 
-            var titulos = new[] { "Almacén", "Código", "Nivel", "Artículo", "Talla", "Color", "UM", "Stock", "Stock en central", "Último mov.", "Observación" };
-
-            bool ok = await EjecutarAsync(ct => ExportacionExcel.GenerarAsync(ruta, titulos, filas, ct), "Generando Excel...");
+            bool ok = await EjecutarAsync(ct => ExportacionExcel.GenerarStockKardexAsync(ruta, filas, hasta, ct), "Generando Excel...");
             if (ok)
             {
                 ExportacionExcel.PreguntarAbrir(ruta);
@@ -253,6 +177,12 @@ namespace SoftCotton.Views.Almacen
 
         // ------------------------------------------------------------------ presentación
 
+        private static bool EsColumnaProducto(DataGridViewColumn columna)
+        {
+            string n = columna.Name;
+            return n == "colAlmacen" || n == "colCodigo" || n == "colArticulo" || n == "colTalla" || n == "colColor" || n == "colUM";
+        }
+
         private void dgvStock_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -260,26 +190,63 @@ namespace SoftCotton.Views.Almacen
                 return;
             }
 
-            var fila = dgvStock.Rows[e.RowIndex].DataBoundItem as StockAlmacenReporte;
+            var fila = dgvStock.Rows[e.RowIndex].DataBoundItem as StockAlmacenKardex;
             if (fila == null)
             {
                 return;
             }
 
-            if (fila.TieneAlerta)
+            var columna = dgvStock.Columns[e.ColumnIndex];
+
+            // como en el Kardex: los datos del producto solo en la primera fila del grupo
+            if (EsColumnaProducto(columna))
             {
-                e.CellStyle.BackColor = EstiloVisual.Alerta;
-                if (dgvStock.Columns[e.ColumnIndex].Name == colStockCentral.Name)
+                if (!fila.EsPrimera)
                 {
-                    e.CellStyle.ForeColor = EstiloVisual.AlertaTexto;
+                    e.Value = "";
+                    e.FormattingApplied = true;
+                }
+                else
+                {
                     e.CellStyle.Font = EstiloVisual.FuenteNegrita;
-                    dgvStock.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText =
-                        "El central quedó negativo: este producto se despachó con guía sin registrar antes la devolución desde " + fila.Almacen + ".";
                 }
             }
-            else if (fila.Stock < 0 && dgvStock.Columns[e.ColumnIndex].Name == colStock.Name)
+
+            // ingresos / salidas en cero se dejan en blanco para que se lea mejor
+            if ((columna == colIngreso && fila.Ingreso == 0) || (columna == colSalida && fila.Salida == 0))
             {
-                e.CellStyle.ForeColor = EstiloVisual.Peligro;
+                e.Value = "";
+                e.FormattingApplied = true;
+            }
+
+            Color fondo = fila.Grupo % 2 == 1 ? FondoGrupoAlterno : EstiloVisual.Superficie;
+            if (fila.EsSaldoInicial && !EsColumnaProducto(columna))
+            {
+                fondo = FondoSaldoInicial;
+                e.CellStyle.ForeColor = EstiloVisual.TextoSecundario;
+                e.CellStyle.Font = EstiloVisual.FuenteNegrita;
+            }
+            e.CellStyle.BackColor = fondo;
+
+            if (columna == colMovimiento && !fila.EsSaldoInicial)
+            {
+                e.CellStyle.ForeColor = fila.TipoFila == StockAlmacenKardex.FilaIngreso ? EstiloVisual.Exito : EstiloVisual.AlertaTexto;
+                e.CellStyle.SelectionForeColor = e.CellStyle.ForeColor;
+            }
+
+            // stock final del producto (última fila del grupo)
+            if (columna == colSaldo)
+            {
+                if (fila.EsUltima)
+                {
+                    e.CellStyle.Font = EstiloVisual.FuenteNegrita;
+                    e.CellStyle.BackColor = Color.FromArgb(225, 236, 248);
+                    dgvStock.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = "Stock final al " + _hastaConsultado.ToString("dd/MM/yyyy");
+                }
+                if (fila.Saldo < 0)
+                {
+                    e.CellStyle.ForeColor = EstiloVisual.Peligro;
+                }
             }
         }
 
